@@ -42,200 +42,6 @@
             color: red !important;  /* thin red text */
             font-weight: normal !important; /* no bold */
         }
-
-        /* ✅ Login Success Popup */
-        .login-popup-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .login-popup-overlay.show {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .login-popup-content {
-            background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
-            padding: 40px 50px;
-            border-radius: 12px;
-            text-align: center;
-            box-shadow: 0 10px 40px rgba(0, 30, 67, 0.25);
-            border-left: 5px solid #001e43;
-            max-width: 450px;
-            width: 90%;
-            animation: popupSlideIn 0.4s ease;
-        }
-
-        @keyframes popupSlideIn {
-            from {
-                transform: translateY(-30px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .login-popup-icon {
-            width: 70px;
-            height: 70px;
-            margin: 0 auto 20px;
-            background: #001e43;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 40px;
-            color: white;
-            animation: popupIconPulse 0.6s ease;
-        }
-
-        @keyframes popupIconPulse {
-            0% {
-                transform: scale(0.5);
-            }
-            50% {
-                transform: scale(1.1);
-            }
-            100% {
-                transform: scale(1);
-            }
-        }
-
-        .login-popup-title {
-            font-family: "Roboto Slab", serif;
-            font-size: 28px;
-            font-weight: 700;
-            color: #001e43;
-            margin-bottom: 12px;
-        }
-
-        .login-popup-message {
-            font-family: "Poppins", sans-serif;
-            font-size: 16px;
-            color: #555;
-            margin-bottom: 25px;
-            line-height: 1.6;
-        }
-
-        .login-popup-name {
-            color: #001e43;
-            font-weight: 600;
-        }
-
-        .login-popup-btn {
-            background: #001e43;
-            color: white;
-            border: none;
-            padding: 12px 35px;
-            border-radius: 6px;
-            font-family: "Poppins", sans-serif;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .login-popup-btn:hover {
-            background: #0a1428;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(0, 30, 67, 0.3);
-        }
-
-        /* ✅ Error Popup Styles */
-        .error-popup-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .error-popup-overlay.show {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .error-popup-content {
-            background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
-            padding: 40px 50px;
-            border-radius: 12px;
-            text-align: center;
-            box-shadow: 0 10px 40px rgba(250, 57, 74, 0.3);
-            border-left: 5px solid #FA394A;
-            max-width: 450px;
-            width: 90%;
-            animation: popupSlideIn 0.4s ease;
-        }
-
-        .error-popup-icon {
-            width: 70px;
-            height: 70px;
-            margin: 0 auto 20px;
-            background: #FA394A;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 40px;
-            color: white;
-            animation: popupIconPulse 0.6s ease;
-        }
-
-        .error-popup-title {
-            font-family: "Roboto Slab", serif;
-            font-size: 28px;
-            font-weight: 700;
-            color: #FA394A;
-            margin-bottom: 12px;
-        }
-
-        .error-popup-message {
-            font-family: "Poppins", sans-serif;
-            font-size: 16px;
-            color: #555;
-            margin-bottom: 25px;
-            line-height: 1.6;
-        }
-
-        .error-popup-btn {
-            background: #FA394A;
-            color: white;
-            border: none;
-            padding: 12px 35px;
-            border-radius: 6px;
-            font-family: "Poppins", sans-serif;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .error-popup-btn:hover {
-            background: #e8263d;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(250, 57, 74, 0.3);
-        }
     </style>
 
     <!-- Google Font -->
@@ -251,7 +57,7 @@
             <div class="row align-items-center">
                 <div class="col-12 text-center">
                     <h3 class="mb-0" style="color: #fff; font-weight: 700; letter-spacing: 1px; line-height: 1.4; font-size: 26px;">
-                        <span style="font-family: 'Great Vibes', cursive; font-size: 36px; font-weight: 600; margin-right: 6px;">
+                        <span style=" font-size: 36px; font-weight: 600; margin-right: 6px;">
                             Aspira
                         </span>
                         – Central Placement and Information Center
@@ -478,26 +284,6 @@
         <i class="ri-arrow-up-double-fill"></i>
     </button>
 
-    <!-- Login Success Popup -->
-    <div id="loginPopupOverlay" class="login-popup-overlay">
-        <div class="login-popup-content">
-            <div class="login-popup-icon">✓</div>
-            <h3 class="login-popup-title">Login Successful</h3>
-            <p class="login-popup-message">Welcome, <span class="login-popup-name" id="welcomeName"></span>!</p>
-            <button class="login-popup-btn" id="continueBtn" onclick="location.href='admin-dashboard.html'">Continue to Dashboard</button>
-        </div>
-    </div>
-
-    <!-- Login Error Popup -->
-    <div id="errorPopupOverlay" class="error-popup-overlay">
-        <div class="error-popup-content">
-            <div class="error-popup-icon">✕</div>
-            <h3 class="error-popup-title">Login Failed</h3>
-            <p class="error-popup-message" id="errorMessage">Incorrect password. Please enter correct credentials.</p>
-            <button class="error-popup-btn" onclick="document.getElementById('errorPopupOverlay').classList.remove('show')">Try Again</button>
-        </div>
-    </div>
-
     <!-- Highlight Active Menu Script -->
     <script>
     document.addEventListener("DOMContentLoaded", function() {
@@ -532,10 +318,10 @@ document.getElementById("adminLoginForm").addEventListener("submit", async (e) =
 
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value.trim();
+    const messageEl = document.getElementById("loginMessage");
 
     if (!email || !password) {
-        document.getElementById("errorMessage").textContent = "Please enter both email and password.";
-        document.getElementById("errorPopupOverlay").classList.add("show");
+        messageEl.textContent = "Please enter both email and password.";
         return;
     }
 
@@ -548,24 +334,18 @@ document.getElementById("adminLoginForm").addEventListener("submit", async (e) =
 
         const data = await response.json();
         if (data.success) {
-            // Show popup with success message
-            document.getElementById("welcomeName").textContent = data.user.name;
-            const overlay = document.getElementById("loginPopupOverlay");
-            overlay.classList.add("show");
-            
-            // Auto-redirect after 2.5 seconds
+            messageEl.style.color = "green";
+            messageEl.textContent = "Login successful! Redirecting...";
             setTimeout(() => {
                 window.location.href = "admin-dashboard.html";
-            }, 2500);
+            }, 1000);
         } else {
-            // Show error popup
-            document.getElementById("errorMessage").textContent = data.message || "Incorrect password. Please enter correct credentials.";
-            const errorOverlay = document.getElementById("errorPopupOverlay");
-            errorOverlay.classList.add("show");
+            messageEl.style.color = "red";
+            messageEl.textContent = data.message || "Invalid login details.";
         }
     } catch (error) {
-        document.getElementById("errorMessage").textContent = "Server not reachable. Please try again.";
-        document.getElementById("errorPopupOverlay").classList.add("show");
+        messageEl.style.color = "red";
+        messageEl.textContent = "Server not reachable. Please try again.";
     }
 });
 </script>
