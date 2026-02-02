@@ -1,0 +1,1457 @@
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aspira – Faculty | Add Events</title>
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
+<!-- CSS Files -->
+<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+<link rel="stylesheet" href="assets/css/scrollCue.css">
+<link rel="stylesheet" href="assets/css/remixicon.css">
+<link rel="stylesheet" href="assets/css/flaticon.css">
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/responsive.css">
+
+<style>
+    :root {
+        --primaryColor: #FA394A;
+        --secenderyColor: #FFC333;
+        --darkColor: rgb(0, 30, 67);
+        --lightGray: #f8f9fa;
+    }
+
+    body {
+        padding-top: 0;
+        overflow-x: hidden;
+        background: linear-gradient(135deg, #f8f9fa 0%, #f0f2f5 100%);
+    }
+
+    #navbar {
+        transition: all 0.3s ease;
+    }
+
+    #navbar.sticky {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1030;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    body.navbar-sticky {
+        padding-top: 90px;
+    }
+
+    .section-title h2 {
+        color: var(--darkColor);
+        font-weight: 800;
+        position: relative;
+        padding-bottom: 15px;
+        animation: slideInDown 0.6s ease;
+    }
+
+    .section-title h2::after {
+        content: '';
+        position: absolute;
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(90deg, var(--primaryColor), var(--secenderyColor));
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        border-radius: 2px;
+        animation: expandWidth 0.8s ease 0.2s both;
+    }
+
+    .section-title p {
+        color: #666;
+        font-size: 15px;
+        animation: fadeInUp 0.6s ease 0.2s both;
+    }
+
+    /* Event form card */
+    .event-card {
+        background: #fff;
+        padding: 45px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        border: 2px solid transparent;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+        animation: slideInUp 0.7s ease 0.3s both;
+    }
+
+    .event-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(90deg, var(--primaryColor), var(--secenderyColor));
+        transition: left 0.5s ease;
+    }
+
+    .event-card:hover::before {
+        left: 0;
+    }
+
+    .event-card:hover,
+    .event-card:focus-within {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 50px rgba(250, 57, 74, 0.15);
+        border-color: rgba(250, 57, 74, 0.2);
+    }
+
+    /* Form labels */
+    .event-card .form-label {
+        color: var(--darkColor);
+        font-weight: 600;
+        margin-bottom: 12px;
+        font-size: 14px;
+        letter-spacing: 0.5px;
+        transition: all 0.3s ease;
+    }
+
+    .event-card .form-control:focus ~ .form-label,
+    .event-card .form-control:not(:placeholder-shown) ~ .form-label {
+        color: var(--primaryColor);
+    }
+
+    /* Inputs & Selects */
+    .event-card .form-control {
+        height: 50px;
+        border: 2px solid #e8e8e8;
+        border-radius: 10px;
+        padding: 12px 18px;
+        font-size: 14px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        background-color: #f8f9fa;
+    }
+
+    .event-card .form-control:focus {
+        background-color: #fff;
+        border-color: var(--primaryColor);
+        box-shadow: 0 0 0 3px rgba(250, 57, 74, 0.1);
+        transform: translateY(-2px);
+    }
+
+    .event-card .form-control:hover {
+        border-color: var(--primaryColor);
+    }
+
+    .event-card textarea.form-control {
+        height: auto;
+        min-height: 120px;
+        resize: vertical;
+    }
+
+    .event-card textarea.form-control:focus {
+        border-color: var(--primaryColor);
+        box-shadow: 0 0 0 3px rgba(250, 57, 74, 0.1);
+    }
+
+    /* Form group animations */
+    .row.g-4 > [class*='col'] {
+        animation: fadeInUp 0.6s ease;
+    }
+
+    .row.g-4 > [class*='col']:nth-child(1) { animation-delay: 0.35s; }
+    .row.g-4 > [class*='col']:nth-child(2) { animation-delay: 0.40s; }
+    .row.g-4 > [class*='col']:nth-child(3) { animation-delay: 0.45s; }
+    .row.g-4 > [class*='col']:nth-child(4) { animation-delay: 0.50s; }
+    .row.g-4 > [class*='col']:nth-child(5) { animation-delay: 0.55s; }
+    .row.g-4 > [class*='col']:nth-child(6) { animation-delay: 0.60s; }
+    .row.g-4 > [class*='col']:nth-child(7) { animation-delay: 0.65s; }
+    .row.g-4 > [class*='col']:nth-child(8) { animation-delay: 0.70s; }
+
+    /* Button */
+    .default-btn {
+        background: linear-gradient(90deg, var(--primaryColor), #d81e2b) !important;
+        color: #fff !important;
+        border: none !important;
+        padding: 14px 40px !important;
+        border-radius: 10px !important;
+        font-weight: 700 !important;
+        font-size: 15px !important;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        display: inline-block !important;
+        text-decoration: none !important;
+        letter-spacing: 0.5px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .default-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(250, 57, 74, 0.35);
+        letter-spacing: 1px;
+    }
+
+    .default-btn i {
+        margin-left: 8px;
+        transition: transform 0.3s ease;
+    }
+
+    .default-btn:hover i {
+        transform: translateX(5px);
+    }
+
+    /* Animations */
+    @keyframes slideInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes slideInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes expandWidth {
+        from {
+            width: 0;
+        }
+        to {
+            width: 80px;
+        }
+    }
+
+    /* Focus state for accessibility */
+    .event-card .form-control:focus-visible {
+        outline: none;
+    }
+
+    /* Checkbox styling for multiple year selection */
+    .year-checkbox-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-top: 12px;
+    }
+
+    .year-checkbox-group .form-check {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0;
+    }
+
+    .year-checkbox-group .form-check-input {
+        width: 20px;
+        height: 20px;
+        border: 2px solid #e8e8e8;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        appearance: none;
+        background-color: #f8f9fa;
+        margin-right: 8px;
+        flex-shrink: 0;
+    }
+
+    .year-checkbox-group .form-check-input:hover {
+        border-color: var(--primaryColor);
+        transform: scale(1.05);
+    }
+
+    .year-checkbox-group .form-check-input:checked {
+        background-color: var(--primaryColor);
+        border-color: var(--primaryColor);
+        box-shadow: 0 0 0 3px rgba(250, 57, 74, 0.1);
+    }
+
+    .year-checkbox-group .form-check-input:checked::after {
+        content: '✓';
+        color: white;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+    }
+
+    .year-checkbox-group .form-check-label {
+        color: var(--darkColor);
+        font-weight: 500;
+        font-size: 14px;
+        cursor: pointer;
+        user-select: none;
+        margin-bottom: 0;
+        transition: color 0.3s ease;
+    }
+
+    .year-checkbox-group .form-check-input:checked ~ .form-check-label {
+        color: var(--primaryColor);
+    }
+
+    /* Event Success Popup Styles */
+    .event-success-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .event-success-overlay.show {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .event-success-popup {
+        background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+        padding: 50px 60px;
+        border-radius: 20px;
+        text-align: center;
+        box-shadow: 0 20px 60px rgba(0, 30, 67, 0.3);
+        border-left: 6px solid var(--primaryColor);
+        max-width: 500px;
+        width: 90%;
+        animation: successSlideIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        transform-origin: center;
+    }
+
+    @keyframes successSlideIn {
+        from {
+            opacity: 0;
+            transform: scale(0.8) translateY(-30px);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+    }
+
+    .event-success-icon {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, var(--primaryColor), #ff6b7a);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 25px;
+        box-shadow: 0 10px 30px rgba(250, 57, 74, 0.3);
+        animation: successBounce 0.6s ease-out;
+    }
+
+    @keyframes successBounce {
+        0% {
+            transform: scale(0) rotate(-45deg);
+        }
+        50% {
+            transform: scale(1.1);
+        }
+        100% {
+            transform: scale(1) rotate(0deg);
+        }
+    }
+
+    .event-success-icon::before {
+        content: '✓';
+        color: white;
+        font-size: 48px;
+        font-weight: bold;
+        line-height: 1;
+    }
+
+    .event-success-title {
+        font-size: 32px;
+        font-weight: 800;
+        color: var(--darkColor);
+        margin-bottom: 15px;
+        animation: titleFadeIn 0.6s ease 0.2s both;
+    }
+
+    @keyframes titleFadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .event-success-message {
+        font-size: 16px;
+        color: #666;
+        margin-bottom: 25px;
+        line-height: 1.6;
+        animation: messageFadeIn 0.6s ease 0.3s both;
+    }
+
+    @keyframes messageFadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .event-success-details {
+        background: #f0f2f5;
+        padding: 15px 20px;
+        border-radius: 10px;
+        margin-bottom: 25px;
+        font-size: 14px;
+        color: #555;
+        animation: detailsFadeIn 0.6s ease 0.4s both;
+    }
+
+    @keyframes detailsFadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .event-success-btn {
+        background: linear-gradient(90deg, var(--primaryColor), #d81e2b);
+        color: white;
+        border: none;
+        padding: 14px 40px;
+        border-radius: 10px;
+        font-weight: 700;
+        font-size: 15px;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        animation: buttonFadeIn 0.6s ease 0.5s both;
+    }
+
+    @keyframes buttonFadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .event-success-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(250, 57, 74, 0.35);
+        letter-spacing: 0.5px;
+    }
+</style>
+</head>
+
+<body>
+
+ <div class="top-header-area style-2" style="padding: 12px 0;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-12 text-center">
+                    <h3 class="mb-0" style="color: #fff; font-weight: 700; letter-spacing: 1px; line-height: 1.4; font-size: 26px;">
+                        <span style="font-family: 'Great Vibes', cursive; font-size: 36px; font-weight: 600; margin-right: 6px;">
+                            Aspira
+                        </span>
+                        – Central Placement and Information Center
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light py-2" id="navbar">
+        <div class="container">
+            <img src="assets/img/logo_necn.jpg" alt="Logo" height="70" width="160">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a href="faculty-dashboard.html" class="nav-link">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a href="faculty-events.html" class="nav-link active">Add Events</a>
+                </li>
+                <li class="nav-item">
+                    <a href="faculty-applications.html" class="nav-link">Applications</a>
+                </li>
+               
+                <li class="nav-item">
+                    <a href="faculty-materials.html" class="nav-link">Materials</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        My Account
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="faculty-profile.html">My Profile</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="index.html">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- ================= PAGE OVERVIEW ================= -->
+<div class="overview-area pt-60 pb-50" style="margin-top: 30px;">
+    <div class="container">
+        <div class="section-title text-center">
+            <h2>Add Placement / Training Event</h2>
+            <p>Create placement drives, workshops, seminars & guidance sessions</p>
+        </div>
+    </div>
+</div>
+
+<!-- ================= EVENT FORM SECTION ================= -->
+<div class="application-area pt-50 pb-75">
+    <div class="container">
+
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+
+                <div class="event-card">
+
+                    <form class="row g-4" id="eventForm">
+
+                        <div class="col-md-6">
+                            <label class="form-label">Event Title</label>
+                            <input type="text" class="form-control" id="eventTitle" placeholder="e.g., AIML Workshop" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Event Type</label>
+                            <input type="text" class="form-control" id="eventType" placeholder="e.g., Workshop, Seminar, Career Guidance" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Event Date</label>
+                            <input type="date" class="form-control" id="eventDate" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Venue / Mode</label>
+                            <input type="text" class="form-control" id="eventVenue" placeholder="Online / Seminar Hall / Lab" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Eligible Branches</label>
+                            <input type="text" class="form-control" id="eligibleBranches" placeholder="CSE, IT, ECE">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Eligible Year</label>
+                            <div class="year-checkbox-group">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="year1" value="1st Year">
+                                    <label class="form-check-label" for="year1">1st Year</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="year2" value="2nd Year">
+                                    <label class="form-check-label" for="year2">2nd Year</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="year3" value="3rd Year">
+                                    <label class="form-check-label" for="year3">3rd Year</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="yearFinal" value="Final Year">
+                                    <label class="form-check-label" for="yearFinal">Final Year</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label">Event Description</label>
+                            <textarea class="form-control" id="eventDescription" rows="4"
+                                placeholder="Provide event details, eligibility etc."></textarea>
+                        </div>
+
+                        <div class="col-12 text-center mt-3">
+                            <button type="submit" class="default-btn border-0">
+                                Add Event </i>
+                            </button>
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- ================= EVENT SUCCESS POPUP ================= -->
+<div class="event-success-overlay" id="eventSuccessOverlay">
+    <div class="event-success-popup">
+        <div class="event-success-icon"></div>
+        <h2 class="event-success-title">Event Added!</h2>
+        <p class="event-success-message">Your event has been successfully created and is now live.</p>
+        <div class="event-success-details">
+            <p id="eventSuccessDetails"></p>
+        </div>
+        <button class="event-success-btn" onclick="redirectToDashboard()">Go to Dashboard</button>
+    </div>
+</div>
+
+<!-- ================= VIEW EVENTS SECTION ================= -->
+<div class="application-area pt-50 pb-75">
+    <div class="container">
+        <div class="section-title text-center">
+            <h2>Your Posted Events</h2>
+            <p>View and manage all events you have created</p>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-lg-12">
+                <div class="event-card">
+                    <div id="eventsContainer">
+                        <p class="text-muted text-center py-5">Loading your events...</p>
+                    </div>
+                    <!-- Pagination -->
+                    <div id="paginationContainer" style="display: none; margin-top: 30px; text-align: center;">
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item" id="prevBtn" style="display: none;">
+                                    <a class="page-link" href="#" onclick="previousPage(event)">← Previous</a>
+                                </li>
+                                <li class="page-item disabled">
+                                    <span class="page-link" id="pageInfo">Page 1</span>
+                                </li>
+                                <li class="page-item" id="nextBtn" style="display: none;">
+                                    <a class="page-link" href="#" onclick="nextPage(event)">Next →</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ================= FOOTER ================= -->
+<div class="footer-area pt-100 pb-75">
+    <div class="container">
+        <div class="row align-items-start">
+
+            <!-- About Aspira -->
+            <div class="col-lg-4 col-sm-6">
+                <div class="single-footer-widget about">
+                    <h3>About Aspira</h3>
+                    <p>Aspira is the Placement & Career Cell of Narayana Engineering College, Nellore. We provide centralized placement information, career guidance, skill development programs, and workshops to prepare students for top recruiters and industry opportunities.</p>
+                    <h6>Follow Aspira:</h6>
+                    <ul class="list-unstyled ps-0 mb-0 social-link">
+                        <li class="d-inline-block">
+                            <a class="text-decoration-none" href="https://www.facebook.com/" target="_blank">
+                                <i class="flaticon-facebook-app-symbol"></i>
+                            </a>
+                        </li>
+                        <li class="d-inline-block">
+                            <a class="text-decoration-none" href="https://www.pinterest.com/" target="_blank">
+                                <i class="flaticon-pinterest"></i>
+                            </a>
+                        </li>
+                        <li class="d-inline-block">
+                            <a class="text-decoration-none" href="https://www.instagram.com/" target="_blank">
+                                <i class="flaticon-instagram"></i>
+                            </a>
+                        </li>
+                        <li class="d-inline-block">
+                            <a class="text-decoration-none" href="https://twitter.com/" target="_blank">
+                                <i class="flaticon-twitter"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="col-lg-4 col-sm-6">
+                <div class="single-footer-widget quick">
+                    <h3>Quick Links</h3>
+                    <ul class="list-unstyled ps-0 mb-0">
+                        <li><a class="text-decoration-none" href="placement-overview.html">Placement Info</a></li>
+                        <li><a class="text-decoration-none" href="career-guidance.html">Career Guidance</a></li>
+                        <li><a class="text-decoration-none" href="events.html">Workshops & Events</a></li>
+                        <li><a class="text-decoration-none" href="contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Contact Placement Cell -->
+            <div class="col-lg-4 col-sm-6">
+                <div class="single-footer-widget contact">
+                    <h3>Contact Placement Cell</h3>
+                    <ul class="list-unstyled ps-0 mb-0">
+                        <li>
+                            <a class="text-decoration-none" href="tel:+919999999999">
+                                +91 99999 99999
+                                <i class="ri-phone-line"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="text-decoration-none" href="mailto:aspira@necn.ac.in">
+                                aspira@necn.ac.in
+                                <i class="ri-message-line"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <i class="flaticon-placeholder"></i>
+                            <p>Narayana Engineering College, Nellore<br>NH-16, Muthukur Road, Nellore, Andhra Pradesh 524003</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="copyright-area">
+    <div class="container">
+        <div class="row align-items-center">
+            
+            <!-- College Logo -->
+            <div class="col-lg-2 col-sm-12 d-flex align-items-center">
+                <div class="copyright-logo">
+                    <img src="assets/img/favicon.png" alt="nec-placement-cell-logo" width="70" height="50">
+                    <p class="mb-0">NEC Placement Cell</p>
+                </div>
+            </div>
+
+            <!-- Copyright Text -->
+            <div class="col-lg-5 col-sm-6">
+                <div class="copyright-title text-lg-end text-sm-start">
+                    <p class="mb-0">© <strong>NEC Placement Cell</strong> Placement & Career Cell. All Rights Reserved.</p>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="col-lg-5 col-sm-6">
+                <div class="copyright-list text-lg-end text-sm-start">
+                    <ul class="list-unstyled ps-0 mb-0">
+                        <li class="d-inline-block me-3">
+                            <a class="text-decoration-none" href="faculty.html">P&T Team</a>
+                        </li>
+                        <li class="d-inline-block me-3">
+                            <a class="text-decoration-none" href="placement-overview.html">Placements Info</a>
+                        </li>
+                        <li class="d-inline-block">
+                            <a class="text-decoration-none" href="career-guidance.html">About NEC Placement Cell</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- JS -->
+<script>
+    // Sticky navbar functionality
+    window.addEventListener('scroll', function() {
+        const navbar = document.getElementById('navbar');
+        const topHeaderHeight = document.querySelector('.top-header-area').offsetHeight;
+
+        if (window.scrollY >= topHeaderHeight) {
+            navbar.classList.add('sticky');
+            document.body.classList.add('navbar-sticky');
+        } else {
+            navbar.classList.remove('sticky');
+            document.body.classList.remove('navbar-sticky');
+        }
+    });
+
+    // Event form submission handler
+    document.getElementById('eventForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        // Get faculty_id from localStorage (set during login)
+        const faculty_id = localStorage.getItem('faculty_id');
+
+        if (!faculty_id) {
+            alert('Please login first');
+            window.location.href = 'login-faculty.html';
+            return;
+        }
+
+        // Get form values
+        const eventTitle = document.getElementById('eventTitle').value;
+        const eventType = document.getElementById('eventType').value;
+        const eventDate = document.getElementById('eventDate').value;
+        const eventVenue = document.getElementById('eventVenue').value;
+        const eligibleBranches = document.getElementById('eligibleBranches').value;
+        const eventDescription = document.getElementById('eventDescription').value;
+
+        // Get selected years
+        const yearCheckboxes = document.querySelectorAll('.year-checkbox-group input[type="checkbox"]:checked');
+        const eligible_years = Array.from(yearCheckboxes).map(cb => cb.value);
+
+        // Validate required fields
+        if (!eventTitle || !eventType || !eventDate || !eventVenue) {
+            alert('Please fill in all required fields');
+            return;
+        }
+
+        try {
+            const response = await fetch('http://localhost:3000/api/faculty/add-event', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    faculty_id: faculty_id,
+                    event_name: eventTitle,
+                    event_type: eventType,
+                    event_date: eventDate,
+                    location: eventVenue,
+                    eligible_branches: eligibleBranches,
+                    eligible_years: eligible_years,
+                    description: eventDescription
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                // Show success popup with event details
+                const eventSuccessDetails = `Event: <strong>${eventTitle}</strong> | Type: <strong>${eventType}</strong> | Date: <strong>${eventDate}</strong>`;
+                document.getElementById('eventSuccessDetails').innerHTML = eventSuccessDetails;
+                
+                const overlay = document.getElementById('eventSuccessOverlay');
+                overlay.classList.add('show');
+                
+                // Reset form
+                document.getElementById('eventForm').reset();
+                
+                // Redirect after 3 seconds
+                setTimeout(() => {
+                    window.location.href = 'faculty-dashboard.html';
+                }, 3000);
+            } else {
+                alert('Error: ' + data.message);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Server error. Please try again.');
+        }
+    });
+
+    // Redirect function for button
+    function redirectToDashboard() {
+        window.location.href = 'faculty-dashboard.html';
+    }
+
+    // Pagination variables
+    let currentPage = 1;
+    const eventsPerPage = 5;
+    let allEvents = [];
+
+    // Load faculty events on page load
+    async function loadFacultyEvents() {
+        try {
+            const faculty_id = localStorage.getItem('faculty_id');
+            console.log('Faculty ID from localStorage:', faculty_id);
+            
+            if (!faculty_id) {
+                document.getElementById('eventsContainer').innerHTML = '<p class="text-muted text-center py-5">Please login to view your events</p>';
+                return;
+            }
+
+            console.log('Fetching events for faculty_id:', faculty_id);
+            const response = await fetch(`/api/faculty/events/${faculty_id}`);
+            const data = await response.json();
+            
+            console.log('API Response:', data);
+            console.log('data.success:', data.success);
+            console.log('data.events:', data.events);
+            console.log('data.events length:', data.events ? data.events.length : 'undefined');
+
+            if (data.success && data.events && data.events.length > 0) {
+                console.log('Events found:', data.events.length);
+                // Sort events by date (latest first)
+                allEvents = data.events.sort((a, b) => {
+                    const dateA = new Date(a.event_date || a.date || a.created_at || 0);
+                    const dateB = new Date(b.event_date || b.date || b.created_at || 0);
+                    return dateB - dateA;
+                });
+                
+                currentPage = 1;
+                displayEventsPage();
+            } else {
+                console.log('No events or failed response');
+                document.getElementById('eventsContainer').innerHTML = '<p class="text-muted text-center py-5">No events posted yet. Create your first event above!</p>';
+                document.getElementById('paginationContainer').style.display = 'none';
+            }
+        } catch (error) {
+            console.error('Error loading events:', error);
+            document.getElementById('eventsContainer').innerHTML = '<p class="text-muted text-center py-5">Error loading events. Please try again.</p>';
+        }
+    }
+
+    function displayEventsPage() {
+        const container = document.getElementById('eventsContainer');
+        const startIndex = (currentPage - 1) * eventsPerPage;
+        const endIndex = startIndex + eventsPerPage;
+        const pageEvents = allEvents.slice(startIndex, endIndex);
+
+        let html = `
+            <style>
+                .event-item {
+                    background: white;
+                    border-left: 5px solid #001e43;
+                    padding: 20px;
+                    margin-bottom: 15px;
+                    border-radius: 8px;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: flex-start;
+                    transition: all 0.3s ease;
+                    box-shadow: 0 2px 8px rgba(0, 30, 67, 0.08);
+                }
+
+                .event-item:hover {
+                    box-shadow: 0 6px 16px rgba(0, 30, 67, 0.15);
+                    transform: translateY(-2px);
+                }
+
+                .event-details h4 {
+                    color: #001e43;
+                    font-weight: 700;
+                    margin: 0 0 10px 0;
+                    font-size: 18px;
+                }
+
+                .event-detail-row {
+                    display: flex;
+                    gap: 30px;
+                    margin-bottom: 8px;
+                    font-size: 14px;
+                    flex-wrap: wrap;
+                }
+
+                .event-detail-item {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                }
+
+                .event-detail-label {
+                    color: #666;
+                    font-weight: 600;
+                }
+
+                .event-detail-value {
+                    color: #333;
+                }
+
+                .event-actions {
+                    display: flex;
+                    gap: 10px;
+                }
+
+                .btn-delete {
+                    background: linear-gradient(135deg, #ef4444, #dc2626);
+                    color: white;
+                    border: none;
+                    padding: 8px 16px;
+                    border-radius: 6px;
+                    cursor: pointer;
+                    font-weight: 600;
+                    font-size: 12px;
+                    transition: all 0.3s ease;
+                }
+
+                .btn-delete:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 6px 12px rgba(239, 68, 68, 0.3);
+                }
+
+                .btn-delete:active {
+                    transform: translateY(0);
+                }
+
+                .pagination {
+                    margin: 0;
+                }
+
+                .page-link {
+                    color: #001e43;
+                    border: 1px solid #dee2e6;
+                    border-radius: 6px;
+                    padding: 8px 12px;
+                    margin: 0 4px;
+                }
+
+                .page-link:hover {
+                    color: white;
+                    background-color: #001e43;
+                    border-color: #001e43;
+                }
+            </style>
+
+            <div style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+                <h5 style="color: #001e43; font-weight: 700; margin-bottom: 0;">
+                    Total Events: <span style="color: var(--primaryColor);">${allEvents.length}</span>
+                </h5>
+                <span style="color: #666; font-size: 14px;">
+                    Showing ${startIndex + 1}-${Math.min(endIndex, allEvents.length)} of ${allEvents.length}
+                </span>
+            </div>
+        `;
+
+        pageEvents.forEach(event => {
+            html += `
+                <div class="event-item">
+                    <div class="event-details" style="flex: 1;">
+                        <h4>${event.event_name || event.title || 'Untitled Event'}</h4>
+                        <div class="event-detail-row">
+                            <div class="event-detail-item">
+                                <span class="event-detail-label">📅 Date:</span>
+                                <span class="event-detail-value">${event.event_date || event.date ? new Date(event.event_date || event.date).toLocaleDateString() : 'N/A'}</span>
+                            </div>
+                            <div class="event-detail-item">
+                                <span class="event-detail-label">🎯 Type:</span>
+                                <span class="event-detail-value">${event.event_type || event.type || '-'}</span>
+                            </div>
+                            <div class="event-detail-item">
+                                <span class="event-detail-label">📍 Location:</span>
+                                <span class="event-detail-value">${event.location || event.venue || '-'}</span>
+                            </div>
+                        </div>
+                        ${event.description || event.eligible_branches || event.eligible_years ? `
+                        <div class="event-detail-row">
+                            ${event.eligible_branches ? `
+                            <div class="event-detail-item">
+                                <span class="event-detail-label">🏢 Branches:</span>
+                                <span class="event-detail-value">${event.eligible_branches}</span>
+                            </div>
+                            ` : ''}
+                            ${event.eligible_years ? `
+                            <div class="event-detail-item">
+                                <span class="event-detail-label">📚 Years:</span>
+                                <span class="event-detail-value">${event.eligible_years}</span>
+                            </div>
+                            ` : ''}
+                        </div>
+                        ` : ''}
+                    </div>
+                    <div class="event-actions">
+                        <button class="btn-delete" onclick="deleteEvent(${event.id})">
+                            🗑️ Delete
+                        </button>
+                    </div>
+                </div>
+            `;
+        });
+
+        container.innerHTML = html;
+
+        // Update pagination
+        const totalPages = Math.ceil(allEvents.length / eventsPerPage);
+        const paginationContainer = document.getElementById('paginationContainer');
+        const pageInfo = document.getElementById('pageInfo');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        if (totalPages > 1) {
+            paginationContainer.style.display = 'block';
+            pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+            prevBtn.style.display = currentPage > 1 ? 'block' : 'none';
+            nextBtn.style.display = currentPage < totalPages ? 'block' : 'none';
+        } else {
+            paginationContainer.style.display = 'none';
+        }
+    }
+
+    function nextPage(e) {
+        e.preventDefault();
+        const totalPages = Math.ceil(allEvents.length / eventsPerPage);
+        if (currentPage < totalPages) {
+            currentPage++;
+            displayEventsPage();
+            window.scrollTo(0, document.getElementById('eventsContainer').offsetTop - 100);
+        }
+    }
+
+    function previousPage(e) {
+        e.preventDefault();
+        if (currentPage > 1) {
+            currentPage--;
+            displayEventsPage();
+            window.scrollTo(0, document.getElementById('eventsContainer').offsetTop - 100);
+        }
+    }
+
+    // Show custom modal
+    function showModal(title, message, type = 'info', onConfirm = null) {
+        const modal = document.getElementById('customModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalMessage = document.getElementById('modalMessage');
+        const modalOverlay = document.getElementById('modalOverlay');
+        const confirmBtn = document.getElementById('confirmBtn');
+        const cancelBtn = document.getElementById('cancelBtn');
+        
+        modalTitle.textContent = title;
+        modalMessage.textContent = message;
+        
+        // Set modal type styling
+        modal.className = 'custom-modal ' + type;
+        
+        modalOverlay.style.display = 'block';
+        modal.style.display = 'flex';
+        
+        // Remove previous event listeners
+        const newConfirmBtn = confirmBtn.cloneNode(true);
+        const newCancelBtn = cancelBtn.cloneNode(true);
+        confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
+        cancelBtn.parentNode.replaceChild(newCancelBtn, cancelBtn);
+        
+        document.getElementById('confirmBtn').addEventListener('click', () => {
+            hideModal();
+            if (onConfirm) onConfirm();
+        });
+        
+        document.getElementById('cancelBtn').addEventListener('click', hideModal);
+        modalOverlay.addEventListener('click', hideModal);
+    }
+
+    function hideModal() {
+        const modal = document.getElementById('customModal');
+        const modalOverlay = document.getElementById('modalOverlay');
+        modal.style.display = 'none';
+        modalOverlay.style.display = 'none';
+    }
+
+    // Delete event function
+    async function deleteEvent(eventId) {
+        showModal('Confirm Delete', 'Are you sure you want to delete this event? This action cannot be undone.', 'warning', async () => {
+            try {
+                const faculty_id = localStorage.getItem('faculty_id');
+                const response = await fetch(`/api/faculty/events/${eventId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ faculty_id: faculty_id })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    showModal('Success', 'Event deleted successfully!', 'success', () => {
+                        loadFacultyEvents(); // Reload the events list
+                    });
+                } else {
+                    showModal('Error', data.message || 'Could not delete event', 'error');
+                }
+            } catch (error) {
+                console.error('Error deleting event:', error);
+                showModal('Error', 'Error deleting event. Please try again.', 'error');
+            }
+        });
+    }
+
+    // Load events when page loads
+    document.addEventListener('DOMContentLoaded', loadFacultyEvents);
+
+</script>
+
+<!-- Custom Modal Popup -->
+<div id="modalOverlay" class="modal-overlay"></div>
+<div id="customModal" class="custom-modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="modalTitle">Modal Title</h2>
+            <button class="modal-close" onclick="hideModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p id="modalMessage">Modal message goes here</p>
+        </div>
+        <div class="modal-footer">
+            <button id="cancelBtn" class="modal-btn cancel-btn">Cancel</button>
+            <button id="confirmBtn" class="modal-btn confirm-btn">Confirm</button>
+        </div>
+    </div>
+</div>
+
+<style>
+    .modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+        animation: fadeIn 0.3s ease;
+    }
+
+    .custom-modal {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+        animation: slideDown 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .modal-content {
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        min-width: 400px;
+        max-width: 500px;
+        overflow: hidden;
+        animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 25px;
+        border-bottom: 1px solid #eee;
+        background: linear-gradient(135deg, #f8f9fa 0%, #f0f2f5 100%);
+    }
+
+    .modal-header h2 {
+        margin: 0;
+        font-size: 22px;
+        font-weight: 700;
+        color: #172b4d;
+    }
+
+    .modal-close {
+        background: none;
+        border: none;
+        font-size: 28px;
+        color: #999;
+        cursor: pointer;
+        padding: 0;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+    }
+
+    .modal-close:hover {
+        background: #f0f0f0;
+        color: #333;
+    }
+
+    .modal-body {
+        padding: 25px;
+        color: #666;
+        font-size: 15px;
+        line-height: 1.6;
+    }
+
+    .modal-footer {
+        display: flex;
+        gap: 12px;
+        padding: 20px 25px;
+        border-top: 1px solid #eee;
+        justify-content: flex-end;
+        background: #f9f9f9;
+    }
+
+    .modal-btn {
+        padding: 12px 30px;
+        border: none;
+        border-radius: 8px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        min-width: 110px;
+    }
+
+    .cancel-btn {
+        background: #e9ecef;
+        color: #495057;
+    }
+
+    .cancel-btn:hover {
+        background: #dee2e6;
+        transform: translateY(-2px);
+    }
+
+    .confirm-btn {
+        background: linear-gradient(135deg, #FA394A 0%, #E63946 100%);
+        color: white;
+    }
+
+    .confirm-btn:hover {
+        box-shadow: 0 8px 20px rgba(250, 57, 74, 0.3);
+        transform: translateY(-2px);
+    }
+
+    /* Modal type styling */
+    .custom-modal.success .modal-header {
+        background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+        border-bottom-color: #c3e6cb;
+    }
+
+    .custom-modal.success .modal-header h2 {
+        color: #155724;
+    }
+
+    .custom-modal.success .confirm-btn {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    }
+
+    .custom-modal.success .confirm-btn:hover {
+        box-shadow: 0 8px 20px rgba(40, 167, 69, 0.3);
+    }
+
+    .custom-modal.error .modal-header {
+        background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+        border-bottom-color: #f5c6cb;
+    }
+
+    .custom-modal.error .modal-header h2 {
+        color: #721c24;
+    }
+
+    .custom-modal.error .confirm-btn {
+        background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+    }
+
+    .custom-modal.error .confirm-btn:hover {
+        box-shadow: 0 8px 20px rgba(220, 53, 69, 0.3);
+    }
+
+    .custom-modal.warning .modal-header {
+        background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+        border-bottom-color: #ffeaa7;
+    }
+
+    .custom-modal.warning .modal-header h2 {
+        color: #856404;
+    }
+
+    .custom-modal.warning .confirm-btn {
+        background: linear-gradient(135deg, #ffc107 0%, #ffb300 100%);
+        color: #333;
+    }
+
+    .custom-modal.warning .confirm-btn:hover {
+        box-shadow: 0 8px 20px rgba(255, 193, 7, 0.3);
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translate(-50%, -60%);
+        }
+        to {
+            opacity: 1;
+            transform: translate(-50%, -50%);
+        }
+    }
+
+    @keyframes popIn {
+        0% {
+            transform: scale(0.7);
+            opacity: 0;
+        }
+        50% {
+            transform: scale(1.05);
+        }
+        100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .modal-content {
+            min-width: 90vw;
+            max-width: 90vw;
+        }
+
+        .modal-header h2 {
+            font-size: 18px;
+        }
+
+        .modal-footer {
+            flex-direction: column;
+        }
+
+        .modal-btn {
+            width: 100%;
+        }
+    }
+</style>
+
+<script src="assets/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/scrollCue.min.js"></script>
+<script src="assets/js/custom.js"></script>
+
+</body>
+</html>

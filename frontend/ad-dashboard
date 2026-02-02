@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard - Aspira</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
+<!-- CSS Files -->
+<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="assets/css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+    /* Header with gradient deep blue */
+    .header-gradient {
+        background: linear-gradient(90deg, #001f4d, #003366);
+        padding: 20px 0;
+        text-align: center;
+        color: white;
+    }
+    .header-gradient span {
+        font-family: 'Great Vibes', cursive;
+        font-size: 36px;
+        font-weight: 600;
+    }
+
+    /* Navbar below header */
+    .dashboard-nav {
+        background-color: #f8f9fa;
+        padding: 10px 0;
+        text-align: center;
+    }
+    .dashboard-nav a {
+        margin: 0 15px;
+        font-weight: 500;
+        color: #007bff;
+        text-decoration: none;
+        transition: color 0.3s;
+    }
+    .dashboard-nav a:hover {
+        color: #0056b3;
+    }
+
+    /* Buzz cards */
+    .buzz-cards {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin-top: 30px;
+        justify-content: center;
+    }
+    .buzz-card {
+        flex: 1 1 250px;
+        background-color: #f1f7ff;
+        border-radius: 10px;
+        padding: 20px;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .buzz-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+    .buzz-card h3 { font-size: 28px; margin-bottom: 10px; }
+    .buzz-card p { font-size: 16px; }
+
+    /* Charts section */
+    .charts-container {
+        margin-top: 50px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+    }
+    .chart-card {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .chart-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header-gradient">
+    <span>Aspira</span> – Central Placement & Information Center
+</div>
+
+<!-- Navbar -->
+<!-- <div class="dashboard-nav">
+    <a href="#" onclick="navigateTo('students')">Students</a>
+    <a href="#" onclick="navigateTo('faculty')">Faculty</a>
+    <a href="#" onclick="navigateTo('opportunities')">Opportunities</a>
+    <a href="#" onclick="navigateTo('reports')">Reports</a>
+</div> -->
+<!-- Admin sub-navigation -->
+<div class="admin-nav mt-2">
+    <a href="admin-students.html" class="btn btn-outline-primary me-2">Students</a>
+    <a href="admin-faculty.html" class="btn btn-outline-primary me-2">Faculty</a>
+    <a href="admin-opportunities.html" class="btn btn-outline-primary me-2">Opportunities</a>
+    <a href="admin-reports.html" class="btn btn-outline-primary">Reports</a>
+</div>
+
+
+<!-- Buzz Cards -->
+<div class="container buzz-cards">
+    <div class="buzz-card" onclick="navigateTo('students')">
+        <h3 id="totalStudents">0</h3>
+        <p>Total Students</p>
+    </div>
+    <div class="buzz-card" onclick="navigateTo('faculty')">
+        <h3 id="totalFaculty">0</h3>
+        <p>Total Faculty</p>
+    </div>
+    <div class="buzz-card" onclick="navigateTo('opportunities')">
+        <h3 id="activeOpportunities">0</h3>
+        <p>Active Opportunities</p>
+    </div>
+    <div class="buzz-card" onclick="navigateTo('reports')">
+        <h3 id="placementsCount">0</h3>
+        <p>Total Placements</p>
+    </div>
+</div>
+
+<!-- Charts -->
+<div class="container charts-container">
+    <div class="chart-card" onclick="navigateTo('students')">
+        <canvas id="studentsChart"></canvas>
+        <p style="text-align:center;margin-top:10px;">Students per Branch</p>
+    </div>
+    <div class="chart-card" onclick="navigateTo('faculty')">
+        <canvas id="facultyChart"></canvas>
+        <p style="text-align:center;margin-top:10px;">Faculty per Department</p>
+    </div>
+    <div class="chart-card" onclick="navigateTo('opportunities')">
+        <canvas id="opportunitiesChart"></canvas>
+        <p style="text-align:center;margin-top:10px;">Opportunities Posted</p>
+    </div>
+</div>
+
+<script src="assets/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    function navigateTo(section) {
+        alert('Redirecting to ' + section + ' page');
+        // Replace alert with actual page navigation
+        // window.location.href = section + '-page.html';
+    }
+
+    // Example stats
+    document.getElementById('totalStudents').innerText = 120;
+    document.getElementById('totalFaculty').innerText = 15;
+    document.getElementById('activeOpportunities').innerText = 25;
+    document.getElementById('placementsCount').innerText = 78;
+
+    // Charts
+    const studentsChart = new Chart(document.getElementById('studentsChart'), {
+        type: 'bar',
+        data: {
+            labels: ['CSE', 'ECE', 'ME', 'CE', 'EE'],
+            datasets: [{
+                label: 'Number of Students',
+                data: [30, 25, 20, 25, 20],
+                backgroundColor: '#007bff'
+            }]
+        },
+        options: {
+            responsive:true,
+            plugins: { legend:{ display:false } },
+            scales:{ y:{ beginAtZero:true } }
+        }
+    });
+
+    const facultyChart = new Chart(document.getElementById('facultyChart'), {
+        type: 'pie',
+        data: {
+            labels: ['CSE', 'ECE', 'ME', 'CE', 'EE'],
+            datasets: [{
+                label: 'Faculty Count',
+                data: [5, 3, 2, 3, 2],
+                backgroundColor: ['#007bff','#00aaff','#0056b3','#003366','#3399ff']
+            }]
+        },
+        options: { responsive:true }
+    });
+
+    const opportunitiesChart = new Chart(document.getElementById('opportunitiesChart'), {
+        type: 'doughnut',
+        data: {
+            labels: ['Internship', 'Job', 'Workshop'],
+            datasets: [{
+                label: 'Opportunities',
+                data: [15, 8, 2],
+                backgroundColor: ['#007bff','#3399ff','#00aaff']
+            }]
+        },
+        options: { responsive:true }
+    });
+</script>
+</body>
+</html>

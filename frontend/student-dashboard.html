@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aspira - Student Dashboard</title>
+
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+  <link rel="stylesheet" href="assets/css/scrollCue.css">
+  <link rel="stylesheet" href="assets/css/remixicon.css">
+  <link rel="stylesheet" href="assets/css/flaticon.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+
+  <style>
+    :root {
+      --primaryColor: #FA394A;
+      --secenderyColor: #FFC333;
+      --darkColor: rgb(0, 30, 67);
+    }
+
+    body {
+      padding-top: 0;
+      background: linear-gradient(135deg, #f8f9fa 0%, #f0f2f5 100%);
+      overflow-x: hidden;
+    }
+
+    .navbar .dropdown-menu .dropdown-item:hover { 
+      color: red !important; 
+    }
+
+    html { 
+      overflow-x: hidden; 
+    }
+
+    /* Welcome Banner Section */
+    .student-welcome-banner {
+      background: linear-gradient(135deg, var(--darkColor) 0%, #1a3a52 100%);
+      padding: 60px 0;
+      color: white;
+      position: relative;
+      overflow: hidden;
+      animation: bannerSlideIn 0.8s ease-out;
+    }
+
+    .student-welcome-banner::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 200%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      animation: shimmer 3s infinite;
+    }
+
+    .student-welcome-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .student-welcome-title {
+      font-size: 36px;
+      font-weight: 800;
+      margin-bottom: 10px;
+      animation: titleFadeIn 0.8s ease-out 0.2s backwards;
+      color: #ffffff;
+    }
+
+    .student-welcome-subtitle {
+      font-size: 18px;
+      opacity: 0.9;
+      animation: subtitleFadeIn 0.8s ease-out 0.4s backwards;
+      color: #ffffff;
+    }
+
+    @keyframes bannerSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes titleFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes subtitleFadeIn {
+      from {
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes shimmer {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+
+    /* Cards Container */
+    .dashboard-cards-container {
+      padding: 50px 0;
+      background: transparent;
+    }
+
+    .dashboard-section-title {
+      text-align: center;
+      margin-bottom: 50px;
+      animation: fadeInDown 0.8s ease-out;
+    }
+
+    .dashboard-section-title h2 {
+      color: var(--darkColor);
+      font-weight: 800;
+      font-size: 36px;
+      position: relative;
+      padding-bottom: 20px;
+      margin-bottom: 15px;
+    }
+
+    .dashboard-section-title h2::after {
+      content: '';
+      position: absolute;
+      width: 100px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primaryColor), var(--secenderyColor));
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 2px;
+    }
+
+    /* Single Card */
+    .dashboard-card {
+      background: #fff;
+      padding: 35px;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+      border: 2px solid transparent;
+      position: relative;
+      overflow: hidden;
+      animation: cardFadeInUp 0.6s ease-out backwards;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .dashboard-card .card-content {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .dashboard-card .card-body-content {
+      flex-grow: 1;
+    }
+
+    .dashboard-card .card-footer-btn {
+      margin-top: auto;
+      padding-top: 20px;
+    }
+
+    .dashboard-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primaryColor), var(--secenderyColor));
+      transition: left 0.4s ease;
+    }
+
+    .dashboard-card:hover::before {
+      left: 0;
+    }
+
+    .dashboard-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 40px rgba(250, 57, 74, 0.15);
+      border-color: rgba(250, 57, 74, 0.2);
+    }
+
+    .dashboard-card:nth-child(1) { animation-delay: 0.1s; }
+    .dashboard-card:nth-child(2) { animation-delay: 0.2s; }
+    .dashboard-card:nth-child(3) { animation-delay: 0.3s; }
+
+    @keyframes cardFadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Full Width Card */
+    .dashboard-card-full {
+      background: #fff;
+      padding: 35px;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      width: 100%;
+      cursor: pointer;
+      border: 2px solid transparent;
+      position: relative;
+      overflow: hidden;
+      animation: cardFadeInUp 0.6s ease-out 0.4s backwards;
+    }
+
+    .dashboard-card-full::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primaryColor), var(--secenderyColor));
+      transition: left 0.4s ease;
+    }
+
+    .dashboard-card-full:hover::before {
+      left: 0;
+    }
+
+    .dashboard-card-full:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 40px rgba(250, 57, 74, 0.15);
+      border-color: rgba(250, 57, 74, 0.2);
+    }
+
+    .dashboard-card h4 {
+      color: var(--darkColor);
+      font-weight: 700;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .dashboard-card h4 i {
+      color: var(--primaryColor);
+      font-size: 24px;
+    }
+
+    .status-listing { 
+      list-style: none; 
+      padding: 0; 
+    }
+
+    .status-listing li {
+      padding: 10px 0;
+      border-bottom: 1px dashed #eee;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .status-badge { 
+      font-size: 0.85rem; 
+      padding: 4px 8px; 
+      border-radius: 5px; 
+    }
+    
+    .event-box {
+      border: 2px solid #f0f0f0;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+      border-left: 4px solid #FA394A;
+      transition: all 0.3s ease;
+      animation: eventSlideIn 0.5s ease-out backwards;
+    }
+    
+    .event-box:hover {
+      box-shadow: 0 6px 20px rgba(250, 57, 74, 0.15);
+      transform: translateY(-2px);
+      border-left-color: #FFC333;
+    }
+    
+    .event-box p { margin: 6px 0; }
+    .event-box .event-title { color: #FA394A; font-weight: 700; }
+    .event-box .event-meta { color: #666; font-size: 0.9rem; }
+    
+    .event-box:nth-child(1) { animation-delay: 0.1s; }
+    .event-box:nth-child(2) { animation-delay: 0.2s; }
+    .event-box:nth-child(3) { animation-delay: 0.3s; }
+    
+    @keyframes eventSlideIn {
+      from {
+        opacity: 0;
+        transform: translateX(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    .empty-events {
+      text-align: center;
+      padding: 20px;
+      color: #999;
+      font-style: italic;
+    }
+
+    .assigned-to-me-card {
+      background: linear-gradient(135deg, var(--secenderyColor) 0%, #ffb700 100%);
+      border-left: 5px solid var(--primaryColor);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      animation: cardFadeInUp 0.6s ease-out 0.5s backwards;
+      padding: 35px;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(255, 195, 51, 0.2);
+      position: relative;
+      overflow: hidden;
+      color: white;
+    }
+
+    .assigned-to-me-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primaryColor), var(--darkColor));
+      transition: left 0.4s ease;
+    }
+
+    .assigned-to-me-card:hover::before {
+      left: 0;
+    }
+
+    .assigned-to-me-card:hover {
+      box-shadow: 0 15px 40px rgba(255, 195, 51, 0.35) !important;
+      transform: translateY(-10px);
+    }
+
+    .assigned-to-me-card h4 {
+      color: var(--darkColor);
+      font-weight: 700;
+      font-size: 1.4rem;
+    }
+
+    .assigned-to-me-card p {
+      color: rgba(0, 30, 67, 0.8);
+      font-size: 15px;
+    }
+
+    .assigned-to-me-card .icon-placeholder {
+      font-size: 80px;
+      opacity: 0.1;
+      transition: all 0.3s ease;
+    }
+
+    .assigned-to-me-card:hover .icon-placeholder {
+      opacity: 0.15;
+      transform: scale(1.1);
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="top-header-area style-2" style="padding: 12px 0;">
+    <div class="container text-center">
+      <h3 class="mb-0" style="color: #fff; font-weight: 700;">
+        <span style="font-family: 'Great Vibes', cursive; font-size: 36px;">Aspira</span>
+        – Central Placement and Information Center
+      </h3>
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light py-2">
+    <div class="container">
+      <img src="assets/img/logo_necn.jpg" alt="Logo" height="70" width="160">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a href="student-dashboard.html" class="nav-link active">Dashboard</a></li>
+          <li class="nav-item"><a href="student-announcements.html" class="nav-link">Announcements</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Events</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="student-events-seminars.html">Seminars</a></li>
+              <li><a class="dropdown-item" href="student-events-workshops.html">Workshops</a></li>
+              <li><a class="dropdown-item" href="student-events-hackathons.html">Hackathons</a></li>
+              <li><a class="dropdown-item" href="student-events-career.html">Career Guidance</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a href="student-resources.html" class="nav-link">Resources</a></li>
+          <li class="nav-item"><a href="student-internships.html" class="nav-link">Internships</a></li>
+          <li class="nav-item"><a href="student-jobs.html" class="nav-link">Job Opportunities</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">My Account</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="student-profile.html">Profile</a></li>
+              <li><a class="dropdown-item" href="#" id="logoutBtn">Logout</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Welcome Banner -->
+  <div class="student-welcome-banner">
+    <div class="container">
+      <div class="student-welcome-content">
+        <h1 class="student-welcome-title">Welcome Back, <span id="studentNameBanner">Student</span>!</h1>
+        <p class="student-welcome-subtitle">Your Personalized Placement Hub - Explore Opportunities & Track Your Progress</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dashboard Content -->
+  <div class="dashboard-cards-container">
+    <div class="container">
+      <!-- Section Title -->
+      <div class="dashboard-section-title">
+        <h2>Dashboard Overview</h2>
+      </div>
+
+      <!-- Cards Row 1: Applications & Events -->
+      <div class="row mb-4">
+        <div class="col-lg-6 mb-4">
+          <div class="dashboard-card">
+            <h4 class="mb-3"><i class="ri-briefcase-line"></i> Application Status Overview</h4>
+            <div class="card-body-content">
+              <ul class="status-listing" id="applicationList">
+                <li>Loading applications...</li>
+              </ul>
+            </div>
+            <div class="card-footer-btn text-center">
+              <a href="student-jobs.html" class="default-btn border-0 btn-sm">View All Applications <i class="flaticon-right-arrow"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Events -->
+        <div class="col-lg-6 mb-4">
+          <div class="dashboard-card">
+            <h4 class="mb-3"><i class="ri-calendar-event-line"></i> Your Upcoming Events</h4>
+            <div class="card-body-content">
+              <div id="upcomingEventsContainer">
+                <div class="empty-events">Loading events...</div>
+              </div>
+            </div>
+            <div class="card-footer-btn text-center">
+              <a href="student-events-workshops.html" class="default-btn border-0 btn-sm">View All Events <i class="flaticon-right-arrow"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Assigned to Me Section -->
+      <div class="row mt-4">
+        <div class="col-lg-12 mb-4">
+          <div class="dashboard-card-full assigned-to-me-card" onclick="window.location.href='student-assigned-opportunities.html'" style="cursor: pointer;">
+            <div class="d-flex justify-content-between align-items-start">
+              <div class="flex-grow-1">
+                <h4 class="mb-2"><i class="ri-star-smile-line me-2"></i> Opportunities Assigned to You</h4>
+                <p class="mb-3">View internships and placements specifically assigned to you by the placement cell. Click to explore your personalized opportunities.</p>
+                <div class="mt-3">
+                  <button class="default-btn border-0 btn-sm" style="cursor: pointer; pointer-events: none;">
+                    View Your Assignments <i class="flaticon-right-arrow"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="icon-placeholder ms-3">
+                <i class="ri-briefcase-4-line"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+
+  <div class="footer-area pt-100 pb-75">
+        <div class="container">
+            <div class="row align-items-start">
+
+                <div class="col-lg-4 col-sm-6">
+                    <div class="single-footer-widget about">
+                        <h3>About Aspira</h3>
+                        <p>Aspira is the Placement & Career Cell of Narayana Engineering College, Nellore. We provide centralized placement information, career guidance, skill development programs, and workshops to prepare students for top recruiters and industry opportunities.</p>
+                        <h6>Follow Aspira:</h6>
+                        <ul class="list-unstyled ps-0 mb-0 social-link">
+                            <li class="d-inline-block"><a class="text-decoration-none" href="https://www.facebook.com/" target="_blank"><i class="flaticon-facebook-app-symbol"></i></a></li>
+                            <li class="d-inline-block"><a class="text-decoration-none" href="https://www.pinterest.com/" target="_blank"><i class="flaticon-pinterest"></i></a></li>
+                            <li class="d-inline-block"><a class="text-decoration-none" href="https://www.instagram.com/" target="_blank"><i class="flaticon-instagram"></i></a></li>
+                            <li class="d-inline-block"><a class="text-decoration-none" href="https://twitter.com/" target="_blank"><i class="flaticon-twitter"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-sm-6">
+                    <div class="single-footer-widget quick">
+                        <h3>Quick Links</h3>
+                        <ul class="list-unstyled ps-0 mb-0">
+                            <li><a class="text-decoration-none" href="student-internships.html">Internships</a></li>
+                            <li><a class="text-decoration-none" href="student-jobs.html">Job Opportunities</a></li>
+                            <li><a class="text-decoration-none" href="student-events-workshops.html">Workshops & Events</a></li>
+                            <li><a class="text-decoration-none" href="contact.html">Contact Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-sm-6">
+                    <div class="single-footer-widget contact">
+                        <h3>Contact Placement Cell</h3>
+                        <ul class="list-unstyled ps-0 mb-0">
+                            <li><a class="text-decoration-none" href="tel:+919999999999">+91 99999 99999 <i class="ri-phone-line"></i></a></li>
+                            <li><a class="text-decoration-none" href="mailto:aspira@necn.ac.in">aspira@necn.ac.in <i class="ri-message-line"></i></a></li>
+                            <li><i class="flaticon-placeholder"></i><p>Narayana Engineering College, Nellore<br>NH-16, Muthukur Road, Nellore, Andhra Pradesh 524003</p></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="copyright-area">
+        <div class="container">
+            <div class="row align-items-center">
+
+                <div class="col-lg-2 col-sm-12 d-flex align-items-center">
+                    <div class="copyright-logo">
+                        <img src="assets/img/favicon.png" alt="aspira-logo" width="70" height="50">
+                        <p class="mb-0">Aspira</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-5 col-sm-6">
+                    <div class="copyright-title text-lg-end text-sm-start">
+                        <p class="mb-0">© <strong>Aspira</strong> Placement & Career Cell. All Rights Reserved.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-5 col-sm-6">
+                    <div class="copyright-list text-lg-end text-sm-start">
+                        <ul class="list-unstyled ps-0 mb-0">
+                            <li class="d-inline-block me-3"><a class="text-decoration-none" href="faculty.html">P&T Team</a></li>
+                            <li class="d-inline-block me-3"><a class="text-decoration-none" href="placement-overview.html">Placements Info</a></li>
+                            <li class="d-inline-block"><a class="text-decoration-none" href="career-guidance.html">About Aspira</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <button type="button" id="back-to-top">
+        <i class="ri-arrow-up-double-fill"></i>
+    </button>
+
+  <!-- <div class="footer-area pt-100 pb-75">
+    <div class="container text-center">
+      <p>© <strong>Aspira</strong> Placement & Career Cell. All Rights Reserved.</p>
+    </div>
+  </div> -->
+
+  <script src="assets/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/scrollCue.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      const studentId = localStorage.getItem("student_id");
+      const studentName = localStorage.getItem("student_name");
+
+      if (!studentId || !studentName) {
+        alert("Session expired! Please log in again.");
+        window.location.href = "login-student.html";
+        return;
+      }
+
+      document.getElementById("studentNameBanner").textContent = studentName;
+
+      // Fetch student profile
+      try {
+        const res = await fetch(`http://localhost:3000/api/student/${studentId}`);
+        const data = await res.json();
+        if (!data.success) console.warn(data.message);
+      } catch (err) {
+        console.error("Error loading student profile:", err);
+      }
+
+      // Fetch applications
+      try {
+        const res = await fetch(`http://localhost:3000/api/student/${studentId}/applications`);
+        const data = await res.json();
+        const list = document.getElementById("applicationList");
+        list.innerHTML = "";
+
+        if (data.success && data.applications.length) {
+          data.applications.forEach(app => {
+            const li = document.createElement("li");
+            li.innerHTML = `
+              <strong>${app.company_name} - ${app.title}</strong>
+              <span class="status-badge bg-info text-white">${app.status}</span>`;
+            list.appendChild(li);
+          });
+        } else {
+          list.innerHTML = "<li>No applications found yet.</li>";
+        }
+      } catch (err) {
+        console.error("Error fetching applications:", err);
+      }
+
+      // Fetch upcoming events (first 3)
+      try {
+        const res = await fetch(`http://localhost:3000/api/student/${studentId}/events`);
+        const data = await res.json();
+        const container = document.getElementById("upcomingEventsContainer");
+        container.innerHTML = "";
+
+        if (data.success && data.events && data.events.length > 0) {
+          // Filter out past events (only show events where date >= today)
+          const today = new Date();
+          today.setHours(0, 0, 0, 0); // Set to start of today
+          
+          const futureEvents = data.events.filter(event => {
+            const eventDate = new Date(event.event_date);
+            eventDate.setHours(0, 0, 0, 0); // Compare just the date part
+            return eventDate >= today;
+          });
+          
+          // Get first 3 upcoming events
+          const upcomingEvents = futureEvents.slice(0, 3);
+          
+          if (upcomingEvents.length > 0) {
+            upcomingEvents.forEach(event => {
+              const eventDate = new Date(event.event_date);
+              const dateStr = eventDate.toLocaleDateString('en-US', { 
+                month: 'short', 
+                day: 'numeric', 
+                year: 'numeric' 
+              });
+              const timeStr = eventDate.toLocaleTimeString('en-US', { 
+                hour: '2-digit', 
+                minute: '2-digit',
+                hour12: true 
+              });
+
+              const eventBox = document.createElement("div");
+              eventBox.className = "event-box";
+              eventBox.innerHTML = `
+                <p class="mb-1 event-title"><i class="ri-calendar-2-line me-1"></i> ${event.event_name}</p>
+                <p class="mb-0 event-meta"><i class="ri-time-line me-1"></i> ${dateStr} | ${timeStr}</p>
+                <p class="mb-0 event-meta"><i class="ri-map-pin-line me-1"></i> ${event.location || 'TBA'}</p>
+                <p class="mb-0 event-meta" style="font-size: 0.85rem; color: #999; margin-top: 6px;"><strong>${event.event_type}</strong></p>
+              `;
+              container.appendChild(eventBox);
+            });
+          } else {
+            container.innerHTML = '<div class="empty-events">📅 No upcoming events scheduled yet</div>';
+          }
+        } else {
+          container.innerHTML = '<div class="empty-events">📅 No upcoming events scheduled yet</div>';
+        }
+      } catch (err) {
+        console.error("Error fetching events:", err);
+        document.getElementById("upcomingEventsContainer").innerHTML = '<div class="empty-events">⚠️ Unable to load events</div>';
+      }
+
+      // Logout
+      document.getElementById("logoutBtn").addEventListener("click", () => {
+        localStorage.removeItem("student_id");
+        localStorage.removeItem("student_name");
+        localStorage.removeItem("student_branch");
+        localStorage.removeItem("student_year");
+        window.location.href = "index.html";
+      });
+    });
+  </script>
+</body>
+</html>

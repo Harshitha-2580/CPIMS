@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aspira - Student Announcements</title>
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="assets/css/scrollCue.css">
+    <link rel="stylesheet" href="assets/css/remixicon.css">
+    <link rel="stylesheet" href="assets/css/flaticon.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+
+    <style>
+       .announcement-card {
+    position: relative;
+    border-left: 6px solid #ff5722;
+    padding: 25px;
+    margin-bottom: 30px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #ffffff, #f9fbff);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.06);
+    transition: all 0.35s ease;
+}
+
+.announcement-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(255, 87, 34, 0.25);
+    border-left-color: #172b4d;
+}
+
+.announcement-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    background: linear-gradient(120deg, transparent, rgba(255,87,34,0.08));
+    opacity: 0;
+    transition: opacity 0.35s ease;
+}
+
+.announcement-card:hover::after {
+    opacity: 1;
+}
+
+.announcement-card h4 {
+    color: #172b4d;
+    font-weight: 600;
+}
+
+.announcement-meta span {
+    display: inline-block;
+    margin-right: 18px;
+    color: #6c757d;
+    font-size: 15px;
+}
+
+.announcement-meta i {
+    margin-right: 6px;
+    color: #ff5722;
+}
+
+/* Button */
+.announcement-btn {
+    margin-top: 15px;
+}
+
+.announcement-btn a {
+    display: inline-block;
+    padding: 8px 18px;
+    font-size: 14px;
+    border-radius: 30px;
+    background-color: #ff5722;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+.announcement-btn a:hover {
+    background-color: #172b4d;
+    color: #fff;
+    transform: translateX(5px);
+}
+
+    </style>
+
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    <link href="assets/img/favicon.png" type="image/x-icon" rel="icon">
+</head>
+
+<body>
+
+<div class="top-header-area style-2" style="padding: 12px 0;">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-12 text-center">
+                <h3 class="mb-0" style="color:#fff;font-weight:700;letter-spacing:1px;font-size:26px;">
+                    <span style="font-family:'Great Vibes',cursive;font-size:36px;">Aspira</span>
+                    – Central Placement and Information Center
+                </h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light py-2" id="navbar">
+    <div class="container">
+        <img src="assets/img/logo_necn.jpg" alt="Logo" height="70" width="160">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a href="student-dashboard.html" class="nav-link">Dashboard</a></li>
+                <li class="nav-item"><a href="student-announcements.html" class="nav-link active">Announcements</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Events</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="student-events-seminars.html">Seminars</a></li>
+                        <li><a class="dropdown-item" href="student-events-workshops.html">Workshops</a></li>
+                        <li><a class="dropdown-item" href="student-events-hackathons.html">Hackathons</a></li>
+                        <li><a class="dropdown-item" href="student-events-career.html">Career Guidance</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item"><a href="student-resources.html" class="nav-link">Resources</a></li>
+                <li class="nav-item"><a href="student-internships.html" class="nav-link">Internships</a></li>
+                <li class="nav-item"><a href="student-jobs.html" class="nav-link">Job Opportunities</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">My Account</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="student-profile.html">Profile</a></li>
+                        <li><a class="dropdown-item" href="index.html">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="pages-banner-area">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="pages-title">
+                    <h2>Announcements</h2>
+                    <ul class="list-unstyled ps-0 mb-0">
+                        <li class="d-inline-block"><a href="student-dashboard.html">Dashboard</a></li>
+                        <li class="d-inline-block">Announcements</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="pages-image">
+                    <img src="assets/img/pages/pages-11.jpg" alt="pages-image">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="register-area ptb-100">
+    <div class="container">
+        <div class="section-title text-center mb-5">
+            <span class="top-title">Stay Updated</span>
+            <h2>Latest Notices & Important Updates</h2>
+        </div>
+
+        <div id="announcementsContainer">
+            <div style="text-align: center; padding: 40px 20px;">
+                <p style="color: #666; font-size: 16px;">Loading announcements...</p>
+            </div>
+            <div class="row align-items-start">
+
+                <div class="col-lg-4 col-sm-6">
+                    <div class="single-footer-widget about">
+                        <h3>About NEC Placement Cell</h3>
+                        <p>NEC Placement Cell is the Placement & Career Cell of Narayana Engineering College, Nellore. We provide centralized placement information, career guidance, skill development programs, and workshops to prepare students for top recruiters and industry opportunities.</p>
+                        <h6>Follow NEC Placement Cell:</h6>
+                        <ul class="list-unstyled ps-0 mb-0 social-link">
+                            <li class="d-inline-block"><a class="text-decoration-none" href="https://www.facebook.com/" target="_blank"><i class="flaticon-facebook-app-symbol"></i></a></li>
+                            <li class="d-inline-block"><a class="text-decoration-none" href="https://www.pinterest.com/" target="_blank"><i class="flaticon-pinterest"></i></a></li>
+                            <li class="d-inline-block"><a class="text-decoration-none" href="https://www.instagram.com/" target="_blank"><i class="flaticon-instagram"></i></a></li>
+                            <li class="d-inline-block"><a class="text-decoration-none" href="https://twitter.com/" target="_blank"><i class="flaticon-twitter"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-sm-6">
+                    <div class="single-footer-widget quick">
+                        <h3>Quick Links</h3>
+                        <ul class="list-unstyled ps-0 mb-0">
+                            <li><a class="text-decoration-none" href="student-internships.html">Internships</a></li>
+                            <li><a class="text-decoration-none" href="student-jobs.html">Job Opportunities</a></li>
+                            <li><a class="text-decoration-none" href="student-events-workshops.html">Workshops & Events</a></li>
+                            <li><a class="text-decoration-none" href="contact.html">Contact Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-sm-6">
+                    <div class="single-footer-widget contact">
+                        <h3>Contact Placement Cell</h3>
+                        <ul class="list-unstyled ps-0 mb-0">
+                            <li><a class="text-decoration-none" href="tel:+919999999999">+91 99999 99999 <i class="ri-phone-line"></i></a></li>
+                            <li><a class="text-decoration-none" href="mailto:aspira@necn.ac.in">aspira@necn.ac.in <i class="ri-message-line"></i></a></li>
+                            <li><i class="flaticon-placeholder"></i><p>Narayana Engineering College, Nellore<br>NH-16, Muthukur Road, Nellore, Andhra Pradesh 524003</p></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="copyright-area">
+        <div class="container">
+            <div class="row align-items-center">
+
+                <div class="col-lg-2 col-sm-12 d-flex align-items-center">
+                    <div class="copyright-logo">
+                        <img src="assets/img/favicon.png" alt="nec-placement-cell-logo" width="70" height="50">
+                        <p class="mb-0">NEC Placement Cell</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-5 col-sm-6">
+                    <div class="copyright-title text-lg-end text-sm-start">
+                        <p class="mb-0">© <strong>NEC Placement Cell</strong> Placement & Career Cell. All Rights Reserved.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-5 col-sm-6">
+                    <div class="copyright-list text-lg-end text-sm-start">
+                        <ul class="list-unstyled ps-0 mb-0">
+                            <li class="d-inline-block me-3"><a class="text-decoration-none" href="faculty.html">P&T Team</a></li>
+                            <li class="d-inline-block me-3"><a class="text-decoration-none" href="placement-overview.html">Placements Info</a></li>
+                            <li class="d-inline-block"><a class="text-decoration-none" href="career-guidance.html">About NEC Placement Cell</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <button type="button" id="back-to-top">
+        <i class="ri-arrow-up-double-fill"></i>
+    </button>
+
+<script src="assets/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/swiper-bundle.min.js"></script>
+<script src="assets/js/scrollCue.min.js"></script>
+<script src="assets/js/custom.js"></script>
+
+<script>
+  // Load announcements on page load
+  document.addEventListener('DOMContentLoaded', async () => {
+    const studentId = localStorage.getItem('student_id');
+    
+    if (!studentId) {
+      document.getElementById('announcementsContainer').innerHTML = 
+        '<div style="text-align: center; padding: 40px 20px; color: #d32f2f;"><p>Please log in to view announcements</p></div>';
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:3000/api/student/${studentId}/announcements`);
+      const data = await response.json();
+
+      if (!data.success) {
+        throw new Error(data.message || 'Failed to load announcements');
+      }
+
+      const container = document.getElementById('announcementsContainer');
+      container.innerHTML = '';
+
+      const { opportunities = [], events = [] } = data.announcements;
+      const allAnnouncements = [
+        ...opportunities.map(opp => ({
+          ...opp,
+          type: 'opportunity',
+          title: opp.title,
+          date: opp.posted_on,
+          dueDate: opp.due_date,
+          icon: opp.type === 'internship' ? 'ri-briefcase-line' : 'ri-notification-3-line',
+          category: opp.type === 'internship' ? 'Internship' : 'Placement'
+        })),
+        ...events.map(evt => ({
+          ...evt,
+          type: 'event',
+          title: evt.event_name,
+          date: evt.created_at,
+          eventDate: evt.event_date,
+          icon: 'ri-calendar-line',
+          category: evt.event_type || 'Event'
+        }))
+      ];
+
+      // Sort by date (most recent first)
+      allAnnouncements.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+      if (allAnnouncements.length === 0) {
+        container.innerHTML = '<div style="text-align: center; padding: 40px 20px;"><p style="color: #666;">No announcements available at the moment</p></div>';
+        return;
+      }
+
+      allAnnouncements.forEach(announcement => {
+        const dateObj = new Date(announcement.date);
+        const dateStr = dateObj.toLocaleDateString('en-US', { 
+          month: 'short', 
+          day: 'numeric', 
+          year: 'numeric' 
+        });
+
+        let dueInfo = '';
+        if (announcement.type === 'opportunity' && announcement.dueDate) {
+          const dueDate = new Date(announcement.dueDate);
+          const dueStr = dueDate.toLocaleDateString('en-US', { 
+            month: 'short', 
+            day: 'numeric', 
+            year: 'numeric' 
+          });
+          dueInfo = `<span style="margin-left: 15px; color: #ff5722;"><i class="ri-alert-line me-1"></i>Due: ${dueStr}</span>`;
+        }
+
+        if (announcement.type === 'event' && announcement.eventDate) {
+          const eventDate = new Date(announcement.eventDate);
+          const eventStr = eventDate.toLocaleDateString('en-US', { 
+            month: 'short', 
+            day: 'numeric', 
+            year: 'numeric' 
+          });
+          dueInfo = `<span style="margin-left: 15px; color: #2196F3;"><i class="ri-calendar-line me-1"></i>Date: ${eventStr}</span>`;
+        }
+
+        const card = document.createElement('div');
+        card.className = 'announcement-card';
+        card.innerHTML = `
+          <h4>${announcement.title}</h4>
+          <div class="announcement-meta mb-2">
+            <span><i class="${announcement.icon} me-1"></i> ${dateStr}</span>
+            <span><i class="ri-tag-line me-1"></i> ${announcement.category}</span>
+            ${dueInfo}
+          </div>
+          <p>${announcement.description || 'No additional details available'}</p>
+        `;
+        container.appendChild(card);
+      });
+    } catch (err) {
+      console.error('Error loading announcements:', err);
+      document.getElementById('announcementsContainer').innerHTML = 
+        '<div style="text-align: center; padding: 40px 20px; color: #d32f2f;"><p>Unable to load announcements. Please try again later.</p></div>';
+    }
+  });
+</script>
+
+</body>
+</html>

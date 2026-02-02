@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEC Placement Cell - Assigned Opportunities</title>
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/remixicon.css">
+    <link rel="stylesheet" href="assets/css/flaticon.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+
+    <style>
+        .navbar .dropdown-menu .dropdown-item:hover {
+            color: red !important;
+        }
+
+        body, html {
+            overflow-x: hidden;
+        }
+
+        .opportunity-card {
+            border: 2px solid #e0e0e0;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .opportunity-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(180deg, #FA394A 0%, #FFC333 100%);
+        }
+
+        .opportunity-card:hover {
+            box-shadow: 0 8px 20px rgba(250, 57, 74, 0.15);
+            transform: translateY(-3px);
+            border-color: #FA394A;
+        }
+
+        .opportunity-type-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .badge-internship {
+            background: linear-gradient(90deg, #FFC333, #ffb700);
+            color: #000;
+        }
+
+        .badge-placement {
+            background: linear-gradient(90deg, #FA394A, #d81e2b);
+            color: #fff;
+        }
+
+        .opportunity-card h4 {
+            color: #172b4d;
+            font-weight: 700;
+            margin-bottom: 15px;
+            padding-right: 120px;
+        }
+
+        .company-name {
+            color: #FA394A;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .meta-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e8e8e8;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #6c757d;
+            font-size: 14px;
+        }
+
+        .meta-item i {
+            color: #FA394A;
+            font-size: 16px;
+        }
+
+        .meta-item strong {
+            color: #172b4d;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .status-accepted {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .status-rejected {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .description-text {
+            color: #495057;
+            line-height: 1.6;
+            margin-top: 12px;
+            font-size: 14px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+
+        .empty-state i {
+            font-size: 80px;
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+
+        .empty-state h4 {
+            color: #6c757d;
+            font-weight: 600;
+        }
+
+        .filter-section {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .section-title {
+            margin-bottom: 30px;
+        }
+
+        .section-title h2 {
+            color: #172b4d;
+            font-weight: 800;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, #FA394A, #FFC333);
+        }
+
+        .loading-spinner {
+            text-align: center;
+            padding: 40px;
+            display: none;
+        }
+
+        .loading-spinner.show {
+            display: block;
+        }
+
+        .loading-spinner i {
+            font-size: 40px;
+            color: #FA394A;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    <link href="assets/img/favicon.png" type="image/x-icon" rel="icon">
+</head>
+<body>
+
+    <div class="top-header-area style-2" style="padding: 12px 0;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-12 text-center">
+                    <h3 class="mb-0" style="color: #fff; font-weight: 700; font-size: 26px;">
+                        <span style="font-family: 'Great Vibes', cursive; font-size: 36px;">Aspira</span>
+                        – Central Placement and Information Center
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light py-2">
+        <div class="container">
+            <img src="assets/img/logo_necn.jpg" alt="Logo" height="70" width="160">
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a href="student-dashboard.html" class="nav-link">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="student-announcements.html" class="nav-link">Announcements</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Events</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="student-events-seminars.html">Seminars</a></li>
+                            <li><a class="dropdown-item" href="student-events-workshops.html">Workshops</a></li>
+                            <li><a class="dropdown-item" href="student-events-hackathons.html">Hackathons</a></li>
+                            <li><a class="dropdown-item" href="student-events-career.html">Career Guidance</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="student-resources.html" class="nav-link">Resources</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="student-internships.html" class="nav-link">Internships</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="student-jobs.html" class="nav-link">Job Opportunities</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">My Account</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="student-profile.html">Profile</a></li>
+                            <li><a class="dropdown-item" href="index.html">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    
+
+    <div class="container" style="padding: 60px 15px;">
+        <div class="section-title">
+            <h2>My Assigned Opportunities</h2>
+            <p style="white-space: nowrap;">Opportunities that have been specifically assigned to you by the placement cell</p>
+        </div>
+
+        <!-- Loading Spinner -->
+        <div class="loading-spinner" id="loadingSpinner">
+            <i class="ri-loader-4-line"></i>
+            <p>Loading your assigned opportunities...</p>
+        </div>
+
+        <!-- Opportunities Container -->
+        <div id="opportunitiesContainer"></div>
+    </div>
+
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/scrollCue.min.js"></script>
+    <script src="assets/js/swiper-bundle.min.js"></script>
+    <script src="assets/js/main.js"></script>
+
+    <script>
+        let allAssignments = [];
+
+        async function loadAssignedOpportunities() {
+            const studentId = localStorage.getItem('student_id');
+            
+            if (!studentId) {
+                window.location.href = 'login-student.html';
+                return;
+            }
+
+            document.getElementById('loadingSpinner').classList.add('show');
+
+            try {
+                const response = await fetch(`http://localhost:3000/api/opportunities/assignments/student/${studentId}`);
+                const data = await response.json();
+
+                document.getElementById('loadingSpinner').classList.remove('show');
+
+                if (data.success && data.assignments && data.assignments.length > 0) {
+                    allAssignments = data.assignments;
+                    displayOpportunities(allAssignments);
+                } else {
+                    displayEmptyState();
+                }
+            } catch (error) {
+                console.error('Error loading assigned opportunities:', error);
+                document.getElementById('loadingSpinner').classList.remove('show');
+                displayErrorState();
+            }
+        }
+
+        function displayOpportunities(assignments) {
+            const container = document.getElementById('opportunitiesContainer');
+            container.innerHTML = '';
+
+            if (assignments.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="ri-filter-off-line"></i>
+                        <h4>No opportunities match your filters</h4>
+                        <p>Try adjusting your filter settings</p>
+                    </div>
+                `;
+                return;
+            }
+
+            assignments.forEach(assignment => {
+                const isInternship = assignment.type === 'internship';
+                const card = document.createElement('div');
+                card.className = 'opportunity-card';
+
+                // Format date
+                const dueDate = new Date(assignment.due_date).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                });
+
+                card.innerHTML = `
+                    <span class="opportunity-type-badge ${isInternship ? 'badge-internship' : 'badge-placement'}">
+                        ${isInternship ? '📋 Internship' : '💼 Placement'}
+                    </span>
+
+                    <div class="company-name">
+                        <i class="ri-building-line"></i>
+                        ${assignment.company_name}
+                    </div>
+
+                    <h4>${assignment.job_role || 'Position Not Specified'}</h4>
+
+                    <div class="meta-info">
+                        ${isInternship ? `
+                            ${assignment.stipend ? `
+                                <div class="meta-item">
+                                    <i class="ri-money-dollar-circle-line"></i>
+                                    <span><strong>Stipend:</strong> ${assignment.stipend}/month</span>
+                                </div>
+                            ` : ''}
+                            ${assignment.duration ? `
+                                <div class="meta-item">
+                                    <i class="ri-time-line"></i>
+                                    <span><strong>Duration:</strong> ${assignment.duration} months</span>
+                                </div>
+                            ` : ''}
+                            ${assignment.internship_type ? `
+                                <div class="meta-item">
+                                    <i class="ri-bookmark-line"></i>
+                                    <span><strong>Type:</strong> ${assignment.internship_type.toUpperCase()}</span>
+                                </div>
+                            ` : ''}
+                        ` : `
+                            ${assignment.salary_package ? `
+                                <div class="meta-item">
+                                    <i class="ri-money-dollar-circle-line"></i>
+                                    <span><strong>Package:</strong> ${assignment.salary_package} LPA</span>
+                                </div>
+                            ` : ''}
+                        `}
+                        <div class="meta-item">
+                            <i class="ri-calendar-line"></i>
+                            <span><strong>Deadline:</strong> ${dueDate}</span>
+                        </div>
+                    </div>
+
+                    ${assignment.description ? `
+                        <div class="description-text">
+                            <strong>Description:</strong> ${assignment.description}
+                        </div>
+                    ` : `
+                        <div class="description-text" style="color: #6c757d; font-style: italic;">
+                            <strong>Description:</strong> No description available
+                        </div>
+                    `}
+
+                    ${assignment.apply_link ? `
+                        <div style="margin-top: 20px;">
+                            <a href="${assignment.apply_link}" target="_blank" class="btn" style="background: linear-gradient(90deg, var(--primaryColor), #ff6b7a); color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; font-weight: 600;">
+                                <i class="ri-external-link-line"></i> Apply Now
+                            </a>
+                        </div>
+                    ` : ''}
+                `;
+
+                container.appendChild(card);
+            });
+        }
+
+        function displayEmptyState() {
+            const container = document.getElementById('opportunitiesContainer');
+            container.innerHTML = `
+                <div class="empty-state">
+                    <i class="ri-inbox-line"></i>
+                    <h4>No Opportunities Assigned Yet</h4>
+                    <p>You don't have any opportunities assigned to you at the moment.</p>
+                    <p>Check back later or browse available <a href="student-internships.html">internships</a> and <a href="student-jobs.html">placements</a>.</p>
+                </div>
+            `;
+        }
+
+        function displayErrorState() {
+            const container = document.getElementById('opportunitiesContainer');
+            container.innerHTML = `
+                <div class="empty-state">
+                    <i class="ri-error-warning-line"></i>
+                    <h4>Error Loading Opportunities</h4>
+                    <p>There was an issue loading your assigned opportunities. Please try again later.</p>
+                </div>
+            `;
+        }
+
+        // Load on page ready
+        window.addEventListener('DOMContentLoaded', loadAssignedOpportunities);
+    </script>
+</body>
+</html>

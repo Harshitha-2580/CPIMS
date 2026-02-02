@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEC Placement Cell – Admin Reports</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="assets/css/scrollCue.css">
+    <link rel="stylesheet" href="assets/css/remixicon.css">
+    <link rel="stylesheet" href="assets/css/flaticon.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link href="assets/img/favicon.png" type="image/x-icon" rel="icon">
+
+    <style>
+        :root {
+            --primaryColor: #FA394A;
+            --secenderyColor: #FFC333;
+            --darkColor: rgb(0, 30, 67);
+            --lightGray: #f8f9fa;
+        }
+
+        body {
+            padding-top: 0;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #f8f9fa 0%, #f0f2f5 100%);
+        }
+
+        /* Welcome Banner */
+        .reports-welcome-banner {
+            background: linear-gradient(135deg, var(--darkColor) 0%, #1a3a52 100%);
+            padding: 60px 0;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            animation: bannerSlideIn 0.8s ease-out;
+        }
+
+        .reports-welcome-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        .reports-welcome-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .reports-welcome-title {
+            font-size: 42px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            color: #ffffff;
+            animation: titleFadeIn 0.8s ease-out 0.2s backwards;
+        }
+
+        .reports-welcome-subtitle {
+            font-size: 18px;
+            opacity: 0.9;
+            color: #ffffff;
+            animation: subtitleFadeIn 0.8s ease-out 0.4s backwards;
+        }
+
+        @keyframes bannerSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes titleFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes subtitleFadeIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        /* Reports Container */
+        .reports-section {
+            padding: 60px 0;
+        }
+
+        .section-title-reports {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .section-title-reports h2 {
+            color: var(--darkColor);
+            font-weight: 800;
+            font-size: 38px;
+            position: relative;
+            padding-bottom: 20px;
+            margin-bottom: 15px;
+        }
+
+        .section-title-reports h2::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primaryColor), var(--secenderyColor));
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .section-title-reports p {
+            color: #666;
+            font-size: 16px;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Stats Cards */
+        .report-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .report-stat-card {
+            background: #fff;
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            animation: cardFadeInUp 0.6s ease-out backwards;
+        }
+
+        .report-stat-card:nth-child(1) { animation-delay: 0.1s; }
+        .report-stat-card:nth-child(2) { animation-delay: 0.2s; }
+        .report-stat-card:nth-child(3) { animation-delay: 0.3s; }
+        .report-stat-card:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes cardFadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .report-stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primaryColor), var(--secenderyColor));
+            transition: left 0.4s ease;
+        }
+
+        .report-stat-card:hover::before {
+            left: 0;
+        }
+
+        .report-stat-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(250, 57, 74, 0.15);
+        }
+
+        .stat-icon-reports {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, rgba(250, 57, 74, 0.1), rgba(255, 195, 51, 0.1));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 36px;
+            color: var(--primaryColor);
+            transition: all 0.3s ease;
+        }
+
+        .report-stat-card:hover .stat-icon-reports {
+            background: linear-gradient(135deg, var(--primaryColor), var(--secenderyColor));
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .stat-number-reports {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--darkColor);
+            margin-bottom: 8px;
+        }
+
+        .stat-label-reports {
+            color: #666;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* Report Types Grid */
+        .report-types-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .report-type-card {
+            background: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            animation: slideInCard 0.6s ease-out backwards;
+        }
+
+        .report-type-card:nth-child(1) { animation-delay: 0.1s; }
+        .report-type-card:nth-child(2) { animation-delay: 0.2s; }
+        .report-type-card:nth-child(3) { animation-delay: 0.3s; }
+
+        @keyframes slideInCard {
+            from {
+                opacity: 0;
+                transform: translateX(-40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .report-type-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(250, 57, 74, 0.15);
+        }
+
+        .report-type-header {
+            background: linear-gradient(135deg, var(--primaryColor) 0%, #d81e2b 100%);
+            padding: 30px;
+            color: white;
+            text-align: center;
+        }
+
+        .report-type-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        .report-type-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .report-type-subtitle {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+
+        .report-type-content {
+            padding: 25px;
+        }
+
+        .report-type-content p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .report-type-btn {
+            display: inline-block;
+            background: linear-gradient(90deg, var(--primaryColor), #d81e2b);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .report-type-btn:hover {
+            transform: translateX(5px);
+            box-shadow: 0 8px 20px rgba(250, 57, 74, 0.3);
+            color: white;
+        }
+
+        /* Table Section */
+        .reports-table-section {
+            background: #fff;
+            border-radius: 15px;
+            padding: 35px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            animation: tableSlideIn 0.8s ease-out 0.3s backwards;
+        }
+
+        @keyframes tableSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .table-header-reports {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .table-header-reports h3 {
+            color: var(--darkColor);
+            font-weight: 700;
+            font-size: 22px;
+            margin: 0;
+        }
+
+        .table-filters {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .filter-select {
+            padding: 10px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: #fff;
+            color: #333;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-select:hover {
+            border-color: var(--primaryColor);
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--primaryColor);
+            box-shadow: 0 0 0 3px rgba(250, 57, 74, 0.1);
+        }
+
+        .reports-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .reports-table thead {
+            background-color: #f8f9fa;
+        }
+
+        .reports-table th {
+            padding: 15px;
+            text-align: left;
+            color: var(--darkColor);
+            font-weight: 700;
+            border-bottom: 2px solid #e0e0e0;
+            font-size: 14px;
+        }
+
+        .reports-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #f0f0f0;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .reports-table tbody tr {
+            transition: all 0.3s ease;
+        }
+
+        .reports-table tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-success {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .status-pending {
+            background: #fff3e0;
+            color: #f57f17;
+        }
+
+        .status-warning {
+            background: #fce4ec;
+            color: #c2185b;
+        }
+
+        /* Download Button */
+        .download-btn {
+            display: inline-block;
+            background: linear-gradient(90deg, var(--primaryColor), #d81e2b);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(250, 57, 74, 0.3);
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .reports-welcome-title {
+                font-size: 28px;
+            }
+
+            .section-title-reports h2 {
+                font-size: 28px;
+            }
+
+            .report-stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .report-types-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .table-filters {
+                flex-direction: column;
+            }
+
+            .filter-select {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Top Header -->
+    <div class="top-header-area style-2" style="padding: 12px 0;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-12 text-center">
+                    <h3 class="mb-0" style="color: #fff; font-weight: 700; letter-spacing: 1px; line-height: 1.4; font-size: 26px;">
+                        <span style="font-family: 'Great Vibes', cursive; font-size: 36px; font-weight: 600; margin-right: 6px;">
+                            NEC
+                        </span>
+                        – Central Placement Information and Management Center
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light py-2" id="navbar">
+        <div class="container">
+            <img src="assets/img/logo_necn.jpg" alt="Logo" height="70" width="160">
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a href="admin-dashboard.html" class="nav-link">Dashboard</a></li>
+                    <li class="nav-item"><a href="admin-students.html" class="nav-link">Students</a></li>
+                    <li class="nav-item"><a href="admin-opportunities.html" class="nav-link">Opportunities</a></li>
+                    <li class="nav-item"><a href="admin-reports.html" class="nav-link active-admin" style="color: red; font-weight: bold;">Reports</a></li>
+                    <li class="nav-item"><a href="index.html" class="nav-link" style="color: red;">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Welcome Banner -->
+    <div class="reports-welcome-banner">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <div class="reports-welcome-content">
+                        <h2 class="reports-welcome-title">Reports & Analytics</h2>
+                        <p class="reports-welcome-subtitle">Comprehensive placement and student data analysis dashboard</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <div style="font-size: 80px; animation: float 3s ease-in-out infinite;">
+                        <i class="flaticon-tablet"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+    </style>
+
+    <!-- Reports Section -->
+    <div class="reports-section">
+        <div class="container">
+            <!-- Section Title -->
+            <div class="section-title-reports">
+                <h2>Generate & View Reports</h2>
+                <p>Access detailed analytics and performance metrics for your placement ecosystem</p>
+            </div>
+
+            <!-- Statistics Cards -->
+            <div class="report-stats-grid">
+                <div class="report-stat-card">
+                    <div class="stat-icon-reports"><i class="flaticon-writing"></i></div>
+                    <div class="stat-number-reports">28</div>
+                    <div class="stat-label-reports">Placement Drives Conducted</div>
+                </div>
+
+                <div class="report-stat-card">
+                    <div class="stat-icon-reports"><i class="flaticon-graduation-cap"></i></div>
+                    <div class="stat-number-reports">287</div>
+                    <div class="stat-label-reports">Students Successfully Placed</div>
+                </div>
+
+                <div class="report-stat-card">
+                    <div class="stat-icon-reports"><i class="flaticon-loan"></i></div>
+                    <div class="stat-number-reports">$2.8L</div>
+                    <div class="stat-label-reports">Average Package Offered</div>
+                </div>
+
+                <div class="report-stat-card">
+                    <div class="stat-icon-reports"><i class="flaticon-speech"></i></div>
+                    <div class="stat-number-reports">92%</div>
+                    <div class="stat-label-reports">Placement Success Rate</div>
+                </div>
+            </div>
+
+            <!-- Report Types -->
+            <h3 style="color: var(--darkColor); font-weight: 700; margin-bottom: 30px; margin-top: 50px;">Available Reports</h3>
+            <div class="report-types-grid">
+                <div class="report-type-card">
+                    <div class="report-type-header">
+                        <div class="report-type-icon"><i class="flaticon-writing"></i></div>
+                        <div class="report-type-title">Placement Reports</div>
+                        <div class="report-type-subtitle">Drive-wise analysis</div>
+                    </div>
+                    <div class="report-type-content">
+                        <p>View comprehensive placement statistics including company-wise placements, student participation, and placement success metrics.</p>
+                        <button class="report-type-btn">Generate Report</button>
+                    </div>
+                </div>
+
+                <div class="report-type-card">
+                    <div class="report-type-header">
+                        <div class="report-type-icon"><i class="flaticon-graduation-cap"></i></div>
+                        <div class="report-type-title">Student Reports</div>
+                        <div class="report-type-subtitle">Performance analytics</div>
+                    </div>
+                    <div class="report-type-content">
+                        <p>Analyze student placement statistics, branch-wise performance, CGPA distribution, and individual student placement details.</p>
+                        <button class="report-type-btn">Generate Report</button>
+                    </div>
+                </div>
+
+                <div class="report-type-card">
+                    <div class="report-type-header">
+                        <div class="report-type-icon"><i class="flaticon-loan"></i></div>
+                        <div class="report-type-title">Company Reports</div>
+                        <div class="report-type-subtitle">Recruitment insights</div>
+                    </div>
+                    <div class="report-type-content">
+                        <p>Track company recruiting patterns, salary packages, job roles offered, and company-specific placement data across drives.</p>
+                        <button class="report-type-btn">Generate Report</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table Section -->
+            <div class="reports-table-section">
+                <div class="table-header-reports">
+                    <h3>Recent Placement Statistics</h3>
+                    <button class="download-btn"><i class="ri-download-cloud-line"></i> Download PDF</button>
+                </div>
+
+                <div class="table-filters" style="margin-bottom: 20px;">
+                    <select class="filter-select">
+                        <option>All Months</option>
+                        <option>January 2026</option>
+                        <option>December 2025</option>
+                        <option>November 2025</option>
+                    </select>
+                    <select class="filter-select">
+                        <option>All Branches</option>
+                        <option>CSE</option>
+                        <option>ECE</option>
+                        <option>MECH</option>
+                    </select>
+                    <select class="filter-select">
+                        <option>All Companies</option>
+                        <option>Infosys</option>
+                        <option>TCS</option>
+                        <option>Wipro</option>
+                    </select>
+                </div>
+
+                <div style="overflow-x: auto;">
+                    <table class="reports-table">
+                        <thead>
+                            <tr>
+                                <th>Drive Name</th>
+                                <th>Company</th>
+                                <th>Date</th>
+                                <th>Participants</th>
+                                <th>Selected</th>
+                                <th>Success Rate</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Infosys Drive 2026</td>
+                                <td>Infosys Limited</td>
+                                <td>Jan 15, 2026</td>
+                                <td>145</td>
+                                <td>58</td>
+                                <td>40%</td>
+                                <td><span class="status-badge status-success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>TCS Recruitment</td>
+                                <td>Tata Consultancy Services</td>
+                                <td>Jan 10, 2026</td>
+                                <td>132</td>
+                                <td>52</td>
+                                <td>39%</td>
+                                <td><span class="status-badge status-success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Wipro Selection</td>
+                                <td>Wipro Technologies</td>
+                                <td>Jan 8, 2026</td>
+                                <td>128</td>
+                                <td>45</td>
+                                <td>35%</td>
+                                <td><span class="status-badge status-success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>HCL Hiring</td>
+                                <td>HCL Technologies</td>
+                                <td>Jan 22, 2026</td>
+                                <td>110</td>
+                                <td>32</td>
+                                <td>29%</td>
+                                <td><span class="status-badge status-pending">In Progress</span></td>
+                            </tr>
+                            <tr>
+                                <td>Accenture Drive</td>
+                                <td>Accenture</td>
+                                <td>Feb 5, 2026</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0%</td>
+                                <td><span class="status-badge status-warning">Scheduled</span></td>
+                            </tr>
+                            <tr>
+                                <td>IBM Recruitment</td>
+                                <td>IBM India</td>
+                                <td>Feb 12, 2026</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0%</td>
+                                <td><span class="status-badge status-warning">Scheduled</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer-area pt-100 pb-75">
+        <div class="container">
+            <div class="row align-items-start">
+                <div class="col-lg-4 col-sm-6">
+                    <div class="single-footer-widget about">
+                        <h3>About NEC Placement Cell</h3>
+                        <p>NEC Placement Cell is the Placement & Career Cell of Narayana Engineering College, Nellore. We provide centralized placement information, career guidance, skill development programs, and workshops to prepare students for top recruiters and industry opportunities.</p>
+                        <h6>Follow NEC Placement Cell:</h6>
+                        <ul class="list-unstyled ps-0 mb-0 social-link">
+                            <li class="d-inline-block">
+                                <a class="text-decoration-none" href="https://www.facebook.com/" target="_blank">
+                                    <i class="flaticon-facebook-app-symbol"></i>
+                                </a>
+                            </li>
+                            <li class="d-inline-block">
+                                <a class="text-decoration-none" href="https://www.pinterest.com/" target="_blank">
+                                    <i class="flaticon-pinterest"></i>
+                                </a>
+                            </li>
+                            <li class="d-inline-block">
+                                <a class="text-decoration-none" href="https://www.instagram.com/" target="_blank">
+                                    <i class="flaticon-instagram"></i>
+                                </a>
+                            </li>
+                            <li class="d-inline-block">
+                                <a class="text-decoration-none" href="https://twitter.com/" target="_blank">
+                                    <i class="flaticon-twitter"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-sm-6">
+                    <div class="single-footer-widget quick">
+                        <h3>Quick Links</h3>
+                        <ul class="list-unstyled ps-0 mb-0">
+                            <li><a class="text-decoration-none" href="admin-dashboard.html">Admin Dashboard</a></li>
+                            <li><a class="text-decoration-none" href="admin-students.html">Manage Students</a></li>
+                            <li><a class="text-decoration-none" href="admin-opportunities.html">Manage Opportunities</a></li>
+                            <li><a class="text-decoration-none" href="contact.html">Contact Support</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-sm-6">
+                    <div class="single-footer-widget contact">
+                        <h3>Contact Placement Cell</h3>
+                        <ul class="list-unstyled ps-0 mb-0">
+                            <li>
+                                <a class="text-decoration-none" href="tel:+919999999999">
+                                    +91 99999 99999
+                                    <i class="ri-phone-line"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="text-decoration-none" href="mailto:aspira@necn.ac.in">
+                                    aspira@necn.ac.in
+                                    <i class="ri-message-line"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <i class="flaticon-placeholder"></i>
+                                <p>Narayana Engineering College, Nellore<br>NH-16, Muthukur Road, Nellore, Andhra Pradesh 524003</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="copyright-area">
+        <div class="container">
+            <div class="row align-items-center">
+                
+                <div class="col-lg-2 col-sm-12 d-flex align-items-center">
+                    <div class="copyright-logo">
+                        <img src="assets/img/favicon.png" alt="nec-placement-cell-logo" width="70" height="50">
+                        <p class="mb-0">NEC Placement Cell</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-5 col-sm-6">
+                    <div class="copyright-title text-lg-end text-sm-start">
+                        <p class="mb-0">© <strong>NEC Placement Cell</strong> Placement & Career Cell. All Rights Reserved.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-5 col-sm-6">
+                    <div class="copyright-list text-lg-end text-sm-start">
+                        <ul class="list-unstyled ps-0 mb-0">
+                            <li class="d-inline-block me-3">
+                                <a class="text-decoration-none" href="admin-dashboard.html">Management</a>
+                            </li>
+                            <li class="d-inline-block me-3">
+                                <a class="text-decoration-none" href="admin-reports.html">Reports</a>
+                            </li>
+                            <li class="d-inline-block">
+                                <a class="text-decoration-none" href="admin-dashboard.html">About NEC Placement Cell</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/custom.js"></script>
+    
+    <script>
+        // Simple download functionality
+        document.querySelectorAll('.download-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                alert('Download PDF feature will be enabled with backend integration');
+            });
+        });
+
+        // Report type buttons
+        document.querySelectorAll('.report-type-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                alert('Detailed report generation will be available soon with database integration');
+            });
+        });
+
+        // Filter functionality
+        document.querySelectorAll('.filter-select').forEach(select => {
+            select.addEventListener('change', function() {
+                console.log('Filter applied:', this.value);
+            });
+        });
+    </script>
+</body>
+</html>

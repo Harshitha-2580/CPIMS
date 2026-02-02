@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aspira – Faculty Profile</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="assets/css/scrollCue.css">
+    <link rel="stylesheet" href="assets/css/remixicon.css">
+    <link rel="stylesheet" href="assets/css/flaticon.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link href="assets/img/favicon.png" type="image/x-icon" rel="icon">
+
+    <style>
+        body {
+            padding-top: 0;
+            overflow-x: hidden;
+        }
+
+        #navbar {
+            transition: all 0.3s ease;
+        }
+
+        #navbar.sticky {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1030;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        body.navbar-sticky {
+            padding-top: 90px;
+        }
+
+        .profile-wrapper {
+            padding: 60px 0;
+            background-color: #f5f8fa;
+        }
+
+        .profile-header {
+            background: linear-gradient(135deg, #001e43 0%, #0d47a1 100%);
+            padding: 50px 0;
+            color: white;
+            text-align: center;
+        }
+
+        .profile-header h2 {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 5px;
+            color: #ffffff;
+        }
+
+        .profile-header p {
+            font-size: 16px;
+            opacity: 1;
+            color: #ffffff;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 50px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .profile-header h2 {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+
+        .profile-header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .profile-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+
+        .profile-section-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #001e43;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #001e43;
+        }
+
+        .profile-item {
+            display: flex;
+            padding: 15px 0;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .profile-item:last-child {
+            border-bottom: none;
+        }
+
+        .profile-label {
+            font-weight: 600;
+            color: #001e43;
+            min-width: 200px;
+            font-size: 14px;
+        }
+
+        .profile-value {
+            color: #555;
+            font-size: 14px;
+        }
+
+        .edit-btn {
+            background: #001e43;
+            color: white;
+            border: none;
+            padding: 12px 35px;
+            border-radius: 6px;
+            font-family: "Poppins", sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .edit-btn:hover {
+            background: #0a1428;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 30, 67, 0.3);
+        }
+
+        .form-control, .form-select {
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 10px 15px;
+            font-size: 14px;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: #001e43;
+            box-shadow: 0 0 0 3px rgba(0, 30, 67, 0.1);
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #001e43;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .stat-box {
+            text-align: center;
+            padding: 20px;
+            background: #f5f8fa;
+            border-radius: 10px;
+            border-left: 4px solid #001e43;
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: 800;
+            color: #001e43;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: #666;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="top-header-area style-2" style="padding: 12px 0;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-12 text-center">
+                    <h3 class="mb-0" style="color: #fff; font-weight: 700; letter-spacing: 1px; line-height: 1.4; font-size: 26px;">
+                        <span style="font-family: 'Great Vibes', cursive; font-size: 36px; font-weight: 600; margin-right: 6px;">
+                            Aspira
+                        </span>
+                        – Central Placement and Information Center
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light py-2" id="navbar">
+        <div class="container">
+            <img src="assets/img/logo_necn.jpg" alt="Logo" height="70" width="160">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a href="faculty-dashboard.html" class="nav-link">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="faculty-events.html" class="nav-link">Add Events</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="faculty-applications.html" class="nav-link">Applications</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="faculty-materials.html" class="nav-link">Materials</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            My Account
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item active" href="faculty-profile.html">My Profile</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="login-faculty.html">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Profile Header -->
+    <div class="profile-header">
+        <div class="container">
+            <div class="profile-avatar">👨‍🏫</div>
+            <h2 id="profileName">Loading...</h2>
+            <p id="profileDesignation">Loading...</p>
+        </div>
+    </div>
+
+    <!-- Profile Content -->
+    <div class="profile-wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <!-- Personal Details -->
+                    <div class="profile-card">
+                        <h4 class="profile-section-title">Personal Details</h4>
+                        <div class="profile-item">
+                            <div class="profile-label">Full Name:</div>
+                            <div class="profile-value" id="displayName">Loading...</div>
+                        </div>
+                        <div class="profile-item">
+                            <div class="profile-label">Email:</div>
+                            <div class="profile-value" id="displayEmail">Loading...</div>
+                        </div>
+                        <div class="profile-item">
+                            <div class="profile-label">Phone Number:</div>
+                            <div class="profile-value" id="displayPhone">Loading...</div>
+                        </div>
+                    </div>
+
+                    <!-- Professional Details -->
+                    <div class="profile-card">
+                        <h4 class="profile-section-title">Professional Details</h4>
+                        <div class="profile-item">
+                            <div class="profile-label">Designation:</div>
+                            <div class="profile-value" id="displayDesignation">Loading...</div>
+                        </div>
+                        <div class="profile-item">
+                            <div class="profile-label">Department:</div>
+                            <div class="profile-value" id="displayDepartment">Loading...</div>
+                        </div>
+                        <div class="profile-item">
+                            <div class="profile-label">Qualification:</div>
+                            <div class="profile-value" id="displayQualification">Loading...</div>
+                        </div>
+                        <div class="profile-item">
+                            <div class="profile-label">Number of Mentees:</div>
+                            <div class="profile-value" id="displayMentees">Loading...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Statistics Sidebar -->
+                <div class="col-lg-4">
+                    <div class="profile-card">
+                        <h4 class="profile-section-title">Quick Stats</h4>
+                        <div class="stat-box mb-3">
+                            <div class="stat-number" id="statMentees">-</div>
+                            <div class="stat-label">Total Mentees Assigned</div>
+                        </div>
+                        <div class="stat-box mb-3">
+                            <div class="stat-number" id="statSelected">-</div>
+                            <div class="stat-label">Successfully Placed</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number" id="statEvents">-</div>
+                            <div class="stat-label">Events Organized</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Edit Form Modal (Hidden by default) -->
+            <div id="editFormContainer" style="display:none; margin-top: 30px;">
+                <div class="profile-card">
+                    <h4 class="profile-section-title">Edit Profile</h4>
+                    <form id="editProfileForm">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Full Name</label>
+                                <input type="text" class="form-control" id="editName" placeholder="Full Name">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-control" id="editEmail" placeholder="Email Address">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Phone Number</label>
+                                <input type="tel" class="form-control" id="editPhone" placeholder="Phone Number">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Designation</label>
+                                <input type="text" class="form-control" id="editDesignation" placeholder="Designation">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Department</label>
+                                <input type="text" class="form-control" id="editDepartment" placeholder="Department">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Qualification</label>
+                                <input type="text" class="form-control" id="editQualification" placeholder="Qualification">
+                            </div>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="edit-btn">Save Changes</button>
+                            <button type="button" class="edit-btn" style="background: #666;" onclick="toggleEditMode()">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer-area pt-100 pb-75">
+        <div class="container">
+            <div class="row align-items-start">
+
+                <!-- About NEC Placement Cell -->
+                <div class="col-lg-4 col-sm-6">
+                    <div class="single-footer-widget about">
+                        <h3>About NEC Placement Cell</h3>
+                        <p>NEC Placement Cell is the Placement & Career Cell of Narayana Engineering College, Nellore. We provide centralized placement information, career guidance, skill development programs, and workshops to prepare students for top recruiters and industry opportunities.</p>
+                        <h6>Follow NEC Placement Cell:</h6>
+                        <ul class="list-unstyled ps-0 mb-0 social-link">
+                            <li class="d-inline-block">
+                                <a class="text-decoration-none" href="https://www.facebook.com/" target="_blank">
+                                    <i class="flaticon-facebook-app-symbol"></i>
+                                </a>
+                            </li>
+                            <li class="d-inline-block">
+                                <a class="text-decoration-none" href="https://www.pinterest.com/" target="_blank">
+                                    <i class="flaticon-pinterest"></i>
+                                </a>
+                            </li>
+                            <li class="d-inline-block">
+                                <a class="text-decoration-none" href="https://www.instagram.com/" target="_blank">
+                                    <i class="flaticon-instagram"></i>
+                                </a>
+                            </li>
+                            <li class="d-inline-block">
+                                <a class="text-decoration-none" href="https://twitter.com/" target="_blank">
+                                    <i class="flaticon-twitter"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="col-lg-4 col-sm-6">
+                    <div class="single-footer-widget quick">
+                        <h3>Quick Links</h3>
+                        <ul class="list-unstyled ps-0 mb-0">
+                            <li><a class="text-decoration-none" href="placement-overview.html">Placement Info</a></li>
+                            <li><a class="text-decoration-none" href="career-guidance.html">Career Guidance</a></li>
+                            <li><a class="text-decoration-none" href="events.html">Workshops & Events</a></li>
+                            <li><a class="text-decoration-none" href="contact.html">Contact Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Contact Placement Cell -->
+                <div class="col-lg-4 col-sm-6">
+                    <div class="single-footer-widget contact">
+                        <h3>Contact Placement Cell</h3>
+                        <ul class="list-unstyled ps-0 mb-0">
+                            <li>
+                                <a class="text-decoration-none" href="tel:+919999999999">
+                                    +91 99999 99999
+                                    <i class="ri-phone-line"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="text-decoration-none" href="mailto:aspira@necn.ac.in">
+                                    aspira@necn.ac.in
+                                    <i class="ri-message-line"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <i class="flaticon-placeholder"></i>
+                                <p>Narayana Engineering College, Nellore<br>NH-16, Muthukur Road, Nellore, Andhra Pradesh 524003</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Copyright -->
+    <div class="copyright-area">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-2 col-sm-12 d-flex align-items-center">
+                    <div class="copyright-logo">
+                        <img src="assets/img/favicon.png" alt="nec-placement-cell-logo" width="70" height="50">
+                        <p class="mb-0">NEC Placement Cell</p>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-sm-6">
+                    <div class="copyright-title text-lg-end text-sm-start">
+                        <p class="mb-0"><strong>NEC Placement Cell</strong> Placement & Career Cell. All Rights Reserved.</p>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-sm-6 text-lg-end text-sm-start">
+                    <div class="copyright-list">
+                        <ul class="list-unstyled ps-0 mb-0">
+                            <li class="d-inline-block me-3"><a class="text-decoration-none" href="faculty.html">P&T Team</a></li>
+                            <li class="d-inline-block me-3"><a class="text-decoration-none" href="placement-overview.html">Placements Info</a></li>
+                            <li class="d-inline-block"><a class="text-decoration-none" href="career-guidance.html">About NEC Placement Cell</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Back to Top -->
+    <button type="button" id="back-to-top">
+        <i class="ri-arrow-up-double-fill"></i>
+    </button>
+
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/swiper-bundle.min.js"></script>
+    <script src="assets/js/fslightbox.js"></script>
+    <script src="assets/js/scrollCue.min.js"></script>
+    <script src="assets/js/custom.js"></script>
+
+    <script>
+        // Load faculty profile data
+        async function loadProfileData() {
+            const facultyId = localStorage.getItem('faculty_id');
+            console.log('Faculty ID:', facultyId);
+            
+            if (!facultyId) {
+                console.warn('No faculty ID found in localStorage. Redirecting to login...');
+                window.location.href = 'login-faculty.html';
+                return;
+            }
+
+            let profileData = null;
+            let statsData = null;
+
+            try {
+                console.log('Attempting to fetch profile from API with ID:', facultyId);
+                
+                // Fetch faculty profile from database
+                const profileRes = await fetch(`/api/faculty/profile/${facultyId}`, {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                
+                console.log('Profile response status:', profileRes.status);
+                profileData = await profileRes.json();
+                console.log('Profile data received:', profileData);
+                
+                // Log individual fields to see what's null
+                if (profileData.success && profileData.faculty) {
+                    const fac = profileData.faculty;
+                    console.log('Faculty details:');
+                    console.log('  - id:', fac.id);
+                    console.log('  - name:', fac.name);
+                    console.log('  - email:', fac.email);
+                    console.log('  - phone:', fac.phone);
+                    console.log('  - designation:', fac.designation);
+                    console.log('  - department:', fac.department);
+                    console.log('  - qualification:', fac.qualification);
+                }
+
+                if (profileData.success && profileData.faculty) {
+                    // Fetch stats from database
+                    console.log('Attempting to fetch stats from API...');
+                    const statsRes = await fetch(`/api/faculty/stats/${facultyId}`, {
+                        method: 'GET',
+                        headers: { 'Content-Type': 'application/json' }
+                    });
+                    
+                    console.log('Stats response status:', statsRes.status);
+                    statsData = await statsRes.json();
+                    console.log('Stats data:', statsData);
+                }
+
+            } catch (err) {
+                console.error('Error fetching from API:', err);
+                profileData = null;
+                statsData = null;
+            }
+
+            // Use API data if successful, otherwise use localStorage fallback
+            let faculty = null;
+            let mentees = '0';
+            let placedCount = '0';
+            let eventsCount = '0';
+
+            if (profileData && profileData.success && profileData.faculty) {
+                // Use API data
+                faculty = profileData.faculty;
+                mentees = statsData && statsData.success ? (statsData.mentees || 0).toString() : '0';
+                placedCount = statsData && statsData.success ? (statsData.opportunities || 0).toString() : '0';
+                eventsCount = statsData && statsData.success ? (statsData.events || 0).toString() : '0';
+                console.log('Using API data');
+            } else {
+                // Fallback to localStorage
+                console.log('API failed, using localStorage fallback');
+                faculty = {
+                    name: localStorage.getItem('faculty_name') || 'Faculty',
+                    email: localStorage.getItem('faculty_email') || 'N/A',
+                    phone: localStorage.getItem('faculty_phone') || 'N/A',
+                    designation: localStorage.getItem('faculty_designation') || 'Faculty Member',
+                    department: localStorage.getItem('faculty_department') || 'N/A',
+                    qualification: localStorage.getItem('faculty_qualification') || 'N/A'
+                };
+                mentees = '0';
+                placedCount = '0';
+                eventsCount = '0';
+            }
+
+            // Update display
+            document.getElementById('profileName').textContent = faculty.name || 'Faculty';
+            document.getElementById('profileDesignation').textContent = faculty.designation || 'Faculty Member';
+            document.getElementById('displayName').textContent = faculty.name || 'N/A';
+            document.getElementById('displayEmail').textContent = faculty.email || 'N/A';
+            document.getElementById('displayPhone').textContent = faculty.phone || 'N/A';
+            document.getElementById('displayDesignation').textContent = faculty.designation || 'N/A';
+            document.getElementById('displayDepartment').textContent = faculty.department || 'N/A';
+            document.getElementById('displayQualification').textContent = faculty.qualification || 'N/A';
+            document.getElementById('displayMentees').textContent = mentees;
+            document.getElementById('statMentees').textContent = mentees;
+            document.getElementById('statSelected').textContent = placedCount;
+            document.getElementById('statEvents').textContent = eventsCount;
+
+            // Populate edit form
+            document.getElementById('editName').value = faculty.name || '';
+            document.getElementById('editEmail').value = faculty.email || '';
+            document.getElementById('editPhone').value = faculty.phone || '';
+            document.getElementById('editDesignation').value = faculty.designation || '';
+            document.getElementById('editDepartment').value = faculty.department || '';
+            document.getElementById('editQualification').value = faculty.qualification || '';
+
+            console.log('Profile loaded');
+        }
+
+        // Toggle Edit Mode
+        function toggleEditMode() {
+            const editForm = document.getElementById('editFormContainer');
+            editForm.style.display = editForm.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // Save profile changes
+        document.getElementById('editProfileForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const facultyId = localStorage.getItem('faculty_id');
+            
+            if (!facultyId) {
+                alert('Faculty ID not found. Please log in again.');
+                return;
+            }
+
+            const updatedData = {
+                name: document.getElementById('editName').value,
+                phone: document.getElementById('editPhone').value,
+                designation: document.getElementById('editDesignation').value,
+                department: document.getElementById('editDepartment').value,
+                qualification: document.getElementById('editQualification').value
+            };
+
+            let saved = false;
+
+            try {
+                // Try to save to backend API
+                console.log('Attempting to save to API...');
+                const response = await fetch(`/api/faculty/profile/${facultyId}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(updatedData)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    console.log('Saved to API successfully');
+                    saved = true;
+                } else {
+                    console.warn('API save failed:', result.message);
+                }
+            } catch (err) {
+                console.error('Error saving to API:', err);
+            }
+
+            // If API save failed, fall back to localStorage
+            if (!saved) {
+                console.log('Saving to localStorage as fallback');
+                localStorage.setItem('faculty_name', updatedData.name);
+                localStorage.setItem('faculty_phone', updatedData.phone);
+                localStorage.setItem('faculty_designation', updatedData.designation);
+                localStorage.setItem('faculty_department', updatedData.department);
+                localStorage.setItem('faculty_qualification', updatedData.qualification);
+                saved = true;
+            }
+
+            // Reload profile with updated data
+            await loadProfileData();
+            toggleEditMode();
+            alert('Profile updated successfully!');
+        });
+
+        // Load data on page load
+        document.addEventListener('DOMContentLoaded', loadProfileData);
+
+        // Sticky navbar functionality
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            const topHeaderHeight = document.querySelector('.top-header-area').offsetHeight;
+
+            if (window.scrollY >= topHeaderHeight) {
+                navbar.classList.add('sticky');
+                document.body.classList.add('navbar-sticky');
+            } else {
+                navbar.classList.remove('sticky');
+                document.body.classList.remove('navbar-sticky');
+            }
+        });
+    </script>
+
+</body>
+</html>

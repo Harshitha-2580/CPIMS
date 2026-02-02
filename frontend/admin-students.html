@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEC Placement Cell – Admin Student Management</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="assets/css/scrollCue.css">
+    <link rel="stylesheet" href="assets/css/remixicon.css">
+    <link rel="stylesheet" href="assets/css/flaticon.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link href="assets/img/favicon.png" type="image/x-icon" rel="icon">
+
+    <style>
+        /* Consistency fixes for Admin Pages */
+        .admin-stats-wrapper {
+            padding: 50px 0;
+            background: linear-gradient(135deg, #f8fbff 0%, #f0f2f5 100%);
+        }
+
+        .stats-card-item {
+            background: #fff;
+            padding: 35px 25px;
+            border-radius: 12px;
+            box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .stats-card-item:nth-child(1) {
+            border-color: #FA394A;
+            background: linear-gradient(135deg, #fff5f5 0%, #fff 100%);
+        }
+
+        .stats-card-item:nth-child(2) {
+            border-color: #FFC333;
+            background: linear-gradient(135deg, #fffbf0 0%, #fff 100%);
+        }
+
+        .stats-card-item:nth-child(3) {
+            border-color: #28a745;
+            background: linear-gradient(135deg, #f0fff4 0%, #fff 100%);
+        }
+
+        .stats-card-item:nth-child(4) {
+            border-color: #0066cc;
+            background: linear-gradient(135deg, #f0f7ff 0%, #fff 100%);
+        }
+
+        .stats-card-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .stats-card-item h3 {
+            font-size: 44px;
+            font-weight: 900;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .stats-card-item:nth-child(1) h3 { color: #FA394A; }
+        .stats-card-item:nth-child(2) h3 { color: #FFC333; }
+        .stats-card-item:nth-child(3) h3 { color: #28a745; }
+        .stats-card-item:nth-child(4) h3 { color: #0066cc; }
+
+        .stats-card-item p {
+            font-weight: 600;
+            color: #666;
+            margin-bottom: 0;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+        }
+
+        .filter-box {
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 20px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+        }
+
+        .buzz-card-custom {
+            background: #fff;
+            border-left: 4px solid #0d47a1;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0px 2px 10px rgba(0,0,0,0.03);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .buzz-card-custom i {
+            font-size: 24px;
+            color: #0d47a1;
+            margin-right: 15px;
+        }
+
+        .section-heading-admin {
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 25px;
+            position: relative;
+            padding-left: 15px;
+        }
+
+        .section-heading-admin::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 5px;
+            height: 25px;
+            width: 4px;
+            background: #ff0000;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="top-header-area style-2" style="padding: 12px 0;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-12 text-center">
+                    <h3 class="mb-0" style="color: #fff; font-weight: 700; letter-spacing: 1px; line-height: 1.4; font-size: 26px;">
+                        <span style="font-family: 'Great Vibes', cursive; font-size: 36px; font-weight: 600; margin-right: 6px;">
+                            NEC
+                        </span>
+                        – Central Placement and Information Center
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light py-2" id="navbar">
+        <div class="container">
+            <img src="assets/img/logo_necn.jpg" alt="Logo" height="70" width="160">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a href="admin-dashboard.html" class="nav-link">Dashboard</a></li>
+                    <li class="nav-item"><a href="admin-students.html" class="nav-link active" style="color: red; font-weight: bold;">Students</a></li>
+                    <li class="nav-item"><a href="admin-opportunities.html" class="nav-link">Opportunities</a></li>
+                    <li class="nav-item"><a href="admin-reports.html" class="nav-link">Reports</a></li>
+                    <li class="nav-item"><a href="index.html" class="nav-link" style="color: #666;">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="admin-stats-wrapper">
+        <div class="container">
+            
+            <div class="row g-4 mb-5">
+                <div class="col-lg-3 col-md-6">
+                    <div class="stats-card-item">
+                        <h3 id="total-students">0</h3>
+                        <p>Total Students</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="stats-card-item">
+                        <h3 id="placed-students">0</h3>
+                        <p>Placed Students</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="stats-card-item">
+                        <h3 id="applied-students">0</h3>
+                        <p>Applied for Drives</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="stats-card-item">
+                        <h3 id="branches-count">0</h3>
+                        <p>Total Branches</p>
+                    </div>
+                </div>
+            </div>
+
+            <h4 class="section-heading-admin">Student Database Filters</h4>
+            <div class="filter-box">
+                <div class="row g-3">
+                    <div class="col-lg-3">
+                        <input type="text" class="form-control" id="searchInput" placeholder="Search name or email...">
+                    </div>
+                    <div class="col-lg-2">
+                        <select class="form-select" id="branchFilter">
+                            <option value="">Select Branch</option>
+                            <option value="CSE">CSE</option>
+                            <option value="ECE">ECE</option>
+                            <option value="MECH">MECH</option>
+                            <option value="CIVIL">CIVIL</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-2">
+                        <select class="form-select" id="yearFilter">
+                            <option value="">Select Year</option>
+                            <option value="1">1st Year</option>
+                            <option value="2">2nd Year</option>
+                            <option value="3">3rd Year</option>
+                            <option value="4">4th Year</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-3">
+                        <select class="form-select" id="statusFilter">
+                            <option value="">All Status</option>
+                            <option value="placed">Placed</option>
+                            <option value="applied">Applied</option>
+                            <option value="not_applied">Not Applied</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-2">
+                        <button class="btn btn-primary w-100 default-btn" style="border:none;" id="filterBtn">Filter Results</button>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Students Table -->
+            <div class="table-responsive" style="margin-bottom: 40px;">
+                <table class="table table-hover">
+                    <thead style="background-color: #f8f9fa; border-bottom: 2px solid #ddd;">
+                        <tr>
+                            <th style="padding: 15px; color: #333; font-weight: 700;">Name</th>
+                            <th style="padding: 15px; color: #333; font-weight: 700;">Email</th>
+                            <th style="padding: 15px; color: #333; font-weight: 700;">Branch</th>
+                            <th style="padding: 15px; color: #333; font-weight: 700;">Year</th>
+                            <th style="padding: 15px; color: #333; font-weight: 700;">CGPA</th>
+                            <th style="padding: 15px; color: #333; font-weight: 700;">Applications</th>
+                            <th style="padding: 15px; color: #333; font-weight: 700;">Placements</th>
+                        </tr>
+                    </thead>
+                    <tbody id="studentsList">
+                        <tr>
+                            <td colspan="7" style="text-align: center; padding: 20px; color: #999;">Loading students...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="footer-area pt-100 pb-75">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-sm-6">
+                    <div class="single-footer-widget about">
+                        <h3>About NEC</h3>
+                        <p>Central Placement Cell - Narayana Engineering College, Nellore. Providing placement info and guidance to help students shape their careers.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <div class="single-footer-widget quick">
+                        <h3>Admin Quick Links</h3>
+                        <ul class="list-unstyled ps-0 mb-0">
+                            <li><a href="admin-dashboard.html">Admin Dashboard</a></li>
+                            <li><a href="admin-reports.html">Placement Reports</a></li>
+                            <li><a href="index.html">Main Website</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <div class="single-footer-widget contact">
+                        <h3>Support Contact</h3>
+                        <ul class="list-unstyled ps-0 mb-0">
+                            <li><a href="mailto:aspira@necn.ac.in">aspira@necn.ac.in <i class="ri-message-line"></i></a></li>
+                            <li><i class="ri-phone-line"></i> +91 99999 99999</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="copyright-area">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <p class="mb-0">© <strong>NEC</strong> Placement & Career Cell. All Rights Reserved.</p>
+                </div>
+                <div class="col-lg-6 text-end">
+                    <img src="assets/img/favicon.png" alt="logo" width="40">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/custom.js"></script>
+    
+    <script>
+        const API_BASE_URL = 'http://localhost:3000';
+        let allStudents = [];
+        let hasAppliedFilters = false;
+
+        // Fetch all students on page load
+        async function loadStudents(filters = {}) {
+            try {
+                if (!hasAppliedFilters) {
+                    showInitialMessage();
+                    return;
+                }
+                let url = `${API_BASE_URL}/api/admin/all-students`;
+                const params = new URLSearchParams();
+                
+                if (filters.search) params.append('search', filters.search);
+                if (filters.branch) params.append('branch', filters.branch);
+                if (filters.year) params.append('year', filters.year);
+                if (filters.status) params.append('status', filters.status);
+                
+                if (params.toString()) url += '?' + params.toString();
+                
+                console.log('Fetching from:', url);
+                const response = await fetch(url);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    allStudents = data.students;
+                    displayStudents(data.students);
+                } else {
+                    console.error('Error fetching students:', data.message);
+                    document.getElementById('studentsList').innerHTML = `
+                        <tr>
+                            <td colspan="7" style="text-align: center; padding: 20px; color: #d32f2f;">
+                                Error: ${data.message}
+                            </td>
+                        </tr>
+                    `;
+                }
+            } catch (err) {
+                console.error('Error:', err);
+                document.getElementById('studentsList').innerHTML = `
+                    <tr>
+                        <td colspan="7" style="text-align: center; padding: 20px; color: #d32f2f;">
+                            Failed to load students: ${err.message}
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+
+        // Load only statistics on page load (always show)
+        async function loadStats() {
+            try {
+                const url = `${API_BASE_URL}/api/admin/all-students`;
+                const response = await fetch(url);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    updateStats(data.stats);
+                }
+            } catch (err) {
+                console.error('Error loading stats:', err);
+            }
+        }
+
+        function showInitialMessage() {
+            const tbody = document.getElementById('studentsList');
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="7" style="text-align: center; padding: 20px; color: #777;">
+                        Select filters and click <strong>Filter Results</strong> to view students.
+                    </td>
+                </tr>
+            `;
+        }
+
+        // Display students in table
+        function displayStudents(students) {
+            const tbody = document.getElementById('studentsList');
+            
+            if (!students || students.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="7" style="text-align: center; padding: 20px; color: #999;">
+                            No students found
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            tbody.innerHTML = students.map(student => `
+                <tr style="border-bottom: 1px solid #eee;">
+                    <td style="padding: 12px 15px; color: #333; font-weight: 600;">${student.name}</td>
+                    <td style="padding: 12px 15px; color: #666;">${student.email}</td>
+                    <td style="padding: 12px 15px; color: #666;">
+                        <span style="background: #e8eaf6; padding: 4px 12px; border-radius: 20px; font-size: 13px;">
+                            ${student.branch || 'N/A'}
+                        </span>
+                    </td>
+                    <td style="padding: 12px 15px; color: #666;">${student.year || 'N/A'}</td>
+                    <td style="padding: 12px 15px; color: #666;">${student.cgpa || 'N/A'}</td>
+                    <td style="padding: 12px 15px; text-align: center;">
+                        <span style="background: #fff3e0; color: #f57f17; padding: 4px 8px; border-radius: 4px; font-weight: 600;">
+                            ${student.applications_count || 0}
+                        </span>
+                    </td>
+                    <td style="padding: 12px 15px; text-align: center;">
+                        <span style="background: #e8f5e9; color: #2e7d32; padding: 4px 8px; border-radius: 4px; font-weight: 600;">
+                            ${student.placements_count || 0}
+                        </span>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Update statistics
+        function updateStats(stats) {
+            document.getElementById('total-students').textContent = stats.total_students || 0;
+            document.getElementById('placed-students').textContent = stats.placed_students || 0;
+            document.getElementById('applied-students').textContent = stats.applied_students || 0;
+            document.getElementById('branches-count').textContent = stats.total_branches || 0;
+        }
+
+        // Event listeners
+        document.getElementById('filterBtn').addEventListener('click', () => {
+            const filters = {
+                search: document.getElementById('searchInput').value,
+                branch: document.getElementById('branchFilter').value,
+                year: document.getElementById('yearFilter').value,
+                status: document.getElementById('statusFilter').value
+            };
+            hasAppliedFilters = true;
+            loadStudents(filters);
+        });
+
+        // Allow filtering with Enter key
+        document.getElementById('searchInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                document.getElementById('filterBtn').click();
+            }
+        });
+
+        // Load students on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            loadStats();
+            showInitialMessage();
+        });
+    </script>
+</body>
+</html>
