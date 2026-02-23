@@ -1136,7 +1136,7 @@ Hero Area Style
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
-  background-image: url(../img/bg/bg-2.jpg);
+  background-image: url(../img/pages/necn.png);
 }
 .banner-area .container-fluid {
   max-width: 1680px;
@@ -1163,7 +1163,7 @@ Hero Area Style
 .banner-content .title h1 {
   font-size: 80px;
   line-height: 1.3;
-  color: var(--whiteColor);
+  color:#002A5C;
 }
 .banner-content .title h1 span {
   position: relative;
