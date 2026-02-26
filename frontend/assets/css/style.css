@@ -1136,7 +1136,7 @@ Hero Area Style
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
-  background-image: url(../img/pages/necn.png);
+  background-image: url(../img/building.png);
 }
 .banner-area .container-fluid {
   max-width: 1680px;
@@ -4870,6 +4870,13 @@ Footer Area Style
 }
 .single-footer-widget ul li:last-child {
   margin-bottom: 0;
+}
+.play-btn .arrow-btn {
+    color:#002A5C !important;
+}
+
+.play-btn .arrow-btn i {
+    color:#002A5C!important;
 }
 .single-footer-widget.about {
   margin-right: 35px;
