@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEC Placement Cell - Public Pages</title>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/remixicon.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/admin-theme.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link href="assets/img/crop_nec.png" type="image/x-icon" rel="icon">
+    <style>
+        :root {
+            --primaryColor: #001e43;
+            --secondaryColor: #002a5c;
+            --accentColor: #003580;
+            --darkColor: rgb(0, 30, 67);
+            --lightGray: #f8f9fa;
+            --cardBg: #ffffff;
+            --textColor: #333;
+            --textLight: #666;
+            --borderColor: #e9ecef;
+            --shadowColor: rgba(0, 30, 67, 0.1);
+            --gradientPrimary: linear-gradient(135deg, #001e43, #002a5c);
+            --gradientSecondary: linear-gradient(135deg, #002a5c, #003580);
+        }
+
+        .top-header-area {
+            margin-left: 240px;
+            transition: margin-left 0.3s ease;
+        }
+
+        .main-content-wrapper {
+            margin-left: 240px;
+            transition: margin-left 0.3s ease;
+            padding: 30px 30px 40px;
+            min-height: calc(100vh - 120px);
+        }
+
+        .admin-welcome-banner {
+            background: linear-gradient(135deg, #001e43, #002a5c);
+            padding: 42px 0 32px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 30, 67, 0.1);
+        }
+
+        .admin-welcome-banner .container-fluid {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .banner-content {
+            max-width: 680px;
+            margin-left: 0;
+        }
+
+        .banner-content h1 {
+            font-size: 2.4rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 0.9rem;
+        }
+
+        .banner-content p {
+            font-size: 1rem;
+            line-height: 1.7;
+            max-width: 620px;
+            margin-bottom: 0;
+        }
+
+        body.admin-sidebar-collapsed .top-header-area,
+        body.admin-sidebar-collapsed .header-welcome-gap,
+        body.admin-sidebar-collapsed .admin-welcome-banner,
+        body.admin-sidebar-collapsed .main-content-wrapper {
+            margin-left: 68px !important;
+        }
+
+        @media (max-width: 900px) {
+            .admin-welcome-banner,
+            .main-content-wrapper {
+                margin-left: 68px;
+            }
+        }
+
+        .page-card {
+            border: 1px solid rgba(0, 30, 67, 0.12);
+            border-radius: 16px;
+            background: #fff;
+            box-shadow: 0 18px 40px rgba(0, 30, 67, 0.08);
+            padding: 24px;
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
+        .preview-panel {
+            min-height: 740px;
+            background: #fff;
+            border: 1px solid rgba(0, 30, 67, 0.12);
+            border-radius: 18px;
+            padding: 18px;
+            box-shadow: 0 24px 60px rgba(0, 30, 67, 0.08);
+        }
+        .preview-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 14px;
+            gap: 12px;
+        }
+        #togglePreviewBtn.active {
+            color: #fff;
+            background: #1f4b8f;
+            border-color: #1f4b8f;
+        }
+        .page-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 22px 48px rgba(0, 30, 67, 0.14);
+        }
+        .page-card h5 {
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+        .page-card p {
+            color: #4f5c78;
+            margin-bottom: 16px;
+            min-height: 48px;
+        }
+        .page-card .btn-edit-page {
+            border-radius: 10px;
+            min-width: 140px;
+        }
+        .editor-panel {
+            background: #fff;
+            border: 1px solid rgba(0, 30, 67, 0.12);
+            border-radius: 18px;
+            box-shadow: 0 20px 60px rgba(0, 30, 67, 0.1);
+            padding: 24px;
+            margin-top: 24px;
+        }
+        .editor-panel textarea {
+            min-height: 460px;
+            resize: vertical;
+            font-family: Consolas, Monaco, 'Courier New', monospace;
+        }
+        .admin-wrapper {
+            padding: 30px 0;
+        }
+        .preview-panel {
+            min-height: 740px;
+            background: #fff;
+            border: 1px solid rgba(0, 30, 67, 0.12);
+            border-radius: 18px;
+            padding: 18px;
+            box-shadow: 0 20px 60px rgba(0, 30, 67, 0.08);
+        }
+        .preview-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 14px;
+            gap: 12px;
+        }
+        .editor-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        .editor-header .badge {
+            font-size: 0.85rem;
+            padding: 8px 14px;
+        }
+        .message-box {
+            background: #edf7f7;
+            border: 1px solid #cfe8e8;
+            color: #0f4d55;
+            border-radius: 12px;
+            padding: 14px 18px;
+            margin-bottom: 18px;
+        }
+        .image-editor-panel {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #fff;
+            border: 1px solid rgba(0, 30, 67, 0.2);
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 30, 67, 0.15);
+            padding: 16px;
+            max-width: 320px;
+            z-index: 9999;
+            display: none;
+        }
+        .image-editor-panel.active {
+            display: block;
+        }
+        .image-editor-panel h6 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--primaryColor);
+        }
+        .image-editor-panel p {
+            font-size: 0.85rem;
+            color: var(--textLight);
+            margin-bottom: 8px;
+        }
+        .image-editor-panel .form-group {
+            margin-bottom: 10px;
+        }
+        .image-editor-panel input[type="file"],
+        .image-editor-panel input[type="text"] {
+            font-size: 0.85rem;
+        }
+        .image-preview-thumb {
+            width: 100%;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border: 2px solid var(--borderColor);
+        }
+        .image-selected-indicator {
+            border: 3px solid #1f4b8f !important;
+            cursor: move;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body class="admin-sidebar-enabled">
+    <div class="top-header-area style-2" style="padding: 12px 0;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-12 text-center">
+                    <h3 class="mb-0" style="color: #fff; font-weight: 700; letter-spacing: 1px; line-height: 1.4; font-size: 26px;">
+                        <span style="font-family: 'Poppins', ; font-size: 36px; font-weight: 700;"> NEC</span> – Central Placement Information and Management Center
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header-welcome-gap"></div>
+    
+
+
+
+            <!-- Welcome Banner -->
+    <div class="admin-page-hero">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <div class="admin-page-hero-content">
+                        <h2 class="admin-page-hero-title">Public Pages</h2>
+                        <p class="admin-page-hero-subtitle">Review and edit the main public-facing pages</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <div class="admin-page-hero-visual">
+                        <i class="ri-file-chart-line"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+        <div class="admin-wrapper">
+            <div class="container-fluid pt-4 pb-5">
+                <div id="pageMessage" class="message-box" style="display:none;"></div>
+                <div class="row g-4" id="pagesList"></div>
+
+                <div class="editor-panel" id="editorPanel" style="display:none;">
+                <div class="editor-header">
+                    <div>
+                        <h4 id="editorTitle" style="margin:0;">Edit Public Page</h4>
+                        <p id="editorSubtitle" style="margin:4px 0 0; color:#5d6d88; font-size:0.95rem;">Edit the page directly in the live preview. Click on images to change them.</p>
+                    </div>
+                    <span class="badge bg-primary" id="editorFilename">index.html</span>
+                </div>
+
+                <div class="mb-3 d-flex flex-wrap gap-2">
+                    <button class="btn btn-outline-primary active" id="togglePreviewBtn">Live Preview</button>
+                </div>
+
+                <div class="row gy-4">
+                    <div class="col-12">
+                        <div class="preview-panel" id="previewPanel">
+                            <div class="preview-header">
+                                <h6 style="margin:0;">Live Preview</h6>
+                                <small style="color:#5d6d88;">Click into the page preview to edit text directly. Click on images to change them.</small>
+                            </div>
+                            <iframe id="pagePreviewIframe" sandbox="allow-same-origin allow-forms allow-popups" style="width:100%; min-height:700px; border:1px solid rgba(0,0,0,0.08); border-radius:14px;"></iframe>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-wrap gap-2 mt-3">
+                    <button class="btn btn-primary" id="savePageBtn">Save Changes</button>
+                    <button class="btn btn-outline-secondary" id="cancelEditBtn">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Editor Panel -->
+    <div class="image-editor-panel" id="imageEditorPanel">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <h6 style="margin:0;">Edit Image</h6>
+            <button class="btn btn-sm btn-outline-secondary" id="closeImageEditor" style="padding:2px 6px; font-size:0.75rem;">×</button>
+        </div>
+        <img id="selectedImageThumb" class="image-preview-thumb" src="" alt="Selected image">
+        <p style="margin:8px 0 4px; font-size:0.8rem; color:#666;">Image Source:</p>
+        <input type="text" id="imageSourcePath" class="form-control form-control-sm" placeholder="Current path" style="font-size:0.85rem; margin-bottom:10px;" readonly>
+        <p style="margin:8px 0 4px; font-size:0.8rem; color:#666;">Upload New Image:</p>
+        <div class="mb-2">
+            <input type="file" id="imageFileInput" class="form-control form-control-sm" accept="image/*" style="font-size:0.85rem;">
+        </div>
+        <div class="d-flex gap-2" style="flex-wrap:wrap;">
+            <button class="btn btn-sm btn-primary" id="updateImageBtn" style="flex:1; font-size:0.85rem;">Replace Image</button>
+            <button class="btn btn-sm btn-outline-danger" id="deleteImageBtn" style="flex:0.8; font-size:0.85rem;">Remove</button>
+        </div>
+    </div>
+
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/admin-session-manager.js"></script>
+    <script src="assets/js/admin-sidebar.js"></script>
+    <script src="assets/js/admin-access-control.js"></script>
+    <script src="assets/js/admin-public-pages.js"></script>
+</body>
+</html>

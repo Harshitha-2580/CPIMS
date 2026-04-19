@@ -4,6 +4,9 @@ const db = require('../db');
 const db2 = require('../db2');
 const crypto = require('crypto');
 const bcrypt = require('bcrypt');
+const fs = require('fs').promises;
+const path = require('path');
+const multer = require('multer');
 const {
   sendPasswordResetEmail,
   sendAdminPasswordSetupEmail,
@@ -11,6 +14,82 @@ const {
   sendStudentApprovalEmail,
   sendStudentRejectionEmail
 } = require('../mailer');
+
+const PUBLIC_PAGE_FILES = [
+  'index.html',
+  'companies.html',
+  'events.html',
+  'event-details.html',
+  'contact.html',
+  'announcements.html'
+];
+
+// Ensure page-images directory exists
+function ensurePageImagesDir() {
+  const uploadsDir = path.join(__dirname, '../..', 'frontend', 'uploads', 'page-images');
+  try {
+    require('fs').mkdirSync(uploadsDir, { recursive: true });
+  } catch (err) {
+    console.warn('Could not create page-images directory:', err);
+  }
+}
+
+// Configure multer for page image uploads
+const pageImageStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    ensurePageImagesDir();
+    const uploadsDir = path.join(__dirname, '../..', 'frontend', 'uploads', 'page-images');
+    cb(null, uploadsDir);
+  },
+  filename: (req, file, cb) => {
+    const timestamp = Date.now();
+    const randomStr = Math.random().toString(36).substring(2, 8);
+    const ext = path.extname(file.originalname);
+    cb(null, `page-img-${timestamp}-${randomStr}${ext}`);
+  }
+});
+
+const pageImageUpload = multer({ 
+  limits: { fileSize: 10 * 1024 * 1024 }, // 10MB limit - set limits first
+  storage: pageImageStorage,
+  fileFilter: (req, file, cb) => {
+    if (!file.mimetype.startsWith('image/')) {
+      return cb(new Error('Only image files are allowed'));
+    }
+    cb(null, true);
+  }
+});
+
+function getPublicPageFilePath(filename) {
+  return path.join(__dirname, '../..', 'frontend', filename);
+}
+
+function isValidPublicPage(filename) {
+  return PUBLIC_PAGE_FILES.includes(filename);
+}
+
+async function getPublicPagePreview(html) {
+  const text = html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+  return text.slice(0, 280) + (text.length > 280 ? '...' : '');
+}
+
+const ADMIN_COLUMN_CACHE = {};
+async function ensureAdminColumn(columnName, columnDefinition) {
+  if (ADMIN_COLUMN_CACHE[columnName]) {
+    return;
+  }
+
+  const [columns] = await db.query('SHOW COLUMNS FROM admins LIKE ?', [columnName]);
+  if (!columns || columns.length === 0) {
+    await db.query(`ALTER TABLE admins ADD COLUMN ${columnDefinition}`);
+  }
+
+  ADMIN_COLUMN_CACHE[columnName] = true;
+}
+
+async function ensureCanEditPublicPagesColumn() {
+  await ensureAdminColumn('can_edit_public_pages', 'can_edit_public_pages TINYINT(1) DEFAULT 0');
+}
 
 // Middleware to check if user is superadmin (JWT auth required)
 function requireSuperadmin(req, res, next) {
@@ -85,6 +164,122 @@ async function requireApproveStudentsPrivilege(req, res, next) {
   }
 }
 
+// Middleware to check if admin can edit public pages
+async function requireEditPublicPagesPrivilege(req, res, next) {
+  try {
+    const userRole = req.user?.role;
+    const userEmail = req.user?.email;
+
+    if (userRole === 'superadmin' || userRole === 'super') {
+      return next();
+    }
+
+    if (userRole === 'admin' && userEmail) {
+      await ensureCanEditPublicPagesColumn();
+      const [admins] = await db.query(
+        'SELECT can_edit_public_pages FROM admins WHERE email = ?',
+        [userEmail]
+      );
+
+      if (admins && admins.length > 0 && admins[0].can_edit_public_pages === 1) {
+        return next();
+      }
+    }
+
+    return res.status(403).json({
+      success: false,
+      message: 'You do not have permission to edit public pages. Please contact superadmin.'
+    });
+  } catch (err) {
+    console.error('Error checking public pages privilege:', err);
+    return res.status(500).json({ success: false, message: 'Server error while checking permissions' });
+  }
+}
+
+// Admin public page content management
+router.get('/public-pages', requireEditPublicPagesPrivilege, async (req, res) => {
+  try {
+    const pages = await Promise.all(PUBLIC_PAGE_FILES.map(async (filename) => {
+      const filePath = getPublicPageFilePath(filename);
+      const content = await fs.readFile(filePath, 'utf8');
+      const preview = await getPublicPagePreview(content);
+      return {
+        filename,
+        label: filename.replace('.html', '').replace(/-/g, ' '),
+        preview
+      };
+    }));
+    res.json({ success: true, pages });
+  } catch (err) {
+    console.error('Error reading public pages:', err);
+    res.status(500).json({ success: false, message: 'Failed to load public pages' });
+  }
+});
+
+router.get('/public-pages/:filename', requireEditPublicPagesPrivilege, async (req, res) => {
+  try {
+    const filename = req.params.filename;
+    if (!isValidPublicPage(filename)) {
+      return res.status(400).json({ success: false, message: 'Invalid public page requested' });
+    }
+    const filePath = getPublicPageFilePath(filename);
+    const content = await fs.readFile(filePath, 'utf8');
+    res.json({ success: true, filename, content });
+  } catch (err) {
+    console.error('Error loading public page content:', err);
+    res.status(500).json({ success: false, message: 'Failed to load public page content' });
+  }
+});
+
+router.post('/public-pages/:filename', requireEditPublicPagesPrivilege, async (req, res) => {
+  try {
+    const filename = req.params.filename;
+    const { content } = req.body;
+
+    if (!isValidPublicPage(filename)) {
+      return res.status(400).json({ success: false, message: 'Invalid public page selected' });
+    }
+    if (typeof content !== 'string' || content.trim().length === 0) {
+      return res.status(400).json({ success: false, message: 'Page content is required' });
+    }
+
+    const filePath = getPublicPageFilePath(filename);
+    await fs.writeFile(filePath, content, 'utf8');
+    res.json({ success: true, message: 'Public page updated successfully' });
+  } catch (err) {
+    console.error('Error saving public page content:', err);
+    res.status(500).json({ success: false, message: 'Failed to save public page content' });
+  }
+});
+
+// Upload image for public pages
+router.post('/upload-page-image', requireEditPublicPagesPrivilege, (req, res, next) => {
+  const upload = pageImageUpload.single('file');
+  upload(req, res, (err) => {
+    if (err instanceof multer.MulterError) {
+      if (err.code === 'LIMIT_FILE_SIZE') {
+        return res.status(400).json({ success: false, message: 'File too large. Maximum size is 10MB.' });
+      }
+      return res.status(400).json({ success: false, message: `Upload error: ${err.message}` });
+    } else if (err) {
+      return res.status(400).json({ success: false, message: `Upload error: ${err.message}` });
+    }
+    next();
+  });
+}, async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ success: false, message: 'No file uploaded' });
+    }
+
+    const imageUrl = `/uploads/page-images/${req.file.filename}`;
+    res.json({ success: true, message: 'Image uploaded successfully', imageUrl, path: imageUrl });
+  } catch (err) {
+    console.error('Error uploading page image:', err);
+    res.status(500).json({ success: false, message: 'Failed to upload image' });
+  }
+});
+
 // Add new admin (superadmin only)
 router.post('/add-admin', requireManageAdminsPrivilege, async (req, res) => {
   try {
@@ -113,6 +308,7 @@ router.post('/add-admin', requireManageAdminsPrivilege, async (req, res) => {
     let can_assign_students_opportunities = 0;
     let can_approve_students = 0;
     let can_manage_admins = 0;
+    let can_edit_public_pages = 0;
     
     // If superadmin is creating, they can grant all privileges
     // Otherwise, only user-selected privileges from non-superadmin
@@ -125,6 +321,7 @@ router.post('/add-admin', requireManageAdminsPrivilege, async (req, res) => {
         can_assign_students_opportunities = 1;
         can_approve_students = 1;
         can_manage_admins = 1;
+        can_edit_public_pages = 1;
       } else if (privileges && Array.isArray(privileges)) {
         // For regular admins, map selected privileges
         can_add_faculty = privileges.includes('can_add_faculty') ? 1 : 0;
@@ -132,6 +329,7 @@ router.post('/add-admin', requireManageAdminsPrivilege, async (req, res) => {
         can_post_opportunities = privileges.includes('can_post_opportunities') ? 1 : 0;
         can_assign_students_opportunities = privileges.includes('can_assign_students_opportunities') ? 1 : 0;
         can_approve_students = privileges.includes('can_approve_students') ? 1 : 0;
+        can_edit_public_pages = privileges.includes('can_edit_public_pages') ? 1 : 0;
       }
     } else {
       // Non-superadmin can only assign privileges that they themselves have
@@ -142,14 +340,17 @@ router.post('/add-admin', requireManageAdminsPrivilege, async (req, res) => {
         can_post_opportunities = privileges.includes('can_post_opportunities') ? 1 : 0;
         can_assign_students_opportunities = privileges.includes('can_assign_students_opportunities') ? 1 : 0;
         can_approve_students = privileges.includes('can_approve_students') ? 1 : 0;
+        can_edit_public_pages = privileges.includes('can_edit_public_pages') ? 1 : 0;
       }
     }
     
+    await ensureCanEditPublicPagesColumn();
+
     // Insert new admin with reset token
     await db.query(
-      `INSERT INTO admins (name, email, phone, designation, password, role, can_add_faculty, can_generate_reports, can_post_opportunities, can_assign_students_opportunities, can_approve_students, can_manage_admins, password_reset_token, password_reset_expires) 
+      `INSERT INTO admins (name, email, phone, designation, password, role, can_add_faculty, can_generate_reports, can_post_opportunities, can_assign_students_opportunities, can_approve_students, can_manage_admins, can_edit_public_pages, password_reset_token, password_reset_expires) 
        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      [name, email, phone, designation, hashedPassword, role, can_add_faculty, can_generate_reports, can_post_opportunities, can_assign_students_opportunities, can_approve_students, can_manage_admins, resetToken, resetExpiresDate]
+      [name, email, phone, designation, hashedPassword, role, can_add_faculty, can_generate_reports, can_post_opportunities, can_assign_students_opportunities, can_approve_students, can_manage_admins, can_edit_public_pages, resetToken, resetExpiresDate]
     );
     
     // Send password reset email
@@ -1286,8 +1487,9 @@ router.post('/grant-monitor-assigned-drives', async (req, res) => {
 // Get all admins (superadmin only)
 router.get('/get-all-admins', requireSuperadmin, async (req, res) => {
   try {
+    await ensureCanEditPublicPagesColumn();
     const [admins] = await db.query(
-      `SELECT id, name, email, phone, designation, role, can_add_faculty, can_generate_reports, can_post_opportunities, can_assign_students_opportunities, can_approve_students, created_at
+      `SELECT id, name, email, phone, designation, role, can_add_faculty, can_generate_reports, can_post_opportunities, can_assign_students_opportunities, can_approve_students, can_edit_public_pages, created_at
        FROM admins ORDER BY created_at DESC`
     );
 
@@ -1313,12 +1515,14 @@ router.post('/update-admin', requireSuperadmin, async (req, res) => {
     const can_post_opportunities = privileges && privileges.can_post_opportunities ? 1 : 0;
     const can_assign_students_opportunities = privileges && privileges.can_assign_students_opportunities ? 1 : 0;
     const can_approve_students = privileges && privileges.can_approve_students ? 1 : 0;
+    const can_edit_public_pages = privileges && privileges.can_edit_public_pages ? 1 : 0;
 
+    await ensureCanEditPublicPagesColumn();
     const [result] = await db.query(
       `UPDATE admins 
-       SET name = ?, phone = ?, designation = ?, can_add_faculty = ?, can_generate_reports = ?, can_post_opportunities = ?, can_assign_students_opportunities = ?, can_approve_students = ?
+       SET name = ?, phone = ?, designation = ?, can_add_faculty = ?, can_generate_reports = ?, can_post_opportunities = ?, can_assign_students_opportunities = ?, can_approve_students = ?, can_edit_public_pages = ?
        WHERE id = ?`,
-      [name, phone, designation, can_add_faculty, can_generate_reports, can_post_opportunities, can_assign_students_opportunities, can_approve_students, adminId]
+      [name, phone, designation, can_add_faculty, can_generate_reports, can_post_opportunities, can_assign_students_opportunities, can_approve_students, can_edit_public_pages, adminId]
     );
 
     if (result.affectedRows === 0) {
@@ -1407,11 +1611,11 @@ router.get('/privileges/:adminId', async (req, res) => {
     }
 
     // Query the database for this admin's record
-    // Note: Only query columns that are guaranteed to exist
+    await ensureCanEditPublicPagesColumn();
     const [admins] = await db.query(
       `SELECT id, name, email, role, 
               can_add_faculty, can_generate_reports, can_post_opportunities, 
-              can_assign_students_opportunities, can_approve_students, can_manage_admins
+              can_assign_students_opportunities, can_approve_students, can_edit_public_pages, can_manage_admins
        FROM admins WHERE id = ?`,
       [effectiveAdminId]
     );
@@ -1432,6 +1636,7 @@ router.get('/privileges/:adminId', async (req, res) => {
       can_post_opportunities: admin.can_post_opportunities || 0,
       can_assign_students_opportunities: admin.can_assign_students_opportunities || 0,
       can_approve_students: admin.can_approve_students || 0,
+      can_edit_public_pages: admin.can_edit_public_pages || 0,
       can_manage_admins: admin.can_manage_admins || 0
     };
 
