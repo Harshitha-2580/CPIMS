@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEC - Study Materials</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="assets/css/scrollCue.css">
+    <link rel="stylesheet" href="assets/css/remixicon.css">
+    <link rel="stylesheet" href="assets/css/flaticon.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link href="assets/img/crop_nec.png" type="image/x-icon" rel="icon">
+
+    <style>
+        body { padding-top: 0; }
+
+        .navbar { transition: all 0.3s ease; }
+
+        .navbar.sticky {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1030;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        body.navbar-sticky { padding-top: 90px; }
+
+        .resources-wrapper {
+            margin-top: 10px;
+            padding: 40px 0 60px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #f3f4f6 100%);
+            animation: pageSlideIn 0.6s ease-out;
+        }
+
+        .student-resources-page .student-page-hero {
+            margin-top: 10px;
+        }
+
+        .student-resources-page .header-welcome-gap {
+            height: 10px !important;
+        }
+
+        /* Reduce gap between hero banner and resources cards */
+        .student-resources-page .register-area {
+            padding-top: 40px;
+        }
+
+        @keyframes pageSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes resourceSlideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Resource Card Styling */
+        .resource-card {
+            background: #fff;
+            padding: 25px;
+            border-radius: 14px;
+            box-shadow: 0px 6px 25px rgba(0, 30, 67, 0.08);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+            height: 100%;
+            border-left: 4px solid rgb(0, 30, 67);
+            position: relative;
+            animation: resourceSlideIn 0.5s ease-out backwards;
+            overflow: hidden;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0px 12px 35px rgba(0, 30, 67, 0.15);
+            border-left-color: #001e43;
+        }
+
+        .resource-card .icon-box {
+            font-size: 48px;
+            color: #001e43;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .resource-card:hover .icon-box {
+            color: #002a5c;
+            transform: scale(1.15);
+        }
+
+        .resource-card h5 {
+            font-size: 18px;
+            font-weight: 800;
+            color: rgb(0, 30, 67);
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .resource-card p {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        .badge-category {
+            font-size: 11px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+
+        .badge-category.technical {
+            background-color: #e8ecf4;
+            color: #001e43;
+        }
+
+        .badge-category.aptitude {
+            background-color: #fff4e5;
+            color: #FFC333;
+        }
+
+        .badge-category.soft {
+            background-color: #e3f2fd;
+            color: rgb(0, 30, 67);
+        }
+
+        .badge-category.company {
+            background-color: #f0e8ff;
+            color: #7c3aed;
+        }
+
+        .resource-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #f0f0f0;
+            font-size: 12px;
+            color: #999;
+        }
+
+        .btn-download-resource {
+            background: linear-gradient(135deg, #001e43 0%, #002a5c 100%);
+            color: white !important;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 13px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-download-resource:hover {
+            transform: translateY(-2px);
+            box-shadow: 0px 6px 15px rgba(0, 30, 67, 0.3);
+            background: linear-gradient(135deg, #002a5c 0%, #001e43 100%);
+        }
+
+        .btn-download-resource i {
+            margin-right: 6px;
+        }
+
+        .empty-resources {
+            text-align: center;
+            padding: 80px 20px;
+            color: #999;
+        }
+
+        .empty-resources i {
+            font-size: 64px;
+            color: #ddd;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .empty-resources h5 {
+            color: #666;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .empty-resources p {
+            color: #999;
+            margin-bottom: 0;
+        }
+
+        /* Filter/Category Buttons */
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            border: 2px solid #e0e0e0;
+            background: #fff;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            transition: all 0.3s ease;
+            color: rgb(0, 30, 67);
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: #001e43;
+            color: white;
+            border-color: #001e43;
+        }
+
+        /* Stagger animation delays */
+        .resource-card:nth-child(1) { animation-delay: 0.1s; }
+        .resource-card:nth-child(2) { animation-delay: 0.2s; }
+        .resource-card:nth-child(3) { animation-delay: 0.3s; }
+        .resource-card:nth-child(4) { animation-delay: 0.4s; }
+        .resource-card:nth-child(5) { animation-delay: 0.5s; }
+        .resource-card:nth-child(6) { animation-delay: 0.6s; }
+        .resource-card:nth-child(7) { animation-delay: 0.7s; }
+        .resource-card:nth-child(8) { animation-delay: 0.8s; }
+
+        .navbar-nav .nav-link.active {
+            color: #FA394A !important;
+            font-weight: bold;
+        }
+        /* Footer Area Style */
+.footer-area{
+  background-color:#071b3a;
+  color:#ffffff;
+  margin-top:100px;
+  padding:40px 20px;
+  width:100%;
+}
+.footer-area p:last-child {
+  margin-bottom: 0;
+}
+/* Inner content width (like container but no outer margins) */
+.footer-inner {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* Headings */
+.footer-area h3 {
+  font-size: 26px;
+  margin-bottom: 16px;
+  color: #ffffff;
+}
+
+.footer-area h6 {
+  font-size: 16px;
+  margin-top: 16px;
+  margin-bottom: 8px;
+  color: #ffffff;
+}
+
+/* Text */
+.footer-area p {
+  font-size: 14px;
+  color: #ffffff;
+  margin-bottom: 8px;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+/* List reset */
+.footer-area ul {
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
+
+/* Social icons spacing */
+.footer-area .social-link li {
+  margin-right: 8px;
+}
+
+/* Links: white by default */
+.footer-area a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+/* Hover / focus */
+.footer-area a:hover,
+.footer-area a:focus {
+  color: var(--primaryColor);
+  text-decoration: none;
+}
+
+/* Active click */
+.footer-area a:active {
+  color: #ffc333;
+}
+
+/* Bottom bar */
+.footer-bottom {
+  font-size: 13px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding-top: 12px;
+  margin-top: 16px;
+}
+
+/* Bottom text and links */
+.footer-bottom span {
+  color: #ffffff;
+}
+
+.footer-bottom a {
+  color: #ffffff;
+}
+
+.footer-bottom a:hover,
+.footer-bottom a:focus {
+  color: var(--primaryColor);
+}
+
+    </style>
+</head>
+
+<body class="student-resources-page">
+
+    <!-- top-header-area removed (student materials banner) -->
+
+    <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light py-2" id="navbar">
+        <div class="container">
+            <img src="assets/img/logo_necn.png" alt="Logo" height="70" width="160">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a href="student-dashboard.html" class="nav-link">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="student-announcements.html" class="nav-link">Announcements</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Events
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="student-events-seminars.html">Seminars</a></li>
+                            <li><a class="dropdown-item" href="student-events-workshops.html">Workshops</a></li>
+                            <li><a class="dropdown-item" href="student-events-hackathons.html">Hackathons</a></li>
+                            <li><a class="dropdown-item" href="student-events-career.html">Career Guidance</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="student-resources.html" class="nav-link active">Resources</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="student-internships.html" class="nav-link">Internships</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="student-jobs.html" class="nav-link">Job Opportunities</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            My Account
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="student-profile.html">Profile</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="index.html" id="logoutBtn">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div> -->
+    </nav>
+
+    <div class="student-page-hero">
+        <div class="container">
+            <div class="student-page-hero-content">
+                <h1 class="student-page-hero-title">Study Materials</h1>
+                <p class="student-page-hero-subtitle">Browse learning materials, documents and resources</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="resources-wrapper">
+        <div class="container">
+           
+
+            <!-- Filter Buttons -->
+            <div class="filter-buttons">
+                <button class="filter-btn active" onclick="filterResources('all')">All Materials</button>
+                <button class="filter-btn" onclick="filterResources('Technical')">Technical</button>
+                <button class="filter-btn" onclick="filterResources('Aptitude')">Aptitude</button>
+                <button class="filter-btn" onclick="filterResources('Soft Skills')">Soft Skills</button>
+                <button class="filter-btn" onclick="filterResources('Company Specific')">Company Specific</button>
+            </div>
+
+            <!-- Resources Grid -->
+            <div class="row g-4" id="resourcesGrid">
+                <div class="col-12">
+                    <div class="empty-resources">
+                        <i class="ri-loader-4-line" style="animation: spin 2s linear infinite;"></i>
+                        <h5>Loading resources...</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+     <!-- Footer injected via admin-footer.js -->
+<div id="adminFooterPlaceholder"></div>
+
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/scrollCue.min.js"></script>
+    <script src="assets/js/auth-session-manager.js"></script>
+<script src="assets/js/student-session-bootstrap.js"></script>
+<script src="assets/js/custom.js"></script>
+
+    <style>
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+
+    <script>
+        let allResources = [];
+        let currentFilter = 'all';
+
+        // Get all faculty resources
+        async function loadResources() {
+            try {
+                // Fetch all faculty IDs and their resources
+                const response = await fetch('http://localhost:3000/api/faculty/NECN_FAC_001/resources');
+                const data = await response.json();
+
+                if (data.success) {
+                    allResources = data.resources || [];
+                } else {
+                    allResources = [];
+                }
+
+                // Try to fetch resources from all faculty members
+                for (let i = 2; i <= 20; i++) {
+                    const facultyId = `NECN_FAC_${String(i).padStart(3, '0')}`;
+                    try {
+                        const res = await fetch(`http://localhost:3000/api/faculty/${facultyId}/resources`);
+                        const resData = await res.json();
+                        if (resData.success && resData.resources) {
+                            allResources = [...allResources, ...resData.resources];
+                        }
+                    } catch (err) {
+                        // Silently continue
+                    }
+                }
+
+                console.log('Total resources loaded:', allResources.length);
+                renderResources(allResources);
+            } catch (err) {
+                console.error('Error loading resources:', err);
+                document.getElementById('resourcesGrid').innerHTML = `
+                    <div class="col-12">
+                        <div class="empty-resources">
+                            <i class="ri-alert-line"></i>
+                            <h5>Unable to load resources</h5>
+                            <p>Please try again later.</p>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // Render resources based on filter
+        function renderResources(resources) {
+            const grid = document.getElementById('resourcesGrid');
+
+            // Filter resources if needed
+            let filteredResources = resources;
+            if (currentFilter !== 'all') {
+                filteredResources = resources.filter(r => r.category === currentFilter);
+            }
+
+            if (filteredResources.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-12">
+                        <div class="empty-resources">
+                            <i class="ri-file-list-3-line"></i>
+                            <h5>No resources found</h5>
+                            <p>Check back soon for more study materials!</p>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = filteredResources.map((resource, index) => {
+                const categoryClass = getCategoryClass(resource.category);
+                const icon = getResourceIcon(resource.category);
+                const uploadDate = new Date(resource.created_at).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                });
+
+                // Determine download link - prioritize uploaded file, fallback to URL
+                const downloadLink = resource.uploaded_file_path || resource.file_path;
+                const isUploadedFile = !!resource.uploaded_file_path;
+
+                return `
+                    <div class="col-lg-4 col-md-6" style="animation-delay: ${index * 0.1}s">
+                        <div class="resource-card student-summary-box">
+                            <div class="icon-box">${icon}</div>
+                            <span class="badge-category ${categoryClass}">${resource.category}</span>
+                            ${isUploadedFile ? '<span class="badge bg-success ms-2" style="font-size: 10px;">File</span>' : ''}
+                            <h5 title="${resource.title}">${truncateText(resource.title, 35)}</h5>
+                            <p>${truncateText(resource.description || 'No description available', 70)}</p>
+                            <div class="resource-meta">
+                                <span><i class="ri-calendar-line me-1"></i>${uploadDate}</span>
+                                <a href="${downloadLink}" target="_blank" class="btn-download-resource" ${isUploadedFile ? 'download' : ''}>
+                                    <i class="ri-download-line"></i> ${isUploadedFile ? 'Download' : 'Open'}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function getCategoryClass(category) {
+            const categoryMap = {
+                'Technical': 'technical',
+                'Aptitude': 'aptitude',
+                'Soft Skills': 'soft',
+                'Company Specific': 'company'
+            };
+            return categoryMap[category] || 'technical';
+        }
+
+        function getResourceIcon(category) {
+            const iconMap = {
+                'Technical': '<i class="ri-code-s-slash-line"></i>',
+                'Aptitude': '<i class="ri-bar-chart-line"></i>',
+                'Soft Skills': '<i class="ri-chat-smile-line"></i>',
+                'Company Specific': '<i class="ri-building-line"></i>'
+            };
+            return iconMap[category] || '<i class="ri-file-line"></i>';
+        }
+
+        function truncateText(text, max) {
+            return text.length > max ? text.substring(0, max) + '...' : text;
+        }
+
+        // Filter functionality
+        function filterResources(category) {
+            currentFilter = category;
+
+            // Update active button
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Re-render
+            renderResources(allResources);
+        }
+
+        // Load resources on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            loadResources();
+
+            // Logout functionality
+            document.getElementById('logoutBtn').addEventListener('click', (e) => {
+                e.preventDefault();
+                localStorage.removeItem('student_id');
+                localStorage.removeItem('student_name');
+                localStorage.removeItem('student_branch');
+                localStorage.removeItem('student_year');
+                window.location.href = 'index.html';
+            });
+
+            // Sticky navbar
+            window.addEventListener('scroll', function() {
+                const navbar = document.getElementById('navbar');
+                if (window.scrollY > 100) {
+                    navbar.classList.add('sticky');
+                    document.body.classList.add('navbar-sticky');
+                } else {
+                    navbar.classList.remove('sticky');
+                    document.body.classList.remove('navbar-sticky');
+                }
+            });
+        });
+    </script>
+    <script src="assets/js/student-sidebar.js?v=20260315"></script>
+</body>
+</html>
+
+
+
+
+
+
+

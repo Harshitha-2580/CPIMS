@@ -1,0 +1,892 @@
+﻿<!DOCTYPE html>
+<html lang="zxx">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEC - Faculty | Add Events</title>
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
+<!-- CSS Files -->
+<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+<link rel="stylesheet" href="assets/css/scrollCue.css">
+<link rel="stylesheet" href="assets/css/remixicon.css">
+<link rel="stylesheet" href="assets/css/flaticon.css">
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/responsive.css">
+<link href="assets/img/crop_nec.png" type="image/x-icon" rel="icon">
+
+<style>
+    :root {
+        --primaryColor: #001e43;
+        --secenderyColor: #0b4b98;
+        --darkColor: rgb(0, 30, 67);
+        --lightGray: #f8f9fa;
+    }
+
+    body {
+        padding-top: 0;
+        overflow-x: hidden;
+        background: linear-gradient(135deg, #f8f9fa 0%, #f0f2f5 100%);
+    }
+
+    #navbar {
+        transition: all 0.3s ease;
+    }
+
+    #navbar.sticky {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1030;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    body.navbar-sticky {
+        padding-top: 90px;
+    }
+
+    .header-welcome-gap {
+        height: 8px;
+        background: linear-gradient(135deg, #f8f9fa 0%, #f0f2f5 100%);
+    }
+
+    body .faculty-page-overview-wrap {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        margin-top: 0 !important;
+    }
+
+    body .faculty-page-overview-box {
+        padding: 52px 0 36px !important;
+        margin-bottom: 24px;
+    }
+
+    .section-title h2 {
+        color: var(--darkColor);
+        font-weight: 800;
+        position: relative;
+        padding-bottom: 15px;
+        animation: slideInDown 0.6s ease;
+    }
+
+    .section-title h2::after {
+        content: '';
+        position: absolute;
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(90deg, var(--primaryColor), var(--secenderyColor));
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        border-radius: 2px;
+        animation: expandWidth 0.8s ease 0.2s both;
+    }
+
+    .section-title p {
+        color: #666;
+        font-size: 15px;
+        animation: fadeInUp 0.6s ease 0.2s both;
+    }
+
+    /* Event form card */
+    .event-card {
+        background: #fff;
+        padding: 45px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        border: 2px solid transparent;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+        animation: slideInUp 0.7s ease 0.3s both;
+    }
+
+    .event-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(90deg, var(--primaryColor), var(--secenderyColor));
+        transition: left 0.5s ease;
+    }
+
+    .event-card:hover::before {
+        left: 0;
+    }
+
+    .event-card:hover,
+    .event-card:focus-within {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 50px rgba(0, 30, 67, 0.15);
+        border-color: rgba(0, 30, 67, 0.2);
+    }
+
+    /* Form labels */
+    .event-card .form-label {
+        color: var(--darkColor);
+        font-weight: 600;
+        margin-bottom: 12px;
+        font-size: 14px;
+        letter-spacing: 0.5px;
+        transition: all 0.3s ease;
+    }
+
+    .event-card .form-control:focus ~ .form-label,
+    .event-card .form-control:not(:placeholder-shown) ~ .form-label {
+        color: var(--primaryColor);
+    }
+
+    /* Inputs & Selects */
+    .event-card .form-control {
+        height: 50px;
+        border: 2px solid #e8e8e8;
+        border-radius: 10px;
+        padding: 12px 18px;
+        font-size: 14px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        background-color: #f8f9fa;
+    }
+
+    .event-card .form-control:focus {
+        background-color: #fff;
+        border-color: var(--primaryColor);
+        box-shadow: 0 0 0 3px rgba(0, 30, 67, 0.1);
+        transform: translateY(-2px);
+    }
+
+    .event-card .form-control:hover {
+        border-color: var(--primaryColor);
+    }
+
+    .event-card textarea.form-control {
+        height: auto;
+        min-height: 120px;
+        resize: vertical;
+    }
+
+    .event-card textarea.form-control:focus {
+        border-color: var(--primaryColor);
+        box-shadow: 0 0 0 3px rgba(0, 30, 67, 0.1);
+    }
+
+    /* Form group animations */
+    .row.g-4 > [class*='col'] {
+        animation: fadeInUp 0.6s ease;
+    }
+
+    .row.g-4 > [class*='col']:nth-child(1) { animation-delay: 0.35s; }
+    .row.g-4 > [class*='col']:nth-child(2) { animation-delay: 0.40s; }
+    .row.g-4 > [class*='col']:nth-child(3) { animation-delay: 0.45s; }
+    .row.g-4 > [class*='col']:nth-child(4) { animation-delay: 0.50s; }
+    .row.g-4 > [class*='col']:nth-child(5) { animation-delay: 0.55s; }
+    .row.g-4 > [class*='col']:nth-child(6) { animation-delay: 0.60s; }
+    .row.g-4 > [class*='col']:nth-child(7) { animation-delay: 0.65s; }
+    .row.g-4 > [class*='col']:nth-child(8) { animation-delay: 0.70s; }
+
+    /* Button */
+    .default-btn {
+        background: linear-gradient(90deg, var(--primaryColor), #0b4b98) !important;
+        color: #fff !important;
+        border: none !important;
+        padding: 14px 40px !important;
+        border-radius: 10px !important;
+        font-weight: 700 !important;
+        font-size: 15px !important;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        display: inline-block !important;
+        text-decoration: none !important;
+        letter-spacing: 0.5px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .default-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(0, 30, 67, 0.35);
+        letter-spacing: 1px;
+    }
+
+    .default-btn i {
+        margin-left: 8px;
+        transition: transform 0.3s ease;
+    }
+
+    .default-btn:hover i {
+        transform: translateX(5px);
+    }
+
+    /* Animations */
+    @keyframes slideInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes slideInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes expandWidth {
+        from {
+            width: 0;
+        }
+        to {
+            width: 80px;
+        }
+    }
+
+    /* Focus state for accessibility */
+    .event-card .form-control:focus-visible {
+        outline: none;
+    }
+
+    /* Checkbox styling for multiple year selection */
+    .year-checkbox-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-top: 12px;
+    }
+
+    .year-checkbox-group .form-check {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0;
+    }
+
+    .year-checkbox-group .form-check-input {
+        width: 20px;
+        height: 20px;
+        border: 2px solid #e8e8e8;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        appearance: none;
+        background-color: #f8f9fa;
+        margin-right: 8px;
+        flex-shrink: 0;
+    }
+
+    .year-checkbox-group .form-check-input:hover {
+        border-color: var(--primaryColor);
+        transform: scale(1.05);
+    }
+
+    .year-checkbox-group .form-check-input:checked {
+        background-color: var(--primaryColor);
+        border-color: var(--primaryColor);
+        box-shadow: 0 0 0 3px rgba(0, 30, 67, 0.1);
+    }
+
+    .year-checkbox-group .form-check-input:checked::after {
+        content: '\2713';
+        color: white;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+    }
+
+    .year-checkbox-group .form-check-label {
+        color: var(--darkColor);
+        font-weight: 500;
+        font-size: 14px;
+        cursor: pointer;
+        user-select: none;
+        margin-bottom: 0;
+        transition: color 0.3s ease;
+    }
+
+    .year-checkbox-group .form-check-input:checked ~ .form-check-label {
+        color: var(--primaryColor);
+    }
+
+    /* Event Success Popup Styles */
+    .event-success-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .event-success-overlay.show {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .event-success-popup {
+        background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+        padding: 50px 60px;
+        border-radius: 20px;
+        text-align: center;
+        box-shadow: 0 20px 60px rgba(0, 30, 67, 0.3);
+        border-left: 6px solid var(--primaryColor);
+        max-width: 500px;
+        width: 90%;
+        animation: successSlideIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        transform-origin: center;
+    }
+
+    @keyframes successSlideIn {
+        from {
+            opacity: 0;
+            transform: scale(0.8) translateY(-30px);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+    }
+
+    .event-success-icon {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, var(--primaryColor), #0d5ec3);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 25px;
+        box-shadow: 0 10px 30px rgba(0, 30, 67, 0.3);
+        animation: successBounce 0.6s ease-out;
+    }
+
+    @keyframes successBounce {
+        0% {
+            transform: scale(0) rotate(-45deg);
+        }
+        50% {
+            transform: scale(1.1);
+        }
+        100% {
+            transform: scale(1) rotate(0deg);
+        }
+    }
+
+    .event-success-icon::before {
+        content: '\2713';
+        color: white;
+        font-size: 48px;
+        font-weight: bold;
+        line-height: 1;
+    }
+
+    .event-success-title {
+        font-size: 32px;
+        font-weight: 800;
+        color: var(--darkColor);
+        margin-bottom: 15px;
+        animation: titleFadeIn 0.6s ease 0.2s both;
+    }
+
+    @keyframes titleFadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .event-success-message {
+        font-size: 16px;
+        color: #666;
+        margin-bottom: 25px;
+        line-height: 1.6;
+        animation: messageFadeIn 0.6s ease 0.3s both;
+    }
+
+    @keyframes messageFadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .event-success-details {
+        background: #f0f2f5;
+        padding: 15px 20px;
+        border-radius: 10px;
+        margin-bottom: 25px;
+        font-size: 14px;
+        color: #555;
+        animation: detailsFadeIn 0.6s ease 0.4s both;
+    }
+
+    @keyframes detailsFadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .event-success-btn {
+        background: linear-gradient(90deg, var(--primaryColor), #0b4b98);
+        color: white;
+        border: none;
+        padding: 14px 40px;
+        border-radius: 10px;
+        font-weight: 700;
+        font-size: 15px;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        animation: buttonFadeIn 0.6s ease 0.5s both;
+    }
+
+    @keyframes buttonFadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .event-success-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(0, 30, 67, 0.35);
+        letter-spacing: 0.5px;
+    }
+        /* Footer Area Style */
+.footer-area{
+  background-color:#071b3a;
+  color:#ffffff;
+  margin-top:100px;
+  padding:40px 20px;
+  width:100%;
+}
+.footer-area p:last-child {
+  margin-bottom: 0;
+}
+/* Inner content width (like container but no outer margins) */
+.footer-inner {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* Headings */
+.footer-area h3 {
+  font-size: 26px;
+  margin-bottom: 16px;
+  color: #ffffff;
+}
+
+.footer-area h6 {
+  font-size: 16px;
+  margin-top: 16px;
+  margin-bottom: 8px;
+  color: #ffffff;
+}
+
+/* Text */
+.footer-area p {
+  font-size: 14px;
+  color: #ffffff;
+  margin-bottom: 8px;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+/* List reset */
+.footer-area ul {
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
+
+/* Social icons spacing */
+.footer-area .social-link li {
+  margin-right: 8px;
+}
+
+/* Links: white by default */
+.footer-area a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+/* Hover / focus */
+.footer-area a:hover,
+.footer-area a:focus {
+  color: var(--primaryColor);
+  text-decoration: none;
+}
+
+/* Active click */
+.footer-area a:active {
+  color: #ffc333;
+}
+
+/* Bottom bar */
+.footer-bottom {
+  font-size: 13px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding-top: 12px;
+  margin-top: 16px;
+}
+
+/* Bottom text and links */
+.footer-bottom span {
+  color: #ffffff;
+}
+
+.footer-bottom a {
+  color: #ffffff;
+}
+
+.footer-bottom a:hover,
+.footer-bottom a:focus {
+  color: var(--primaryColor);
+}
+</style>
+</head>
+
+<body>
+
+ <div class="top-header-area style-2" style="padding: 12px 0;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-12 text-center">
+                    <h3 class="mb-0" style="color: #fff; font-weight: 700; letter-spacing: 1px; line-height: 1.4; font-size: 26px;">
+                        <span style="font-family: 'Poppins', ; font-size: 36px; font-weight: 700;"> NEC
+                        </span>
+                        - Central Placement and Information Center
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-welcome-gap" aria-hidden="true"></div>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light py-2" id="navbar">
+        <div class="container">
+            <img src="assets/img/logo_necn.png" alt="Logo" height="70" width="160">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a href="faculty-dashboard.html" class="nav-link">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a href="faculty-events.html" class="nav-link active">Add Events</a>
+                </li>
+                <li class="nav-item">
+                    <a href="faculty-applications.html" class="nav-link">Applications</a>
+                </li>
+               
+                <li class="nav-item">
+                    <a href="faculty-materials.html" class="nav-link">Materials</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        My Account
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="faculty-profile.html">My Profile</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="index.html">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="faculty-page-overview-wrap">
+    <div class="faculty-page-overview-box">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <div class="faculty-page-overview-content">
+                        <h2 class="faculty-page-overview-title">Event Management</h2>
+                        <p class="faculty-page-overview-subtitle">Create, publish, and manage placement and training events from one place.</p>
+                        
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <i class="ri-calendar-event-line faculty-page-overview-icon" aria-hidden="true"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- ================= EVENT FORM SECTION ================= -->
+<div class="application-area pt-50 pb-75">
+    <div class="container">
+
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+
+                <div class="event-card">
+
+                    <form class="row g-4" id="eventForm">
+
+                        <div class="col-md-6">
+                            <label class="form-label">Event Title</label>
+                            <input type="text" class="form-control" id="eventTitle" placeholder="e.g., AIML Workshop" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Event Type</label>
+                            <input type="text" class="form-control" id="eventType" placeholder="e.g., Workshop, Seminar, Career Guidance" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Event Date</label>
+                            <input type="date" class="form-control" id="eventDate" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Venue / Mode</label>
+                            <input type="text" class="form-control" id="eventVenue" placeholder="Online / Seminar Hall / Lab" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Eligible Branches</label>
+                            <input type="text" class="form-control" id="eligibleBranches" placeholder="CSE, IT, ECE">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Eligible Year</label>
+                            <div class="year-checkbox-group">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="year1" value="1st Year">
+                                    <label class="form-check-label" for="year1">1st Year</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="year2" value="2nd Year">
+                                    <label class="form-check-label" for="year2">2nd Year</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="year3" value="3rd Year">
+                                    <label class="form-check-label" for="year3">3rd Year</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="yearFinal" value="Final Year">
+                                    <label class="form-check-label" for="yearFinal">Final Year</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label">Event Description</label>
+                            <textarea class="form-control" id="eventDescription" rows="4"
+                                placeholder="Provide event details, eligibility etc."></textarea>
+                        </div>
+
+                        <div class="col-12 text-center mt-3">
+                            <button type="submit" class="default-btn border-0">
+                                Add Event </i>
+                            </button>
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- ================= EVENT SUCCESS POPUP ================= -->
+<div class="event-success-overlay" id="eventSuccessOverlay">
+    <div class="event-success-popup">
+        <div class="event-success-icon"></div>
+        <h2 class="event-success-title">Event Added!</h2>
+        <p class="event-success-message">Your event has been successfully created and is now live.</p>
+        <div class="event-success-details">
+            <p id="eventSuccessDetails"></p>
+        </div>
+        <button class="event-success-btn" onclick="redirectToDashboard()">Go to Dashboard</button>
+    </div>
+</div>
+
+<!-- JS -->
+<script src="assets/js/auth-session-manager.js"></script>
+<script src="assets/js/faculty-session-bootstrap.js"></script>
+<script>
+    // Sticky navbar functionality
+    window.addEventListener('scroll', function() {
+        const navbar = document.getElementById('navbar');
+        const topHeader = document.querySelector('.top-header-area');
+        if (!navbar || !topHeader) {
+            return;
+        }
+        const topHeaderHeight = topHeader.offsetHeight;
+
+        if (window.scrollY >= topHeaderHeight) {
+            navbar.classList.add('sticky');
+            document.body.classList.add('navbar-sticky');
+        } else {
+            navbar.classList.remove('sticky');
+            document.body.classList.remove('navbar-sticky');
+        }
+    });
+
+    const facultyPrivileges = JSON.parse((sessionStorage.getItem('faculty_privileges') || localStorage.getItem('faculty_privileges')) || '{}');
+    const facultyCampusType = (sessionStorage.getItem('faculty_campus_type') || localStorage.getItem('faculty_campus_type')) || 'NECN';
+
+    function showAccessDenied() {
+        alert('Access denied contact the admin');
+    }
+
+    // Event form submission handler
+    document.getElementById('eventForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        if (!facultyPrivileges.postEvents) {
+            showAccessDenied();
+            return;
+        }
+
+        // Get faculty_id from localStorage (set during login)
+        const faculty_id = (sessionStorage.getItem('faculty_id') || localStorage.getItem('faculty_id'));
+
+        if (!faculty_id) {
+            alert('Please login first');
+            window.location.href = 'login-faculty.html';
+            return;
+        }
+
+        // Get form values
+        const eventTitle = document.getElementById('eventTitle').value;
+        const eventType = document.getElementById('eventType').value;
+        const eventDate = document.getElementById('eventDate').value;
+        const eventVenue = document.getElementById('eventVenue').value;
+        const eligibleBranches = document.getElementById('eligibleBranches').value;
+        const eventDescription = document.getElementById('eventDescription').value;
+
+        // Get selected years
+        const yearCheckboxes = document.querySelectorAll('.year-checkbox-group input[type="checkbox"]:checked');
+        const eligible_years = Array.from(yearCheckboxes).map(cb => cb.value);
+
+        // Validate required fields
+        if (!eventTitle || !eventType || !eventDate || !eventVenue) {
+            alert('Please fill in all required fields');
+            return;
+        }
+
+        try {
+            const response = await fetch('http://localhost:3000/api/faculty/add-event', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    faculty_id: faculty_id,
+                    campusType: facultyCampusType,
+                    event_name: eventTitle,
+                    event_type: eventType,
+                    event_date: eventDate,
+                    location: eventVenue,
+                    eligible_branches: eligibleBranches,
+                    eligible_years: eligible_years,
+                    description: eventDescription
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                // Show success popup with event details
+                const eventSuccessDetails = `Event: <strong>${eventTitle}</strong> | Type: <strong>${eventType}</strong> | Date: <strong>${eventDate}</strong>`;
+                document.getElementById('eventSuccessDetails').innerHTML = eventSuccessDetails;
+                
+                const overlay = document.getElementById('eventSuccessOverlay');
+                overlay.classList.add('show');
+                
+                // Reset form
+                document.getElementById('eventForm').reset();
+                
+                // Redirect after 3 seconds
+                setTimeout(() => {
+                    window.location.href = 'faculty-dashboard.html';
+                }, 3000);
+            } else {
+                alert(data.message || 'Failed to add event');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Server error. Please try again.');
+        }
+    });
+
+    // Redirect function for button
+    function redirectToDashboard() {
+        window.location.href = 'faculty-dashboard.html';
+    }
+
+</script>
+
+<script src="assets/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/scrollCue.min.js"></script>
+<script src="assets/js/faculty-sidebar.js?v=20260314"></script>
+<script src="assets/js/admin-footer.js"></script>
+<script src="assets/js/custom.js"></script>
+
+</body>
+</html>
+
+
+
+

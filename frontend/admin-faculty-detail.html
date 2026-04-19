@@ -1,0 +1,1160 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEC - Faculty Detail</title>
+
+<!-- CSS Files -->
+<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="assets/css/remixicon.css">
+<link rel="stylesheet" href="assets/css/flaticon.css">
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/admin-theme.css">
+<link rel="stylesheet" href="assets/css/responsive.css">
+
+<style>
+    :root {
+        --primaryColor: #001e43;
+        --secondaryColor: #002a5c;
+        --darkColor: rgb(0, 30, 67);
+    }
+
+    .header-welcome-gap {
+        height: 8px;
+        background: linear-gradient(135deg, #f8f9fa 0%, #f0f2f5 100%);
+    }
+
+    .header-gradient {
+        background: linear-gradient(90deg, #001e43, #002a5c);
+        color: #fff;
+        padding: 15px 0;
+        font-family: 'Poppins', sans-serif;
+        font-size: 26px;
+        font-weight: 700;
+        text-align: center;
+    }
+
+    /* Match admin-dashboard welcome banner styling */
+    .admin-page-hero {
+        background: linear-gradient(135deg, #001e43, #002a5c);
+        padding: 44px 0 30px;
+        color: #fff;
+        position: relative;
+        overflow: hidden;
+        border-radius: 12px;
+        box-shadow: 0 10px 40px rgba(0, 30, 67, 0.1);
+    }
+
+    .admin-page-hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+        animation: shimmer 4s infinite;
+    }
+
+    .admin-page-hero::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 6px;
+        background: linear-gradient(135deg, #002a5c, #003580);
+        animation: borderGlow 3s ease-in-out infinite alternate;
+    }
+
+    .admin-page-hero-content {
+        position: relative;
+        z-index: 2;
+    }
+
+    .admin-page-hero-title {
+        font-size: 48px;
+        font-weight: 800;
+        margin-bottom: 15px;
+        color: #fff;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        letter-spacing: -1px;
+    }
+
+    .admin-page-hero-subtitle {
+        font-size: 20px;
+        color: rgba(255, 255, 255, 0.95);
+        font-weight: 400;
+        margin-bottom: 0;
+        max-width: 760px;
+    }
+
+    .admin-page-hero-visual {
+        font-size: 80px;
+        color: #fff;
+        animation: float 3s ease-in-out infinite;
+        position: relative;
+        z-index: 2;
+    }
+
+    @keyframes float {
+        0%, 100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-20px);
+        }
+    }
+
+    @keyframes shimmer {
+        0% {
+            left: -100%;
+        }
+
+        100% {
+            left: 100%;
+        }
+    }
+
+    @keyframes borderGlow {
+        from {
+            opacity: 0.6;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    @media (max-width: 991.98px) {
+        .admin-page-hero-title {
+            font-size: 40px;
+        }
+
+        .admin-page-hero-subtitle {
+            font-size: 18px;
+        }
+    }
+
+    @media (max-width: 575.98px) {
+        .admin-page-hero-title {
+            font-size: 32px;
+        }
+
+        .admin-page-hero-subtitle {
+            font-size: 16px;
+        }
+
+        .admin-page-hero-visual {
+            font-size: 62px;
+        }
+    }
+    .profile-card {
+        border: 1px solid #dbe5f1;
+        border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(0, 30, 67, 0.08);
+    }
+
+    .profile-avatar {
+        width: 88px;
+        height: 88px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #001e43, #0b4b98);
+        color: #fff;
+        font-size: 34px;
+        font-weight: 700;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .profile-name {
+        font-size: 30px;
+        font-weight: 700;
+        color: #001e43;
+        line-height: 1.15;
+    }
+
+    .profile-subtitle {
+        color: #5f6f84;
+        font-weight: 500;
+        margin-bottom: 12px;
+    }
+
+    .info-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 4px 14px;
+        font-size: 14px;
+    }
+
+    .info-grid p {
+        margin: 0;
+    }
+
+    .info-row-label {
+        color: #53657c;
+        font-weight: 600;
+        margin-right: 6px;
+    }
+
+    .usage-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 10px;
+    }
+
+    .usage-tile {
+        border: 1px solid #d8e2ef;
+        border-radius: 10px;
+        padding: 12px;
+        background: #f8fbff;
+    }
+
+    .usage-tile h6 {
+        margin-bottom: 6px;
+        font-size: 13px;
+        color: #2f4460;
+        font-weight: 600;
+    }
+
+    .usage-tile p {
+        margin-bottom: 0;
+        font-size: 22px;
+        line-height: 1;
+        font-weight: 700;
+        color: #001e43;
+    }
+
+    .section-nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        margin-top: 8px;
+        margin-bottom: 8px;
+    }
+
+    .section-nav-tabs {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .section-nav .btn {
+        border-radius: 6px;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 8px 14px;
+    }
+
+    .section-nav .btn.active {
+        background-color: #001e43;
+        border-color: #001e43;
+        color: #fff;
+    }
+
+    .details-card {
+        border: 1px solid #dbe5f1;
+        border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(0, 30, 67, 0.06);
+    }
+
+    .details-title {
+        font-size: 24px;
+        font-weight: 700;
+        color: #001e43;
+        margin-bottom: 14px;
+    }
+
+    .details-content-block {
+        border: 1px solid #e3ebf5;
+        border-radius: 10px;
+        padding: 12px 14px;
+        margin-bottom: 10px;
+        background: #fff;
+    }
+
+    .details-content-block h6 {
+        color: #1f3754;
+        margin-bottom: 6px;
+    }
+
+    .details-muted {
+        color: #5f6f84;
+        font-size: 13px;
+    }
+
+    .summary-list p {
+        margin-bottom: 8px;
+    }
+
+    .event-list {
+        display: grid;
+        gap: 10px;
+    }
+
+    .event-card {
+        border: 1px solid #d8e4f3;
+        border-radius: 10px;
+        padding: 14px 16px;
+        background: #fff;
+    }
+
+    .event-card-title {
+        font-size: 20px;
+        color: #001e43;
+        margin: 0 0 6px;
+        font-weight: 700;
+        line-height: 1.25;
+    }
+
+    .event-card-meta {
+        margin: 0;
+        color: #546b88;
+        font-size: 14px;
+    }
+
+    .events-pagination {
+        margin-top: 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .events-pagination .page-info {
+        color: #4e6481;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .events-pagination .btn {
+        min-width: 88px;
+    }
+
+    .assign-drive-btn {
+        border-radius: 8px;
+        font-weight: 700;
+        border: none;
+        background: linear-gradient(135deg, #001e43, #0b4b98);
+        color: #fff;
+        padding: 9px 16px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 6px 18px rgba(0, 30, 67, 0.2);
+    }
+
+    .assign-drive-btn:hover,
+    .assign-drive-btn:focus {
+        color: #fff;
+        background: linear-gradient(135deg, #002a5c, #0d5ec3);
+    }
+
+    .bottom-action-row {
+        margin-top: 12px;
+        margin-bottom: 6px;
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    .bottom-back-btn {
+        border-radius: 8px;
+        font-weight: 700;
+        border: 1px solid #001e43;
+        color: #001e43;
+        background: #fff;
+        padding: 9px 16px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+        transition: all 0.2s ease;
+    }
+
+    .bottom-back-btn:hover,
+    .bottom-back-btn:focus {
+        color: #fff;
+        background: #001e43;
+        text-decoration: none;
+    }
+
+    .admin-wrapper {
+        padding-top: 10px !important;
+        padding-bottom: 16px !important;
+    }
+
+    .pretty-popup-icon-wrap {
+        width: 54px;
+        height: 54px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 12px;
+    }
+
+    .pretty-popup-icon-wrap i {
+        font-size: 24px;
+        color: #fff;
+    }
+
+    .pretty-popup-icon-wrap.info {
+        background: linear-gradient(135deg, #0d6efd, #0050b8);
+    }
+
+    .pretty-popup-icon-wrap.success {
+        background: linear-gradient(135deg, #1f9d55, #157347);
+    }
+
+    .pretty-popup-icon-wrap.error {
+        background: linear-gradient(135deg, #dc3545, #b02a37);
+    }
+
+    .pretty-popup-icon-wrap.warning {
+        background: linear-gradient(135deg, #001e43, #0b4b98);
+    }
+
+    #uiFeedbackModal .modal-content {
+        border: 1px solid #dbe5f1;
+        border-radius: 14px;
+        box-shadow: 0 14px 45px rgba(0, 30, 67, 0.22);
+    }
+
+    #uiFeedbackModal .btn {
+        min-width: 96px;
+        border-radius: 8px;
+        font-weight: 700;
+    }
+
+    #assignDriveModal .modal-content {
+        border: 1px solid #dbe5f1;
+        border-radius: 14px;
+        box-shadow: 0 14px 45px rgba(0, 30, 67, 0.2);
+        background: #f8fbff;
+    }
+
+    #assignDriveLabel {
+        color: #001e43;
+        font-size: 30px;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+    }
+
+    #assignDriveFacultyHint {
+        color: #53657c !important;
+        background: #fff;
+        border: 1px solid #d8e4f3;
+        border-radius: 10px;
+        padding: 10px 12px;
+        margin-bottom: 10px !important;
+    }
+
+    #assignDriveModal .form-label {
+        color: #1f3754;
+        font-weight: 700;
+        margin-bottom: 6px;
+    }
+
+    #assignDriveSelect {
+        border: 1px solid #c7d7ec;
+        border-radius: 10px;
+        min-height: 46px;
+        color: #2f4460;
+    }
+
+    #assignDriveModal .btn {
+        border-radius: 8px;
+        font-weight: 700;
+        min-width: 96px;
+    }
+
+    #confirmAssignDriveBtn {
+        background-color: #001e43;
+        border-color: #001e43;
+        color: #fff;
+    }
+
+    #confirmAssignDriveBtn:hover,
+    #confirmAssignDriveBtn:focus {
+        background-color: #002a5c;
+        border-color: #002a5c;
+        color: #fff;
+        box-shadow: 0 0 0 0.2rem rgba(0, 30, 67, 0.22);
+    }
+
+    @media (max-width: 767.98px) {
+        .profile-name {
+            font-size: 24px;
+        }
+
+        .info-grid,
+        .usage-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .section-nav {
+            align-items: stretch;
+        }
+
+        .assign-drive-btn {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+</style>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- Header -->
+<div class="top-header-area style-2" style="padding: 12px 0;">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-12 text-center">
+                <h3 class="mb-0" style="color: #fff; font-weight: 700; letter-spacing: 1px; line-height: 1.4; font-size: 26px;">
+                    <span style="font-family: 'Poppins', ; font-size: 36px; font-weight: 700;"> NEC</span> – Central Placement Information and Management Center
+                </h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="header-welcome-gap" aria-hidden="true"></div>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light py-2">
+<div class="container">
+    <a class="navbar-brand" href="admin-dashboard.html">Admin Dashboard</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a href="admin-dashboard.html" class="nav-link">Dashboard</a></li>
+            <li class="nav-item"><a href="admin-student.html" class="nav-link">Students</a></li>
+            <li class="nav-item"><a href="admin-faculty.html" class="nav-link active">Faculty</a></li>
+            <li class="nav-item"><a href="admin-opportunities.html" class="nav-link">Opportunities</a></li>
+        </ul>
+    </div>
+</div>
+</nav>
+
+<div class="admin-page-hero">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <div class="admin-page-hero-content">
+                    <h2 class="admin-page-hero-title">Faculty Detail</h2>
+                    <p class="admin-page-hero-subtitle">Review faculty activity and placement contribution.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center">
+                <div class="admin-page-hero-visual">
+                    <i class="ri-user-star-line"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Faculty Info -->
+<div class="admin-wrapper">
+<div class="container mt-2">
+<div class="card profile-card p-3 mb-3">
+    <div class="row g-4 align-items-start">
+        <div class="col-lg-8">
+            <div class="d-flex gap-3 align-items-start">
+                <div class="profile-avatar" id="facultyInitial">F</div>
+                <div>
+                    <div class="profile-name" id="facultyName">Faculty Name</div>
+                    <div class="profile-subtitle" id="facultyDesignation">Faculty Member</div>
+                </div>
+            </div>
+
+            <div class="info-grid mt-3">
+                <p><span class="info-row-label">Faculty ID:</span><span id="facultyCode"></span></p>
+                <p><span class="info-row-label">Name:</span><span id="facultyNameInline"></span></p>
+                <p><span class="info-row-label">Email:</span><span id="facultyEmail"></span></p>
+                <p><span class="info-row-label">Phone Number:</span><span id="facultyPhone"></span></p>
+                <p><span class="info-row-label">Campus Type:</span><span id="facultyCampus"></span></p>
+                <p><span class="info-row-label">Department:</span><span id="facultyDept"></span></p>
+                <p><span class="info-row-label">Designation:</span><span id="facultyDesignationInline"></span></p>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <h6 class="mb-2">Privileges</h6>
+            <div id="privilegesList" class="d-flex flex-wrap gap-2"></div>
+
+            <div class="usage-grid">
+                <div class="usage-tile">
+                    <h6>Post Events</h6>
+                    <p id="postEventsCount">0</p>
+                </div>
+                <div class="usage-tile">
+                    <h6>Upload Resources</h6>
+                    <p id="uploadResourcesCount">0</p>
+                </div>
+                <div class="usage-tile">
+                    <h6>Post Internships</h6>
+                    <p id="postInternshipsCount">0</p>
+                </div>
+                <div class="usage-tile">
+                    <h6>Monitor Assigned Drives</h6>
+                    <p id="monitorAssignedDrivesCount">0</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="section-nav" id="sectionNav">
+    <div class="section-nav-tabs">
+        <button type="button" class="btn btn-outline-primary section-btn active" data-section="postEvents">Events</button>
+        <button type="button" class="btn btn-outline-primary section-btn" data-section="uploadResources">Resources</button>
+        <button type="button" class="btn btn-outline-primary section-btn" data-section="postInternships">Internships</button>
+        <button type="button" class="btn btn-outline-primary section-btn" data-section="monitorAssignedDrives">Assigned Drives</button>
+    </div>
+    <button class="btn assign-drive-btn" id="assignDriveBtn" type="button">
+        <i class="ri-links-line"></i>
+        <span>Assign Drive</span>
+    </button>
+</div>
+
+<!-- Sections -->
+<div id="detailsSection" class="mt-2">
+    <div class="card details-card p-3">
+        <h4 class="details-title" id="detailsTitle"></h4>
+        <div id="detailsContent"></div>
+    </div>
+</div>
+
+<div class="bottom-action-row">
+    <button type="button" class="bottom-back-btn" id="bottomBackBtn">
+        <i class="ri-arrow-left-line" aria-hidden="true"></i>
+        <span>Back</span>
+    </button>
+</div>
+
+<!-- Assign Drive Modal -->
+<div class="modal fade" id="assignDriveModal" tabindex="-1" aria-labelledby="assignDriveLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered">
+<div class="modal-content p-3">
+    <h5 id="assignDriveLabel" class="mb-3">Assign Existing Drive</h5>
+    <p class="text-muted mb-2" id="assignDriveFacultyHint"></p>
+    <label for="assignDriveSelect" class="form-label">Select Drive</label>
+    <select id="assignDriveSelect" class="form-select mb-3"></select>
+    <div class="d-flex justify-content-end gap-2">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" id="confirmAssignDriveBtn">Assign</button>
+    </div>
+</div>
+</div>
+</div>
+
+<!-- Pretty Feedback Popup Modal -->
+<div class="modal fade" id="uiFeedbackModal" tabindex="-1" aria-labelledby="uiFeedbackTitle" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered">
+<div class="modal-content p-3 text-center">
+    <div class="pretty-popup-icon-wrap info" id="uiFeedbackIconWrap">
+        <i class="ri-information-line" id="uiFeedbackIcon"></i>
+    </div>
+    <h5 id="uiFeedbackTitle" class="mb-2">Notice</h5>
+    <p id="uiFeedbackMessage" class="text-muted mb-3">Message</p>
+    <div class="d-flex justify-content-center gap-2" id="uiFeedbackActionRow">
+        <button type="button" class="btn btn-outline-secondary px-4 d-none" id="uiFeedbackNoBtn" data-bs-dismiss="modal">No</button>
+        <button type="button" class="btn btn-primary px-4" id="uiFeedbackOkBtn" data-bs-dismiss="modal">OK</button>
+        <button type="button" class="btn btn-primary px-4 d-none" id="uiFeedbackYesBtn">Yes</button>
+    </div>
+</div>
+</div>
+</div>
+
+</div>
+
+</div>
+
+<!-- JS -->
+<script src="assets/js/bootstrap.bundle.min.js"></script>
+
+<script>
+const urlParams = new URLSearchParams(window.location.search);
+const facultyEmail = urlParams.get('email');
+const facultyCampus = urlParams.get('campus') || 'NECN';
+const EVENTS_PER_PAGE = 5;
+let currentEventsPage = 1;
+let assignDriveModalInstance = null;
+let assignableDrivesCache = [];
+let uiFeedbackModalInstance = null;
+let uiFeedbackConfirmHandler = null;
+
+function showPrettyPopup(message, type = 'info', title = 'Notice') {
+    const iconWrap = document.getElementById('uiFeedbackIconWrap');
+    const icon = document.getElementById('uiFeedbackIcon');
+    const titleEl = document.getElementById('uiFeedbackTitle');
+    const messageEl = document.getElementById('uiFeedbackMessage');
+    const okBtn = document.getElementById('uiFeedbackOkBtn');
+    const yesBtn = document.getElementById('uiFeedbackYesBtn');
+    const noBtn = document.getElementById('uiFeedbackNoBtn');
+
+    const normalizedType = ['info', 'success', 'error', 'warning'].includes(type) ? type : 'info';
+    const iconMap = {
+        info: 'ri-information-line',
+        success: 'ri-check-line',
+        error: 'ri-close-line',
+        warning: 'ri-alert-line'
+    };
+
+    iconWrap.className = `pretty-popup-icon-wrap ${normalizedType}`;
+    icon.className = iconMap[normalizedType];
+    titleEl.textContent = title;
+    messageEl.textContent = message;
+    okBtn.classList.remove('d-none');
+    yesBtn.classList.add('d-none');
+    noBtn.classList.add('d-none');
+
+    if (!uiFeedbackModalInstance) {
+        uiFeedbackModalInstance = bootstrap.Modal.getOrCreateInstance(document.getElementById('uiFeedbackModal'));
+    }
+    uiFeedbackModalInstance.show();
+}
+
+function showPrettyConfirm(message, title, onConfirm) {
+    const iconWrap = document.getElementById('uiFeedbackIconWrap');
+    const icon = document.getElementById('uiFeedbackIcon');
+    const titleEl = document.getElementById('uiFeedbackTitle');
+    const messageEl = document.getElementById('uiFeedbackMessage');
+    const okBtn = document.getElementById('uiFeedbackOkBtn');
+    const yesBtn = document.getElementById('uiFeedbackYesBtn');
+    const noBtn = document.getElementById('uiFeedbackNoBtn');
+
+    iconWrap.className = 'pretty-popup-icon-wrap warning';
+    icon.className = 'ri-shield-check-line';
+    titleEl.textContent = title;
+    messageEl.textContent = message;
+
+    okBtn.classList.add('d-none');
+    yesBtn.classList.remove('d-none');
+    noBtn.classList.remove('d-none');
+
+    uiFeedbackConfirmHandler = onConfirm;
+
+    if (!uiFeedbackModalInstance) {
+        uiFeedbackModalInstance = bootstrap.Modal.getOrCreateInstance(document.getElementById('uiFeedbackModal'));
+    }
+    uiFeedbackModalInstance.show();
+}
+
+async function grantPrivilegeAndContinueAssign() {
+    try {
+        const response = await fetch('/api/admin/grant-monitor-assigned-drives', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                facultyEmail,
+                campusType: facultyCampus
+            })
+        });
+        const data = await response.json();
+
+        if (!data.success) {
+            showPrettyPopup(data.message || 'Failed to grant privilege.', 'error', 'Grant Failed');
+            return;
+        }
+
+        showPrettyPopup('Privilege granted. You can now assign an upcoming drive.', 'success', 'Granted');
+        await fetchFacultyData();
+        setTimeout(() => {
+            openAssignDriveModal();
+        }, 300);
+    } catch (error) {
+        console.error(error);
+        showPrettyPopup('Failed to grant privilege.', 'error', 'Request Failed');
+    }
+}
+
+function escapeHtml(value) {
+    return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/\"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+}
+
+function toDisplayValue(value) {
+    if (value === null || value === undefined || value === '') {
+        return '-';
+    }
+    if (typeof value === 'boolean') {
+        return value ? 'Yes' : 'No';
+    }
+    return String(value);
+}
+
+function recordBlock(title, subtitle) {
+    return `<div class="details-content-block"><h6>${escapeHtml(title)}</h6><p class="details-muted mb-0">${escapeHtml(subtitle || '-')}</p></div>`;
+}
+
+function buildAssignedDriveCard(drive) {
+    const company = drive.company_name || 'Company';
+    const role = drive.job_role || 'Role not specified';
+    const dateLabel = formatEventDate(drive.event_date || drive.due_date || '-');
+    const location = drive.location || '-';
+    let rounds = 0;
+    if (Array.isArray(drive.rounds)) {
+        rounds = drive.rounds.length;
+    } else if (Array.isArray(drive.interview_rounds)) {
+        rounds = drive.interview_rounds.length;
+    } else if (drive.interview_rounds) {
+        try {
+            const parsed = JSON.parse(drive.interview_rounds);
+            rounds = Array.isArray(parsed) ? parsed.length : 0;
+        } catch (error) {
+            rounds = String(drive.interview_rounds).split(',').map(item => item.trim()).filter(Boolean).length;
+        }
+    }
+    const status = drive.is_drive_completed || Number(drive.is_active) !== 1 ? 'Inactive' : 'Active';
+
+    return `
+        <div class="details-content-block">
+            <h6>${escapeHtml(company)}</h6>
+            <p class="details-muted mb-0">
+                ${escapeHtml(role)} | Date: ${escapeHtml(dateLabel)} | Location: ${escapeHtml(location)} | Rounds: ${escapeHtml(rounds)} | Status: ${escapeHtml(status)}
+            </p>
+        </div>
+    `;
+}
+
+function formatEventDate(value) {
+    if (!value) return '-';
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) {
+        return String(value);
+    }
+
+    return date.toLocaleString('en-GB', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric'
+    });
+}
+
+function renderEventsPage(records, page) {
+    const totalPages = Math.max(1, Math.ceil(records.length / EVENTS_PER_PAGE));
+    const safePage = Math.min(Math.max(page, 1), totalPages);
+    currentEventsPage = safePage;
+
+    const startIndex = (safePage - 1) * EVENTS_PER_PAGE;
+    const pageItems = records.slice(startIndex, startIndex + EVENTS_PER_PAGE);
+
+    const itemsHtml = pageItems.map((event) => {
+        const eventName = event.title || event.event_name || 'Untitled Event';
+        const eventType = event.event_type || 'Event';
+        const eventDate = formatEventDate(event.event_date || event.created_at || '-');
+        return `
+            <div class="event-card">
+                <h5 class="event-card-title">${escapeHtml(eventName)}</h5>
+                <p class="event-card-meta">${escapeHtml(eventType)} | ${escapeHtml(eventDate)}</p>
+            </div>
+        `;
+    }).join('');
+
+    const pagerHtml = totalPages > 1
+        ? `
+            <div class="events-pagination">
+                <span class="page-info">Showing ${startIndex + 1}-${Math.min(startIndex + EVENTS_PER_PAGE, records.length)} of ${records.length}</span>
+                <div class="d-flex gap-2">
+                    <button type="button" class="btn btn-outline-primary btn-sm" id="eventsPrevBtn" ${safePage === 1 ? 'disabled' : ''}>Previous</button>
+                    <span class="page-info align-self-center">Page ${safePage} / ${totalPages}</span>
+                    <button type="button" class="btn btn-outline-primary btn-sm" id="eventsNextBtn" ${safePage === totalPages ? 'disabled' : ''}>Next</button>
+                </div>
+            </div>
+        `
+        : '';
+
+    document.getElementById('detailsContent').innerHTML = `
+        <div class="event-list">${itemsHtml}</div>
+        ${pagerHtml}
+    `;
+
+    const prevBtn = document.getElementById('eventsPrevBtn');
+    const nextBtn = document.getElementById('eventsNextBtn');
+
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => renderEventsPage(records, safePage - 1));
+    }
+
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => renderEventsPage(records, safePage + 1));
+    }
+}
+
+function renderPrivileges(faculty) {
+    const labels = {
+        postEvents: 'Post Events',
+        uploadResources: 'Upload Resources',
+        postInternships: 'Post Internships',
+        monitorAssignedDrives: 'Monitor Assigned Drives'
+    };
+
+    const privileges = faculty.privileges || {};
+    const chips = Object.keys(labels).map((key) => {
+        const granted = Boolean(privileges[key]);
+        const cls = granted ? 'bg-success-subtle text-success' : 'bg-danger-subtle text-danger';
+        return `<span class="badge ${cls}">${labels[key]}: ${granted ? 'Granted' : 'Not Granted'}</span>`;
+    }).join('');
+
+    document.getElementById('privilegesList').innerHTML = chips;
+}
+
+function buildSectionLookup(faculty) {
+    const usage = faculty.privilegeUsage || {};
+
+    return {
+        postEvents: {
+            title: 'Events Posted Using Post Events Privilege',
+            allowed: Boolean(usage.postEvents?.allowed),
+            records: usage.postEvents?.records || []
+        },
+        uploadResources: {
+            title: 'Resources Uploaded Using Upload Resources Privilege',
+            content: usage.uploadResources?.allowed
+                ? (usage.uploadResources.records || []).map(resource =>
+                    recordBlock(resource.title || resource.resource_name || 'Untitled Resource', resource.category || resource.resource_type || '-')
+                ).join('')
+                : '<p class="details-muted mb-0">This faculty member does not have Upload Resources privilege.</p>'
+        },
+        postInternships: {
+            title: 'Internships Posted Using Post Internships Privilege',
+            content: usage.postInternships?.allowed
+                ? (usage.postInternships.records || []).map(opportunity =>
+                    recordBlock(opportunity.title || opportunity.job_role || opportunity.company_name || 'Internship', `${opportunity.type || 'internship'} | ${opportunity.created_at || '-'}`)
+                ).join('')
+                : '<p class="details-muted mb-0">This faculty member does not have Post Internships privilege.</p>'
+        },
+        monitorAssignedDrives: {
+            title: 'Assigned Drives Monitoring Activity',
+            content: usage.monitorAssignedDrives?.allowed
+                                ? `${(usage.monitorAssignedDrives.records?.assignedDrives || []).map(drive => buildAssignedDriveCard(drive)).join('') || '<p class="details-muted">No assigned drives found.</p>'}`
+                : '<p class="details-muted mb-0">This faculty member does not have Monitor Assigned Drives privilege.</p>'
+        }
+    };
+}
+
+function showSection(section) {
+    const sectionData = (window.sectionLookup || {})[section];
+    if (!sectionData) return;
+
+    document.getElementById('detailsTitle').innerText = sectionData.title;
+
+    if (section === 'postEvents') {
+        if (!sectionData.allowed) {
+            document.getElementById('detailsContent').innerHTML = '<p class="details-muted mb-0">This faculty member does not have Post Events privilege.</p>';
+        } else if (!sectionData.records.length) {
+            document.getElementById('detailsContent').innerHTML = '<p class="details-muted mb-0">No events found.</p>';
+        } else {
+            currentEventsPage = 1;
+            renderEventsPage(sectionData.records, currentEventsPage);
+        }
+    } else {
+        document.getElementById('detailsContent').innerHTML = sectionData.content || '<p class="details-muted mb-0">No records found.</p>';
+    }
+
+    document.querySelectorAll('.section-btn').forEach((btn) => {
+        btn.classList.toggle('active', btn.dataset.section === section);
+    });
+}
+
+async function openAssignDriveModal() {
+    if (!window.facultyData) {
+        showPrettyPopup('Faculty details are still loading. Please try again.', 'warning', 'Please Wait');
+        return;
+    }
+
+    if (!window.facultyData.privileges?.monitorAssignedDrives) {
+        showPrettyConfirm(
+            `No privilege given. Do you want to grant this privilege to ${window.facultyData.name || 'this faculty'}?`,
+            'Privilege Required',
+            grantPrivilegeAndContinueAssign
+        );
+        return;
+    }
+
+    const hint = document.getElementById('assignDriveFacultyHint');
+    const selectEl = document.getElementById('assignDriveSelect');
+    hint.innerText = `Faculty: ${window.facultyData.name || '-'} (${window.facultyData.email || '-'})`;
+    selectEl.innerHTML = '<option value="">Loading drives...</option>';
+
+    try {
+        const response = await fetch(`/api/admin/faculty-assignable-drives?campus=${encodeURIComponent(facultyCampus)}`);
+        const data = await response.json();
+
+        if (!data.success) {
+            showPrettyPopup(data.message || 'Failed to load available drives.', 'error', 'Unable To Load');
+            return;
+        }
+
+        assignableDrivesCache = data.drives || [];
+
+        if (!assignableDrivesCache.length) {
+            selectEl.innerHTML = '<option value="">No active drives found</option>';
+        } else {
+            selectEl.innerHTML = '<option value="">Select a drive</option>' + assignableDrivesCache.map((drive) => {
+                const dateLabel = formatEventDate(drive.event_date || drive.due_date || '-');
+                const label = `${drive.company_name || 'Company'} - ${drive.job_role || 'Role'} (${dateLabel})`;
+                return `<option value="${drive.id}">${escapeHtml(label)}</option>`;
+            }).join('');
+        }
+
+        if (!assignDriveModalInstance) {
+            assignDriveModalInstance = bootstrap.Modal.getOrCreateInstance(document.getElementById('assignDriveModal'));
+        }
+        assignDriveModalInstance.show();
+    } catch (error) {
+        console.error(error);
+        showPrettyPopup('Failed to load drives for assignment.', 'error', 'Request Failed');
+    }
+}
+
+async function assignSelectedDrive() {
+    const selectEl = document.getElementById('assignDriveSelect');
+    const placementId = Number(selectEl.value);
+
+    if (!placementId) {
+        showPrettyPopup('Please select a drive to assign.', 'warning', 'Selection Required');
+        return;
+    }
+
+    try {
+        const response = await fetch('/api/admin/assign-drive-to-faculty', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                facultyEmail,
+                campusType: facultyCampus,
+                placementId
+            })
+        });
+        const data = await response.json();
+
+        if (!data.success) {
+            showPrettyPopup(data.message || 'Failed to assign drive.', 'error', 'Assignment Failed');
+            return;
+        }
+
+        showPrettyPopup(data.message || 'Drive assigned successfully.', 'success', 'Assigned');
+        if (assignDriveModalInstance) {
+            assignDriveModalInstance.hide();
+        }
+        await fetchFacultyData();
+    } catch (error) {
+        console.error(error);
+        showPrettyPopup('Failed to assign drive.', 'error', 'Request Failed');
+    }
+}
+
+async function fetchFacultyData() {
+    try {
+        const res = await fetch(`/api/admin/faculty-email/${facultyEmail}?campus=${facultyCampus}`);
+        const data = await res.json();
+        if(!data.success){ showPrettyPopup(data.message || 'Failed to fetch faculty details.', 'error', 'Unable To Load'); return; }
+        const f = data.faculty;
+
+        // Populate
+        document.getElementById('facultyName').innerText = f.name;
+        document.getElementById('facultyInitial').innerText = (f.name || 'F').trim().charAt(0).toUpperCase();
+        document.getElementById('facultyDesignation').innerText = f.designation || 'Faculty Member';
+        document.getElementById('facultyNameInline').innerText = f.name || '-';
+        document.getElementById('facultyDesignationInline').innerText = f.designation || '-';
+        document.getElementById('facultyEmail').innerText = f.email;
+        document.getElementById('facultyPhone').innerText = f.phone || f.mobile || f.phone_number || '-';
+        document.getElementById('facultyDept').innerText = f.department;
+
+        document.getElementById('facultyCampus').innerText = f.campusType || facultyCampus;
+        document.getElementById('facultyCode').innerText = f.faculty_id || '-';
+
+        document.getElementById('postEventsCount').innerText = f.privilegeUsage?.postEvents?.usageCount || 0;
+        document.getElementById('uploadResourcesCount').innerText = f.privilegeUsage?.uploadResources?.usageCount || 0;
+        document.getElementById('postInternshipsCount').innerText = f.privilegeUsage?.postInternships?.usageCount || 0;
+        document.getElementById('monitorAssignedDrivesCount').innerText = f.privilegeUsage?.monitorAssignedDrives?.usageCount || 0;
+
+        renderPrivileges(f);
+
+        window.facultyData = f;
+        window.sectionLookup = buildSectionLookup(f);
+        showSection('postEvents');
+    } catch(err){
+        console.error(err);
+        showPrettyPopup('Failed to fetch faculty data.', 'error', 'Request Failed');
+    }
+}
+
+function openSection(section){
+    showSection(section);
+    document.getElementById('detailsSection').scrollIntoView({behavior:'smooth'});
+}
+
+document.getElementById('sectionNav').addEventListener('click', (event) => {
+    const btn = event.target.closest('.section-btn');
+    if (!btn) return;
+    openSection(btn.dataset.section);
+});
+
+document.getElementById('uiFeedbackYesBtn').addEventListener('click', async () => {
+    if (uiFeedbackModalInstance) {
+        uiFeedbackModalInstance.hide();
+    }
+    if (typeof uiFeedbackConfirmHandler === 'function') {
+        const callback = uiFeedbackConfirmHandler;
+        uiFeedbackConfirmHandler = null;
+        await callback();
+    }
+});
+
+document.getElementById('uiFeedbackModal').addEventListener('hidden.bs.modal', () => {
+    uiFeedbackConfirmHandler = null;
+});
+
+document.getElementById('assignDriveBtn').addEventListener('click', openAssignDriveModal);
+document.getElementById('confirmAssignDriveBtn').addEventListener('click', assignSelectedDrive);
+document.getElementById('bottomBackBtn').addEventListener('click', () => {
+    if (window.history.length > 1) {
+        window.history.back();
+        return;
+    }
+    window.location.href = 'admin-faculty.html';
+});
+
+// Fetch on load
+fetchFacultyData();
+
+</script>
+    <script src="assets/js/admin-session-manager.js"></script>
+    <script src="assets/js/admin-sidebar.js"></script>
+    <script src="assets/js/admin-access-control.js"></script>
+    <script>
+        // Hide main content while checking privileges
+        const mainContent = document.querySelector('main') || 
+                           document.querySelector('.admin-wrapper') || 
+                           document.querySelector('.container-fluid');
+        if (mainContent) mainContent.style.display = 'none';
+
+        // Guard this page - check if admin has permission to manage faculty
+        document.addEventListener('DOMContentLoaded', async function() {
+            const hasAccess = await adminAccessControl.guardPage('can_add_faculty', 'Faculty Details');
+            if (hasAccess && mainContent) mainContent.style.display = '';
+        });
+    </script>
+    <script src="assets/js/admin-footer.js"></script>
+</body>
+</html>
+
+

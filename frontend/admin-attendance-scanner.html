@@ -1,0 +1,610 @@
+﻿<!DOCTYPE html>
+<html lang="zxx">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NEC Placement Cell - QR Attendance Scanner</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="assets/css/remixicon.css" />
+  <link rel="stylesheet" href="assets/css/flaticon.css" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/admin-theme.css" />
+  <link href="assets/img/crop_nec.png" type="image/x-icon" rel="icon" />
+
+  <style>
+    :root {
+      --primaryColor: #001e43;
+      --secondaryColor: #002a5c;
+      --accentColor: #003580;
+      --darkColor: rgb(0, 30, 67);
+      --lightGray: #f8f9fa;
+      --cardBg: #ffffff;
+      --textColor: #333;
+      --textLight: #666;
+      --borderColor: #e9ecef;
+      --shadowColor: rgba(0, 30, 67, 0.1);
+      --gradientPrimary: linear-gradient(135deg, #001e43, #002a5c);
+      --gradientSecondary: linear-gradient(135deg, #002a5c, #003580);
+    }
+
+    body {
+      padding-top: 0;
+      overflow-x: hidden;
+      background: linear-gradient(135deg, #f8f9fa 0%, #f0f2f5 100%);
+    }
+
+    .admin-welcome-banner {
+      background: var(--gradientPrimary);
+      padding: 52px 0 36px;
+      color: white;
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px var(--shadowColor);
+      margin-left: 240px;
+      transition: margin-left 0.3s ease;
+    }
+
+    body.admin-sidebar-collapsed .admin-welcome-banner {
+      margin-left: 68px !important;
+    }
+
+    @media (max-width: 900px) {
+      .admin-welcome-banner {
+        margin-left: 68px;
+      }
+    }
+
+    .admin-welcome-banner::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+      animation: shimmer 4s infinite;
+    }
+
+    .admin-welcome-banner::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: var(--gradientSecondary);
+      animation: borderGlow 3s ease-in-out infinite alternate;
+    }
+
+    .admin-welcome-content {
+      position: relative;
+      z-index: 2;
+      text-align: left;
+    }
+
+    .admin-welcome-title {
+      font-size: 44px;
+      font-weight: 800;
+      margin-bottom: 14px;
+      color: #fff;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.28);
+      letter-spacing: -0.8px;
+      animation: titleFadeIn 1s ease-out;
+    }
+
+    .admin-welcome-subtitle {
+      font-size: 19px;
+      line-height: 1.6;
+      margin-bottom: 0;
+      color: rgba(255, 255, 255, 0.95);
+      animation: subtitleFadeIn 1s ease-out 0.2s backwards;
+    }
+
+    .admin-welcome-visual {
+      position: relative;
+      z-index: 2;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 120px;
+      min-height: 120px;
+      font-size: 82px;
+      color: #fff;
+      animation: adminPageHeroFloat 3s ease-in-out infinite;
+    }
+
+    .scanner-panel { margin-top: 20px; }
+    .scanner-card { background: #fff; border: 1px solid #dfe7f4; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,.08); padding: 22px; }
+    .qr-display-panel {
+      display: none;
+      margin-top: 18px;
+      padding: 20px;
+      background: linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
+      border: 1px solid #dfe7f4;
+      border-radius: 12px;
+    }
+    .qr-display-panel.show { display: block; }
+    .qr-code-box {
+      width: 340px;
+      min-height: 340px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      border: 1px solid #dfe7f4;
+      border-radius: 16px;
+      padding: 12px;
+      box-shadow: 0 10px 28px rgba(0, 30, 67, 0.08);
+    }
+    .qr-drive-meta {
+      margin-top: 15px;
+      text-align: center;
+      color: #34495e;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .drive-status { margin-top: 12px; }
+
+    @keyframes shimmer {
+      from { transform: translateX(0); }
+      to { transform: translateX(100%); }
+    }
+
+    @keyframes borderGlow {
+      from { opacity: 0.8; }
+      to { opacity: 1; }
+    }
+
+    @keyframes adminPageHeroFloat {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(6px); }
+      100% { transform: translateY(0px); }
+    }
+  
+    /* Pagination Controls */
+    #pagination-controls {
+      display: flex;
+      gap: 8px;
+      list-style: none;
+      padding: 0;
+      margin: 20px 0;
+      justify-content: center;
+    }
+
+    .page-item .page-link {
+      border: 1px solid #dfe7f4;
+      padding: 8px 12px;
+      color: #001e43;
+      background-color: #fff;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .page-item .page-link:hover {
+      background-color: #f0f5ff;
+      border-color: #001e43;
+    }
+
+    .page-item.active .page-link {
+      background-color: #001e43;
+      color: #fff;
+      border-color: #001e43;
+      box-shadow: 0 2px 8px rgba(0, 30, 67, 0.3);
+    }
+
+    .page-item.disabled .page-link {
+      color: #bdc3c7;
+      background-color: #ecf0f1;
+      border-color: #dfe7f4;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+  </style>
+</head>
+<body class="admin-sidebar-enabled">
+  <div class="top-header-area style-2" style="padding: 12px 0;">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-12 text-center">
+          <h3 class="mb-0" style="color:#fff;font-weight:700;letter-spacing:1px;line-height:1.4;font-size:26px;">
+            <span style="font-family:'Poppins';font-size:36px;font-weight:700;">NEC</span> – Central Placement Information and Management Center
+          </h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="header-welcome-gap" aria-hidden="true"></div>
+
+<div class="admin-welcome-banner">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-8">
+          <div class="admin-welcome-content">
+            <h2 class="admin-welcome-title">QR Attendance Scanner</h2>
+            <p class="admin-welcome-subtitle">Select a drive to display its QR code and view attendance history.</p>
+          </div>
+        </div>
+        <div class="col-lg-4 text-center">
+          <div class="admin-welcome-visual"><i class="ri-qr-scan-line"></i></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="admin-wrapper">
+    <div class="container">
+      <div class="scanner-panel">
+        <div class="scanner-card">
+          <div class="mb-4">
+            <label for="drive-select" class="form-label">Select Ongoing Drive</label>
+            <select id="drive-select" class="form-select">
+              <option value="">Loading ongoing drives...</option>
+            </select>
+          </div>
+
+          <div class="qr-display-panel" id="qr-display-panel">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h5 class="mb-0">Drive QR Code</h5>
+              <span class="badge bg-primary" id="qr-drive-badge">Selected Drive</span>
+            </div>
+            <div class="qr-code-box" id="drive-qr-box">
+              <div class="text-center text-muted">
+                <i class="ri-qr-scan-2-line" style="font-size: 42px;"></i>
+                <div class="mt-2">Select a drive to generate QR</div>
+              </div>
+            </div>
+            <div class="qr-drive-meta" id="qr-drive-meta"></div>
+          </div>
+
+          <div class="drive-status" id="drive-status-section" style="display:none;">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h5 class="mb-0">Attendance History</h5>
+              <div>
+                <span id="attendee-count" class="badge bg-primary me-2">0 Present</span>
+                <button id="export-csv" class="btn btn-sm btn-outline-secondary" style="display:none;"><i class="ri-download-2-line"></i> Export CSV</button>
+              </div>
+            </div>
+            <div id="attendance-history"></div>
+          </div>
+
+          <!-- Recent Drives Section -->
+          <div class="recent-drives-section mt-4">
+            <h5 class="mb-3">Recent Drives</h5>
+            <div id="recent-drives-list" class="row g-3">
+              <!-- Drives will be loaded here -->
+            </div>
+            <div id="recent-drives-pagination" class="d-flex justify-content-center mt-3" style="display:none;">
+              <nav aria-label="Recent drives pagination">
+                <ul class="pagination pagination-sm" id="pagination-controls">
+                  <!-- Pagination controls will be added here -->
+                </ul>
+              </nav>
+            </div>
+            <div id="no-recent-drives" class="text-center text-muted mt-3" style="display:none;">
+              No attendance available for recent drives.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/custom.js"></script>
+  <script src="assets/js/admin-sidebar.js"></script>
+  <script>
+    let selectedDriveId = null;
+    let currentDriveDetails = null;
+
+    async function loadDrives() {
+      try {
+        const res = await fetch('/api/opportunities/placements/admin/ongoing');
+        const data = await res.json();
+        const select = document.getElementById('drive-select');
+        select.innerHTML = '<option value="">Choose a drive...</option>';
+
+        const drives = Array.isArray(data.drives) ? data.drives : (data.opportunities || []);
+        if (!drives.length) {
+          select.innerHTML = '<option value="">No ongoing drives found</option>';
+          return;
+        }
+
+        drives.forEach(drive => {
+          const opt = document.createElement('option');
+          opt.value = drive.id;
+          opt.textContent = `${drive.company_name || drive.title || drive.job_role} - ${drive.location || 'Location N/A'}`;
+          select.appendChild(opt);
+        });
+      } catch (err) {
+        console.error('Error loading drives:', err);
+      }
+    }
+
+    document.getElementById('drive-select').addEventListener('change', function () {
+      selectedDriveId = this.value;
+      currentDriveDetails = null;
+      document.getElementById('qr-display-panel').classList.remove('show');
+      document.getElementById('qr-drive-meta').textContent = '';
+      document.getElementById('drive-qr-box').innerHTML = '<div class="text-center text-muted"><i class="ri-qr-scan-2-line" style="font-size: 42px;"></i><div class="mt-2">Loading QR...</div></div>';
+      document.getElementById('drive-status-section').style.display = selectedDriveId ? 'block' : 'none';
+      document.getElementById('attendance-history').textContent = '';
+
+      if (selectedDriveId) {
+        document.getElementById('qr-display-panel').classList.add('show');
+        renderDriveQrCode(selectedDriveId);
+        loadAttendanceHistory();
+      } else {
+      }
+    });
+
+    async function renderDriveQrCode(opportunityId) {
+      try {
+        const response = await fetch(`/api/attendance/drive-qr/${opportunityId}`);
+        const data = await response.json();
+
+        if (!response.ok || !data.success || !data.qrCode) {
+          document.getElementById('drive-qr-box').innerHTML = '<div class="text-center text-danger">Unable to load drive details</div>';
+          document.getElementById('qr-display-panel').classList.add('show');
+          return;
+        }
+
+        currentDriveDetails = data.drive || {};
+        document.getElementById('drive-qr-box').innerHTML = `<img src="${data.qrCode}" alt="Drive QR Code" style="width:100%; max-width:320px; display:block; border-radius:10px;">`;
+        document.getElementById('qr-drive-meta').innerHTML = `
+          <div><strong>${currentDriveDetails.company_name || currentDriveDetails.title || 'Placement Drive'}</strong></div>
+          <div>${currentDriveDetails.job_role || 'Drive QR for attendance'}</div>
+          <div style="margin-top:8px; color:#6c7a89;">Students can scan this QR on the student attendance scanner and confirm attendance.</div>
+        `;
+        document.getElementById('qr-display-panel').classList.add('show');
+      } catch (error) {
+        console.error('Error generating QR code:', error);
+        document.getElementById('drive-qr-box').innerHTML = '<div class="text-center text-danger">Error generating QR code</div>';
+        document.getElementById('qr-display-panel').classList.add('show');
+      }
+    }
+
+    async function loadAttendanceHistory() {
+      if (!selectedDriveId) return;
+      const res = await fetch(`/api/attendance/opportunity/${selectedDriveId}`);
+      const data = await res.json();
+      const history = document.getElementById('attendance-history');
+      const countBadge = document.getElementById('attendee-count');
+      const exportBtn = document.getElementById('export-csv');
+
+      if (data && Array.isArray(data.attendance) && data.attendance.length) {
+        countBadge.textContent = `${data.attendance.length} Present`;
+        countBadge.classList.add('bg-success');
+        countBadge.classList.remove('bg-primary');
+        exportBtn.style.display = 'inline-block';
+
+        history.innerHTML = data.attendance.map(item => `
+          <div class="d-flex justify-content-between gap-2 align-items-start mb-2">
+            <div><strong>${item.student_name}</strong><br><small>${item.roll_no}</small></div>
+            <div><small>${new Date(item.scanned_at).toLocaleTimeString()}</small></div>
+          </div>
+        `).join('');
+      } else {
+        countBadge.textContent = '0 Present';
+        countBadge.classList.remove('bg-success');
+        countBadge.classList.add('bg-primary');
+        exportBtn.style.display = 'none';
+        history.innerHTML = '<div class="alert alert-info">No attendance available for this drive.</div>';
+      }
+    }
+
+    function exportAsCSV() {
+      if (!selectedDriveId) return;
+
+      fetch(`/api/attendance/opportunity/${selectedDriveId}`)
+        .then(res => res.json())
+        .then(data => {
+          if (!data.attendance || data.attendance.length === 0) {
+            alert('No attendance records to export');
+            return;
+          }
+
+          const headers = ['Student Name', 'Roll Number', 'Branch', 'Year', 'Campus', 'Scanned At', 'Status'];
+          const rows = data.attendance.map(item => [
+            item.student_name,
+            item.roll_no,
+            item.branch || 'N/A',
+            item.year || 'N/A',
+            item.campus_type || 'NECN',
+            new Date(item.scanned_at).toLocaleString(),
+            item.status || 'present'
+          ]);
+
+          let csv = headers.join(',') + '\n';
+          rows.forEach(row => {
+            csv += row.map(cell => `"${(cell || '').toString().replace(/"/g, '""')}"`).join(',') + '\n';
+          });
+
+          const blob = new Blob([csv], { type: 'text/csv' });
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          const now = new Date();
+          const dateStamp = now.toISOString().slice(0, 10);
+          const timeStamp = now.toISOString().slice(11, 19).replace(/:/g, '-');
+          a.href = url;
+          a.download = `Attendance_Report_Drive${selectedDriveId}_${dateStamp}_${timeStamp}.csv`;
+          a.click();
+          window.URL.revokeObjectURL(url);
+        })
+        .catch(err => {
+          console.error('Export error:', err);
+          alert('Failed to export attendance');
+        });
+    }
+
+    document.getElementById('export-csv').addEventListener('click', exportAsCSV);
+
+    // Recent Drives functionality
+    let currentPage = 1;
+    const drivesPerPage = 6;
+
+    async function loadRecentDrives(page = 1) {
+      try {
+        const response = await fetch(`/api/opportunities/placements/admin/recent-with-attendance?page=${page}&limit=${drivesPerPage}`);
+        const data = await response.json();
+
+        if (data.success) {
+          displayRecentDrives(data.drives);
+          updatePagination(data.pagination);
+        } else {
+          showNoRecentDrives();
+        }
+      } catch (error) {
+        console.error('Error loading recent drives:', error);
+        showNoRecentDrives();
+      }
+    }
+
+    function displayRecentDrives(drives) {
+      const container = document.getElementById('recent-drives-list');
+      const noDrivesMsg = document.getElementById('no-recent-drives');
+      const pagination = document.getElementById('recent-drives-pagination');
+
+      if (!drives || drives.length === 0) {
+        showNoRecentDrives();
+        return;
+      }
+
+      noDrivesMsg.style.display = 'none';
+      pagination.style.display = drives.length > 0 ? 'block' : 'none';
+
+      container.innerHTML = drives.map(drive => {
+        const hasAttendance = drive.attendance_count && drive.attendance_count > 0;
+        return `
+        <div class="col-md-6 col-lg-4">
+          <div class="card h-100">
+            <div class="card-body">
+              <h6 class="card-title">${drive.company_name}</h6>
+              <p class="card-text mb-1"><strong>Role:</strong> ${drive.job_role}</p>
+              <p class="card-text mb-1"><strong>Date:</strong> ${new Date(drive.event_date).toLocaleDateString()}</p>
+              <p class="card-text mb-1"><strong>Location:</strong> ${drive.location || 'N/A'}</p>
+              <p class="card-text mb-2"><strong>Attendance:</strong> ${hasAttendance ? `<span class="badge bg-info">${drive.attendance_count} students</span>` : '<span class="text-muted">No attendance data available</span>'}</p>
+              ${hasAttendance ? `<button class="btn btn-sm btn-outline-primary export-drive-btn" data-drive-id="${drive.id}"><i class="ri-download-2-line"></i> Export CSV</button>` : ''}
+            </div>
+          </div>
+        </div>
+      `;
+      }).join('');
+
+      // Add event listeners for export buttons
+      document.querySelectorAll('.export-drive-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const driveId = this.getAttribute('data-drive-id');
+          exportDriveAttendance(driveId);
+        });
+      });
+    }
+
+    function updatePagination(pagination) {
+      const controls = document.getElementById('pagination-controls');
+      controls.innerHTML = '';
+
+      if (pagination.totalPages <= 1) return;
+
+      // Previous button
+      const prevBtn = document.createElement('li');
+      prevBtn.className = `page-item ${pagination.page <= 1 ? 'disabled' : ''}`;      prevBtn.style.margin = '0 4px';      prevBtn.innerHTML = `<a class="page-link" href="#" data-page="${pagination.page - 1}">Prev</a>`;
+      controls.appendChild(prevBtn);
+
+      // Page numbers
+      for (let i = 1; i <= pagination.totalPages; i++) {
+        const pageBtn = document.createElement('li');
+        pageBtn.className = `page-item ${i === pagination.page ? 'active' : ''}`;
+        pageBtn.style.margin = '0 4px';
+        pageBtn.innerHTML = `<a class="page-link" href="#" data-page="${i}">${i}</a>`;
+        controls.appendChild(pageBtn);
+      }
+
+      // Next button
+      const nextBtn = document.createElement('li');
+      nextBtn.className = `page-item ${pagination.page >= pagination.totalPages ? 'disabled' : ''}`;
+      nextBtn.style.margin = '0 4px';
+      nextBtn.innerHTML = `<a class="page-link" href="#" data-page="${pagination.page + 1}">Next</a>`;
+      controls.appendChild(nextBtn);
+
+      // Add event listeners
+      controls.querySelectorAll('.page-link').forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const page = parseInt(this.getAttribute('data-page'));
+          if (page >= 1 && page <= pagination.totalPages) {
+            currentPage = page;
+            loadRecentDrives(page);
+          }
+        });
+      });
+    }
+
+    function showNoRecentDrives() {
+      const container = document.getElementById('recent-drives-list');
+      const noDrivesMsg = document.getElementById('no-recent-drives');
+      const pagination = document.getElementById('recent-drives-pagination');
+
+      container.innerHTML = '';
+      pagination.style.display = 'none';
+      noDrivesMsg.style.display = 'block';
+    }
+
+    async function exportDriveAttendance(driveId) {
+      try {
+        const response = await fetch(`/api/attendance/opportunity/${driveId}`);
+        const data = await response.json();
+
+        if (!data.attendance || data.attendance.length === 0) {
+          alert('No attendance records to export for this drive');
+          return;
+        }
+
+        const headers = ['Student Name', 'Roll Number', 'Branch', 'Year', 'Campus', 'Scanned At', 'Status'];
+        const rows = data.attendance.map(item => [
+          item.student_name,
+          item.roll_no,
+          item.branch || 'N/A',
+          item.year || 'N/A',
+          item.campus_type || 'NECN',
+          new Date(item.scanned_at).toLocaleString(),
+          item.status || 'present'
+        ]);
+
+        let csv = headers.join(',') + '\n';
+        rows.forEach(row => {
+          csv += row.map(cell => `"${(cell || '').toString().replace(/"/g, '""')}"`).join(',') + '\n';
+        });
+
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        const now = new Date();
+        const dateStamp = now.toISOString().slice(0, 10);
+        const timeStamp = now.toISOString().slice(11, 19).replace(/:/g, '-');
+        a.href = url;
+        a.download = `Attendance_Report_Drive${driveId}_${dateStamp}_${timeStamp}.csv`;
+        a.click();
+        window.URL.revokeObjectURL(url);
+      } catch (error) {
+        console.error('Export error:', error);
+        alert('Failed to export attendance for this drive');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      loadDrives();
+      loadRecentDrives();
+    });
+  </script>
+</body>
+</html>
+

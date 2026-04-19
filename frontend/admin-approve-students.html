@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEC Placement Cell - Approve Students</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="assets/css/scrollCue.css">
+    <link rel="stylesheet" href="assets/css/remixicon.css">
+    <link rel="stylesheet" href="assets/css/flaticon.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/admin-theme.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link href="assets/img/crop_nec.png" type="image/x-icon" rel="icon">
+
+    <style>
+        .pending-student-card {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .pending-student-card:hover {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+            transform: translateY(-2px);
+        }
+
+        .student-info-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #666;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            font-size: 14px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .btn-approve, .btn-reject {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .btn-approve {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-approve:hover {
+            background: #218838;
+            transform: scale(1.02);
+        }
+
+        .btn-reject {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-reject:hover {
+            background: #c82333;
+            transform: scale(1.02);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-approved {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-rejected {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            border: 2px solid #001e43;
+            background: #fff;
+            color: #001e43;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active {
+            background: #001e43;
+            color: #fff;
+        }
+
+        .filter-btn:hover {
+            background: #001e43;
+            color: #fff;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .empty-state i {
+            font-size: 48px;
+            color: #ccc;
+            margin-bottom: 15px;
+        }
+
+        .rejection-reason-input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: Arial, sans-serif;
+            margin-top: 10px;
+        }
+
+        .college-btn {
+            flex: 1;
+            padding: 10px;
+            border-radius: 6px;
+            border: 2px solid #001e43;
+            background: #fff;
+            color: #001e43;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .college-btn:hover {
+            background-color: #f3f4ff;
+        }
+
+        .college-btn.active {
+            background: #001e43;
+            color: #fff;
+            border-color: #001e43;
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== Admin Sidebar ===== -->
+    <aside class="admin-sidebar" id="adminSidebar">
+        <div class="sidebar-header">
+            <img src="assets/img/logo_necn.png" alt="NEC Logo" class="sidebar-logo-img">
+            <span class="sidebar-brand">NEC Admin</span>
+        </div>
+        <button class="sidebar-toggle-btn" id="sidebarToggle" title="Toggle Sidebar">
+            <i class="ri-menu-fold-line" id="sidebarToggleIcon"></i>
+        </button>
+        <nav class="sidebar-nav">
+            <a href="admin-dashboard.html" class="sidebar-nav-item active">
+                <i class="ri-dashboard-line"></i>
+                <span class="nav-label">Dashboard</span>
+            </a>
+            <a href="admin-students.html" class="sidebar-nav-item">
+                <i class="ri-user-line"></i>
+                <span class="nav-label">Students</span>
+            </a>
+            <a href="admin-approve-students.html" class="sidebar-nav-item">
+                <i class="ri-user-check-line"></i>
+                <span class="nav-label">Approve Students</span>
+            </a>
+            <a href="admin-opportunities.html" class="sidebar-nav-item">
+                <i class="ri-briefcase-line"></i>
+                <span class="nav-label">Opportunities</span>
+            </a>
+            <a href="admin-placement-drives.html" class="sidebar-nav-item">
+                <i class="ri-calendar-event-line"></i>
+                <span class="nav-label">Placement Drives</span>
+            </a>
+            <a href="admin-faculty.html" class="sidebar-nav-item">
+                <i class="ri-team-line"></i>
+                <span class="nav-label">Faculty</span>
+            </a>
+            <a href="admin-reports.html" class="sidebar-nav-item">
+                <i class="ri-bar-chart-line"></i>
+                <span class="nav-label">Reports</span>
+            </a>
+            <a href="admin-add-admin.html" class="sidebar-nav-item">
+                <i class="ri-user-add-line"></i>
+                <span class="nav-label">Add Admin</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="index.html" class="sidebar-nav-item logout-item">
+                <i class="ri-logout-box-line"></i>
+                <span class="nav-label">Logout</span>
+            </a>
+        </div>
+    </aside>
+
+    <div class="top-header-area style-2">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-12 text-center">
+                    <h3 class="mb-0" style="color: #fff; font-weight: 700; letter-spacing: 1px; line-height: 1.4; font-size: 26px;">
+                        <span style="font-family: 'Poppins'; font-size: 36px; font-weight: 700;">NEC</span> – Central Placement Information and Management Center
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-welcome-gap" aria-hidden="true"></div>
+
+    <div style="margin-left: 240px; padding: 30px;">
+        <div class="container-fluid">
+            <h2 style="margin-bottom: 30px; color: #001e43;">Pending Student Approvals</h2>
+
+            <!-- Filter Buttons -->
+            <div class="filter-buttons">
+                <button class="filter-btn active" onclick="filterStudents('all', this)">All</button>
+                <button class="filter-btn" onclick="filterStudents('pending', this)">Pending</button>
+                <button class="filter-btn" onclick="filterStudents('approved', this)">Approved</button>
+                <button class="filter-btn" onclick="filterStudents('rejected', this)">Rejected</button>
+            </div>
+
+            <div id="campusToggle" style="display: flex; gap: 10px; margin-bottom: 20px;">
+                <button class="college-btn active" onclick="switchCampus('necn', this)">NECN Campus</button>
+                <button class="college-btn" onclick="switchCampus('necg', this)">NECG Campus</button>
+            </div>
+
+            <!-- Students List -->
+            <div id="studentsList"></div>
+            <div id="paginationControls" class="pagination-wrap" style="display:none; margin-top: 20px; justify-content: center; gap: 6px;"></div>
+        </div>
+    </div>
+
+    <!-- Rejection Modal -->
+    <div class="modal fade" id="rejectionModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Reject Student Request</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <label class="form-label">Reason for Rejection (Optional):</label>
+                    <textarea class="rejection-reason-input" id="rejectionReason" rows="4" placeholder="Enter reason for rejection..."></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" onclick="confirmReject()">Reject</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Approval Confirmation Modal -->
+    <div class="modal fade" id="approvalConfirmModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirm Approval</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="approvalConfirmText">Are you sure you want to approve this student?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-success" onclick="approveStudent()">Yes, Approve</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Result Modal -->
+    <div class="modal fade" id="actionResultModal" tabindex="-1" aria-labelledby="actionResultModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="actionResultModalLabel">Action Result</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="actionResultMessage" style="font-size: 14px; line-height: 1.6; color: #333;"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Okay</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/admin-sidebar.js"></script>
+    <script src="assets/js/admin-access-control.js"></script>
+
+    <script>
+        let pendingStudents = [];
+        let currentFilter = 'all';
+        let currentCampus = 'necn';
+        let currentPage = 1;
+        const pageSize = 6;
+        let currentRejectingId = null;
+        let currentApprovingId = null;
+        let currentApprovingName = '';
+        const adminData = JSON.parse(localStorage.getItem('admin_data') || '{}');
+        const adminName = adminData.name || 'Admin';
+
+        // Load pending students on page load if privilege checks pass
+        window.addEventListener('load', async () => {
+            const hasAccess = await adminAccessControl.guardPage('can_approve_students', 'Approve Students');
+            if (!hasAccess) return;
+            loadPendingStudents();
+        });
+
+        async function loadPendingStudents() {
+            try {
+                const campus = currentCampus.toUpperCase();
+                const response = await fetch(`http://localhost:3000/api/admin/pending-students?campus=${campus}`);
+                const data = await response.json();
+
+                if (data.success) {
+                    pendingStudents = data.students || [];
+                    renderStudents();
+                } else {
+                    console.error('Error loading students:', data.message);
+                }
+            } catch (err) {
+                console.error('Error:', err);
+            }
+        }
+
+        function renderStudents() {
+            const container = document.getElementById('studentsList');
+            let filtered = pendingStudents;
+
+            if (currentFilter !== 'all') {
+                filtered = pendingStudents.filter(s => s.status === currentFilter);
+            }
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="ri-inbox-line"></i>
+                        <h5>No students to display</h5>
+                        <p>There are no student registrations matching the selected filter.</p>
+                    </div>
+                `;
+                document.getElementById('paginationControls').style.display = 'none';
+                return;
+            }
+
+            const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
+            if (currentPage > totalPages) currentPage = totalPages;
+
+            const start = (currentPage - 1) * pageSize;
+            const pagedStudents = filtered.slice(start, start + pageSize);
+
+            container.innerHTML = pagedStudents.map(student => `
+                <div class="pending-student-card">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 15px;">
+                        <h5 style="color: #001e43; margin: 0;">${student.name}</h5>
+                        <span class="status-badge status-${student.status}">${student.status.toUpperCase()}</span>
+                    </div>
+
+                    <div class="student-info-row">
+                        <div class="info-item">
+                            <span class="info-label">Email</span>
+                            <span class="info-value">${student.email}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Roll Number</span>
+                            <span class="info-value">${student.roll_no}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Phone</span>
+                            <span class="info-value">${student.phone}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Department</span>
+                            <span class="info-value">${student.branch}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Year</span>
+                            <span class="info-value">${student.year}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Registered On</span>
+                            <span class="info-value">${new Date(student.created_at).toLocaleDateString()}</span>
+                        </div>
+                    </div>
+
+                    ${student.status === 'pending' ? `
+                        <div class="action-buttons">
+                            <button class="btn-approve" onclick="showApproveModal(${student.id}, '${student.name.replace(/'/g, "\\'")}')">
+                                <i class="ri-check-line"></i> Approve
+                            </button>
+                            <button class="btn-reject" onclick="showRejectModal(${student.id})">
+                                <i class="ri-close-line"></i> Reject
+                            </button>
+                        </div>
+                    ` : ''}
+
+                    ${student.status === 'rejected' && student.rejection_reason ? `
+                        <div style="margin-top: 15px; padding: 10px; background: #f8d7da; border-radius: 4px;">
+                            <strong style="color: #721c24;">Rejection Reason:</strong>
+                            <p style="color: #721c24; margin: 5px 0 0 0;">${student.rejection_reason}</p>
+                        </div>
+                    ` : ''}
+                </div>
+            `).join('');
+
+            renderPagination(totalPages);
+        }
+
+        function filterStudents(status, btn) {
+            currentFilter = status;
+            currentPage = 1;
+            document.querySelectorAll('.filter-btn').forEach(button => button.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            renderStudents();
+        }
+
+        function switchCampus(campus, btn) {
+            currentCampus = campus;
+            currentPage = 1;
+            document.querySelectorAll('#campusToggle .college-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            loadPendingStudents();
+        }
+
+        function showRejectModal(studentId) {
+            currentRejectingId = studentId;
+            document.getElementById('rejectionReason').value = '';
+            const modal = new bootstrap.Modal(document.getElementById('rejectionModal'));
+            modal.show();
+        }
+
+        function showActionResult(message) {
+            const msgElem = document.getElementById('actionResultMessage');
+            const safeMessage = String(message || '')
+                .replace(/\s*with\s+temporary\s+password\s*:\s*\S+/i, '')
+                .replace(/\s{2,}/g, ' ')
+                .trim();
+            msgElem.textContent = safeMessage;
+            const actionModal = new bootstrap.Modal(document.getElementById('actionResultModal'));
+            actionModal.show();
+        }
+
+        function showApproveModal(studentId, studentName) {
+            currentApprovingId = studentId;
+            currentApprovingName = studentName;
+            document.getElementById('approvalConfirmText').textContent = `Are you sure you want to approve ${studentName}?`;
+            const modal = new bootstrap.Modal(document.getElementById('approvalConfirmModal'));
+            modal.show();
+        }
+
+        async function approveStudent() {
+            if (!currentApprovingId) return;
+            try {
+                const campus = currentCampus.toUpperCase();
+                const response = await fetch(`http://localhost:3000/api/admin/approve-student/${currentApprovingId}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ campus, approvedBy: adminName })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    const approvalModalEl = document.getElementById('approvalConfirmModal');
+                    const approvalModalInstance = bootstrap.Modal.getInstance(approvalModalEl);
+                    if (approvalModalInstance) {
+                        approvalModalInstance.hide();
+                    }
+
+                    const msg = 'Student approved successfully! Approval email sent.';
+                    currentApprovingId = null;
+                    currentApprovingName = '';
+                    showActionResult(msg);
+                    loadPendingStudents();
+                } else {
+                    showActionResult('Error: ' + data.message);
+                }
+            } catch (err) {
+                console.error('Error:', err);
+                showActionResult('Server error');
+            }
+        }
+
+        async function confirmReject() {
+            const reason = document.getElementById('rejectionReason').value;
+
+            try {
+                const campus = currentCampus.toUpperCase();
+                const response = await fetch(`http://localhost:3000/api/admin/reject-student/${currentRejectingId}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ reason, campus })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    showActionResult('Student request rejected successfully');
+                    bootstrap.Modal.getInstance(document.getElementById('rejectionModal')).hide();
+                    loadPendingStudents();
+                } else {
+                    showActionResult('Error: ' + data.message);
+                }
+            } catch (err) {
+                console.error('Error:', err);
+                showActionResult('Server error');
+            }
+        }
+
+        function renderPagination(totalPages) {
+            const pagination = document.getElementById('paginationControls');
+            pagination.innerHTML = '';
+
+            if (totalPages <= 1) {
+                pagination.style.display = 'none';
+                return;
+            }
+
+            pagination.style.display = 'flex';
+
+            const prev = document.createElement('button');
+            prev.className = 'btn btn-outline-primary btn-sm';
+            prev.textContent = 'Prev';
+            prev.disabled = currentPage <= 1;
+            prev.onclick = () => { if (currentPage > 1) { currentPage--; renderStudents(); } };
+            pagination.appendChild(prev);
+
+            for (let i = 1; i <= totalPages; i++) {
+                const btn = document.createElement('button');
+                btn.className = `btn btn-outline-primary btn-sm ${i === currentPage ? 'active' : ''}`;
+                btn.style.margin = '0 3px';
+                btn.textContent = i;
+                btn.onclick = () => { currentPage = i; renderStudents(); };
+                pagination.appendChild(btn);
+            }
+
+            const next = document.createElement('button');
+            next.className = 'btn btn-outline-primary btn-sm';
+            next.textContent = 'Next';
+            next.disabled = currentPage >= totalPages;
+            next.onclick = () => { if (currentPage < totalPages) { currentPage++; renderStudents(); } };
+            pagination.appendChild(next);
+        }
+
+        function goToPage(page) {
+            if (page < 1) page = 1;
+            currentPage = page;
+            renderStudents();
+        }
+
+        // Sidebar toggle (same as admin dashboard behavior)
+        const adminSidebar = document.getElementById('adminSidebar');
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebarToggleIcon = document.getElementById('sidebarToggleIcon');
+
+        sidebarToggle.addEventListener('click', () => {
+            adminSidebar.classList.toggle('collapsed');
+            if (adminSidebar.classList.contains('collapsed')) {
+                sidebarToggleIcon.classList.replace('ri-menu-fold-line', 'ri-menu-unfold-line');
+            } else {
+                sidebarToggleIcon.classList.replace('ri-menu-unfold-line', 'ri-menu-fold-line');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+# Environment variables (IMPORTANT: Never commit credentials!)
+.env
+.env.local
+.env.production
+
+# Node modules
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Uploaded files (user data)
+uploads/
+backend/uploads/
+
+# IDE/Editor folders
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Build outputs
+dist/
+build/

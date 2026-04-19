@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NEC Placement Cell - Attendance QR</title>
+
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="assets/css/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="assets/css/scrollCue.css" />
+  <link rel="stylesheet" href="assets/css/remixicon.css" />
+  <link rel="stylesheet" href="assets/css/flaticon.css" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/responsive.css" />
+  <link href="assets/img/crop_nec.png" type="image/x-icon" rel="icon" />
+
+  <style>
+    :root {
+      --primaryColor: #001e43;
+      --secenderyColor: #002a5c;
+      --darkColor: rgb(0, 30, 67);
+      --accentColor: #003580;
+      --shadowColor: rgba(0, 30, 67, 0.14);
+      --background: linear-gradient(135deg, #f8f9fa 0%, #f0f2f5 100%);
+    }
+
+    body {
+      padding-top: 0;
+      background: var(--background);
+      overflow-x: hidden;
+    }
+
+    html { overflow-x: hidden; }
+
+    .student-page-hero {
+      border-radius: 14px;
+      background: linear-gradient(135deg, #001e43 0%, #002a5c 100%);
+      color: #ffffff;
+      padding: 40px 0 34px;
+      margin-bottom: 36px;
+      box-shadow: 0 12px 30px rgba(0, 30, 67, 0.25);
+    }
+
+    .header-welcome-gap {
+      height: 8px;
+      background: linear-gradient(135deg, #f8f9fa 0%, #f0f2f5 100%);
+    }
+
+    .student-page-hero-title {
+      font-size: 3rem;
+      font-weight: 800;
+      line-height: 1.1;
+    }
+
+    .student-page-hero-subtitle {
+      color: rgba(255,255,255,.93);
+      font-size: 1.1rem;
+      margin-top: 8px;
+      max-width: 630px;
+    }
+
+    .dashboard-cards-container {
+      padding: 30px 0 60px;
+      min-height: calc(100vh - 220px);
+    }
+
+    .main-content-wrapper {
+      margin-left: 240px;
+      max-width: calc(100% - 240px);
+      transition: margin-left .3s cubic-bezier(.4,0,.2,1);
+    }
+
+    .student-sidebar.collapsed ~ .main-content-wrapper,
+    body.student-sidebar-collapsed .main-content-wrapper {
+      margin-left: 68px;
+      max-width: calc(100% - 68px);
+    }
+
+    .dashboard-cards-container .container {
+      max-width: 100%;
+      padding: 0 15px;
+    }
+
+    .dashboard-cards-container .row { gap: 18px; }
+
+    .dashboard-card {
+      background: #ffffff;
+      border-radius: 13px;
+      box-shadow: 0 6px 25px rgba(20,34,63,0.1);
+      border: 1px solid #e8edf6;
+      padding: 22px;
+      transition: transform .3s ease, box-shadow .3s ease;
+      width: 100%;
+    }
+
+    .dashboard-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(20,34,63,0.18);
+    }
+
+    .dashboard-card h4 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #001e43;
+      margin-bottom: 6px;
+    }
+
+    .dashboard-card .card-subtitle {
+      color: #4f5d78;
+      font-size: 0.93rem;
+      margin-bottom: 12px;
+    }
+
+    .dashboard-card .qr-code img {
+      width: 230px;
+      max-width: 100%;
+      margin: 12px 0;
+    }
+
+    .dashboard-card .status-badge {
+      display: inline-block;
+      background-color: #d6f7e5;
+      color: #0f8b54;
+      padding: 5px 10px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      border-radius: 50px;
+    }
+
+    .student-page-inner {
+      padding: 0;
+    }
+
+           /* Footer Area Style */
+.footer-area{
+  background-color:#071b3a;
+  color:#ffffff;
+  margin-top:100px;
+  padding:40px 20px;
+  width:100%;
+}
+.footer-area.admin-unified-footer {
+  margin-top: 48px !important;
+  width: calc(100% - 240px) !important;
+  margin-left: 240px !important;
+  transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+body.student-sidebar-collapsed .footer-area.admin-unified-footer {
+  width: calc(100% - 68px) !important;
+  margin-left: 68px !important;
+}
+@media (max-width: 900px) {
+  .footer-area.admin-unified-footer {
+    width: calc(100% - 68px) !important;
+    margin-left: 68px !important;
+  }
+}
+.footer-area p:last-child {
+  margin-bottom: 0;
+}
+/* Inner content width (like container but no outer margins) */
+.footer-inner {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* Headings */
+.footer-area h3 {
+  font-size: 26px;
+  margin-bottom: 16px;
+  color: #ffffff;
+}
+
+.footer-area h6 {
+  font-size: 16px;
+  margin-top: 16px;
+  margin-bottom: 8px;
+  color: #ffffff;
+}
+
+/* Text */
+.footer-area p {
+  font-size: 14px;
+  color: #ffffff;
+  margin-bottom: 8px;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+/* List reset */
+.footer-area ul {
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
+
+/* Social icons spacing */
+.footer-area .social-link li {
+  margin-right: 8px;
+}
+
+/* Links: white by default */
+.footer-area a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+/* Hover / focus */
+.footer-area a:hover,
+.footer-area a:focus {
+  color: var(--primaryColor);
+  text-decoration: none;
+}
+
+/* Active click */
+.footer-area a:active {
+  color: #ffc333;
+}
+
+/* Bottom bar */
+.footer-bottom {
+  font-size: 13px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding-top: 12px;
+  margin-top: 16px;
+}
+
+/* Bottom text and links */
+.footer-bottom span {
+  color: #ffffff;
+}
+
+.footer-bottom a {
+  color: #ffffff;
+}
+
+.footer-bottom a:hover,
+.footer-bottom a:focus {
+  color: var(--primaryColor);
+}
+  </style>
+</head>
+<body>
+  <div class="header-welcome-gap" aria-hidden="true"></div>
+
+  <div class="main-content-wrapper" id="mainContentWrapper">
+    <div class="student-page-hero">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-8">
+            <div class="student-page-hero-content">
+              <h2 class="student-page-hero-title">My Ongoing Drives</h2>
+              <p class="student-page-hero-subtitle">Click a registered ongoing drive to open scanner and mark attendance.</p>
+            </div>
+          </div>
+          <div class="col-lg-4 text-center">
+            <div class="student-page-hero-visual">
+              <i class="ri-camera-line"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section class="dashboard-cards-container">
+      <div class="container">
+       
+        <div id="qr-codes-container" class="row">
+          <div class="col-12 text-center">
+            <div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div>
+            <p class="mt-2">Loading your registered ongoing drives...</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="assets/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/swiper-bundle.min.js"></script>
+  <script src="assets/js/scrollCue.min.js"></script>
+  <script src="assets/js/auth-session-manager.js"></script>
+<script src="assets/js/student-session-bootstrap.js"></script>
+<script src="assets/js/custom.js"></script>
+  <script src="assets/js/student-sidebar.js?v=20260316"></script>
+<script src="assets/js/admin-footer.js"></script>
+
+  <script>
+    const studentId = (sessionStorage.getItem('student_id') || localStorage.getItem('student_id')) || 1;
+
+    function formatDateDMY(rawDate) {
+      if (!rawDate) return '--';
+      const date = new Date(rawDate);
+      if (Number.isNaN(date.getTime())) return '--';
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const year = date.getFullYear();
+      return `${day}/${month}/${year}`;
+    }
+
+    async function loadAttendanceQRs() {
+      const container = document.getElementById('qr-codes-container');
+      try {
+        console.log('[Attendance] Loading drives for student:', studentId);
+        const [drivesResponse, attendanceResponse] = await Promise.all([
+          fetch(`/api/student/${studentId}/registered-ongoing-drives`),
+          fetch(`/api/attendance/student/${studentId}`)
+        ]);
+
+        const data = await drivesResponse.json();
+        const attendanceData = await attendanceResponse.json();
+        const drives = data.drives || [];
+        const markedOpportunityIds = new Set(
+          ((attendanceData && attendanceData.attendance) || [])
+            .map(item => parseInt(item.opportunity_id, 10))
+            .filter(id => !Number.isNaN(id))
+        );
+
+        if (drives.length === 0) {
+          container.innerHTML = '<div class="alert alert-info w-100">No ongoing registered drives found. Register for a drive first.</div>';   
+          return;
+        }
+
+        let html = '';
+        for (const drive of drives) {
+          const driveDate = formatDateDMY(drive.due_date);
+          const driveTitle = drive.title || drive.company_name || 'Placement Drive';
+          const companyName = drive.company_name || 'N/A';
+          const roleName = drive.job_role || drive.role || drive.jobTitle || 'Role not specified';
+          const opportunityId = drive.opportunity_id;
+          const isMarked = markedOpportunityIds.has(parseInt(opportunityId, 10));
+          const cardClick = isMarked ? '' : `onclick="openScannerForDrive(${opportunityId})"`;
+          const buttonLabel = isMarked ? 'Attendance Marked' : 'Open Scanner';
+          const buttonIcon = isMarked ? 'ri-checkbox-circle-line' : 'ri-camera-line';
+          const buttonClass = isMarked ? 'btn btn-sm btn-success' : 'btn btn-sm btn-outline-primary';
+          const buttonAction = isMarked ? 'disabled' : `onclick="event.stopPropagation(); openScannerForDrive(${opportunityId});"`;
+          const statusLabel = isMarked ? 'Attendance Marked' : 'Registered';
+
+          html += `
+            <div class="col-lg-4 col-md-6">
+              <div class="dashboard-card" style="cursor:${isMarked ? 'default' : 'pointer'};" ${cardClick}>
+                <div class="card-content">
+                  <h4>${driveTitle}</h4>
+                  <div class="card-subtitle">${companyName}</div>
+                  <div style="font-size: 14px; color: #67748e; margin-bottom: 8px;">${roleName}</div>
+                  <div style="font-size: 14px; color: #67748e; margin-bottom: 13px;">${driveDate}</div>
+                  <div class="mb-2"><span class="status-badge">${statusLabel}</span></div>
+                  <button class="${buttonClass}" ${buttonAction}>
+                    <i class="${buttonIcon}"></i> ${buttonLabel}
+                  </button>
+                </div>
+              </div>
+            </div>
+          `;
+        }
+
+        container.innerHTML = html;
+      } catch (err) {
+        console.error('Error loading drives:', err);
+        container.innerHTML = '<div class="alert alert-danger w-100">Error loading drives, please refresh.</div>';
+      }
+    }
+
+    function openScannerForDrive(opportunityId) {
+      const target = `student-qr-attendance-scanner.html?opportunityId=${encodeURIComponent(opportunityId)}`;
+      window.location.href = target;
+    }
+
+    document.addEventListener('DOMContentLoaded', loadAttendanceQRs);
+  </script>
+
+  <!-- Footer injected via admin-footer.js -->
+<div id="adminFooterPlaceholder"></div>
+</body>
+</html>
+
+
+
+
+
+
+

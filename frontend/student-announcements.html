@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEC - Student Announcements</title>
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="assets/css/scrollCue.css">
+    <link rel="stylesheet" href="assets/css/remixicon.css">
+    <link rel="stylesheet" href="assets/css/flaticon.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+
+    <style>
+       .announcement-card {
+    position: relative;
+    border-left: 6px solid #001e43;
+    padding: 25px;
+    margin-bottom: 30px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #ffffff, #f9fbff);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.06);
+    transition: all 0.35s ease;
+}
+
+        /* Override the student page hero on Announcements to use navy blue */
+        .student-announcements-page .student-page-hero {
+            background: linear-gradient(135deg, #001e43, #002a5c) !important;
+            margin-top: 10px;
+        }
+        /* Add a little extra spacing between the top header and hero for this page */
+        .student-announcements-page .header-welcome-gap {
+            height: 10px !important;
+        }
+
+        /* Reduce gap between hero banner and announcements list */
+        .student-announcements-page .register-area {
+            padding-top: 40px;
+        }
+
+.announcement-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(255, 87, 34, 0.25);
+    border-left-color: #5678b1;
+}
+
+.announcement-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    background: linear-gradient(120deg, transparent, rgba(255,87,34,0.08));
+    opacity: 0;
+    transition: opacity 0.35s ease;
+}
+
+.announcement-card:hover::after {
+    opacity: 1;
+}
+
+.announcement-card h4 {
+    color: #172b4d;
+    font-weight: 600;
+}
+
+.announcement-meta span {
+    display: inline-block;
+    margin-right: 18px;
+    color: #6c757d;
+    font-size: 15px;
+}
+
+.announcement-meta i {
+    margin-right: 6px;
+    color: #ff5722;
+}
+
+/* Button */
+.announcement-btn {
+    margin-top: 15px;
+}
+
+.announcement-btn a {
+    display: inline-block;
+    padding: 8px 18px;
+    font-size: 14px;
+    border-radius: 30px;
+    background-color: #ff5722;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+.announcement-btn a:hover {
+    background-color: #172b4d;
+    color: #fff;
+    transform: translateX(5px);
+}
+
+    </style>
+
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    <link href="assets/img/crop_nec.png" type="image/x-icon" rel="icon">
+</head>
+
+<body class="student-announcements-page">
+
+<div class="top-header-area style-2" style="padding: 12px 0;">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-12 text-center">
+                <h3 class="mb-0" style="color:#fff;font-weight:700;letter-spacing:1px;font-size:26px;">
+                    <span style="font-family: 'Poppins', ; font-size: 36px; font-weight: 700;"> NEC
+                        </span>
+                    - Central Placement and Information Center
+                </h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light py-2" id="navbar">
+    <div class="container">
+        <img src="assets/img/logo_necn.png" alt="Logo" height="70" width="160">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a href="student-dashboard.html" class="nav-link">Dashboard</a></li>
+                <li class="nav-item"><a href="student-announcements.html" class="nav-link active">Announcements</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="student-events.html" data-bs-toggle="dropdown">Events</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="student-events.html?type=seminar">Seminars</a></li>
+                        <li><a class="dropdown-item" href="student-events.html?type=workshop">Workshops</a></li>
+                        <li><a class="dropdown-item" href="student-events.html?type=hackathon">Hackathons</a></li>
+                        <li><a class="dropdown-item" href="student-events.html?type=career">Career Guidance</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item"><a href="student-resources.html" class="nav-link">Resources</a></li>
+                <li class="nav-item"><a href="student-internships.html" class="nav-link">Internships</a></li>
+                <li class="nav-item"><a href="student-jobs.html" class="nav-link">Job Opportunities</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">My Account</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="student-profile.html">Profile</a></li>
+                        <li><a class="dropdown-item" href="index.html">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="student-page-hero">
+    <div class="container">
+        <div class="student-page-hero-content">
+            <h1 class="student-page-hero-title">Announcements</h1>
+            <p class="student-page-hero-subtitle">Stay updated with the latest notices and placement announcements</p>
+        </div>
+    </div>
+</div>
+
+<div class="register-area ptb-100">
+    <div class="container">
+       
+
+        <div id="announcementsContainer">
+            <div style="text-align: center; padding: 40px 20px;">
+                <p style="color: #666; font-size: 16px;">Loading announcements...</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="register-area ptb-100" style="background: #f8f9fa;">
+<!-- Removed static footer section, unified footer is injected below -->
+
+<script src="assets/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/swiper-bundle.min.js"></script>
+<script src="assets/js/scrollCue.min.js"></script>
+<script src="assets/js/auth-session-manager.js"></script>
+<script src="assets/js/student-session-bootstrap.js"></script>
+<script src="assets/js/custom.js"></script>
+
+<script>
+  // Load announcements on page load
+  document.addEventListener('DOMContentLoaded', async () => {
+    const studentId = (sessionStorage.getItem('student_id') || localStorage.getItem('student_id'));
+    
+    if (!studentId) {
+      document.getElementById('announcementsContainer').innerHTML = 
+        '<div style="text-align: center; padding: 40px 20px; color: #d32f2f;"><p>Please log in to view announcements</p></div>';
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:3000/api/student/${studentId}/announcements`);
+      const data = await response.json();
+
+      if (!data.success) {
+        throw new Error(data.message || 'Failed to load announcements');
+      }
+
+      const container = document.getElementById('announcementsContainer');
+      container.innerHTML = '';
+
+      const { opportunities = [], events = [] } = data.announcements;
+      const allAnnouncements = [
+        ...opportunities.map(opp => ({
+          ...opp,
+          type: 'opportunity',
+          title: opp.title,
+          date: opp.posted_on,
+          dueDate: opp.due_date,
+          icon: opp.type === 'internship' ? 'ri-briefcase-line' : 'ri-notification-3-line',
+          category: opp.type === 'internship' ? 'Internship' : 'Placement'
+        })),
+        ...events.map(evt => ({
+          ...evt,
+          type: 'event',
+          title: evt.event_name,
+          date: evt.created_at,
+          eventDate: evt.event_date,
+          icon: 'ri-calendar-line',
+          category: evt.event_type || 'Event'
+        }))
+      ];
+
+      // Filter out announcements whose due/event date has already passed.
+      // This ensures completed opportunities/events don't show on the page.
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const validAnnouncements = allAnnouncements.filter(announcement => {
+        if (announcement.type === 'opportunity' && announcement.dueDate) {
+          const due = new Date(announcement.dueDate);
+          due.setHours(0, 0, 0, 0);
+          return due >= today;
+        }
+        if (announcement.type === 'event' && announcement.eventDate) {
+          const eventDay = new Date(announcement.eventDate);
+          eventDay.setHours(0, 0, 0, 0);
+          return eventDay >= today;
+        }
+        return true;
+      });
+
+      // Sort by date (most recent first)
+      validAnnouncements.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+      if (validAnnouncements.length === 0) {
+        container.innerHTML = '<div style="text-align: center; padding: 40px 20px;"><p style="color: #666;">No announcements available at the moment</p></div>';
+        return;
+      }
+
+      validAnnouncements.forEach(announcement => {
+        const dateObj = new Date(announcement.date);
+        const dateStr = dateObj.toLocaleDateString('en-US', { 
+          month: 'short', 
+          day: 'numeric', 
+          year: 'numeric' 
+        });
+
+        let dueInfo = '';
+        if (announcement.type === 'opportunity' && announcement.dueDate) {
+          const dueDate = new Date(announcement.dueDate);
+          const dueStr = dueDate.toLocaleDateString('en-US', { 
+            month: 'short', 
+            day: 'numeric', 
+            year: 'numeric' 
+          });
+          dueInfo = `<span style="margin-left: 15px; color: #ff5722;"><i class="ri-alert-line me-1"></i>Due: ${dueStr}</span>`;
+        }
+
+        if (announcement.type === 'event' && announcement.eventDate) {
+          const eventDate = new Date(announcement.eventDate);
+          const eventStr = eventDate.toLocaleDateString('en-US', { 
+            month: 'short', 
+            day: 'numeric', 
+            year: 'numeric' 
+          });
+          dueInfo = `<span style="margin-left: 15px; color: #2196F3;"><i class="ri-calendar-line me-1"></i>Date: ${eventStr}</span>`;
+        }
+
+        const card = document.createElement('div');
+        card.className = 'announcement-card student-summary-box';
+        card.innerHTML = `
+          <h4>${announcement.title}</h4>
+          <div class="announcement-meta mb-2">
+            <span><i class="${announcement.icon} me-1"></i> ${dateStr}</span>
+            <span><i class="ri-tag-line me-1"></i> ${announcement.category}</span>
+            ${dueInfo}
+          </div>
+          <p>${announcement.description || 'No additional details available'}</p>
+        `;
+        container.appendChild(card);
+      });
+    } catch (err) {
+      console.error('Error loading announcements:', err);
+      document.getElementById('announcementsContainer').innerHTML = 
+        '<div style="text-align: center; padding: 40px 20px; color: #d32f2f;"><p>Unable to load announcements. Please try again later.</p></div>';
+    }
+  });
+</script>
+
+    <!-- unified footer removed --><script src="assets/js/student-sidebar.js?v=20260315"></script>
+    </body>
+    </html>
+
+
+
+
+

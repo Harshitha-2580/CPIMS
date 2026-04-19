@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Admin - NEC Placement Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="assets/css/scrollCue.css">
+    <link rel="stylesheet" href="assets/css/remixicon.css">
+    <link rel="stylesheet" href="assets/css/flaticon.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/admin-theme.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link href="assets/img/crop_nec.png" type="image/x-icon" rel="icon">
+</head>
+<body>
+
+
+    
+        <div class="top-header-area style-2">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-12 text-center">
+                        <h3 class="mb-0" style="color: #fff; font-weight: 700; letter-spacing: 1px; line-height: 1.4; font-size: 26px;">
+                            <span style="font-family: 'Poppins'; font-size: 36px; font-weight: 700;">NEC</span> – Central Placement Information and Management Center
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="header-welcome-gap" aria-hidden="true"></div>
+        <div class="admin-welcome-banner">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-lg-8">
+                        <div class="admin-welcome-content">
+                            <h2 class="admin-welcome-title">Add New Admin</h2>
+                            <p class="admin-welcome-subtitle">Create a new admin user and assign privileges</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 text-center">
+                        <div class="banner-icon-wrapper">
+                            <i class="ri-user-add-line"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <style>
+            :root {
+                --primaryColor: #001e43;
+                --secondaryColor: #002a5c;
+                --accentColor: #003580;
+                --darkColor: rgb(0, 30, 67);
+                --lightGray: #f8f9fa;
+                --cardBg: #ffffff;
+                --textColor: #333;
+                --textLight: #666;
+                --borderColor: #e9ecef;
+                --shadowColor: rgba(0, 30, 67, 0.1);
+                --gradientPrimary: linear-gradient(135deg, #001e43, #002a5c);
+                --gradientSecondary: linear-gradient(135deg, #002a5c, #003580);
+            }
+
+            body {
+                padding-top: 0;
+                overflow-x: hidden;
+                background: linear-gradient(135deg, #f8f9fa 0%, #f0f2f5 100%);
+            }
+
+            .header-welcome-gap {
+                height: 8px;
+                background: linear-gradient(135deg, #f8f9fa 0%, #f0f2f5 100%);
+                margin-left: 240px;
+            }
+
+            /* Main Content Wrapper */
+            .main-content-wrapper {
+                margin-left: 240px;
+                background: linear-gradient(135deg, #f8f9fa 0%, #f0f2f5 100%);
+                min-height: 100vh;
+            }
+
+            /* Welcome Banner Section */
+            .admin-welcome-banner {
+                background: var(--gradientPrimary);
+                padding: 52px 0 36px;
+                color: white;
+                position: relative;
+                overflow: hidden;
+                border-radius: 12px;
+                box-shadow: 0 10px 40px var(--shadowColor);
+                margin-left: 240px;
+                transition: margin-left 0.3s ease;
+            }
+
+            body.admin-sidebar-collapsed .admin-welcome-banner {
+                margin-left: 68px !important;
+            }
+
+            @media (max-width: 900px) {
+                .admin-welcome-banner {
+                    margin-left: 68px;
+                }
+            }
+
+            .admin-welcome-banner::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+                animation: shimmer 4s infinite;
+            }
+
+            .admin-welcome-banner::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 6px;
+                background: var(--gradientSecondary);
+                animation: borderGlow 3s ease-in-out infinite alternate;
+            }
+
+            .admin-welcome-content {
+                position: relative;
+                z-index: 2;
+                text-align: left;
+            }
+
+            .admin-welcome-title {
+                font-size: 44px;
+                font-weight: 800;
+                margin-bottom: 15px;
+                animation: titleFadeIn 1s ease-out;
+                color: #ffffff;
+                text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+                letter-spacing: -1px;
+            }
+
+            .admin-welcome-subtitle {
+                font-size: 19px;
+                opacity: 0.95;
+                animation: subtitleFadeIn 1s ease-out 0.3s backwards;
+                color: #ffffff;
+                font-weight: 400;
+                margin-bottom: 0;
+            }
+
+            .banner-icon-wrapper {
+                min-width: 120px;
+                min-height: 120px;
+                font-size: 82px;
+                animation: adminPageHeroFloat 3s ease-in-out infinite;
+                color: #ffffff;
+                position: relative;
+                z-index: 1;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            /* Dashboard Body */
+            .admin-dashboard-body {
+                padding: 34px 0;
+                background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+                min-height: 100vh;
+                margin-left: 240px;
+            }
+
+            .dashboard-grid {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 18px;
+                padding: 0 12px;
+                max-width: 800px;
+                margin: 0 auto;
+            }
+
+            /* Dashboard Widgets */
+            .dashboard-widget {
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(20px);
+                border-radius: 24px;
+                border: 1px solid rgba(0, 30, 67, 0.1);
+                box-shadow: 0 20px 60px rgba(0, 30, 67, 0.08);
+                overflow: hidden;
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                animation: widgetSlideIn 0.8s ease-out backwards;
+                position: relative;
+            }
+
+            .dashboard-widget:hover {
+                box-shadow: 0 30px 80px rgba(0, 30, 67, 0.12);
+                transform: translateY(-5px);
+            }
+
+            .widget-header {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                padding: 22px 28px 16px;
+                border-bottom: 1px solid rgba(0, 30, 67, 0.08);
+                background: linear-gradient(135deg, rgba(0, 30, 67, 0.02), rgba(0, 42, 92, 0.02));
+            }
+
+            .widget-icon {
+                width: 56px;
+                height: 56px;
+                border-radius: 16px;
+                background: var(--gradientPrimary);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: white;
+                font-size: 28px;
+                box-shadow: 0 8px 25px rgba(0, 30, 67, 0.2);
+            }
+
+            .widget-title h3 {
+                color: var(--primaryColor);
+                font-size: 22px;
+                font-weight: 700;
+                margin: 0 0 4px 0;
+            }
+
+            .widget-title p {
+                color: #666;
+                font-size: 14px;
+                margin: 0;
+                font-weight: 500;
+            }
+
+            .widget-content {
+                padding: 28px;
+            }
+
+            /* Form Styling */
+            #addAdminForm {
+                background: transparent;
+                border-radius: 0;
+                box-shadow: none;
+                padding: 0;
+                border: none;
+                transition: none;
+            }
+
+            #addAdminForm .form-label {
+                font-weight: 600;
+                color: var(--primaryColor);
+                margin-bottom: 8px;
+                letter-spacing: 0.2px;
+                font-size: 15px;
+            }
+
+            #addAdminForm .form-control {
+                border-radius: 12px;
+                border: 1.5px solid #e3e8f0;
+                padding: 12px 16px;
+                font-size: 16px;
+                background: #fafbfc;
+                transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
+                color: var(--textColor);
+            }
+
+            #addAdminForm .form-control:focus {
+                border-color: var(--accentColor);
+                box-shadow: 0 0 0 3px rgba(0, 53, 128, 0.08);
+                background: #ffffff;
+            }
+
+            #addAdminForm .form-control::placeholder {
+                color: #999;
+            }
+
+            #addAdminForm select.form-control {
+                appearance: none;
+                background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+                background-repeat: no-repeat;
+                background-position: right 12px center;
+                background-size: 18px;
+                padding-right: 40px;
+            }
+
+            #addAdminForm .form-check {
+                margin-bottom: 14px;
+                padding-left: 2.5em;
+                position: relative;
+                transition: all 0.2s;
+            }
+
+            #addAdminForm .form-check:hover {
+                transform: translateX(4px);
+            }
+
+            #addAdminForm .form-check-input {
+                width: 1.3em;
+                height: 1.3em;
+                border-radius: 8px;
+                border: 2px solid #d0d8e3;
+                transition: all 0.3s;
+                margin-top: 0.15em;
+                margin-left: -2.5em;
+                background: #ffffff;
+            }
+
+            #addAdminForm .form-check-input:focus {
+                border-color: var(--accentColor);
+                box-shadow: 0 0 0 3px rgba(0, 53, 128, 0.08);
+            }
+
+            #addAdminForm .form-check-input:checked {
+                background-color: var(--accentColor);
+                border-color: var(--accentColor);
+                box-shadow: 0 0 0 3px rgba(0, 53, 128, 0.08);
+            }
+
+            #addAdminForm .form-check-label {
+                font-weight: 500;
+                color: var(--textColor);
+                cursor: pointer;
+                transition: color 0.2s;
+                user-select: none;
+                font-size: 15px;
+            }
+
+            #addAdminForm .form-check-input:checked + .form-check-label {
+                color: var(--accentColor);
+                font-weight: 600;
+            }
+
+            #addAdminForm .form-check-input:focus + .form-check-label {
+                color: var(--accentColor);
+            }
+
+            #addAdminForm .privileges-section {
+                background: linear-gradient(135deg, rgba(0, 30, 67, 0.02), rgba(0, 42, 92, 0.02));
+                padding: 18px;
+                border-radius: 12px;
+                border: 1px solid rgba(0, 30, 67, 0.08);
+                margin: 20px 0;
+            }
+
+            #addAdminForm .privileges-section .form-label {
+                margin-bottom: 14px;
+            }
+
+            #addAdminForm .btn-primary {
+                background: var(--gradientPrimary);
+                border: none;
+                border-radius: 12px;
+                font-weight: 700;
+                font-size: 17px;
+                padding: 14px 0;
+                width: 100%;
+                box-shadow: 0 8px 24px rgba(0, 30, 67, 0.15);
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                margin-top: 12px;
+                color: #ffffff;
+                cursor: pointer;
+                position: relative;
+                overflow: hidden;
+            }
+
+            #addAdminForm .btn-primary::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+                transition: left 0.5s;
+            }
+
+            #addAdminForm .btn-primary:hover {
+                background: var(--gradientSecondary);
+                box-shadow: 0 12px 36px rgba(0, 30, 67, 0.25);
+                transform: translateY(-2px);
+            }
+
+            #addAdminForm .btn-primary:hover::before {
+                left: 100%;
+            }
+
+            #addAdminForm .btn-primary:active {
+                transform: translateY(0);
+            }
+
+            #addAdminForm .mb-3 {
+                margin-bottom: 20px;
+            }
+
+            /* Success/Error Messages */
+            #addAdminMsg {
+                padding: 14px 16px;
+                border-radius: 12px;
+                border-left: 4px solid transparent;
+                animation: messageSlideIn 0.3s ease-out;
+                display: none;
+            }
+
+            #addAdminMsg.success {
+                display: block;
+                background: rgba(34, 197, 94, 0.1);
+                color: #16a34a;
+                border-left-color: #16a34a;
+            }
+
+            #addAdminMsg.error {
+                display: block;
+                background: rgba(239, 68, 68, 0.1);
+                color: #dc2626;
+                border-left-color: #dc2626;
+            }
+
+            /* Animations */
+            @keyframes titleFadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px) scale(0.95);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0) scale(1);
+                }
+            }
+
+            @keyframes subtitleFadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateX(-30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+
+            @keyframes adminPageHeroFloat {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(-20px); }
+            }
+
+            @keyframes iconBounce {
+                0%, 100% { transform: translateY(0) rotate(0deg); }
+                50% { transform: translateY(-20px) rotate(5deg); }
+            }
+
+            @keyframes borderGlow {
+                from { opacity: 0.6; }
+                to { opacity: 1; }
+            }
+
+            @keyframes shimmer {
+                0% { left: -100%; }
+                100% { left: 100%; }
+            }
+
+            @keyframes widgetSlideIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            @keyframes messageSlideIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(-10px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            @keyframes float {
+                0%, 100% { transform: translateY(0px); }
+                50% { transform: translateY(-20px); }
+            }
+
+            /* Responsive Design */
+            @media (max-width: 768px) {
+                .main-content-wrapper {
+                    margin-left: 0;
+                }
+
+                .header-welcome-gap {
+                    margin-left: 0;
+                }
+
+                .admin-welcome-banner {
+                    margin-left: 0;
+                }
+
+                .admin-dashboard-body {
+                    margin-left: 0;
+                }
+
+                .admin-welcome-title {
+                    font-size: 36px;
+                }
+
+                .admin-welcome-subtitle {
+                    font-size: 16px;
+                }
+
+                .banner-icon-wrapper {
+                    font-size: 60px;
+                }
+
+                .dashboard-grid {
+                    max-width: 100%;
+                    padding: 0 16px;
+                }
+
+                .widget-content {
+                    padding: 20px;
+                }
+
+                #addAdminForm .btn-primary {
+                    font-size: 16px;
+                    padding: 12px;
+                }
+            }
+        </style>
+        <div class="admin-dashboard-body">
+            <div class="container-fluid">
+                <div class="dashboard-grid">
+                    <div class="dashboard-widget">
+                        <div class="widget-header">
+                            <div class="widget-icon">
+                                <i class="ri-user-add-line"></i>
+                            </div>
+                            <div class="widget-title">
+                                <h3>Create Admin Account</h3>
+                                <p>Fill in the details below to add a new administrator</p>
+                            </div>
+                        </div>
+                        <div class="widget-content">
+                            <form id="addAdminForm">
+                                <div class="mb-3">
+                                    <label for="adminName" class="form-label">Full Name</label>
+                                    <input type="text" class="form-control" id="adminName" placeholder="Enter admin name" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="adminEmail" class="form-label">Email Address</label>
+                                    <input type="email" class="form-control" id="adminEmail" placeholder="Enter email address" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="adminPhone" class="form-label">Phone Number</label>
+                                    <input type="tel" class="form-control" id="adminPhone" placeholder="Enter phone number" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="adminDesignation" class="form-label">Designation</label>
+                                    <input type="text" class="form-control" id="adminDesignation" placeholder="e.g., Senior Admin, Manager" required>
+                                </div>
+
+                                <div class="privileges-section">
+                                    <label class="form-label">
+                                        <i class="ri-shield-check-line" style="color: #003580; margin-right: 6px;"></i>
+                                        Admin Privileges
+                                    </label>
+                                    <div class="form-check">
+                                        <input class="form-check-input privilege-checkbox" type="checkbox" value="can_add_faculty" id="privAddFaculty">
+                                        <label class="form-check-label" for="privAddFaculty">Add Faculty Members</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input privilege-checkbox" type="checkbox" value="can_generate_reports" id="privGenerateReports">
+                                        <label class="form-check-label" for="privGenerateReports">Generate Reports</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input privilege-checkbox" type="checkbox" value="can_post_opportunities" id="privPostOpportunities">
+                                        <label class="form-check-label" for="privPostOpportunities">Post Job Opportunities</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input privilege-checkbox" type="checkbox" value="can_assign_students_opportunities" id="privAssignStudentsOpportunities">
+                                        <label class="form-check-label" for="privAssignStudentsOpportunities">Assign Students to Opportunities</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input privilege-checkbox" type="checkbox" value="can_approve_students" id="privApproveStudents">
+                                        <label class="form-check-label" for="privApproveStudents">Approve Students</label>
+                                    </div>
+                                    <hr style="border: none; border-top: 1px solid rgba(0, 30, 67, 0.1); margin: 14px 0;">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="superadmin" id="privSuperadmin">
+                                        <label class="form-check-label" for="privSuperadmin"><strong>Grant All Privileges (Superadmin)</strong></label>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="ri-check-line" style="margin-right: 6px;"></i>
+                                    Add Admin User
+                                </button>
+                            </form>
+                            <div id="addAdminMsg" class="mt-3"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="assets/js/bootstrap.bundle.min.js"></script>
+        <script src="assets/js/admin-session-manager.js"></script>
+        <script src="assets/js/admin-access-control.js"></script>
+        <script src="assets/js/admin-sidebar.js"></script>
+        <script src="assets/js/add-admin.js"></script>
+        <script>
+            // Enhanced Privilege checkbox logic
+            const superadminCheckbox = document.getElementById('privSuperadmin');
+            const privilegeCheckboxes = document.querySelectorAll('.privilege-checkbox');
+            const addAdminBtn = document.querySelector('#addAdminForm .btn-primary');
+
+            // Only set up listeners if elements exist
+            if (superadminCheckbox && privilegeCheckboxes.length > 0) {
+                // Handle superadmin checkbox change
+                superadminCheckbox.addEventListener('change', function() {
+                    privilegeCheckboxes.forEach(cb => {
+                        if (!cb.disabled) {
+                            cb.checked = superadminCheckbox.checked;
+                        }
+                    });
+                });
+
+                // Handle individual privilege checkboxes
+                privilegeCheckboxes.forEach(cb => {
+                    cb.addEventListener('change', function() {
+                        if (!cb.checked) {
+                            superadminCheckbox.checked = false;
+                        } else if ([...privilegeCheckboxes].every(box => box.checked || box.disabled)) {
+                            superadminCheckbox.checked = true;
+                        }
+                    });
+                });
+            }
+
+            // Form validation feedback
+            const form = document.getElementById('addAdminForm');
+            form.addEventListener('submit', function(e) {
+                if (!form.checkValidity()) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            });
+
+            // Add visual feedback to button
+            addAdminBtn.addEventListener('mouseenter', function() {
+                this.style.boxShadow = '0 12px 36px rgba(0, 30, 67, 0.25)';
+            });
+
+            addAdminBtn.addEventListener('mouseleave', function() {
+                this.style.boxShadow = '0 8px 24px rgba(0, 30, 67, 0.15)';
+            });
+        </script>
+        <script>
+            // Hide main content while checking privileges
+            const mainContent = document.querySelector('main') || 
+                               document.querySelector('.admin-wrapper') || 
+                               document.querySelector('.dashboard-grid');
+            if (mainContent) mainContent.style.display = 'none';
+
+            // Guard this page - only superadmins can add other admins
+            document.addEventListener('DOMContentLoaded', async function() {
+                // Superadmins have can_manage_admins automatically, regular admins need explicit permission
+                const hasAccess = await adminAccessControl.guardPage('can_manage_admins', 'Add Admin');
+                if (hasAccess && mainContent) mainContent.style.display = '';
+            });
+        </script>
+    </div>
+</body>
+</html>

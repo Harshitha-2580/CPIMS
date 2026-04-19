@@ -1,0 +1,1137 @@
+﻿<!DOCTYPE html>
+<html lang="zxx">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEC - Faculty Dashboard</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="assets/css/scrollCue.css">
+    <link rel="stylesheet" href="assets/css/remixicon.css">
+    <link rel="stylesheet" href="assets/css/flaticon.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link href="assets/img/crop_nec.png" type="image/x-icon" rel="icon">
+
+    <style>
+        :root {
+            --primaryColor: #001e43;
+            --secenderyColor: #0b4b98;
+            --darkColor: rgb(0, 30, 67);
+            --lightGray: #f8f9fa;
+        }
+
+        body {
+            padding-top: 0;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #f8f9fa 0%, #f0f2f5 100%);
+        }
+
+        .header-welcome-gap {
+            height: 8px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #f0f2f5 100%);
+        }
+
+        #navbar {
+            transition: all 0.3s ease;
+        }
+
+        #navbar.sticky {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1030;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        body.navbar-sticky {
+            padding-top: 90px;
+        }
+
+        .section-title h2 {
+            color: var(--darkColor);
+            font-weight: 800;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primaryColor), var(--secenderyColor));
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .section-title p {
+            color: #666;
+            font-size: 15px;
+        }
+
+        .faculty-card {
+            background: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            height: 100%;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .faculty-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primaryColor), var(--secenderyColor));
+            transition: left 0.4s ease;
+        }
+
+        .faculty-card:hover::before {
+            left: 0;
+        }
+
+        .faculty-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 30, 67, 0.15);
+            border-color: rgba(0, 30, 67, 0.2);
+        }
+
+        .faculty-card h4 {
+            color: var(--darkColor);
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .faculty-card h3 {
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: var(--primaryColor);
+            font-size: 28px;
+        }
+
+        .faculty-card p {
+            color: #666;
+        }
+
+        .faculty-card i {
+            font-size: 48px;
+            color: var(--primaryColor);
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        .default-btn {
+            background: linear-gradient(90deg, var(--primaryColor), #0b4b98) !important;
+            color: #fff !important;
+            border: none !important;
+            padding: 10px 25px !important;
+            border-radius: 5px !important;
+            font-weight: 600 !important;
+            transition: all 0.3s ease !important;
+            display: inline-block !important;
+            text-decoration: none !important;
+        }
+
+        .default-btn:hover {
+            color: #fff !important;
+            transform: translateX(5px);
+            box-shadow: 0 8px 20px rgba(0, 30, 67, 0.3);
+        }
+
+        .btn:hover,
+        button:hover {
+            color: #fff !important;
+        }
+
+        .badge {
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        .badge.bg-info {
+            background-color: #0ea5e9 !important;
+        }
+
+        .text-warning {
+            color: var(--secenderyColor) !important;
+        }
+
+        .text-muted {
+            color: #999 !important;
+        }
+
+        .dashboard-event-item {
+            border: 1px solid #e9ecef;
+            border-left: 4px solid var(--primaryColor);
+            border-radius: 10px;
+            padding: 14px;
+            margin-bottom: 12px;
+            background: #fff;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .dashboard-event-item:hover {
+            box-shadow: 0 8px 18px rgba(0, 30, 67, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .dashboard-event-item.active {
+            border-color: var(--primaryColor);
+            box-shadow: 0 8px 20px rgba(0, 30, 67, 0.18);
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .summary-tile {
+            background: linear-gradient(135deg, #ffffff, #f8fafc);
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .summary-tile .value {
+            display: block;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--darkColor);
+            line-height: 1.1;
+        }
+
+        .summary-tile .label {
+            display: block;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #64748b;
+            margin-top: 6px;
+        }
+
+        .registrations-table-wrapper {
+            max-height: 340px;
+            overflow: auto;
+            border: 1px solid #eef2f7;
+            border-radius: 10px;
+        }
+
+        .registrations-table-wrapper table {
+            margin-bottom: 0;
+        }
+
+        .quick-link-card {
+            cursor: pointer;
+        }
+
+        .quick-action-card {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .quick-action-card .default-btn {
+            margin-top: auto !important;
+            align-self: flex-start;
+        }
+
+        .quick-link-card .default-btn {
+            pointer-events: none;
+        }
+
+        .quick-link-card:hover .default-btn {
+            color: #fff !important;
+            transform: translateX(5px);
+            box-shadow: 0 8px 20px rgba(0, 30, 67, 0.3);
+        }
+
+        .dashboard-modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.45);
+            z-index: 2000;
+            padding: 18px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dashboard-modal {
+            width: min(960px, 100%);
+            max-height: 92vh;
+            background: #fff;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dashboard-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            border-bottom: 1px solid #eef2f7;
+            background: #f8fafc;
+        }
+
+        .dashboard-modal-body {
+            padding: 18px 20px;
+            overflow: auto;
+        }
+
+        .dashboard-modal-close {
+            border: none;
+            background: #e2e8f0;
+            border-radius: 8px;
+            width: 34px;
+            height: 34px;
+            font-size: 20px;
+            line-height: 1;
+            cursor: pointer;
+        }
+
+        .dashboard-modal-close:hover {
+            background: #001e43;
+            color: #fff !important;
+        }
+
+        .event-filter-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 14px;
+        }
+
+        .event-filter-item {
+            min-width: 160px;
+            flex: 1;
+        }
+
+        .event-filter-item input {
+            width: 100%;
+            border: 1px solid #dbe3ee;
+            border-radius: 8px;
+            padding: 8px 10px;
+        }
+
+        .events-modal-list {
+            max-height: 56vh;
+            overflow: auto;
+            padding-right: 4px;
+        }
+
+        .summary-heading {
+            color: #001e43;
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+
+        .events-pagination {
+            display: none;
+            margin-top: 12px;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .events-pagination .default-btn {
+            padding: 8px 16px !important;
+        }
+
+        .events-pagination .page-status {
+            color: #475569;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .faculty-dashboard-main {
+            padding-top: 0;
+            padding-bottom: 75px;
+        }
+
+        .admin-welcome-banner {
+            background: linear-gradient(135deg, #001e43, #002a5c);
+            padding: 52px 0 36px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 30, 67, 0.12);
+            margin-bottom: 24px;
+        }
+
+        .admin-welcome-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+            animation: shimmer 4s infinite;
+        }
+
+        .admin-welcome-banner::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(135deg, #002a5c, #003580);
+            animation: borderGlow 3s ease-in-out infinite alternate;
+        }
+
+        .admin-welcome-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .admin-welcome-title {
+            color: #fff;
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            letter-spacing: -1px;
+            animation: titleFadeIn 1s ease-out;
+        }
+
+        .admin-welcome-subtitle {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 20px;
+            margin-bottom: 0;
+            font-weight: 400;
+            animation: subtitleFadeIn 1s ease-out 0.3s backwards;
+        }
+
+        .faculty-page-overview-list {
+            margin: 0;
+            padding-left: 18px;
+            color: rgba(255, 255, 255, 0.92);
+            font-size: 14px;
+        }
+
+        @keyframes shimmer {
+            0% {
+                left: -100%;
+            }
+
+            100% {
+                left: 100%;
+            }
+        }
+
+        @keyframes borderGlow {
+            from {
+                opacity: 0.6;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes titleFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes subtitleFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        @media (max-width: 991.98px) {
+            .admin-welcome-title {
+                font-size: 40px;
+            }
+
+            .admin-welcome-subtitle {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 575.98px) {
+            .admin-welcome-banner {
+                padding: 42px 0 30px;
+            }
+
+            .admin-welcome-title {
+                font-size: 30px;
+            }
+
+            .admin-welcome-subtitle {
+                font-size: 14px;
+            }
+        }
+    /* Footer Area Style */
+.footer-area{
+  background-color:#071b3a;
+  color:#ffffff;
+  margin-top:100px;
+  padding:40px 20px;
+  width:100%;
+}
+.footer-area p:last-child {
+  margin-bottom: 0;
+}
+/* Inner content width (like container but no outer margins) */
+.footer-inner {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* Headings */
+.footer-area h3 {
+  font-size: 26px;
+  margin-bottom: 16px;
+  color: #ffffff;
+}
+
+.footer-area h6 {
+  font-size: 16px;
+  margin-top: 16px;
+  margin-bottom: 8px;
+  color: #ffffff;
+}
+
+/* Text */
+.footer-area p {
+  font-size: 14px;
+  color: #ffffff;
+  margin-bottom: 8px;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+/* List reset */
+.footer-area ul {
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
+
+/* Social icons spacing */
+.footer-area .social-link li {
+  margin-right: 8px;
+}
+
+/* Links: white by default */
+.footer-area a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+/* Hover / focus */
+.footer-area a:hover,
+.footer-area a:focus {
+  color: var(--primaryColor);
+  text-decoration: none;
+}
+
+/* Active click */
+.footer-area a:active {
+  color: #ffc333;
+}
+
+/* Bottom bar */
+.footer-bottom {
+  font-size: 13px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding-top: 12px;
+  margin-top: 16px;
+}
+
+/* Bottom text and links */
+.footer-bottom span {
+  color: #ffffff;
+}
+
+.footer-bottom a {
+  color: #ffffff;
+}
+
+.footer-bottom a:hover,
+.footer-bottom a:focus {
+  color: var(--primaryColor);
+}
+    </style>
+</head>
+
+<body>
+
+ <div class="top-header-area style-2" style="padding: 12px 0;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-12 text-center">
+                    <h3 class="mb-0" style="color: #fff; font-weight: 700; letter-spacing: 1px; line-height: 1.4; font-size: 26px;">
+                        <span style="font-family: 'Poppins', ; font-size: 36px; font-weight: 700;"> NEC </span>
+                        - Central Placement and Information Center
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-welcome-gap" aria-hidden="true"></div>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light py-2" id="navbar">
+        <div class="container">
+            <img src="assets/img/logo_necn.png" alt="Logo" height="70" width="160">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto"> 
+                <li class="nav-item">
+                    <a href="faculty-dashboard.html" class="nav-link active">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a href="faculty-events.html" class="nav-link">Add Events</a>
+                </li>
+                <li class="nav-item">
+                    <a href="faculty-applications.html" class="nav-link">Applications</a>
+                </li>
+               
+                <li class="nav-item">
+                    <a href="faculty-materials.html" class="nav-link">Materials</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        My Account
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="faculty-profile.html">My Profile</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="index.html">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- ================= FACULTY DASHBOARD CONTENT ================= -->
+<div class="faculty-dashboard-main">
+    <div class="admin-welcome-banner">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <div class="admin-welcome-content">
+                        <h2 class="admin-welcome-title">Welcome Back, <span id="facultyWelcomeName">Faculty</span></h2>
+                        <p class="admin-welcome-subtitle">Your centralized placement management dashboard is ready</p>
+                       
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <div style="font-size: 80px; animation: float 3s ease-in-out infinite; position: relative; z-index: 2;">
+                        <i class="flaticon-tablet" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+
+    <!-- ================= QUICK LINKS ================= -->
+    <div class="row mt-5 g-4">
+
+        <div class="col-lg-6">
+            <div class="faculty-card quick-action-card">
+                <h4>Monitor Assigned Drives</h4>
+                <p>Monitor the drives assigned to you by the admin</p>
+                <a href="faculty-assigned-drives.html" id="dashboardAssignedDrivesLink" class="default-btn mt-2">View Assigned Drives</a>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="faculty-card quick-action-card quick-link-card" onclick="openPostedEventsModal()">
+                <h4>View Posted Events</h4>
+                <p>Filter by date and open event-wise summary</p>
+                <a href="#" id="dashboardPostedEventsLink" class="default-btn mt-2" onclick="event.preventDefault(); openPostedEventsModal();">View Posted Events</a>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+</div>
+
+<div id="postedEventsModalOverlay" class="dashboard-modal-overlay" onclick="closePostedEventsModal(event)">
+    <div class="dashboard-modal" onclick="event.stopPropagation()">
+        <div class="dashboard-modal-header">
+            <h4 class="mb-0">Your Posted Events</h4>
+            <button class="dashboard-modal-close" onclick="closePostedEventsModal()">&times;</button>
+        </div>
+        <div class="dashboard-modal-body">
+            <div class="event-filter-row">
+                <div class="event-filter-item">
+                    <label class="form-label mb-1">From Date</label>
+                    <input type="date" id="eventFilterFromDate">
+                </div>
+                <div class="event-filter-item">
+                    <label class="form-label mb-1">To Date</label>
+                    <input type="date" id="eventFilterToDate">
+                </div>
+                <div class="d-flex gap-2 align-items-end">
+                    <button class="default-btn" onclick="applyEventDateFilter()">Apply</button>
+                    <button class="default-btn" style="background: linear-gradient(90deg, #64748b, #475569) !important;" onclick="resetEventDateFilter()">Reset</button>
+                </div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <strong style="color:#001e43;">Filtered Events</strong>
+                <span id="filtered-events-count" class="badge bg-primary">0</span>
+            </div>
+            <div id="posted-events-modal-list" class="events-modal-list">
+                <p class="text-muted text-center py-4">Loading events...</p>
+            </div>
+            <div id="filtered-events-pagination" class="events-pagination">
+                <button id="filtered-events-prev-btn" class="default-btn" onclick="previousFilteredEventsPage()">Previous</button>
+                <span id="filtered-events-page-status" class="page-status">Page 1 of 1</span>
+                <button id="filtered-events-next-btn" class="default-btn" onclick="nextFilteredEventsPage()">Next</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="eventSummaryModalOverlay" class="dashboard-modal-overlay" onclick="closeEventSummaryModal(event)">
+    <div class="dashboard-modal" onclick="event.stopPropagation()">
+        <div class="dashboard-modal-header">
+            <h4 class="mb-0">Event Summary</h4>
+            <div class="d-flex align-items-center gap-2">
+                <button id="summary-modal-download-btn" class="default-btn" onclick="downloadSelectedEventCsv()">Download CSV</button>
+                <button class="dashboard-modal-close" onclick="closeEventSummaryModal()">&times;</button>
+            </div>
+        </div>
+        <div class="dashboard-modal-body">
+            <div id="event-summary-modal-content">
+                <p class="text-muted text-center py-4">Select an event from posted events list.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer injected via admin-footer.js -->
+<div id="adminFooterPlaceholder"></div>
+
+<!-- JS -->
+<script src="assets/js/auth-session-manager.js"></script>
+<script src="assets/js/faculty-session-bootstrap.js"></script>
+<script>
+    // Resolve faculty data from tab-scoped session storage populated by faculty-session-bootstrap.
+    const facultyId = (sessionStorage.getItem('faculty_id') || localStorage.getItem('faculty_id')) || '1'; // Default to 1 for testing
+    const facultyEmail = (sessionStorage.getItem('faculty_email') || localStorage.getItem('faculty_email'));
+    const facultyCampusType = (sessionStorage.getItem('faculty_campus_type') || localStorage.getItem('faculty_campus_type')) || 'NECN';
+    const facultyPrivileges = JSON.parse((sessionStorage.getItem('faculty_privileges') || localStorage.getItem('faculty_privileges')) || '{}');
+    let allPostedEvents = [];
+    let filteredPostedEvents = [];
+    let eventFilterApplied = false;
+    let filteredEventsCurrentPage = 1;
+    const filteredEventsPerPage = 5;
+    let selectedEventDetails = null;
+
+    async function initializeDashboard() {
+        await Promise.all([populateWelcomeBanner(), loadPostedEventsCache()]);
+    }
+
+    async function populateWelcomeBanner() {
+        const welcomeNameEl = document.getElementById('facultyWelcomeName');
+        if (!welcomeNameEl) {
+            return;
+        }
+
+        const storedName = (sessionStorage.getItem('faculty_name') || localStorage.getItem('faculty_name'))
+            || localStorage.getItem('facultyName')
+            || (sessionStorage.getItem('faculty_full_name') || localStorage.getItem('faculty_full_name'));
+
+        if (storedName) {
+            welcomeNameEl.textContent = storedName;
+        }
+
+        if (!facultyId) {
+            return;
+        }
+
+        try {
+            const response = await fetch(`/api/faculty/profile/${facultyId}?campus=${facultyCampusType}`);
+            if (!response.ok) {
+                return;
+            }
+
+            const data = await response.json();
+            const profile = data.profile || data.faculty || data.data || {};
+            const apiName = profile.name || profile.faculty_name || profile.full_name;
+
+            if (apiName) {
+                welcomeNameEl.textContent = apiName;
+                sessionStorage.setItem('faculty_name', apiName);
+            }
+        } catch (error) {
+            console.error('Error loading faculty name for welcome banner:', error);
+        }
+    }
+
+    async function loadPostedEventsCache() {
+        try {
+            const response = await fetch(`/api/faculty/events/${facultyId}?campus=${facultyCampusType}`);
+            const data = await response.json();
+
+            if (!data.success) {
+                allPostedEvents = [];
+                filteredPostedEvents = [];
+                return;
+            }
+
+            allPostedEvents = (data.events || []).sort((a, b) => {
+                const da = new Date(a.event_date || a.created_at || 0);
+                const db = new Date(b.event_date || b.created_at || 0);
+                return db - da;
+            });
+            filteredPostedEvents = [...allPostedEvents];
+        } catch (err) {
+            console.error('Error loading posted events:', err);
+            allPostedEvents = [];
+            filteredPostedEvents = [];
+        }
+    }
+
+    function showAccessDenied() {
+        alert('Access denied contact the admin');
+    }
+
+    function wirePrivilegeGuard(elementId, privilegeKey) {
+        const element = document.getElementById(elementId);
+        if (!element) {
+            return;
+        }
+
+        element.addEventListener('click', function(event) {
+            if (!facultyPrivileges[privilegeKey]) {
+                event.preventDefault();
+                showAccessDenied();
+            }
+        });
+    }
+
+    wirePrivilegeGuard('dashboardAssignedDrivesLink', 'monitorAssignedDrives');
+    wirePrivilegeGuard('dashboardPostedEventsLink', 'postEvents');
+
+    async function openPostedEventsModal() {
+        if (!allPostedEvents.length) {
+            await loadPostedEventsCache();
+        }
+
+        eventFilterApplied = false;
+        filteredEventsCurrentPage = 1;
+        filteredPostedEvents = [];
+        renderPostedEventsModalList();
+        document.getElementById('postedEventsModalOverlay').style.display = 'flex';
+    }
+
+    function closePostedEventsModal(event) {
+        if (!event || event.target.id === 'postedEventsModalOverlay') {
+            document.getElementById('postedEventsModalOverlay').style.display = 'none';
+        }
+    }
+
+    function applyEventDateFilter() {
+        const fromDate = document.getElementById('eventFilterFromDate').value;
+        const toDate = document.getElementById('eventFilterToDate').value;
+
+        if (!fromDate || !toDate) {
+            eventFilterApplied = false;
+            filteredPostedEvents = [];
+            filteredEventsCurrentPage = 1;
+            renderPostedEventsModalList('Select both From Date and To Date, then click Apply.');
+            return;
+        }
+
+        eventFilterApplied = true;
+        filteredEventsCurrentPage = 1;
+
+        filteredPostedEvents = allPostedEvents.filter(event => {
+            const rawDate = event.event_date || event.date || event.created_at;
+            if (!rawDate) return false;
+
+            const eventDate = new Date(rawDate);
+
+            if (fromDate) {
+                const from = new Date(fromDate);
+                if (eventDate < from) return false;
+            }
+
+            if (toDate) {
+                const to = new Date(toDate);
+                to.setHours(23, 59, 59, 999);
+                if (eventDate > to) return false;
+            }
+
+            return true;
+        });
+
+        renderPostedEventsModalList();
+    }
+
+    function resetEventDateFilter() {
+        document.getElementById('eventFilterFromDate').value = '';
+        document.getElementById('eventFilterToDate').value = '';
+        eventFilterApplied = false;
+        filteredEventsCurrentPage = 1;
+        filteredPostedEvents = [];
+        renderPostedEventsModalList();
+    }
+
+    function renderPostedEventsModalList(customMessage = '') {
+        const eventListEl = document.getElementById('posted-events-modal-list');
+        const countEl = document.getElementById('filtered-events-count');
+        const paginationEl = document.getElementById('filtered-events-pagination');
+        const pageStatusEl = document.getElementById('filtered-events-page-status');
+        const prevBtn = document.getElementById('filtered-events-prev-btn');
+        const nextBtn = document.getElementById('filtered-events-next-btn');
+
+        if (!eventFilterApplied) {
+            countEl.textContent = 0;
+            eventListEl.innerHTML = `<p class="text-muted text-center py-4">${customMessage || 'Choose From Date and To Date, then click Apply to view events.'}</p>`;
+            paginationEl.style.display = 'none';
+            return;
+        }
+
+        countEl.textContent = filteredPostedEvents.length;
+
+        if (!filteredPostedEvents.length) {
+            eventListEl.innerHTML = '<p class="text-muted text-center py-4">No events found for this date range.</p>';
+            paginationEl.style.display = 'none';
+            return;
+        }
+
+        const totalPages = Math.ceil(filteredPostedEvents.length / filteredEventsPerPage);
+        if (filteredEventsCurrentPage > totalPages) {
+            filteredEventsCurrentPage = totalPages;
+        }
+
+        const startIndex = (filteredEventsCurrentPage - 1) * filteredEventsPerPage;
+        const paginatedEvents = filteredPostedEvents.slice(startIndex, startIndex + filteredEventsPerPage);
+
+        eventListEl.innerHTML = paginatedEvents.map(event => {
+            const eventTitle = event.event_name || event.title || 'Untitled Event';
+            const eventDate = event.event_date ? new Date(event.event_date).toLocaleDateString() : 'N/A';
+
+            return `
+                <div class="dashboard-event-item" onclick="openEventSummaryModal(${event.id})">
+                    <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center;">
+                        <strong style="color: #001e43;">${eventTitle}</strong>
+                        <span class="badge bg-info">${event.event_type || 'event'}</span>
+                    </div>
+                    <div style="font-size: 13px; color: #666; margin-top: 6px;">${eventDate} | ${event.location || 'Location not set'}</div>
+                </div>
+            `;
+        }).join('');
+
+        if (totalPages > 1) {
+            paginationEl.style.display = 'flex';
+            pageStatusEl.textContent = `Page ${filteredEventsCurrentPage} of ${totalPages}`;
+            prevBtn.disabled = filteredEventsCurrentPage === 1;
+            nextBtn.disabled = filteredEventsCurrentPage === totalPages;
+            prevBtn.style.opacity = filteredEventsCurrentPage === 1 ? '0.6' : '1';
+            nextBtn.style.opacity = filteredEventsCurrentPage === totalPages ? '0.6' : '1';
+        } else {
+            paginationEl.style.display = 'none';
+        }
+    }
+
+    function nextFilteredEventsPage() {
+        const totalPages = Math.ceil(filteredPostedEvents.length / filteredEventsPerPage);
+        if (filteredEventsCurrentPage < totalPages) {
+            filteredEventsCurrentPage += 1;
+            renderPostedEventsModalList();
+        }
+    }
+
+    function previousFilteredEventsPage() {
+        if (filteredEventsCurrentPage > 1) {
+            filteredEventsCurrentPage -= 1;
+            renderPostedEventsModalList();
+        }
+    }
+
+    async function openEventSummaryModal(eventId) {
+        document.getElementById('postedEventsModalOverlay').style.display = 'none';
+        document.getElementById('eventSummaryModalOverlay').style.display = 'flex';
+        const summaryEl = document.getElementById('event-summary-modal-content');
+        summaryEl.innerHTML = '<p class="text-muted text-center py-4">Loading event summary...</p>';
+
+        try {
+            const response = await fetch(`/api/faculty/events/${facultyId}/${eventId}/registrations?campus=${facultyCampusType}`);
+            const data = await response.json();
+
+            if (!data.success) {
+                summaryEl.innerHTML = `<p class="text-muted">${data.message || 'Unable to load summary'}</p>`;
+                document.getElementById('summary-modal-download-btn').style.display = 'none';
+                return;
+            }
+
+            selectedEventDetails = data;
+            renderSummaryModal(data);
+            document.getElementById('summary-modal-download-btn').style.display = 'inline-block';
+        } catch (err) {
+            console.error('Error loading event summary:', err);
+            summaryEl.innerHTML = '<p class="text-muted">Error loading summary.</p>';
+            document.getElementById('summary-modal-download-btn').style.display = 'none';
+        }
+    }
+
+    function closeEventSummaryModal(event) {
+        if (!event || event.target.id === 'eventSummaryModalOverlay') {
+            document.getElementById('eventSummaryModalOverlay').style.display = 'none';
+        }
+    }
+
+    function renderSummaryModal(data) {
+        const summaryEl = document.getElementById('event-summary-modal-content');
+        const eventName = data.event.event_name || data.event.title || 'Selected Event';
+        const eventDate = data.event.event_date ? new Date(data.event.event_date).toLocaleDateString() : 'N/A';
+        const eventType = data.event.event_type || 'N/A';
+        const eventLocation = data.event.location || 'N/A';
+
+        summaryEl.innerHTML = `
+            <h5 class="summary-heading">${eventName}</h5>
+            <div class="mb-3" style="color:#475569; font-weight:600;">
+                <div>Date: ${eventDate}</div>
+                <div>Type: ${eventType}</div>
+                <div>Location: ${eventLocation}</div>
+            </div>
+            <div class="summary-grid">
+                <div class="summary-tile"><span class="value">${data.summary.totalRegistered}</span><span class="label">Registrations Count</span></div>
+            </div>
+            <p class="text-muted mb-0">Use Download CSV if you need the participant list.</p>
+        `;
+    }
+
+    function downloadSelectedEventCsv() {
+        if (!selectedEventDetails || !selectedEventDetails.registrations) {
+            alert('Please select an event first.');
+            return;
+        }
+
+        const eventName = (selectedEventDetails.event.event_name || selectedEventDetails.event.title || 'event')
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/^-+|-+$/g, '');
+
+        const headers = ['Student ID', 'Name', 'Email', 'Branch', 'Year', 'CGPA', 'Status', 'Registered At'];
+        const rows = selectedEventDetails.registrations.map(r => [
+            r.student_id || '',
+            r.name || '',
+            r.email || '',
+            r.branch || '',
+            r.year || '',
+            r.cgpa || '',
+            r.status || '',
+            r.registered_at ? new Date(r.registered_at).toISOString() : ''
+        ]);
+
+        const csvContent = [headers, ...rows]
+            .map(cols => cols.map(value => `"${String(value).replace(/"/g, '""')}"`).join(','))
+            .join('\n');
+
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        const now = new Date();
+        const dateStamp = now.toISOString().slice(0, 10);
+        const timeStamp = now.toISOString().slice(11, 19).replace(/:/g, '-');
+        link.href = url;
+        link.download = `Event_Registrations_${eventName || 'event'}_${dateStamp}_${timeStamp}.csv`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+    }
+
+    // Load data on page load
+    document.addEventListener('DOMContentLoaded', initializeDashboard);
+
+    // Sticky navbar functionality
+    window.addEventListener('scroll', function() {
+        const navbar = document.getElementById('navbar');
+        const topHeader = document.querySelector('.top-header-area');
+        if (!navbar || !topHeader) {
+            return;
+        }
+        const topHeaderHeight = topHeader.offsetHeight;
+
+        if (window.scrollY >= topHeaderHeight) {
+            navbar.classList.add('sticky');
+            document.body.classList.add('navbar-sticky');
+        } else {
+            navbar.classList.remove('sticky');
+            document.body.classList.remove('navbar-sticky');
+        }
+    });
+</script>
+
+<script src="assets/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/scrollCue.min.js"></script>
+<script src="assets/js/faculty-sidebar.js?v=20260314"></script>
+<script src="assets/js/logout-back-guard.js"></script>
+<script src="assets/js/admin-footer.js"></script>
+<script src="assets/js/custom.js"></script>
+
+</body>
+</html>
+
+
+
+

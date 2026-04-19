@@ -1,0 +1,4 @@
+PS D:\fouryear> cd backend
+PS D:\fouryear\backend> npm init -y
+>> npm install express mysql2 body-parser cors
+PS D:\fouryear\backend> npm install bcrypt

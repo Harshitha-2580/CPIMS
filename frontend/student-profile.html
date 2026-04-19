@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="assets/css/scrollCue.css">
+    <link rel="stylesheet" href="assets/css/remixicon.css">
+    <link rel="stylesheet" href="assets/css/flaticon.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/admin-theme.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+
+    <style>
+        /* Desktop dropdown submenu hover effect */
+        .navbar .dropdown-menu .dropdown-item {
+            transition: color 0.3s ease;
+        }
+        .navbar .dropdown-menu .dropdown-item:hover {
+            color: var(--primaryColor) !important;
+        }
+
+        :root {
+            --primaryColor: #001e43;
+            --secondaryColor: #002a5c;
+            --accentColor: #003580;
+            --darkColor: rgb(0, 30, 67);
+            --textColor: #333;
+            --textLight: #666;
+            --borderColor: #e9ecef;
+            --shadowColor: rgba(0, 30, 67, 0.1);
+            --gradientPrimary: linear-gradient(135deg, #001e43, #002a5c);
+            --gradientSecondary: linear-gradient(135deg, #002a5c, #003580);
+        }
+
+        /* Prevent horizontal overflow */
+        body, html {
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+
+        .admin-dashboard-body {
+            padding: 34px 0;
+            background: transparent;
+            min-height: calc(100vh - 80px);
+        }
+
+        #navbar img {
+            max-width: 100%;
+            height: auto;
+        }
+        .top-header-area h3 {
+            word-wrap: break-word;
+        }
+
+        /* Override Bootstrap active dropdown style */
+        .navbar .dropdown-menu .dropdown-item.active {
+            background-color: transparent !important;
+            color: var(--primaryColor) !important;
+            font-weight: normal !important;
+        }
+
+        /* ===== Modern Profile Cards Styling (Admin Dashboard-inspired) ===== */
+        .profile-page .profile-card {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(0, 30, 67, 0.12);
+            border-radius: 20px;
+            padding: 34px 32px;
+            box-shadow: 0 20px 60px rgba(0, 30, 67, 0.08);
+            margin-bottom: 30px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            animation: cardSlideIn 0.6s ease-out backwards;
+        }
+
+        .profile-card:nth-child(1) { animation-delay: 0.1s; }
+        .profile-card:nth-child(2) { animation-delay: 0.2s; }
+        .profile-card:nth-child(3) { animation-delay: 0.3s; }
+
+        @keyframes cardSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .profile-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(0, 30, 67, 0.15);
+            border-color: rgba(0, 30, 67, 0.2);
+        }
+
+        .profile-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradientPrimary);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+
+        .profile-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .profile-card-header {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            margin-bottom: 26px;
+            padding: 18px 0;
+            border-bottom: 1px solid rgba(0, 30, 67, 0.08);
+            background: linear-gradient(135deg, rgba(0, 30, 67, 0.03), rgba(0, 42, 92, 0.03));
+        }
+
+        .profile-card-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
+            background: var(--gradientPrimary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: white;
+            box-shadow: 0 10px 25px rgba(0, 30, 67, 0.22);
+        }
+
+        .profile-card h4 {
+            color: var(--darkColor);
+            font-size: 22px;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: -0.4px;
+        }
+
+        .profile-card p {
+            color: var(--textLight);
+            font-size: 13px;
+            margin: 4px 0 0 0;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+        }
+
+        .profile-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .profile-detail {
+            animation: detailFadeIn 0.5s ease-out backwards;
+        }
+
+        .profile-detail:nth-child(1) { animation-delay: 0.1s; }
+        .profile-detail:nth-child(2) { animation-delay: 0.2s; }
+        .profile-detail:nth-child(3) { animation-delay: 0.3s; }
+        .profile-detail:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes detailFadeIn {
+            from {
+                opacity: 0;
+                transform: translateX(-15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .profile-detail-label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            color: #001e43;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .profile-detail-value {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            word-break: break-word;
+            transition: all 0.3s ease;
+        }
+
+        .profile-card:hover .profile-detail-value {
+            color: var(--primaryColor);
+        }
+
+        /* Skills Input Styling */
+        .skills-input-container {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid rgba(0, 30, 67, 0.1);
+        }
+
+        .skills-label {
+            font-size: 13px;
+            font-weight: 700;
+            color: #001e43;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .skills-input {
+            width: 100%;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 12px 16px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .skills-input:focus {
+            border-color: var(--primaryColor);
+            box-shadow: 0 0 0 4px rgba(0, 30, 67, 0.1);
+        }
+
+        .skills-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .skill-tag {
+            background: var(--gradientPrimary);
+            color: white;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            animation: tagSlideIn 0.3s ease-out;
+        }
+
+        @keyframes tagSlideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .skill-tag button {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            transition: transform 0.2s ease;
+        }
+
+        .skill-tag button:hover {
+            transform: scale(1.2);
+        }
+
+        /* Resume Upload Section */
+        .resume-upload-container {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid rgba(0, 30, 67, 0.1);
+        }
+
+        .resume-label {
+            font-size: 13px;
+            font-weight: 700;
+            color: #001e43;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .file-upload-box {
+            border: 3px dashed #e0e0e0;
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #f8fafc 0%, #f0f2f5 100%);
+        }
+
+        .file-upload-box:hover {
+            border-color: var(--primaryColor);
+            background: linear-gradient(135deg, #f4f6fb 0%, #f8f9fa 100%);
+        }
+
+        .file-upload-box i {
+            font-size: 40px;
+            color: var(--primaryColor);
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .file-upload-box p {
+            color: #333;
+            font-weight: 600;
+            margin: 5px 0;
+        }
+
+        .file-upload-box small {
+            display: block;
+            color: #6c757d;
+            margin-top: 8px;
+        }
+
+        #resumeFile {
+            display: none;
+        }
+
+        .resume-name {
+            margin-top: 20px;
+            padding: 16px 20px;
+            background: linear-gradient(135deg, #e8f5e9 0%, #f1f8f6 100%);
+            border-left: 5px solid #4caf50;
+            border-radius: 12px;
+            color: #2e7d32;
+            font-weight: 600;
+            display: none;
+            animation: slideInUp 0.3s ease-out;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .resume-action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .resume-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            white-space: nowrap;
+        }
+
+        .resume-btn i {
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+        }
+
+        .resume-btn-view {
+            background: linear-gradient(135deg, #FA394A, #FF5A6E);
+            color: white;
+        }
+
+        .resume-btn-view:hover {
+            background: linear-gradient(135deg, #FF5A6E, #FF7B45);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(250, 57, 74, 0.4);
+        }
+
+        .resume-btn-view:active {
+            transform: translateY(-1px);
+        }
+
+        .resume-btn-download {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+        }
+
+        .resume-btn-download:hover {
+            background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        .resume-btn-download:active {
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 768px) {
+            .resume-name {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .resume-action-buttons {
+                width: 100%;
+            }
+
+            .resume-btn {
+                flex: 1;
+                justify-content: center;
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Action Buttons */
+        .profile-action-btn {
+            display: inline-block;
+            background: var(--gradientPrimary);
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-action-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .profile-action-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .profile-action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 30, 67, 0.25);
+        }
+
+        .profile-action-btn:active {
+            transform: translateY(-1px);
+        }
+    </style>
+
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
+    <link href="assets/img/crop_nec.png" type="image/x-icon" rel="icon">
+</head>
+<body class="profile-page">
+
+    <div class="top-header-area style-2" style="padding: 12px 0;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-12 text-center">
+                    <h3 class="mb-0" style="color: #fff; font-weight: 700; letter-spacing: 1px; line-height: 1.4; font-size: 26px;">
+                        My Profile
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light py-2" id="navbar">
+        <div class="container">
+            <img src="assets/img/logo_necn.png" alt="Logo" height="70" width="160">
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a href="student-dashboard.html" class="nav-link">Dashboard</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="student-announcements.html" class="nav-link">Announcements</a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="student-events.html" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Events
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="student-events.html?type=seminar">Seminars</a></li>
+                            <li><a class="dropdown-item" href="student-events.html?type=workshop">Workshops</a></li>
+                            <li><a class="dropdown-item" href="student-events.html?type=hackathon">Hackathons</a></li>
+                            <li><a class="dropdown-item" href="student-events.html?type=career">Career Guidance</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="student-resources.html" class="nav-link">Resources</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="student-internships.html" class="nav-link">Internships</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="student-jobs.html" class="nav-link">Job Opportunities</a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            My Account
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item active" href="student-profile.html">Profile</a></li>
+                            <li><a class="dropdown-item" href="index.html">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+ 
+    <div class="register-area ptb-100 admin-dashboard-body">
+       
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="profile-card student-summary-box">
+                        <div class="profile-card-header">
+                            <div class="profile-card-icon" style="background: linear-gradient(135deg, #001e43, #002a5c);">
+                                <i class="ri-user-3-line"></i>
+                            </div>
+                            <div>
+                                <h4>Personal Details</h4>
+                                <p>Your personal information</p>
+                            </div>
+                        </div>
+                        <div class="profile-details">
+                            <div class="profile-detail">
+                                <span class="profile-detail-label">Name</span>
+                                <span class="profile-detail-value" id="profileName">-</span>
+                            </div>
+                            <div class="profile-detail">
+                                <span class="profile-detail-label">Roll Number</span>
+                                <span class="profile-detail-value" id="profileRoll">-</span>
+                            </div>
+                            <div class="profile-detail">
+                                <span class="profile-detail-label">Email</span>
+                                <span class="profile-detail-value" id="profileEmail">-</span>
+                            </div>
+                            <div class="profile-detail">
+                                <span class="profile-detail-label">Phone</span>
+                                <span class="profile-detail-value" id="profilePhone">-</span>
+                            </div>
+                        </div>
+                        <a href="student-profile-edit.html" class="text-decoration-none">
+                            <button class="profile-action-btn">
+                                <i class="ri-edit-line"></i> Edit Personal Info
+                            </button>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="profile-card student-summary-box">
+                        <div class="profile-card-header">
+                            <div class="profile-card-icon" style="background: linear-gradient(135deg, #FFC333, #FFB703);">
+                                <i class="ri-book-2-line"></i>
+                            </div>
+                            <div>
+                                <h4>Academic Details</h4>
+                                <p>Your academic information</p>
+                            </div>
+                        </div>
+                        <div class="profile-details">
+                            <div class="profile-detail">
+                                <span class="profile-detail-label">Department</span>
+                                <span class="profile-detail-value" id="profileBranch">-</span>
+                            </div>
+                            <div class="profile-detail">
+                                <span class="profile-detail-label">Current Year</span>
+                                <span class="profile-detail-value" id="profileYear">-</span>
+                            </div>
+                            <div class="profile-detail">
+                                <span class="profile-detail-label">Current CGPA</span>
+                                <span class="profile-detail-value" id="profileCgpa" style="color: #4caf50;">-</span>
+                            </div>
+                            <div class="profile-detail">
+                                <span class="profile-detail-label">Backlogs</span>
+                                <span class="profile-detail-value" id="profileBacklogs">-</span>
+                            </div>
+                        </div>
+                        <a href="student-academic-edit.html" class="text-decoration-none">
+                            <button class="profile-action-btn">
+                                <i class="ri-edit-line"></i> Update Academic Info
+                            </button>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-lg-12">
+                    <div class="profile-card student-summary-box">
+                        <div class="profile-card-header">
+                            <div class="profile-card-icon" style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">
+                                <i class="ri-briefcase-2-line"></i>
+                            </div>
+                            <div>
+                                <h4>Professional Information</h4>
+                                <p>Your resume and professional skills</p>
+                            </div>
+                        </div>
+
+                        <!-- Resume Upload Section -->
+                        <div class="resume-upload-container">
+                            <label class="resume-label">Upload Resume (PDF)</label>
+                            <div class="file-upload-box" onclick="document.getElementById('resumeFile').click();">
+                                <i class="ri-upload-cloud-2-line"></i>
+                                <p>Click to upload your resume</p>
+                                <small>PDF files only (Max 5MB)</small>
+                            </div>
+                            <input type="file" id="resumeFile" accept=".pdf" />
+                            <div class="resume-name" id="resumeName">
+                                <div style="display: flex; align-items: center; gap: 12px; flex: 1;">
+                                    <i class="ri-file-pdf-line" style="font-size: 28px; color: var(--primaryColor);"></i> 
+                                    <div>
+                                        <div id="resumeFileName" style="font-weight: 600; color: #001e43; font-size: 14px; margin-bottom: 2px;"></div>
+                                        <small style="color: #6c757d; font-size: 11px;">PDF Resume</small>
+                                    </div>
+                                </div>
+                                <div class="resume-action-buttons">
+                                    <button type="button" id="viewResumeBtn" class="resume-btn resume-btn-view" onclick="viewResume()" title="View Resume">
+                                        <i class="ri-eye-line"></i>
+                                        <span>View</span>
+                                    </button>
+                                    <button type="button" id="downloadResumeBtn" class="resume-btn resume-btn-download" onclick="downloadResume()" title="Download Resume">
+                                        <i class="ri-download-2-line"></i>
+                                        <span>Download</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Skills Section -->
+                        <div class="skills-input-container">
+                            <label class="skills-label">Your Professional Skills</label>
+                            <input type="text" class="skills-input" id="skillsInput" placeholder="Type a skill and press Enter..." />
+                            <small style="color: #6c757d; display: block; margin-top: 8px;" >Add skills one by one by typing and pressing Enter</small>
+                            <div class="skills-tags" id="skillsTags"></div>
+                        </div>
+
+                        <button class="profile-action-btn" id="saveProfessionalBtn">
+                            <i class="ri-save-line"></i> Save Professional Information
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- Footer injected via admin-footer.js -->
+    <div id="adminFooterPlaceholder"></div>
+    <button type="button" id="back-to-top">
+        <i class="ri-arrow-up-double-fill"></i>
+    </button>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const mainSection = document.querySelector(".register-area");
+        if (mainSection && !window.location.hash) {
+            const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            requestAnimationFrame(() => {
+                setTimeout(() => {
+                    mainSection.scrollIntoView({
+                        behavior: reduceMotion ? "auto" : "smooth",
+                        block: "start"
+                    });
+                }, 120);
+            });
+        }
+
+        let currentPage = window.location.pathname.split("/").pop() || "index.html";
+
+        document.querySelectorAll(".navbar-nav .nav-link").forEach(link => {
+            if (link.getAttribute("href") === currentPage) {
+                link.classList.add("active");
+            }
+        });
+
+        // Specifically handle the dropdown items for 'My Account'
+        document.querySelectorAll(".dropdown-menu .dropdown-item").forEach(link => {
+            if (link.getAttribute("href") === currentPage) {
+                link.classList.add("active");
+                // Also activate the parent dropdown toggle
+                link.closest('.dropdown').querySelector('.nav-link').classList.add('active');
+            }
+        });
+        
+        const studentId = (sessionStorage.getItem("student_id") || localStorage.getItem("student_id"));
+        let studentSkills = [];
+        let currentResume = null;
+        let previousResumeUrl = null;
+
+        // Initialize DOM elements first
+        const resumeFile = document.getElementById('resumeFile');
+        const resumeName = document.getElementById('resumeName');
+        const resumeFileName = document.getElementById('resumeFileName');
+        const skillsInput = document.getElementById('skillsInput');
+        const skillsTags = document.getElementById('skillsTags');
+        const saveProfessionalBtn = document.getElementById('saveProfessionalBtn');
+
+        console.log('DOM elements initialized:', {
+            resumeFile: !!resumeFile,
+            resumeName: !!resumeName,
+            resumeFileName: !!resumeFileName,
+            skillsInput: !!skillsInput,
+            skillsTags: !!skillsTags,
+            saveProfessionalBtn: !!saveProfessionalBtn
+        });
+
+        // Global functions to view and download resume
+        window.viewResume = function() {
+            if (previousResumeUrl) {
+                window.open(`http://localhost:3000${previousResumeUrl}`, '_blank');
+            } else {
+                alert('Save professional information to view resume');
+            }
+        };
+
+        window.downloadResume = function() {
+            if (previousResumeUrl) {
+                const link = document.createElement('a');
+                link.href = `http://localhost:3000${previousResumeUrl}`;
+                link.download = resumeFileName.textContent || 'resume.pdf';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            } else {
+                alert('Save professional information to download resume');
+            }
+        };
+
+        const setText = (id, value) => {
+            const el = document.getElementById(id);
+            if (!el) return;
+            const displayValue = (value === null || value === undefined || value === "") ? "-" : value;
+            el.textContent = displayValue;
+        };
+
+        // Resume Upload Handler
+        if (resumeFile) {
+            resumeFile.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file && file.type === 'application/pdf' && file.size <= 5 * 1024 * 1024) {
+                    currentResume = file;
+                    resumeFileName.textContent = file.name;
+                    resumeName.style.display = 'flex';
+                } else {
+                    alert('Please select a valid PDF file (Max 5MB)');
+                    resumeFile.value = '';
+                    currentResume = null;
+                    if (!previousResumeUrl) {
+                        resumeName.style.display = 'none';
+                    }
+                }
+            });
+        }
+
+        // Skills Management
+        const renderSkills = () => {
+            skillsTags.innerHTML = studentSkills.map((skill, index) => `
+                <span class="skill-tag">
+                    ${skill}
+                    <button type="button" onclick="removeSkill(${index})" style="background: none; border: none; color: white; cursor: pointer; padding: 0; font: inherit;">
+                        <i class="ri-close-line" style="font-size: 14px;"></i>
+                    </button>
+                </span>
+            `).join('');
+        };
+
+        window.removeSkill = (index) => {
+            studentSkills.splice(index, 1);
+            renderSkills();
+        };
+
+        if (skillsInput) {
+            skillsInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter' && skillsInput.value.trim()) {
+                    const skill = skillsInput.value.trim();
+                    if (!studentSkills.includes(skill) && skill.length > 0) {
+                        studentSkills.push(skill);
+                        skillsInput.value = '';
+                        renderSkills();
+                    }
+                }
+            });
+        }
+
+        // Show success message
+        const showSuccessMessage = () => {
+            const btn = saveProfessionalBtn;
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = '<i class="ri-check-circle-line"></i> Saved Successfully!';
+            btn.style.backgroundColor = '#4caf50';
+            setTimeout(() => {
+                btn.innerHTML = originalHTML;
+                btn.style.backgroundColor = '';
+            }, 3000);
+        };
+
+        if (saveProfessionalBtn) {
+            saveProfessionalBtn.addEventListener('click', async () => {
+                if (!studentId) {
+                    alert('Please log in first');
+                    return;
+                }
+
+                try {
+                    const formData = new FormData();
+                    
+                    // Only append resume if a new one was selected
+                    if (currentResume) {
+                        formData.append('resume', currentResume);
+                    }
+                    
+                    // Always append updated skills array
+                    formData.append('skills', JSON.stringify(studentSkills));
+
+                    const response = await fetch(`http://localhost:3000/api/student/${studentId}/professional`, {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    const result = await response.json();
+                    if (result.success) {
+                        showSuccessMessage();
+                        // Reset resume after successful save
+                        currentResume = null;
+                        resumeFile.value = '';
+                        
+                        // Reload professional info from database to display the saved data
+                        await loadProfessionalInfo();
+                    } else {
+                        alert('Error saving professional information: ' + result.message);
+                    }
+                } catch (err) {
+                    console.error('Error saving professional info:', err);
+                    alert('Failed to save professional information: ' + err.message);
+                }
+            });
+        }
+
+        if (!studentId) {
+            [
+                "profileName",
+                "profileRoll",
+                "profileEmail",
+                "profilePhone",
+                "profileBranch",
+                "profileYear",
+                "profileCgpa",
+                "profileBacklogs"
+            ].forEach(id => setText(id, "Not logged in"));
+            return;
+        }
+
+        // Load professional info (resume and skills) on page load
+        async function loadProfessionalInfo() {
+            // Wait a small moment to ensure DOM is ready
+            await new Promise(resolve => setTimeout(resolve, 100));
+            
+            try {
+                const response = await fetch(`http://localhost:3000/api/student/${studentId}/professional`);
+                const data = await response.json();
+                
+                console.log('Professional info loaded:', data);
+                
+                if (data.success && data.professional) {
+                    // Load skills
+                    if (data.professional.skills && data.professional.skills.length > 0) {
+                        studentSkills = data.professional.skills;
+                        console.log('Loaded skills:', studentSkills);
+                    } else {
+                        studentSkills = [];
+                    }
+                    renderSkills();
+                    
+                    // Load resume
+                    if (data.professional.resumeUrl) {
+                        previousResumeUrl = data.professional.resumeUrl;
+                        const fileName = data.professional.resumeUrl.split('/').pop();
+                        if (resumeFileName) {
+                            resumeFileName.textContent = fileName;
+                        }
+                        if (resumeName) {
+                            resumeName.style.display = 'flex';
+                        }
+                        console.log('Loaded resume:', fileName);
+                    } else {
+                        if (resumeName) {
+                            resumeName.style.display = 'none';
+                        }
+                    }
+                } else {
+                    console.log('No professional data returned');
+                    studentSkills = [];
+                    renderSkills();
+                    if (resumeName) {
+                        resumeName.style.display = 'none';
+                    }
+                }
+            } catch (err) {
+                console.error('Error loading professional info:', err);
+                studentSkills = [];
+                renderSkills();
+                if (resumeName) {
+                    resumeName.style.display = 'none';
+                }
+            }
+        }
+
+        // Load professional info on page load
+        loadProfessionalInfo();
+
+        fetch(`http://localhost:3000/api/student/${studentId}`)
+            .then(res => res.json())
+            .then(data => {
+                if (!data.success || !data.student) {
+                    throw new Error(data.message || "Unable to load profile");
+                }
+
+                const student = data.student;
+                const yearMap = {
+                    "1": "1st Year",
+                    "2": "2nd Year",
+                    "3": "3rd Year",
+                    "4": "Final Year"
+                };
+
+                const storedName = (sessionStorage.getItem("student_name") || localStorage.getItem("student_name"));
+                const apiName = typeof student.name === "string" ? student.name.trim() : student.name;
+                setText("profileName", apiName ? apiName : storedName);
+                setText("profileRoll", student.id);
+                setText("profileEmail", student.email);
+                setText("profilePhone", student.phone || "-");
+                setText("profileBranch", student.branch);
+                setText("profileYear", yearMap[student.year] || student.year);
+                setText("profileCgpa", student.cgpa !== null && student.cgpa !== undefined ? `${student.cgpa} / 10.0` : "-");
+                setText("profileBacklogs", student.backlogs);
+            })
+            .catch(err => {
+                console.error("Error loading profile:", err);
+                [
+                    "profileName",
+                    "profileRoll",
+                    "profileEmail",
+                    "profilePhone",
+                    "profileBranch",
+                    "profileYear",
+                    "profileCgpa",
+                    "profileBacklogs"
+                ].forEach(id => setText(id, "-"));
+            });
+    });
+    </script>
+
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/swiper-bundle.min.js"></script>
+    <script src="assets/js/fslightbox.js"></script>
+    <script src="assets/js/scrollCue.min.js"></script>
+    <script src="assets/js/auth-session-manager.js"></script>
+<script src="assets/js/student-session-bootstrap.js"></script>
+<script src="assets/js/custom.js"></script>
+
+    <script src="assets/js/student-sidebar.js?v=20260315"></script>
+    <script src="assets/js/admin-footer.js"></script>
+</body>
+</html>
+
+

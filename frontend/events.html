@@ -1,0 +1,1409 @@
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEC Placement Cell – Central Placement and Information Center - All Events</title>
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="assets/css/scrollCue.css">
+    <link rel="stylesheet" href="assets/css/remixicon.css">
+    <link rel="stylesheet" href="assets/css/flaticon.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+
+    <style>
+        /* Desktop dropdown submenu hover effect */
+        /* Fix Login dropdown position */
+.navbar .nav-item.dropdown {
+    position: relative;
+}
+
+.navbar .nav-item.dropdown .dropdown-menu {
+    min-width: 220px;
+    right: 0 !important;
+    left: auto !important;
+    transform-origin: top right;
+}
+
+.navbar .nav-item.dropdown.show .dropdown-menu {
+    left: auto !important;
+    right: 0 !important;
+}
+
+/* Hover effect */
+.navbar .dropdown-menu .dropdown-item {
+    transition: color 0.3s ease;
+}
+
+.navbar .dropdown-menu .dropdown-item:hover {
+    color: red !important;
+}
+        .navbar .dropdown-menu .dropdown-item {
+            transition: color 0.3s ease;
+        }
+        .navbar .dropdown-menu .dropdown-item:hover {
+            color: red !important;
+        }
+
+        /* Prevent horizontal overflow */
+        body, html {
+            overflow-x: hidden;
+        }
+        #navbar img {
+            max-width: 100%;
+            height: auto;
+        }
+        .top-header-area h3 {
+            word-wrap: break-word;
+        }
+
+        /* Active link styling */
+        .navbar-nav .nav-link.active,
+        .responsive-menu a.active {
+            color: red !important;
+            font-weight: bold;
+        }
+        .pages-image img{
+    width: 80%;
+    max-width: 450px;
+    height: auto;
+}
+.single-events-card{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.single-events-card .content{
+    flex: 1;
+}
+
+/* Extracted CSS from style.css and responsive.css */
+
+/* Top Header Area Style */
+.top-header-area {
+  background-color: var(--blackColor);
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.top-header-area .container-fluid {
+  max-width: 1400px;
+  margin: auto;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+.top-header-area.style-2 {
+  background-color: #002a5c;
+}
+.top-header-area.style-3 .container-fluid {
+  max-width: 1520px;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+.top-header-area.pages-style .container-fluid {
+  max-width: 1480px;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.top-header-list ul li {
+  margin-right: 13px;
+  padding-right: 20px;
+  position: relative;
+}
+.top-header-list ul li a {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.56);
+}
+.top-header-list ul li a i {
+  top: 2px;
+  font-size: 16px;
+  margin-right: 7px;
+  position: relative;
+  color: var(--primaryColor);
+}
+.top-header-list ul li a:hover {
+  color: var(--primaryColor);
+}
+.top-header-list ul li::before {
+  top: 2px;
+  right: 0;
+  width: 1px;
+  height: 17px;
+  content: "";
+  position: absolute;
+  background-color: rgb(31, 57, 90);
+}
+.top-header-list ul li:last-child {
+  margin-right: 0;
+  padding-right: 0;
+}
+.top-header-list ul li:last-child::before {
+  display: none;
+}
+.top-header-list ul li:last-child a i {
+  top: 0;
+}
+.top-header-list.style-2 ul li a i {
+  color: var(--whiteColor);
+}
+
+.top-header-social-list ul li .pages-link li {
+  margin-right: 6px;
+  padding-right: 12px;
+  position: relative;
+}
+.top-header-social-list ul li .pages-link li a {
+  font-size: 13px;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.56);
+}
+.top-header-social-list ul li .pages-link li a:hover {
+  color: var(--primaryColor);
+}
+.top-header-social-list ul li .pages-link li::before {
+  top: 6px;
+  right: 0;
+  width: 1px;
+  height: 15px;
+  content: "";
+  position: absolute;
+  background-color: rgb(31, 57, 90);
+}
+.top-header-social-list ul li .pages-link li:last-child {
+  margin-right: 0;
+  padding-right: 0;
+}
+.top-header-social-list ul li .pages-link li:last-child::before {
+  display: none;
+}
+.top-header-social-list ul li .social-link {
+  margin-left: 18px;
+}
+.top-header-social-list ul li .social-link li {
+  margin-right: 4px;
+}
+.top-header-social-list ul li .social-link li a {
+  width: 26px;
+  height: 26px;
+  font-size: 12px;
+  line-height: 26px;
+  text-align: center;
+  border-radius: 100%;
+  display: inline-block;
+  color: rgb(143, 156, 172);
+  background-color: rgba(255, 255, 255, 0.08);
+}
+.top-header-social-list ul li .social-link li a i {
+  bottom: -2px;
+  position: relative;
+}
+.top-header-social-list ul li .social-link li a:hover {
+  color: var(--blackColor);
+  background-color: var(--secenderyColor);
+}
+.top-header-social-list ul li .social-link li:last-child {
+  margin-right: 0;
+}
+
+/* Navbar Area Style */
+.navbar .nav-link {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+/* Dropdown items slightly smaller */
+.navbar .dropdown-menu .dropdown-item {
+    font-size: 16px;
+}
+
+.navbar {
+  z-index: 2;
+  position: relative;
+  background-color: var(--whiteColor);
+  box-shadow: 0px 2px 20px 0px rgba(0, 0, 0, 0.05);
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+
+/* FULL WIDTH NAVBAR */
+.navbar .container-nav {
+  max-width: 100%;
+  margin: 0;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+/* Logo */
+.navbar .navbar-brand {
+  font-size: inherit;
+  line-height: 1;
+  padding: 0;
+  margin-left: 0;
+}
+
+/* Remove list spacing */
+.navbar ul {
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style-type: none;
+}
+
+/* PUSH MENU TO RIGHT EDGE */
+.navbar .navbar-nav {
+  margin-right: 0;
+  margin-left: auto;
+}
+
+/* Increase spacing between items */
+.navbar .navbar-nav .nav-item {
+  position: relative;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+/* Increase navbar text size */
+.navbar .navbar-nav .nav-item .nav-link {
+  position: relative;
+  color: var(--blackColor);
+  transition: var(--transition);
+  font-weight: 600;
+  font-size: 18px;
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+/* Hover effect */
+.navbar .navbar-nav .nav-item .nav-link:hover,
+.navbar .navbar-nav .nav-item .nav-link.active {
+  color: var(--primaryColor);
+}
+
+.navbar .navbar-nav .nav-item .dropdown-toggle {
+  margin-right: 17px;
+}
+
+.navbar .navbar-nav .nav-item:last-child {
+  margin-right: 0;
+}
+
+.navbar .navbar-nav .nav-item:first-child {
+  margin-left: 0;
+}
+
+/* Dropdown menu */
+.navbar .navbar-nav .nav-item .dropdown-menu {
+  left: 0;
+  top: 30px;
+  opacity: 0;
+  z-index: 99;
+  border: none;
+  width: 270px;
+  margin-top: 0;
+  display: block;
+  padding: 12px 0;
+  border-radius: 0;
+  position: absolute;
+  visibility: hidden;
+  transition: all 0.2s ease-in-out;
+  transform: translate3d(0, 18px, 0);
+  background-color: var(--whiteColor);
+  box-shadow: 0px 2px 20px 0px rgba(0, 0, 0, 0.05);
+}
+
+/* Dropdown links */
+.navbar .navbar-nav .nav-item .dropdown-menu .nav-item .nav-link {
+  display: block;
+  color: var(--blackColor);
+  padding: 10px 25px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.navbar .navbar-nav .nav-item .dropdown-menu .nav-item .nav-link:hover {
+  color: var(--primaryColor);
+}
+
+/* Show dropdown on hover */
+.navbar .navbar-nav .nav-item:hover .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Sticky navbar */
+.navbar.sticky {
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;
+  position: sticky;
+  animation: 500ms ease-in-out 0s normal none 1 running fadeInDown;
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+
+/* Navbar toggler */
+.navbar .navbar-toggler {
+  color: var(--whiteColor);
+  font-size: inherit;
+  box-shadow: unset;
+  border: none;
+  padding: 0;
+}
+
+.navbar .navbar-toggler .burger-menu {
+  cursor: pointer;
+}
+
+.navbar .navbar-toggler .burger-menu span {
+  height: 3px;
+  width: 30px;
+  margin: 5px 0;
+  display: block;
+  background: var(--primaryColor);
+}
+/* Make navbar layout flexible */
+.navbar .container-nav{
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+/* Push menu fully to right */
+.navbar .navbar-collapse{
+  justify-content: flex-end;
+}
+
+/* Remove extra space from first and last menu items */
+.navbar .navbar-nav .nav-item:first-child{
+  margin-left: 0;
+}
+
+.navbar .navbar-nav .nav-item:last-child{
+  margin-right: 0;
+}
+
+/* Events Area Style */
+.events-area {
+  background-color: #f6f6f6;
+}
+
+.single-events-card {
+  padding: 20px;
+  margin-bottom: 25px;
+  transition: var(--transition);
+  background-color: var(--whiteColor);
+}
+.single-events-card .image {
+  margin-bottom: 25px;
+}
+.single-events-card .content {
+  padding-left: 15px;
+}
+.single-events-card .content .date {
+  position: relative;
+  margin-right: 13px;
+  padding-right: 13px;
+}
+.single-events-card .content .date h2 {
+  font-size: 42px;
+  line-height: 29px;
+  margin-bottom: 8px;
+  color: var(--secenderyColor);
+}
+.single-events-card .content .date span {
+  display: block;
+  text-align: center;
+  letter-spacing: 0.63px;
+  color: var(--blackColor);
+  text-transform: uppercase;
+  color: var(--blackColor);
+  transition: var(--transition);
+  font-size: 18px;
+  font-weight: 600;
+}
+.single-events-card .content .date::before {
+  top: 0;
+  right: 0;
+  width: 1px;
+  height: 57px;
+  content: "";
+  position: absolute;
+  background-color: var(--secenderyColor);
+}
+.single-events-card .content .title {
+  margin-top: 5px;
+}
+.single-events-card .content .title h3 {
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 13px;
+}
+.single-events-card .content .title span {
+  font-size: 14px;
+  margin-bottom: 5px;
+  transition: var(--transition);
+}
+.single-events-card .content .title span i {
+  font-size: 18px;
+  margin-right: 8px;
+  color: var(--primaryColor);
+}
+.single-events-card:hover {
+  background-color: #002a5c;
+}
+.single-events-card:hover .content .date span {
+  color: rgba(255, 255, 255, 0.65);
+}
+.single-events-card:hover .content .title h3 a {
+  color: var(--whiteColor);
+}
+.single-events-card:hover .content .title h3 a:hover {
+  color: var(--primaryColor);
+}
+.single-events-card:hover .content .title span {
+  color: rgba(255, 255, 255, 0.65);
+}
+.single-events-card.pages-style {
+  background-color: #f6f6f6;
+}
+.single-events-card.pages-style:hover {
+  background-color: #002a5c;
+}
+
+/* Page Banner Area Style */
+.pages-banner-area {
+  z-index: 1;
+  position: relative;
+  height: 550px;
+  padding-top: 40px;
+  margin-bottom: 50px;
+  padding-bottom: 40px;
+  margin-left: 0;
+  margin-right: 0;
+  background-image: url(assets/img/bg/bg-3.jpg);
+  background-size: 800px auto;
+}
+
+.pages-banner-area .container-fluid {
+  max-width: 1480px;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+.pages-banner-area .shape-7 {
+  left: 250px;
+  bottom: 0;
+  position: absolute;
+}
+.pages-banner-area::before {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  content: "";
+  position: absolute;
+  background-color: rgba(0, 30, 67, 0.92);
+}
+.pages-banner-area::after {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 110px;
+  z-index: -1;
+  content: "";
+  position: absolute;
+  background-color: var(--whiteColor);
+}
+
+.pages-title {
+  margin-top: 50px;
+}
+.pages-title h2 {
+  font-size: 56px;
+  margin-bottom: 20px;
+  color: var(--whiteColor);
+}
+.pages-title ul li {
+  color: #d2d6dc;
+  margin-right: 10px;
+  padding-right: 20px;
+  position: relative;
+}
+.pages-title ul li a {
+  font-weight: 700;
+  color: var(--secenderyColor);
+}
+.pages-title ul li a:hover {
+  color: var(--whiteColor);
+}
+.pages-title ul li::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  border-radius: 100%;
+  background-color: #d2d6dc;
+  transform: translateY(-50%);
+}
+.pages-title ul li:last-child {
+  margin-right: 0;
+  padding-right: 0;
+}
+.pages-title ul li:last-child::before {
+  display: none;
+}
+
+/* Footer Area Style */
+.footer-area{
+  background-color:#071b3a;
+  color:#ffffff;
+  margin-top:100px;
+  padding:40px 20px;
+  width:100%;
+}
+.footer-area p:last-child {
+  margin-bottom: 0;
+}
+/* Inner content width (like container but no outer margins) */
+.footer-inner {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* Headings */
+.footer-area h3 {
+  font-size: 26px;
+  margin-bottom: 16px;
+  color: #ffffff;
+}
+
+.footer-area h6 {
+  font-size: 16px;
+  margin-top: 16px;
+  margin-bottom: 8px;
+  color: #ffffff;
+}
+
+/* Text */
+.footer-area p {
+  font-size: 14px;
+  color: #ffffff;
+  margin-bottom: 8px;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+/* List reset */
+.footer-area ul {
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
+
+/* Social icons spacing */
+.footer-area .social-link li {
+  margin-right: 8px;
+}
+
+/* Links: white by default */
+.footer-area a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+/* Hover / focus */
+.footer-area a:hover,
+.footer-area a:focus {
+  color: var(--primaryColor);
+  text-decoration: none;
+}
+
+/* Active click */
+.footer-area a:active {
+  color: #ffc333;
+}
+
+/* Bottom bar */
+.footer-bottom {
+  font-size: 13px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding-top: 12px;
+  margin-top: 16px;
+}
+
+/* Bottom text and links */
+.footer-bottom span {
+  color: #ffffff;
+}
+
+.footer-bottom a {
+  color: #ffffff;
+}
+
+.footer-bottom a:hover,
+.footer-bottom a:focus {
+  color: var(--primaryColor);
+}
+
+/* Back to Top Style */
+#back-to-top {
+  opacity: 0;
+  top: 87%;
+  right: 2%;
+  z-index: 4;
+  width: 40px;
+  height: 50px;
+  border: unset;
+  position: fixed;
+  transition: 0.9s;
+  cursor: pointer;
+  line-height: 45px;
+  border-radius: 5px;
+  text-align: center;
+  background-color: var(--blackColor);
+}
+#back-to-top i {
+  top: 50%;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  font-size: 25px;
+  transition: 0.5s;
+  position: absolute;
+  color: var(--whiteColor);
+  transform: translateY(-50%);
+}
+#back-to-top:hover {
+  color: #ffffff;
+  background: var(--secenderyColor);
+}
+#back-to-top:hover i {
+  color: var(--blackColor);
+}
+#back-to-top:hover i:first-child {
+  opacity: 0;
+  top: 0;
+  visibility: hidden;
+}
+#back-to-top:hover i:last-child {
+  opacity: 1;
+  visibility: visible;
+  top: 50%;
+}
+#back-to-top:focus {
+  color: #ffffff;
+}
+#back-to-top:focus::before {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Responsive CSS */
+
+/* Small screens */
+@media (max-width: 767px) {
+  .top-header-area .container {
+    max-width: 540px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  .top-header-area.style-3 .container {
+    max-width: 540px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  .top-header-area.pages-style .container {
+    max-width: 540px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  .navbar .container {
+    max-width: 540px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  .navbar.style-3 .container {
+    max-width: 540px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  .navbar.pages-style .container {
+    max-width: 540px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  .pages-banner-area {
+    padding-top: 65px;
+  }
+  .pages-banner-area .container-fluid {
+    max-width: 540px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  .pages-banner-area .shape-7 {
+    display: none;
+  }
+  .pages-title {
+    margin-top: 0;
+    margin-bottom: 25px;
+  }
+  .pages-title h2 {
+    font-size: 28px;
+    margin-bottom: 15px;
+  }
+  .single-events-card {
+    padding: 15px;
+  }
+  .single-events-card .content {
+    padding-left: 0;
+    display: block !important;
+  }
+  .single-events-card .content .date {
+    display: inline-block;
+    margin-bottom: 15px;
+  }
+  .single-events-card .content .date h2 {
+    font-size: 35px;
+  }
+  .single-events-card .content .date span {
+    text-align: left !important;
+  }
+}
+
+/* Medium screens */
+@media (min-width: 768px) and (max-width: 991px) {
+  .single-events-card {
+    padding-left: 0;
+  }
+  .single-events-card .content {
+    display: flex !important;
+  }
+}
+
+    </style>
+
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
+    <link href="assets/img/favicon.png" type="image/x-icon" rel="icon">
+</head>
+<body>
+        <!-- Start Top Header Area -->
+<!-- Top Header Area -->
+<div class="top-header-area style-2" style="padding: 12px 0;">
+    <div class="container"><!-- Changed from container-fluid to container -->
+        <div class="row align-items-center">
+            <div class="col-12 text-center">
+                <h3 class="mb-0" style="color: #fff; font-weight: 700; letter-spacing: 1px; line-height: 1.4; font-size: 26px;">
+                    <span style=" font-size: 36px; font-weight: 600; margin-right: 6px;">
+                        NEC
+                    </span>
+                     Central Placement and Information Center
+                </h3>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Top Header Area -->
+
+<!-- Start Navbar Area -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light py-2" id="navbar">
+    <div class="container-nav"><!-- Changed from container-fluid to container -->
+        <!-- Logo -->
+        <img src="assets/img/logo_necn.png" alt="Logo" height="100" width="200">
+
+        <!-- Toggler for mobile -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navbar Items -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <!-- Home -->
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link active">Home</a>
+                </li>
+
+                <!-- Placements -->
+                <li class="nav-item">
+                    <a class="nav-link" href="companies.html">
+                        Companies
+                    </a>
+                    
+                </li>
+
+                <!-- Events -->
+                <li class="nav-item">
+                    <a href="events.html" class="nav-link">Events</a>
+                </li>
+
+                <!-- Contact -->
+                <li class="nav-item">
+                    <a href="contact.html" class="nav-link">Contact Us</a>
+                </li>
+
+                <!-- Login -->
+                <li class="nav-item dropdown">
+                   
+    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+        Login
+    </a>
+    <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="login-student.html">🎓 Student Login</a></li>
+        <li><a class="dropdown-item" href="login-faculty.html">👨‍🏫 Faculty Login</a></li>
+        <li><a class="dropdown-item" href="login-admin.html">👨‍💼 Admin Login</a></li>
+    </ul>
+</li>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+    <div class="responsive-navbar offcanvas offcanvas-end border-0" data-bs-backdrop="static" tabindex="-1" id="navbarOffcanvas">
+        <div class="offcanvas-header">
+            <a href="index.html" class="logo d-inline-block">
+                <img src="assets/img/logo_necn.jpg" alt="logo" style="height:60px; max-width:100%;">
+            </a>
+            <button type="button" class="close-btn bg-transparent position-relative lh-1 p-0 border-0" data-bs-dismiss="offcanvas" aria-label="Close">
+                <i class="ri-close-fill"></i>
+            </button>
+        </div>
+        <div class="offcanvas-body">
+            <ul class="responsive-menu">
+                <li class="responsive-menu-list"><a href="index.html">Home</a></li>
+
+                <li class="responsive-menu-list">
+                    <a href="javascript:void(0);">Placements</a>
+                    <ul class="responsive-menu-items">
+                        <li><a href="announcements.html" class="nav-link">Announcements</a></li>
+                        <li><a href="companies.html" class="nav-link">Companies</a></li>
+                    </ul>
+                </li>
+
+                <li class="responsive-menu-list active">
+                <a href="events.html" class="active">Events</a>
+            </li>
+
+                <li class="responsive-menu-list"><a href="contact.html">Contact Us</a></li>
+
+                <li class="responsive-menu-list">
+                    <a href="javascript:void(0);">Login</a>
+                    <ul class="responsive-menu-items">
+                        <li><a href="login-student.html" class="nav-link">Student Login</a></li>
+                        <li><a href="login-faculty.html" class="nav-link">Faculty Login</a></li>
+                        <li><a href="login-admin.html" class="nav-link">Admin Login</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <div class="others-option d-md-flex align-items-center mt-3">
+                <div class="option-item">
+                    <a class="text-decoration-none default-btn" href="contact.html">
+                        Contact Us <i class="flaticon-right-arrow"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="pages-banner-area">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="pages-title">
+                        <h2>All Events</h2>
+                        <ul class="list-unstyled ps-0 mb-0">
+                            <li class="d-inline-block">
+                                <a class="text-decoration-none" href="index-2.html">
+                                    Home
+                                </a>
+                            </li>
+                            <li class="d-inline-block">
+                                All Events
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="pages-image">
+                        <img src="assets/img/pages/pages5.jpeg" alt="pages-image">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="shape-7">
+            <img src="assets/img/shape/shape-7.png" alt="shape">
+        </div>
+    </div>
+    <div class="event-area pt-40 pb-45">
+        <div class="container">
+            <div class="section-title text-center m-auto" data-cues="slideInUp">
+                <h2>Upcoming Placement Events</h2>
+            </div>
+            <div class="row justify-content-center" data-cues="slideInUp">
+                <div class="col-lg-4 col-md-6">
+                    <div class="single-events-card pages-style">
+                        <a class="text-decoration-none d-block image" href="event-details.html">
+                            <img src="assets/img/pages/pages7.jpg" alt="events-image">
+                        </a>
+                        <div class="content d-flex align-items-top">
+                            <div class="date">
+                                <h2>24</h2>
+                                <span>Jan</span>
+                            </div>
+                            <div class="title">
+                                <h3>
+                                    <a class="text-decoration-none" href="event-details.html">CodeSpark Hackathon: Build the Future</a>
+                                </h3>
+                                <span class="d-block mt-2" style="font-size: 14px; color: #555;">
+                                    <strong>Eligibility:</strong> B.Tech/M.Tech (CSE, IT, ECE)
+                                </span>
+                                <span class="d-block" style="font-size: 14px; color: #555;">
+                                    <strong>Years:</strong> 3rd and 4th Year Students
+                                </span>
+                                <span class="d-flex align-items-center mt-2">
+                                    <i class="ri-calendar-line"></i>
+                                    09:00 AM - 05:00 PM
+                                </span>
+                                <span class="d-flex align-items-center">
+                                    <i class="ri-map-pin-line"></i>
+                                    NECN Incubation Center
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="single-events-card pages-style">
+                        <a class="text-decoration-none d-block image" href="event-details.html">
+                            <img src="assets/img/pages/pages6.jpeg" alt="events-image">
+                        </a>
+                        <div class="content d-flex align-items-top">
+                            <div class="date">
+                                <h2>26</h2>
+                                <span>Jan</span>
+                            </div>
+                            <div class="title">
+                                <h3>
+                                    <a class="text-decoration-none" href="event-details.html">Industry Trends & Future Career Paths Seminar</a>
+                                </h3>
+                                <span class="d-block mt-2" style="font-size: 14px; color: #555;">
+                                    <strong>Eligibility:</strong> All B.Tech/M.Tech Branches
+                                </span>
+                                <span class="d-block" style="font-size: 14px; color: #555;">
+                                    <strong>Years:</strong> 2nd and 3rd Year Students
+                                </span>
+                                <span class="d-flex align-items-center mt-2">
+                                    <i class="ri-calendar-line"></i>
+                                    10:00 AM - 12:00 PM
+                                </span>
+                                <span class="d-flex align-items-center">
+                                    <i class="ri-map-pin-line"></i>
+                                    Auditorium, NECN Campus
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="single-events-card pages-style">
+                        <a class="text-decoration-none d-block image" href="event-details.html">
+                            <img src="assets/img/pages/pages8.png" alt="events-image">
+                        </a>
+                        <div class="content d-flex align-items-top">
+                            <div class="date">
+                                <h2>14</h2>
+                                <span>Apr</span>
+                            </div>
+                            <div class="title">
+                                <h3>
+                                    <a class="text-decoration-none" href="event-details.html">Advanced Python for Data Science Workshop</a>
+                                </h3>
+                                <span class="d-block mt-2" style="font-size: 14px; color: #555;">
+                                    <strong>Eligibility:</strong> B.Tech (CSE, IT, EEE)
+                                </span>
+                                <span class="d-block" style="font-size: 14px; color: #555;">
+                                    <strong>Years:</strong> 3rd Year Students
+                                </span>
+                                <span class="d-flex align-items-center mt-2">
+                                    <i class="ri-calendar-line"></i>
+                                    02:00 PM - 04:00 PM
+                                </span>
+                                <span class="d-flex align-items-center">
+                                    <i class="ri-map-pin-line"></i>
+                                    CSE Lab, Academic Block
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="single-events-card pages-style">
+                        <a class="text-decoration-none d-block image" href="event-details.html">
+                            <img src="assets/img/pages/pages9.webp" alt="events-image">
+                        </a>
+                        <div class="content d-flex align-items-top">
+                            <div class="date">
+                                <h2>10</h2>
+                                <span>Dec</span>
+                            </div>
+                            <div class="title">
+                                <h3>
+                                    <a class="text-decoration-none" href="event-details.html">Mock Interview & Resume Building Drive</a>
+                                </h3>
+                                <span class="d-block mt-2" style="font-size: 14px; color: #555;">
+                                    <strong>Eligibility:</strong> All Branches
+                                </span>
+                                <span class="d-block" style="font-size: 14px; color: #555;">
+                                    <strong>Years:</strong> Final Year Students
+                                </span>
+                                <span class="d-flex align-items-center mt-2">
+                                    <i class="ri-calendar-line"></i>
+                                    09:30 AM - 01:00 PM
+                                </span>
+                                <span class="d-flex align-items-center">
+                                    <i class="ri-map-pin-line"></i>
+                                    Placement Cell Office
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="single-events-card pages-style">
+                        <a class="text-decoration-none d-block image" href="event-details.html">
+                            <img src="assets/img/pages/pages10.webp" alt="events-image">
+                        </a>
+                        <div class="content d-flex align-items-top">
+                            <div class="date">
+                                <h2>24</h2>
+                                <span>Jan</span>
+                            </div>
+                            <div class="title">
+                                <h3>
+                                    <a class="text-decoration-none" href="event-details.html">Startup Ecosystem: A Talk by Alumni Entrepreneurs</a>
+                                </h3>
+                                <span class="d-block mt-2" style="font-size: 14px; color: #555;">
+                                    <strong>Eligibility:</strong> All Students
+                                </span>
+                                <span class="d-block" style="font-size: 14px; color: #555;">
+                                    <strong>Years:</strong> All Years
+                                </span>
+                                <span class="d-flex align-items-center mt-2">
+                                    <i class="ri-calendar-line"></i>
+                                    04:00 PM - 05:30 PM
+                                </span>
+                                <span class="d-flex align-items-center">
+                                    <i class="ri-map-pin-line"></i>
+                                    Seminar Hall
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="single-events-card pages-style">
+                        <a class="text-decoration-none d-block image" href="event-details.html">
+                            <img src="assets/img/events/events-6.jpg" alt="events-image">
+                        </a>
+                        <div class="content d-flex align-items-top">
+                            <div class="date">
+                                <h2>21</h2>
+                                <span>Jun</span>
+                            </div>
+                            <div class="title">
+                                <h3>
+                                    <a class="text-decoration-none" href="event-details.html">Mastering the Art of Group Discussions (GD)</a>
+                                </h3>
+                                <span class="d-block mt-2" style="font-size: 14px; color: #555;">
+                                    <strong>Eligibility:</strong> All Branches
+                                </span>
+                                <span class="d-block" style="font-size: 14px; color: #555;">
+                                    <strong>Years:</strong> 3rd and 4th Year Students
+                                </span>
+                                <span class="d-flex align-items-center mt-2">
+                                    <i class="ri-calendar-line"></i>
+                                    11:00 AM - 01:00 PM
+                                </span>
+                                <span class="d-flex align-items-center">
+                                    <i class="ri-map-pin-line"></i>
+                                    MBA Block Conference Room
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="single-events-card pages-style">
+                        <a class="text-decoration-none d-block image" href="event-details.html">
+                            <img src="assets/img/pages/pages12.jpg" alt="events-image">
+                        </a>
+                        <div class="content d-flex align-items-top">
+                            <div class="date">
+                                <h2>08</h2>
+                                <span>Apr</span>
+                            </div>
+                            <div class="title">
+                                <h3>
+                                    <a class="text-decoration-none" href="event-details.html">Future of AI and Machine Learning in Tech Jobs</a>
+                                </h3>
+                                <span class="d-block mt-2" style="font-size: 14px; color: #555;">
+                                    <strong>Eligibility:</strong> B.Tech/M.Tech (CSE, IT, ECE)
+                                </span>
+                                <span class="d-block" style="font-size: 14px; color: #555;">
+                                    <strong>Years:</strong> All Years
+                                </span>
+                                <span class="d-flex align-items-center mt-2">
+                                    <i class="ri-calendar-line"></i>
+                                    03:00 PM - 05:00 PM
+                                </span>
+                                <span class="d-flex align-items-center">
+                                    <i class="ri-map-pin-line"></i>
+                                    Digital Learning Center
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="single-events-card pages-style">
+                        <a class="text-decoration-none d-block image" href="event-details.html">
+                            <img src="assets/img/pages/pages13.jpg" alt="events-image">
+                        </a>
+                        <div class="content d-flex align-items-top">
+                            <div class="date">
+                                <h2>18</h2>
+                                <span>Jul</span>
+                            </div>
+                            <div class="title">
+                                <h3>
+                                    <a class="text-decoration-none" href="event-details.html">Core Sector Placements: Strategy and Preparation</a>
+                                </h3>
+                                <span class="d-block mt-2" style="font-size: 14px; color: #555;">
+                                    <strong>Eligibility:</strong> B.Tech (MECH, CIVIL, EEE)
+                                </span>
+                                <span class="d-block" style="font-size: 14px; color: #555;">
+                                    <strong>Years:</strong> 4th Year Students
+                                </span>
+                                <span class="d-flex align-items-center mt-2">
+                                    <i class="ri-calendar-line"></i>
+                                    10:30 AM - 12:30 PM
+                                </span>
+                                <span class="d-flex align-items-center">
+                                    <i class="ri-map-pin-line"></i>
+                                    Mechanical Dept Hall
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="single-events-card pages-style">
+                        <a class="text-decoration-none d-block image" href="event-details.html">
+                            <img src="assets/img/pages/pages14.jpg" alt="events-image">
+                        </a>
+                        <div class="content d-flex align-items-top">
+                            <div class="date">
+                                <h2>14</h2>
+                                <span>Apr</span>
+                            </div>
+                            <div class="title">
+                                <h3>
+                                    <a class="text-decoration-none" href="event-details.html">Crafting a Winning Resume and LinkedIn Profile</a>
+                                </h3>
+                                <span class="d-block mt-2" style="font-size: 14px; color: #555;">
+                                    <strong>Eligibility:</strong> All Branches
+                                </span>
+                                <span class="d-block" style="font-size: 14px; color: #555;">
+                                    <strong>Years:</strong> 2nd, 3rd and 4th Year Students
+                                </span>
+                                <span class="d-flex align-items-center mt-2">
+                                    <i class="ri-calendar-line"></i>
+                                    01:30 PM - 03:30 PM
+                                </span>
+                                <span class="d-flex align-items-center">
+                                    <i class="ri-map-pin-line"></i>
+                                    Library Conference Hall
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Placement & Career Insights Area -->
+
+    <div class="footer-area admin-unified-footer">
+	<div class="footer-container">
+		<div class="row g-3">
+
+    <!-- About -->
+    <div class="col-lg-4 col-md-12">
+        <div class="single-footer-widget about">
+            <h3>About NEC Placement Cell</h3>
+
+            <p style="text-align:justify;">
+                The NEC Placement Cell is the Training, Placement, and Career Development center of Narayana Engineering College. The cell plays a crucial role in guiding students towards successful careers by connecting them with leading companies and industry opportunities. It acts as a bridge between students and recruiters by organizing campus recruitment drives, career counseling sessions, and industry interaction programs.
+            </p>
+        </div>
+        <h6 class="mt-3">Follow NEC:</h6>
+
+					<ul class="list-unstyled ps-0 mb-0 social-link">
+						<li class="d-inline-block">
+							<a href="https://www.facebook.com/" target="_blank">
+								<i class="flaticon-facebook-app-symbol"></i>
+							</a>
+						</li>
+
+						<li class="d-inline-block">
+							<a href="https://www.pinterest.com/" target="_blank">
+								<i class="flaticon-pinterest"></i>
+							</a>
+						</li>
+
+						<li class="d-inline-block">
+							<a href="https://www.instagram.com/" target="_blank">
+								<i class="flaticon-instagram"></i>
+							</a>
+						</li>
+
+						<li class="d-inline-block">
+							<a href="https://twitter.com/" target="_blank">
+								<i class="flaticon-twitter"></i>
+							</a>
+						</li>
+					</ul>
+    </div>
+
+    <!-- Nellore Campus -->
+    <div class="col-lg-3 offset-lg-1 col-md-6">
+        <div class="single-footer-widget contact">
+            <h3>Nellore Campus</h3>
+
+            <p>
+                <i class="flaticon-placeholder"></i><br>
+                Narayana Engineering College<br>
+                NH-16, Muthukur Road,<br>
+                Nellore, Andhra Pradesh – 524003
+            </p>
+
+            <p>
+                <i class="ri-phone-line"></i> +91 99999 99999
+            </p>
+
+            <p>
+                <i class="ri-message-line"></i> narayanacollege@necn.ac.in
+            </p>
+        </div>
+    </div>
+
+    <!-- Gudur Campus -->
+    <div class="col-lg-4 col-md-6">
+        <div class="single-footer-widget contact">
+            <h3>Gudur Campus</h3>
+
+            <p>
+                <i class="flaticon-placeholder"></i><br>
+                Narayana Engineering College<br>
+                Gudur, Tirupati District,<br>
+                Andhra Pradesh
+            </p>
+            <p>
+                <i class="ri-phone-line"></i> +91 99999 99999
+            </p>
+
+            <p>
+                <i class="ri-message-line"></i> narayanacollege@necg.ac.in
+            </p>
+        </div>
+    </div>
+
+</div>
+
+		</div>
+
+		<!-- Bottom -->
+		<div class="footer-bottom d-flex flex-column flex-md-row align-items-center justify-content-between pt-2 mt-3 border-top border-light">
+
+			<div class="d-flex align-items-center">
+				<img src="assets/img/crop_nec.png" alt="NEC Placement Cell" width="56" height="40">
+
+				<span class="ms-2">
+					&copy; <span id="footerYear"></span> NEC Training & Placement Cell,
+					Narayana Engineering College. All Rights Reserved.
+				</span>
+                
+
+			</div>
+            
+
+		</div>
+
+	</div>
+</div>
+    <button type="button" id="back-to-top"><i class="ri-arrow-up-double-fill"></i></button>
+
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/swiper-bundle.min.js"></script>
+    <script src="assets/js/fslightbox.js"></script>
+    <script src="assets/js/scrollCue.min.js"></script>
+    <script src="assets/js/custom.js"></script>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let currentPage = window.location.pathname.split("/").pop() || "index.html";
+        
+        // Fix for index.html vs index-2.html in the second HTML structure
+        if (currentPage === "events.html") {
+            // Desktop Menu
+            document.querySelectorAll(".navbar-nav .nav-link").forEach(link => {
+                link.classList.remove("active");
+            });
+            document.querySelector('.navbar-nav .nav-link[href="events.html"]').classList.add("active");
+            
+            // Mobile Menu
+            document.querySelectorAll(".responsive-menu a").forEach(link => {
+                link.classList.remove("active");
+                link.closest(".responsive-menu-list")?.classList.remove("active");
+            });
+            document.querySelector('.responsive-menu a[href="events.html"]').classList.add("active");
+            document.querySelector('.responsive-menu a[href="events.html"]').closest(".responsive-menu-list").classList.add("active");
+        } else {
+            // General logic for other pages
+            document.querySelectorAll(".navbar-nav .nav-link").forEach(link => {
+                if (link.getAttribute("href") === currentPage) {
+                    link.classList.add("active");
+                }
+            });
+
+            document.querySelectorAll(".responsive-menu a").forEach(link => {
+                if (link.getAttribute("href") === currentPage) {
+                    link.classList.add("active");
+                    let parent = link.closest(".responsive-menu-list");
+                    if (parent) parent.classList.add("active");
+                }
+            });
+        }
+    });
+    </script>
+</body>
+</html>0

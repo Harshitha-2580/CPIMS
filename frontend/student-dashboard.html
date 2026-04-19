@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEC - Student Dashboard</title>
+
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+  <link rel="stylesheet" href="assets/css/scrollCue.css">
+  <link rel="stylesheet" href="assets/css/remixicon.css">
+  <link rel="stylesheet" href="assets/css/flaticon.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/admin-theme.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+  <link href="assets/img/crop_nec.png" type="image/x-icon" rel="icon">
+
+  <style>
+    :root {
+      --primaryColor: #001e43;
+      --secenderyColor: #002a5c;
+      --darkColor: rgb(0, 30, 67);
+      --accentColor: #003580;
+      --gradientPrimary: linear-gradient(135deg, #001e43, #002a5c);
+      --gradientSecondary: linear-gradient(135deg, #002a5c, #003580);
+    }
+
+    body {
+      padding-top: 0;
+      background: linear-gradient(135deg, #f8f9fa 0%, #f0f2f5 100%);
+      overflow-x: hidden;
+    }
+
+    .navbar .dropdown-menu .dropdown-item:hover {
+      color: var(--primaryColor) !important;
+    }
+
+    html { 
+      overflow-x: hidden; 
+    }
+
+    /* Welcome Banner Section */
+    .student-welcome-banner {
+      background: var(--gradientPrimary);
+      padding: 52px 0 36px;
+      color: white;
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px var(--shadowColor);
+      animation: bannerSlideIn 0.8s ease-out;
+    }
+
+    .student-welcome-banner::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+      animation: shimmer 4s infinite;
+    }
+
+    .student-welcome-banner::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: var(--gradientSecondary);
+      animation: borderGlow 3s ease-in-out infinite alternate;
+    }
+
+    .student-welcome-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+
+    .student-welcome-title {
+      font-size: 48px;
+      font-weight: 800;
+      margin-bottom: 15px;
+      animation: titleFadeIn 1s ease-out;
+      color: #ffffff;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      letter-spacing: -1px;
+    }
+
+    .student-welcome-subtitle {
+      font-size: 20px;
+      opacity: 0.95;
+      animation: subtitleFadeIn 1s ease-out 0.3s backwards;
+      color: #ffffff;
+      font-weight: 400;
+      margin-bottom: 30px;
+    }
+
+    @keyframes bannerSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes titleFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes subtitleFadeIn {
+      from {
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes shimmer {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+
+    /* Cards Container */
+    .dashboard-cards-container {
+      padding: 34px 0;
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      min-height: 100vh;
+    }
+
+    .dashboard-cards-container .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 12px;
+    }
+
+    .dashboard-section-title {
+      text-align: center;
+      margin-bottom: 50px;
+      animation: fadeInDown 0.8s ease-out;
+    }
+
+    .dashboard-section-title h2 {
+      color: var(--darkColor);
+      font-weight: 800;
+      font-size: 36px;
+      position: relative;
+      padding-bottom: 20px;
+      margin-bottom: 15px;
+    }
+
+    .dashboard-section-title h2::after {
+      content: '';
+      position: absolute;
+      width: 100px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primaryColor), var(--secenderyColor));
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 2px;
+    }
+
+    /* Single Card */
+    .dashboard-card {
+      background: #fff;
+      padding: 35px;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+      border: 2px solid transparent;
+      position: relative;
+      overflow: hidden;
+      animation: cardFadeInUp 0.6s ease-out backwards;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .dashboard-card .card-content {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .dashboard-card .card-body-content {
+      flex-grow: 1;
+    }
+
+    .dashboard-card .card-footer-btn {
+      margin-top: auto;
+      padding-top: 20px;
+    }
+
+    .dashboard-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primaryColor), var(--secenderyColor));
+      transition: left 0.4s ease;
+    }
+
+    .dashboard-card:hover::before {
+      left: 0;
+    }
+
+    .dashboard-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 40px rgba(0, 30, 67, 0.15);
+      border-color: rgba(0, 30, 67, 0.2);
+    }
+
+    .dashboard-card:nth-child(1) { animation-delay: 0.1s; }
+    .dashboard-card:nth-child(2) { animation-delay: 0.2s; }
+    .dashboard-card:nth-child(3) { animation-delay: 0.3s; }
+
+    @keyframes cardFadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Full Width Card */
+    .dashboard-card-full {
+      background: #fff;
+      padding: 35px;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      width: 100%;
+      cursor: pointer;
+      border: 2px solid transparent;
+      position: relative;
+      overflow: hidden;
+      animation: cardFadeInUp 0.6s ease-out 0.4s backwards;
+    }
+
+    .dashboard-card-full::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primaryColor), var(--secenderyColor));
+      transition: left 0.4s ease;
+    }
+
+    .dashboard-card-full:hover::before {
+      left: 0;
+    }
+
+    .dashboard-card-full:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 40px rgba(0, 30, 67, 0.15);
+      border-color: rgba(0, 30, 67, 0.2);
+    }
+
+    .dashboard-card h4 {
+      color: var(--darkColor);
+      font-weight: 700;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .dashboard-card h4 i {
+      color: var(--primaryColor);
+      font-size: 24px;
+    }
+
+    .status-listing { 
+      list-style: none; 
+      padding: 0; 
+    }
+
+    .status-listing li {
+      padding: 10px 0;
+      border-bottom: 1px dashed #eee;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .status-badge { 
+      font-size: 0.85rem; 
+      padding: 4px 8px; 
+      border-radius: 5px; 
+    }
+    
+    .event-box {
+      border: 2px solid #f0f0f0;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+      border-left: 4px solid var(--primaryColor);
+      transition: all 0.3s ease;
+      animation: eventSlideIn 0.5s ease-out backwards;
+    }
+    
+    .event-box:hover {
+      box-shadow: 0 6px 20px rgba(0, 30, 67, 0.15);
+      transform: translateY(-2px);
+      border-left-color: var(--accentColor);
+    }
+    
+    .event-box p { margin: 6px 0; }
+    .event-box .event-title { color: var(--primaryColor); font-weight: 700; }
+    .event-box .event-meta { color: #666; font-size: 0.9rem; }
+    
+    .event-box:nth-child(1) { animation-delay: 0.1s; }
+    .event-box:nth-child(2) { animation-delay: 0.2s; }
+    .event-box:nth-child(3) { animation-delay: 0.3s; }
+      .event-box:nth-child(4) { animation-delay: 0.4s; }
+      .event-box:nth-child(5) { animation-delay: 0.5s; }
+    
+    @keyframes eventSlideIn {
+      from {
+        opacity: 0;
+        transform: translateX(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    .empty-events {
+      text-align: center;
+      padding: 20px;
+      color: #999;
+      font-style: italic;
+    }
+
+    .assigned-to-me-card {
+      background: var(--gradientPrimary);
+      border-left: 5px solid var(--accentColor);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      animation: cardFadeInUp 0.6s ease-out 0.5s backwards;
+      padding: 35px;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0, 30, 67, 0.2);
+      position: relative;
+      overflow: hidden;
+      color: white;
+    }
+
+    .assigned-to-me-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primaryColor), var(--darkColor));
+      transition: left 0.4s ease;
+    }
+
+    .assigned-to-me-card:hover::before {
+      left: 0;
+    }
+
+    .assigned-to-me-card:hover {
+      box-shadow: 0 15px 40px rgba(0, 30, 67, 0.35) !important;
+      transform: translateY(-10px);
+    }
+
+    .assigned-to-me-card h4 {
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 1.4rem;
+    }
+
+    .assigned-to-me-card p {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 15px;
+    }
+
+    .assigned-to-me-card .icon-placeholder {
+      font-size: 80px;
+      opacity: 0.1;
+      transition: all 0.3s ease;
+    }
+
+    .assigned-to-me-card .assigned-cta-btn {
+      background: #ffffff !important;
+      color: #001e43 !important;
+      border: 1px solid rgba(255, 255, 255, 0.85) !important;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+    }
+
+    .assigned-to-me-card .assigned-cta-btn i {
+      color: #001e43 !important;
+    }
+
+    .assigned-to-me-card .assigned-cta-btn:hover {
+      background: #f7fbff !important;
+      color: #001e43 !important;
+      transform: translateY(-1px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16);
+    }
+
+    .assigned-to-me-card:hover .icon-placeholder {
+      opacity: 0.15;
+      transform: scale(1.1);
+    }
+
+    /* Notification Bell */
+    .notification-wrapper {
+      position: fixed !important;
+      top: 20px !important;
+      right: 30px !important;
+      z-index: 10050;
+      margin: 0 !important;
+      padding: 0 !important;
+      display: block !important;
+    }
+
+    .notification-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1px solid #e5e7eb;
+      background: #ffffff;
+      color: var(--darkColor);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 12px rgba(0, 30, 67, 0.08);
+    }
+
+    .notification-btn:hover {
+      transform: translateY(-1px);
+      color: var(--primaryColor);
+      box-shadow: 0 6px 16px rgba(0, 30, 67, 0.18);
+      border-color: rgba(0, 30, 67, 0.3);
+    }
+
+    .notification-count {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      min-width: 20px;
+      height: 20px;
+      border-radius: 999px;
+      background: var(--primaryColor);
+      color: #fff;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 0 6px;
+      border: 2px solid #fff;
+      line-height: 1;
+    }
+
+    .notification-panel {
+      position: absolute;
+      top: calc(100% + 12px);
+      right: 0;
+      width: min(420px, 92vw);
+      max-height: 460px;
+      overflow: auto;
+      background: #ffffff;
+      border: 1px solid #e9ecef;
+      border-radius: 12px;
+      box-shadow: 0 20px 40px rgba(0, 30, 67, 0.2);
+      z-index: 9999;
+      display: none;
+    }
+
+    .notification-panel-header {
+      padding: 14px 16px;
+      border-bottom: 1px solid #f1f3f5;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(135deg, #f8f9fa, #ffffff);
+    }
+
+    .notification-panel-header h6 {
+      margin: 0;
+      color: var(--darkColor);
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    .notification-list {
+      padding: 8px;
+    }
+
+    .notification-item {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      border-radius: 10px;
+      padding: 12px;
+      transition: all 0.2s ease;
+      border: 1px solid transparent;
+      margin-bottom: 8px;
+      background: #fff;
+    }
+
+    .notification-item:hover {
+      background: #f8f9ff;
+      border-color: #e5e7ff;
+      transform: translateX(2px);
+    }
+
+    .notification-item.unread {
+      background: #eef3ff;
+      border-color: #d7e6ff;
+    }
+
+    .notification-item-title {
+      font-weight: 700;
+      color: var(--darkColor);
+      margin-bottom: 4px;
+      font-size: 14px;
+    }
+
+    .notification-item-msg {
+      margin: 0;
+      color: #5f6773;
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .notification-item-meta {
+      margin-top: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: #8a9099;
+    }
+
+    .notification-badge-type {
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .type-assigned {
+      background: #e9f8ef;
+      color: #1f9254;
+    }
+
+    .type-regular {
+      background: #eef2ff;
+      color: #3f51b5;
+    }
+
+    .notification-empty {
+      padding: 24px 16px;
+      text-align: center;
+      color: #6c757d;
+      font-size: 14px;
+    }
+
+    @media (max-width: 991px) {
+      .notification-wrapper {
+        top: 20px;
+        right: 20px !important;
+      }
+
+      .notification-panel {
+        right: 0;
+        left: auto;
+      }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="main-content-wrapper" id="mainContentWrapper">
+    <!-- Header -->
+    <div class="top-header-area style-2">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-12 text-center">
+                    <h3 class="mb-0" style="color: #fff; font-weight: 700; letter-spacing: 1px; line-height: 1.4; font-size: 26px;">
+                        <span style="font-family: 'Poppins'; font-size: 36px; font-weight: 700;">NEC</span> – Central Placement Information and Management Center
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  <div class="header-welcome-gap" aria-hidden="true"></div>
+
+  <!-- Page Summary Hero -->
+  <div class="student-page-hero">
+    <div class="container">
+      <div class="student-page-hero-content">
+        <h1 class="student-page-hero-title">Welcome Back, <span id="studentNameBanner">Student</span>!</h1>
+        <p class="student-page-hero-subtitle">Your Personalized Placement Hub - Explore Opportunities & Track Your Progress</p>
+      </div>
+    </div>
+  </div>
+
+    <!-- Dashboard Content -->
+  <div class="dashboard-cards-container">
+    <div class="container">
+     
+      <!-- Cards Row 1: Applications & Events -->
+      <div class="row mb-4">
+        <div class="col-lg-6 mb-4">
+          <div class="dashboard-card student-summary-box">
+            <h4 class="mb-3"><i class="ri-briefcase-line"></i> Application Status Overview</h4>
+            <div class="card-body-content">
+              <ul class="status-listing" id="applicationList">
+                <li>Loading applications...</li>
+              </ul>
+            </div>
+            <div class="card-footer-btn text-center">
+              <a href="student-my-applications.html" class="default-btn border-0 btn-sm admin-btn">View All Applications <i class="flaticon-right-arrow"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Events -->
+        <div class="col-lg-6 mb-4">
+          <div class="dashboard-card student-summary-box">
+            <h4 class="mb-3"><i class="ri-calendar-event-line"></i> Your Upcoming Events</h4>
+            <div class="card-body-content">
+              <div id="upcomingEventsContainer">
+                <div class="empty-events">Loading events...</div>
+              </div>
+            </div>
+            <div class="card-footer-btn text-center">
+              <a href="student-events.html" class="default-btn border-0 btn-sm admin-btn">View All Events <i class="flaticon-right-arrow"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Assigned to Me Section -->
+      <div class="row mt-4">
+        <div class="col-lg-12 mb-4">
+          <div class="dashboard-card-full student-summary-box assigned-to-me-card" onclick="window.location.href='student-assigned-opportunities.html'" style="cursor: pointer;">
+            <div class="d-flex justify-content-between align-items-start">
+              <div class="flex-grow-1">
+                <h4 class="mb-2"><i class="ri-star-smile-line me-2"></i> Opportunities Assigned to You</h4>
+                <p class="mb-3">View internships and placements specifically assigned to you by the placement cell. Click to explore your personalized opportunities.</p>
+                <div class="mt-3">
+                  <button class="default-btn border-0 btn-sm admin-btn assigned-cta-btn" style="cursor: pointer; pointer-events: none;">
+                    View Your Assignments <i class="flaticon-right-arrow"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="icon-placeholder ms-3">
+                <i class="ri-briefcase-4-line"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer injected via admin-footer.js -->
+  <div id="adminFooterPlaceholder"></div>
+
+  <button type="button" id="back-to-top">
+    <i class="ri-arrow-up-double-fill"></i>
+  </button>
+
+    <!-- Notification Bell (Dashboard) -->
+    <div class="notification-wrapper" id="notificationWrapper">
+      <button class="notification-btn" id="notificationBtn" type="button" aria-label="Notifications">
+        <i class="ri-notification-3-line" aria-hidden="true"></i>
+        <span class="notification-count" id="notificationCount" aria-label="Unread notifications"></span>
+      </button>
+      <div class="notification-panel" id="notificationPanel" role="dialog" aria-label="Notifications">
+        <div class="notification-panel-header">
+          <h6>Notifications</h6>
+          <span id="notificationHeaderMeta">All caught up</span>
+        </div>
+        <div class="notification-list" id="notificationList"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="assets/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/scrollCue.min.js"></script>
+  <script>
+    let opportunityNotifications = [];
+
+    function getReadNotificationIds(studentId) {
+      const key = `student_notifications_read_${studentId}`;
+      try {
+        const parsed = JSON.parse(localStorage.getItem(key) || '[]');
+        return Array.isArray(parsed) ? parsed : [];
+      } catch {
+        return [];
+      }
+    }
+
+    function setReadNotificationIds(studentId, ids) {
+      const key = `student_notifications_read_${studentId}`;
+      localStorage.setItem(key, JSON.stringify(ids));
+    }
+
+    function formatNotificationTime(value) {
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) return 'Now';
+      return date.toLocaleString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    }
+
+    function renderNotifications(studentId) {
+      const list = document.getElementById('notificationList');
+      const counter = document.getElementById('notificationCount');
+      const meta = document.getElementById('notificationHeaderMeta');
+      if (!list || !counter || !meta) return; // Nothing to render if notification UI isn't present
+      const readIds = getReadNotificationIds(studentId);
+
+      const unreadNotifications = opportunityNotifications.filter(n => !readIds.includes(n.id));
+      const unreadCount = unreadNotifications.length;
+
+      if (unreadCount > 0) {
+        counter.style.display = 'flex';
+        counter.textContent = unreadCount > 99 ? '99+' : String(unreadCount);
+      } else {
+        counter.style.display = 'none';
+      }
+
+      meta.textContent = unreadCount > 0 ? `${unreadCount} unread` : 'All caught up';
+
+      if (!opportunityNotifications.length) {
+        list.innerHTML = '<div class="notification-empty">No notifications yet.</div>';
+        return;
+      }
+
+      list.innerHTML = opportunityNotifications.map(item => {
+        const unread = !readIds.includes(item.id);
+        const typeClass = item.isAssigned ? 'type-assigned' : 'type-regular';
+        const typeLabel = item.isAssigned ? 'Assigned' : 'New';
+        return `
+          <a href="${item.targetUrl}" class="notification-item ${unread ? 'unread' : ''}" data-notification-id="${item.id}">
+            <div class="notification-item-title">${item.title}</div>
+            <p class="notification-item-msg">${item.message}</p>
+            <div class="notification-item-meta">
+              <span>${formatNotificationTime(item.createdAt)}</span>
+              <span class="notification-badge-type ${typeClass}">${typeLabel}</span>
+            </div>
+          </a>
+        `;
+      }).join('');
+
+      // Mark single notification as read on click.
+      list.querySelectorAll('.notification-item').forEach(anchor => {
+        anchor.addEventListener('click', () => {
+          const id = anchor.getAttribute('data-notification-id');
+          const updatedRead = Array.from(new Set([...readIds, id]));
+          setReadNotificationIds(studentId, updatedRead);
+        });
+      });
+    }
+
+    async function loadOpportunityNotifications(studentId) {
+      try {
+        const res = await fetch(`/api/opportunities/notifications/${studentId}`);
+        const data = await res.json();
+        opportunityNotifications = data.success && Array.isArray(data.notifications) ? data.notifications : [];
+      } catch (err) {
+        console.error('Error loading notifications:', err);
+        opportunityNotifications = [];
+      }
+
+      renderNotifications(studentId);
+    }
+
+    document.addEventListener("DOMContentLoaded", async () => {
+      try {
+        const studentId = (sessionStorage.getItem("student_id") || localStorage.getItem("student_id"));
+        const studentName = (sessionStorage.getItem("student_name") || localStorage.getItem("student_name"));
+
+        if (!studentId || !studentName) {
+          alert("Session expired! Please log in again.");
+          window.location.href = "login-student.html";
+          return;
+        }
+
+        const list = document.getElementById("applicationList");
+        if (list) {
+          list.innerHTML = '<li style="justify-content:center;color:#999;font-style:italic;">Loading applications...</li>';
+        }
+
+      const studentNameBanner = document.getElementById("studentNameBanner");
+      if (studentNameBanner) {
+        studentNameBanner.textContent = studentName;
+      }
+
+      const notificationBtn = document.getElementById('notificationBtn');
+      const notificationPanel = document.getElementById('notificationPanel');
+
+      // Some pages may not render the notification UI; guard against missing elements.
+      if (notificationBtn && notificationPanel) {
+        notificationBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const isOpen = notificationPanel.style.display === 'block';
+          notificationPanel.style.display = isOpen ? 'none' : 'block';
+
+          // Mark all visible notifications as read when opening panel.
+          if (!isOpen && opportunityNotifications.length) {
+            const allIds = opportunityNotifications.map(item => item.id);
+            setReadNotificationIds(studentId, allIds);
+            renderNotifications(studentId);
+          }
+        });
+
+        document.addEventListener('click', (e) => {
+          if (!notificationPanel.contains(e.target) && e.target !== notificationBtn && !notificationBtn.contains(e.target)) {
+            notificationPanel.style.display = 'none';
+          }
+        });
+      }
+
+      await loadOpportunityNotifications(studentId);
+
+      // Fetch student profile
+      try {
+        const res = await fetch(`/api/student/${studentId}`);
+        const data = await res.json();
+        if (!data.success) console.warn(data.message);
+      } catch (err) {
+        console.error("Error loading student profile:", err);
+      }
+
+      // Fetch recent applications (latest 5) from student_registrations
+      try {
+        const res = await fetch(`/api/student/${studentId}/my-applications?page=1`);
+        const data = await res.json();
+        const list = document.getElementById("applicationList");
+        list.innerHTML = "";
+
+        const statusColors = {
+          applied:     { bg: '#e8f4fd', color: '#0d6efd', border: '#0d6efd' },
+          shortlisted: { bg: '#e8f8ef', color: '#198754', border: '#198754' },
+          selected:    { bg: '#d4edda', color: '#146c43', border: '#146c43' },
+          rejected:    { bg: '#fdecea', color: '#dc3545', border: '#dc3545' }
+        };
+
+        if (data.applications && data.applications.length > 0) {
+          data.applications.slice(0, 5).forEach(app => {
+            const sc = statusColors[app.status] || statusColors.applied;
+            const rawDriveDate = app.drive_date || app.registered_on;
+            const driveDate = rawDriveDate
+              ? new Date(rawDriveDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+              : 'N/A';
+            const typeTag = app.drive_type === 'internship'
+              ? `<span style="font-size:0.75rem;background:#fff3cd;color:#856404;border-radius:4px;padding:1px 6px;margin-left:4px;">Internship</span>`
+              : `<span style="font-size:0.75rem;background:#d1ecf1;color:#0c5460;border-radius:4px;padding:1px 6px;margin-left:4px;">Placement</span>`;
+            const li = document.createElement("li");
+            li.innerHTML = `
+              <div style="flex:1;min-width:0;">
+                <div style="font-weight:700;font-size:0.95rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                  ${app.company_name} ${typeTag}
+                </div>
+                <div style="font-size:0.82rem;color:#888;margin-top:2px;">${app.job_role || 'N/A'} &bull; ${driveDate}</div>
+              </div>
+              <span style="font-size:0.82rem;font-weight:600;padding:3px 10px;border-radius:12px;white-space:nowrap;margin-left:8px;background:${sc.bg};color:${sc.color};border:1px solid ${sc.border};">${app.status.charAt(0).toUpperCase() + app.status.slice(1)}</span>`;
+            list.appendChild(li);
+          });
+        } else {
+          list.innerHTML = '<li style="justify-content:center;color:#999;font-style:italic;">No applications found yet.</li>';
+        }
+      } catch (err) {
+        console.error("Error fetching applications:", err);
+        document.getElementById("applicationList").innerHTML = '<li style="justify-content:center;color:#999;font-style:italic;">Unable to load applications.</li>';
+      }
+
+      // Fetch upcoming events (first 3)
+      try {
+        const res = await fetch(`/api/student/${studentId}/events`);
+        const data = await res.json();
+        const container = document.getElementById("upcomingEventsContainer");
+        container.innerHTML = "";
+
+        if (data.success && data.events && data.events.length > 0) {
+          // Filter out past events (only show events where date >= today)
+          const today = new Date();
+          today.setHours(0, 0, 0, 0); // Set to start of today
+          
+          const futureEvents = data.events.filter(event => {
+            const eventDate = new Date(event.event_date);
+            eventDate.setHours(0, 0, 0, 0); // Compare just the date part
+            return eventDate >= today;
+          });
+          
+          // Get first 5 upcoming events
+          const upcomingEvents = futureEvents.slice(0, 5);
+          
+          if (upcomingEvents.length > 0) {
+            upcomingEvents.forEach(event => {
+              const eventDate = new Date(event.event_date);
+              const dateStr = eventDate.toLocaleDateString('en-US', { 
+                month: 'short', 
+                day: 'numeric', 
+                year: 'numeric' 
+              });
+              const timeStr = eventDate.toLocaleTimeString('en-US', { 
+                hour: '2-digit', 
+                minute: '2-digit',
+                hour12: true 
+              });
+
+              const eventBox = document.createElement("div");
+              eventBox.className = "event-box";
+              eventBox.innerHTML = `
+                <p class="mb-1 event-title"><i class="ri-calendar-2-line me-1"></i> ${event.event_name}</p>
+                <p class="mb-0 event-meta"><i class="ri-time-line me-1"></i> ${dateStr} | ${timeStr}</p>
+                <p class="mb-0 event-meta"><i class="ri-map-pin-line me-1"></i> ${event.location || 'TBA'}</p>
+                <p class="mb-0 event-meta" style="font-size: 0.85rem; color: #999; margin-top: 6px;"><strong>${event.event_type}</strong></p>
+              `;
+              container.appendChild(eventBox);
+            });
+          } else {
+            container.innerHTML = '<div class="empty-events">No upcoming events scheduled yet</div>';
+          }
+        } else {
+          container.innerHTML = '<div class="empty-events">No upcoming events scheduled yet</div>';
+        }
+      } catch (err) {
+        console.error("Error fetching events:", err);
+        document.getElementById("upcomingEventsContainer").innerHTML = '<div class="empty-events">Warning: Unable to load events</div>';
+      }
+
+      // Logout
+      var logoutBtn = document.getElementById("logoutBtn");
+      if (logoutBtn) {
+        logoutBtn.addEventListener("click", () => {
+          localStorage.removeItem("student_id");
+          localStorage.removeItem("student_name");
+          localStorage.removeItem("student_branch");
+          localStorage.removeItem("student_year");
+          window.location.href = "index.html";
+        });
+      }
+    } catch (err) {
+      console.error('Error initializing dashboard page:', err);
+      var list = document.getElementById("applicationList");
+      if (list) list.innerHTML = '<li style="justify-content:center;color:#999;font-style:italic;">Unable to load applications.</li>';
+    }
+    });
+  </script>
+    </div>
+    <script src="assets/js/auth-session-manager.js"></script>
+<script src="assets/js/student-session-bootstrap.js"></script>
+<script src="assets/js/student-sidebar.js?v=20260316"></script>
+    <script src="assets/js/logout-back-guard.js"></script>
+    <script src="assets/js/admin-footer.js"></script>
+    <script>
+      // Set current year in footer
+      const footerYearEl = document.getElementById('footerYear');
+      if (footerYearEl) footerYearEl.textContent = String(new Date().getFullYear());
+    </script>
+</body>
+</html>
+
+
+

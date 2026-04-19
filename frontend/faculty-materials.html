@@ -1,0 +1,1223 @@
+﻿<!DOCTYPE html>
+<html lang="zxx">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEC - Placement Resources</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="assets/css/scrollCue.css">
+    <link rel="stylesheet" href="assets/css/remixicon.css">
+    <link rel="stylesheet" href="assets/css/flaticon.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link href="assets/img/crop_nec.png" type="image/x-icon" rel="icon">
+
+    <style>
+        body {
+            padding-top: 0;
+        }
+
+        #navbar {
+            transition: all 0.3s ease;
+        }
+
+        #navbar.sticky {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1030;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        body.navbar-sticky {
+            padding-top: 90px;
+        }
+
+        .header-welcome-gap {
+            height: 8px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #f0f2f5 100%);
+        }
+
+        .admin-wrapper {
+            padding: 20px 0 24px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #f3f4f6 100%);
+            animation: pageSlideIn 0.6s ease-out;
+        }
+
+        .materials-library-shell {
+            background: rgba(255, 255, 255, 0.72);
+            border: 1px solid rgba(219, 227, 238, 0.9);
+            border-radius: 24px;
+            padding: 18px;
+            box-shadow: 0 20px 45px rgba(0, 30, 67, 0.08);
+            backdrop-filter: blur(10px);
+        }
+
+        @keyframes pageSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes resourceSlideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Module Card Style - Theme Colors */
+        .resource-card {
+            background: #fff;
+            padding: 18px;
+            border-radius: 18px;
+            box-shadow: 0 10px 24px rgba(0, 30, 67, 0.08);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+            height: 100%;
+            border: 1px solid rgba(219, 227, 238, 0.9);
+            position: relative;
+            animation: resourceSlideIn 0.5s ease-out backwards;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .resource-card::before {
+            content: '';
+            position: absolute;
+            inset: 0 auto 0 0;
+            width: 4px;
+            background: linear-gradient(180deg, #001e43, #0d5ec3);
+            border-radius: 18px 0 0 18px;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 16px 32px rgba(0, 30, 67, 0.12);
+            border-color: rgba(13, 94, 195, 0.2);
+        }
+
+        .resource-card .icon-box {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #eef4ff, #f7faff);
+            border: 1px solid #dbe3ee;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: #001e43;
+            margin-bottom: 0;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .resource-card:hover .icon-box {
+            color: #0b4b98;
+            transform: scale(1.06);
+        }
+
+        .resource-card h4 {
+            font-size: 20px;
+            font-weight: 700;
+            color: rgb(0, 30, 67);
+            margin-bottom: 8px;
+            line-height: 1.25;
+            text-transform: capitalize;
+        }
+
+        .resource-card p {
+            font-size: 14px;
+            color: #5f6f84;
+            margin-bottom: 12px;
+        }
+
+        .resource-card-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .resource-card-top-left {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            min-width: 0;
+            flex: 1;
+        }
+
+        .resource-card-heading {
+            min-width: 0;
+        }
+
+        .resource-card-tags {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 0;
+        }
+
+        .resource-card-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #5f6f84;
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .resource-card-meta i {
+            color: #001e43;
+        }
+
+        .resource-card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-top: auto;
+            padding-top: 10px;
+            border-top: 1px solid #edf2f7;
+        }
+
+        .badge-category {
+            font-size: 12px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .badge-category.technical {
+            background-color: #ffe8e8;
+            color: #001e43;
+        }
+
+        .badge-category.aptitude {
+            background-color: #fff4e5;
+            color: #0b4b98;
+        }
+
+        .badge-category.soft {
+            background-color: #e3f2fd;
+            color: rgb(0, 30, 67);
+        }
+
+        .navbar-nav .nav-link.active {
+            color: #001e43 !important;
+            font-weight: bold;
+        }
+
+        /* Upload Button Area */
+        .upload-btn-area {
+            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+            padding: 18px 20px;
+            border-radius: 14px;
+            margin-bottom: 16px;
+            box-shadow: 0px 6px 20px rgba(0,0,0,0.05);
+            border-left: 4px solid #001e43;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        body .faculty-page-overview-wrap {
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+            margin-top: 0 !important;
+        }
+
+        body .faculty-page-overview-box {
+            padding: 52px 0 36px !important;
+            margin-bottom: 24px;
+        }
+
+        .upload-btn-area:hover {
+            box-shadow: 0px 10px 30px rgba(0, 30, 67, 0.12);
+            transform: translateY(-2px);
+        }
+
+        .upload-btn-area h5 {
+            color: rgb(0, 30, 67);
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .upload-btn-area small {
+            color: #999;
+            font-size: 12px;
+        }
+
+        .materials-grid {
+            row-gap: 14px;
+        }
+
+        .resource-file-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #1d9b5f, #17784a);
+            color: #fff;
+            font-size: 12px;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        /* Add Button Styling */
+        .btn-add-resource {
+            background: linear-gradient(135deg, #001e43 0%, #0d5ec3 100%);
+            color: white !important;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0px 4px 15px rgba(0, 30, 67, 0.3);
+        }
+
+        .btn-add-resource:hover {
+            color: #fff !important;
+            transform: translateY(-3px);
+            box-shadow: 0px 8px 25px rgba(0, 30, 67, 0.4);
+            background: linear-gradient(135deg, #0d5ec3 0%, #001e43 100%);
+        }
+
+        .btn-add-resource:active {
+            transform: translateY(-1px);
+        }
+
+        .btn-add-resource i {
+            margin-left: 8px;
+        }
+
+        /* Modal Animations */
+        .modal-content {
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: modalSlideIn 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .modal.fade.show .modal-backdrop {
+            animation: backdropFadeIn 0.3s ease;
+        }
+
+        @keyframes backdropFadeIn {
+            from { opacity: 0; }
+            to { opacity: 0.5; }
+        }
+
+        .modal-header {
+            border-bottom: 2px solid #f0f0f0;
+            padding: 25px !important;
+        }
+
+        .modal-title {
+            color: rgb(0, 30, 67) !important;
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        .form-label {
+            color: rgb(0, 30, 67);
+            margin-bottom: 8px;
+        }
+
+        .form-control, .form-select {
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 12px 15px;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: #001e43;
+            box-shadow: 0 0 0 0.2rem rgba(0, 30, 67, 0.15);
+            outline: none;
+        }
+
+        .form-control::placeholder {
+            color: #999;
+        }
+
+        /* Upload Button in Modal */
+        .btn-upload {
+            background: linear-gradient(135deg, #001e43 0%, #0d5ec3 100%);
+            color: white !important;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        .btn-upload:hover {
+            color: #fff !important;
+            transform: translateY(-2px);
+            box-shadow: 0px 8px 25px rgba(0, 30, 67, 0.3);
+            background: linear-gradient(135deg, #0d5ec3 0%, #001e43 100%);
+        }
+
+        .btn-upload:active {
+            transform: translateY(0);
+        }
+
+        /* Action Buttons on Card */
+        .btn-action {
+            padding: 10px 16px;
+            border-radius: 12px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            font-weight: 700;
+        }
+
+        .btn-download {
+            background: linear-gradient(135deg, #eef4ff, #f6f9ff);
+            color: #001e43;
+            border: 1px solid #dbe3ee;
+        }
+
+        .btn-download:hover {
+            background: linear-gradient(135deg, #001e43, #0d5ec3);
+            color: #fff !important;
+            transform: translateY(-2px);
+        }
+
+        .btn-download:hover i {
+            color: #fff !important;
+        }
+
+        .btn-delete {
+            background-color: transparent;
+            color: #0d5ec3;
+            border: none;
+            font-size: 22px;
+            padding: 8px 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 12px;
+        }
+
+        .btn-delete:hover {
+            color: #001e43;
+            background: #eef4ff;
+            transform: scale(1.08);
+        }
+
+        .materials-pagination {
+            margin-top: 16px;
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            flex-wrap: wrap;
+            padding: 12px 16px;
+            background: #fff;
+            border: 1px solid #dbe3ee;
+            border-radius: 18px;
+            box-shadow: 0 10px 24px rgba(0, 30, 67, 0.06);
+        }
+
+        .footer-area {
+            padding-top: 56px !important;
+            padding-bottom: 40px !important;
+            width: 100vw !important;
+            left: 0;
+            right: 0;
+            background: #1a2236 !important;
+            color: #fff !important;
+            position: relative;
+        }
+
+        .copyright-area {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            background: #1a2236 !important;
+            color: #fff !important;
+        }
+
+        .materials-pagination-status {
+            color: #475569;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .materials-pagination-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .materials-page-btn {
+            border: none;
+            border-radius: 12px;
+            padding: 10px 16px;
+            background: linear-gradient(135deg, #001e43, #0d5ec3);
+            color: #fff;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+
+        .materials-page-btn:hover:not(:disabled) {
+            color: #fff !important;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 22px rgba(0, 30, 67, 0.22);
+        }
+
+        .materials-page-btn:disabled {
+            background: #cbd5e1;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        @media (max-width: 767.98px) {
+            .materials-library-shell {
+                padding: 18px;
+                border-radius: 18px;
+            }
+
+            .upload-btn-area {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 16px;
+            }
+
+            .resource-card h4 {
+                font-size: 18px;
+            }
+
+            .resource-card-top-left,
+            .resource-card-footer,
+            .materials-pagination {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .materials-pagination-actions {
+                justify-content: stretch;
+            }
+
+            .materials-page-btn {
+                width: 100%;
+            }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+
+        .empty-state i {
+            font-size: 64px;
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+
+        .empty-state h5 {
+            color: #666;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        /* Success Toast */
+        .toast-success {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #001e43 0%, #0d5ec3 100%);
+            color: white;
+            padding: 16px 24px;
+            border-radius: 8px;
+            box-shadow: 0 8px 25px rgba(0, 30, 67, 0.3);
+            z-index: 2000;
+            animation: toastSlideIn 0.4s ease-out;
+        }
+
+        @keyframes toastSlideIn {
+            from {
+                opacity: 0;
+                transform: translateX(400px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .toast-success i {
+            margin-right: 10px;
+        }
+            /* Footer Area Style */
+.footer-area{
+  background-color:#071b3a;
+  color:#ffffff;
+  margin-top:100px;
+  padding:40px 20px;
+  width:100%;
+}
+.footer-area p:last-child {
+  margin-bottom: 0;
+}
+/* Inner content width (like container but no outer margins) */
+.footer-inner {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* Headings */
+.footer-area h3 {
+  font-size: 26px;
+  margin-bottom: 16px;
+  color: #ffffff;
+}
+
+.footer-area h6 {
+  font-size: 16px;
+  margin-top: 16px;
+  margin-bottom: 8px;
+  color: #ffffff;
+}
+
+/* Text */
+.footer-area p {
+  font-size: 14px;
+  color: #ffffff;
+  margin-bottom: 8px;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+/* List reset */
+.footer-area ul {
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
+
+/* Social icons spacing */
+.footer-area .social-link li {
+  margin-right: 8px;
+}
+
+/* Links: white by default */
+.footer-area a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+/* Hover / focus */
+.footer-area a:hover,
+.footer-area a:focus {
+  color: var(--primaryColor);
+  text-decoration: none;
+}
+
+/* Active click */
+.footer-area a:active {
+  color: #ffc333;
+}
+
+/* Bottom bar */
+.footer-bottom {
+  font-size: 13px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding-top: 12px;
+  margin-top: 16px;
+}
+
+/* Bottom text and links */
+.footer-bottom span {
+  color: #ffffff;
+}
+
+.footer-bottom a {
+  color: #ffffff;
+}
+
+.footer-bottom a:hover,
+.footer-bottom a:focus {
+  color: var(--primaryColor);
+}
+
+        /* Stagger Animation for Resource Cards */
+        .resource-card:nth-child(1) { animation-delay: 0.1s; }
+        .resource-card:nth-child(2) { animation-delay: 0.2s; }
+        .resource-card:nth-child(3) { animation-delay: 0.3s; }
+        .resource-card:nth-child(4) { animation-delay: 0.4s; }
+        .resource-card:nth-child(5) { animation-delay: 0.5s; }
+        .resource-card:nth-child(6) { animation-delay: 0.6s; }
+    </style>
+</head>
+
+<body>
+
+    <div class="top-header-area style-2" style="padding: 12px 0;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-12 text-center">
+                    <h3 class="mb-0" style="color: #fff; font-weight: 700; letter-spacing: 1px; line-height: 1.4; font-size: 26px;">
+                        <span style="font-family: 'Poppins', ; font-size: 36px; font-weight: 700;"> NEC
+                        </span>
+                        - Central Placement and Information Center
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-welcome-gap" aria-hidden="true"></div>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light py-2" id="navbar">
+        <div class="container">
+            <img src="assets/img/logo_necn.jpg" alt="Logo" height="70" width="160">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a href="faculty-dashboard.html" class="nav-link">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a href="faculty-events.html" class="nav-link">Add Events</a>
+                </li>
+                <li class="nav-item">
+                    <a href="faculty-applications.html" class="nav-link">Applications</a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="faculty-materials.html" class="nav-link active">Materials</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        My Account
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="faculty-profile.html">My Profile</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="login-faculty.html">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    </nav>
+
+    <div class="faculty-page-overview-wrap">
+        <div class="faculty-page-overview-box">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-8">
+                        <div class="faculty-page-overview-content">
+                            <h2 class="faculty-page-overview-title">Resource Center</h2>
+                            <p class="faculty-page-overview-subtitle">Upload and organize preparation materials for students across categories.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 text-center">
+                        <i class="ri-booklet-line faculty-page-overview-icon" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="admin-wrapper">
+        <div class="container">
+            <div class="materials-library-shell">
+                <div class="upload-btn-area d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5 class="mb-0"><i class="ri-book-open-line me-2"></i>Placement Preparation Library</h5>
+                        <small class="text-muted">Currently hosting <span id="resourceCount">0</span> materials</small>
+                    </div>
+                    <button id="openUploadModalBtn" class="btn-add-resource" data-bs-toggle="modal" data-bs-target="#uploadModal">
+                        + Add New Resource <i class="ri-file-add-line"></i>
+                    </button>
+                </div>
+
+                <div class="row materials-grid" id="resourceGrid"></div>
+
+                <div class="materials-pagination" id="materialsPagination">
+                    <div class="materials-pagination-status" id="materialsPaginationStatus">Page 1 of 1</div>
+                    <div class="materials-pagination-actions">
+                        <button type="button" class="materials-page-btn" id="materialsPrevBtn" onclick="changeMaterialsPage(-1)">Previous</button>
+                        <button type="button" class="materials-page-btn" id="materialsNextBtn" onclick="changeMaterialsPage(1)">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="uploadModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title"><i class="ri-upload-cloud-2-line me-2"></i>Upload New Material</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="padding: 25px;">
+                    <div class="mb-3">
+                        <label class="form-label">Resource Title</label>
+                        <input type="text" id="resTitle" class="form-control" placeholder="e.g. Java Interview MCQs" autocomplete="off">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Category</label>
+                        <select id="resCategory" class="form-select">
+                            <option value="">Select a category...</option>
+                            <option value="Technical">Technical</option>
+                            <option value="Aptitude">Aptitude</option>
+                            <option value="Soft Skills">Soft Skills</option>
+                            <option value="Company Specific">Company Specific</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Description (Optional)</label>
+                        <textarea id="resDescription" class="form-control" rows="3" placeholder="Brief description of the resource..." autocomplete="off"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Resource Link (Optional)</label>
+                        <input type="url" id="resLink" class="form-control" placeholder="https://example.com/resource or file path" autocomplete="off">
+                        <small class="text-muted d-block mt-2">Paste a Google Drive link, OneDrive link, or any external resource URL</small>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label">Or Upload File (Optional)</label>
+                        <input type="file" id="resFile" class="form-control" accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.txt,.zip,.rar">
+                        <small class="text-muted d-block mt-2">Accepted: PDF, DOC, PPT, XLS, ZIP files (Max 25MB)</small>
+                    </div>
+                    <button class="btn-upload" onclick="handleUpload(event)">
+                        <i class="ri-upload-cloud-2-line"></i> Confirm Upload
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/auth-session-manager.js"></script>
+    <script src="assets/js/faculty-session-bootstrap.js"></script>
+    <script>
+        let resources = [];
+        let materialsCurrentPage = 1;
+        const materialsPerPage = 4;
+        const facultyId = (sessionStorage.getItem('faculty_id') || localStorage.getItem('faculty_id'));
+        const facultyCampusType = (sessionStorage.getItem('faculty_campus_type') || localStorage.getItem('faculty_campus_type')) || 'NECN';
+        const facultyPrivileges = JSON.parse((sessionStorage.getItem('faculty_privileges') || localStorage.getItem('faculty_privileges')) || '{}');
+
+        function showAccessDenied() {
+            showToast('Access denied contact the admin', 'error');
+        }
+        
+        if (!facultyId) {
+            window.location.href = 'login-faculty.html';
+        }
+
+        document.getElementById('openUploadModalBtn').addEventListener('click', function(event) {
+            if (!facultyPrivileges.uploadResources) {
+                event.preventDefault();
+                showAccessDenied();
+            }
+        });
+
+        // 1. Fetch Resources from Database
+        async function loadResources() {
+            try {
+                const res = await fetch(`http://localhost:3000/api/faculty/${facultyId}/resources?campus=${facultyCampusType}`);
+                const data = await res.json();
+                
+                if (data.success) {
+                    resources = (data.resources || []).sort((left, right) => {
+                        const leftDate = new Date(left.created_at || 0);
+                        const rightDate = new Date(right.created_at || 0);
+                        return rightDate - leftDate;
+                    });
+                    console.log('Resources loaded:', resources);
+                } else {
+                    resources = [];
+                }
+                
+                renderResources(resources);
+            } catch (error) {
+                console.error('Error loading resources:', error);
+                resources = [];
+                renderResources(resources);
+            }
+        }
+
+        // 2. Render UI
+        function renderResources(data) {
+            const grid = document.getElementById('resourceGrid');
+            const pagination = document.getElementById('materialsPagination');
+            document.getElementById('resourceCount').innerText = data.length;
+            
+            if(data.length === 0) {
+                pagination.style.display = 'none';
+                grid.innerHTML = `
+                    <div class="col-12">
+                        <div class="empty-state">
+                            <i class="ri-file-list-3-line"></i>
+                            <h5>No resources uploaded yet</h5>
+                            <p>Click "Add New Resource" to get started!</p>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            const totalPages = Math.max(1, Math.ceil(data.length / materialsPerPage));
+            if (materialsCurrentPage > totalPages) {
+                materialsCurrentPage = totalPages;
+            }
+
+            const startIndex = (materialsCurrentPage - 1) * materialsPerPage;
+            const pageItems = data.slice(startIndex, startIndex + materialsPerPage);
+
+            grid.innerHTML = pageItems.map((res, index) => {
+                const categoryClass = getCategoryClass(res.category);
+                const icon = getResourceIcon(res.category);
+                const uploadDate = new Date(res.created_at).toLocaleDateString('en-US', { 
+                    year: 'numeric', 
+                    month: 'short', 
+                    day: 'numeric' 
+                });
+
+                // Determine download link - prioritize uploaded file, fallback to URL
+                const downloadLink = res.uploaded_file_path || res.file_path;
+                const isUploadedFile = !!res.uploaded_file_path;
+
+                return `
+                    <div class="col-xl-6 col-md-6" style="animation-delay: ${index * 0.1}s">
+                        <div class="resource-card">
+                            <div class="resource-card-top">
+                                <div class="resource-card-top-left">
+                                    <div class="icon-box">
+                                        ${icon}
+                                    </div>
+                                    <div class="resource-card-heading">
+                                        <h4 title="${res.title}">${truncateText(res.title, 30)}</h4>
+                                        <div class="resource-card-tags">
+                                            <span class="badge-category ${categoryClass}">${res.category}</span>
+                                            ${isUploadedFile ? '<span class="resource-file-badge"><i class="ri-attachment-2"></i>File</span>' : ''}
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn-delete" onclick="deleteResource(${res.id})" title="Delete">
+                                    <i class="ri-delete-bin-line"></i>
+                                </button>
+                            </div>
+                            <p class="text-muted">${truncateText(res.description || 'No description', 50)}</p>
+                            <div class="resource-card-footer">
+                                <div class="resource-card-meta"><i class="ri-calendar-line"></i><span>${uploadDate}</span></div>
+                                <a href="${downloadLink}" target="_blank" class="btn btn-action btn-download" ${isUploadedFile ? 'download' : ''}>
+                                    <i class="ri-download-line"></i> ${isUploadedFile ? 'Download' : 'Open Link'}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            renderMaterialsPagination(data.length, totalPages, startIndex, pageItems.length);
+        }
+
+        function renderMaterialsPagination(totalItems, totalPages, startIndex, visibleCount) {
+            const pagination = document.getElementById('materialsPagination');
+            const status = document.getElementById('materialsPaginationStatus');
+            const prevBtn = document.getElementById('materialsPrevBtn');
+            const nextBtn = document.getElementById('materialsNextBtn');
+
+            if (totalItems <= materialsPerPage) {
+                pagination.style.display = 'none';
+                return;
+            }
+
+            pagination.style.display = 'flex';
+            status.textContent = `Showing ${startIndex + 1}-${startIndex + visibleCount} of ${totalItems} â€¢ Page ${materialsCurrentPage} of ${totalPages}`;
+            prevBtn.disabled = materialsCurrentPage === 1;
+            nextBtn.disabled = materialsCurrentPage === totalPages;
+        }
+
+        function changeMaterialsPage(direction) {
+            const totalPages = Math.max(1, Math.ceil(resources.length / materialsPerPage));
+            const nextPage = materialsCurrentPage + direction;
+
+            if (nextPage < 1 || nextPage > totalPages) {
+                return;
+            }
+
+            materialsCurrentPage = nextPage;
+            renderResources(resources);
+            document.getElementById('resourceGrid').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function getCategoryClass(category) {
+            const categoryMap = {
+                'Technical': 'technical',
+                'Aptitude': 'aptitude',
+                'Soft Skills': 'soft'
+            };
+            return categoryMap[category] || 'technical';
+        }
+
+        function getResourceIcon(category) {
+            const iconMap = {
+                'Technical': '<i class="ri-code-s-slash-line"></i>',
+                'Aptitude': '<i class="ri-bar-chart-line"></i>',
+                'Soft Skills': '<i class="ri-chat-smile-line"></i>',
+                'Company Specific': '<i class="ri-building-line"></i>'
+            };
+            return iconMap[category] || '<i class="ri-file-line"></i>';
+        }
+
+        function truncateText(text, max) {
+            return text.length > max ? text.substring(0, max) + '...' : text;
+        }
+
+        // 3. Handle File Upload / Resource Addition
+        async function handleUpload(event) {
+            if (!facultyPrivileges.uploadResources) {
+                showAccessDenied();
+                return;
+            }
+
+            const title = document.getElementById('resTitle').value.trim();
+            const category = document.getElementById('resCategory').value.trim();
+            const description = document.getElementById('resDescription').value.trim();
+            const link = document.getElementById('resLink').value.trim();
+            const fileInput = document.getElementById('resFile');
+            const file = fileInput.files[0];
+
+            // Validation
+            if (!title) {
+                showToast('Please enter a resource title', 'error');
+                return;
+            }
+
+            if (!category) {
+                showToast('Please select a category', 'error');
+                return;
+            }
+
+            // Must have either a link or a file
+            if (!link && !file) {
+                showToast('Please provide either a resource link or upload a file', 'error');
+                return;
+            }
+
+            // Validate URL if provided
+            if (link && !isValidUrl(link)) {
+                showToast('Please enter a valid URL', 'error');
+                return;
+            }
+
+            // Validate file size if provided
+            if (file && file.size > 25 * 1024 * 1024) {
+                showToast('File size must be less than 25MB', 'error');
+                return;
+            }
+
+            // Disable button while submitting
+            const btn = event.target;
+            const originalHTML = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<i class="ri-loader-4-line" style="animation: spin 1s linear infinite;"></i> Uploading...';
+
+            try {
+                // Use FormData to handle file upload
+                const formData = new FormData();
+                formData.append('resource_name', title);
+                formData.append('resource_type', category);
+                formData.append('description', description);
+                formData.append('file_path', link);
+                formData.append('campusType', facultyCampusType);
+                
+                if (file) {
+                    formData.append('file', file);
+                }
+
+                const response = await fetch(`http://localhost:3000/api/faculty/${facultyId}/add-resource?campus=${facultyCampusType}`, {
+                    method: 'POST',
+                    body: formData
+                    // Note: Don't set Content-Type header, browser will set it with boundary for multipart/form-data
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showToast('Resource uploaded successfully!', 'success');
+                    materialsCurrentPage = 1;
+                    
+                    // Clear form
+                    document.getElementById('resTitle').value = '';
+                    document.getElementById('resCategory').value = '';
+                    document.getElementById('resDescription').value = '';
+                    document.getElementById('resLink').value = '';
+                    document.getElementById('resFile').value = '';
+
+                    // Close modal
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('uploadModal'));
+                    modal.hide();
+
+                    // Reload resources
+                    setTimeout(() => loadResources(), 500);
+                } else {
+                    showToast(result.message || 'Upload failed', 'error');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showToast('Error uploading resource. Please try again.', 'error');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = originalHTML;
+            }
+        }
+
+        // 4. Delete Resource
+        async function deleteResource(resourceId) {
+            if (!facultyPrivileges.uploadResources) {
+                showAccessDenied();
+                return;
+            }
+
+            if (!confirm('Are you sure you want to delete this resource? This action cannot be undone.')) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`http://localhost:3000/api/faculty/${facultyId}/resource/${resourceId}?campus=${facultyCampusType}`, {
+                    method: 'DELETE'
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showToast('Resource deleted successfully!', 'success');
+                    loadResources();
+                } else {
+                    showToast(result.message || 'Deletion failed', 'error');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showToast('Error deleting resource', 'error');
+            }
+        }
+
+        // 5. Utility Functions
+        function isValidUrl(string) {
+            try {
+                new URL(string);
+                return true;
+            } catch (_) {
+                return false;
+            }
+        }
+
+        function showToast(message, type = 'success') {
+            // Remove existing toast if any
+            const existingToast = document.querySelector('.toast-success');
+            if (existingToast) existingToast.remove();
+
+            const toast = document.createElement('div');
+            toast.className = 'toast-success';
+            toast.innerHTML = message;
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.animation = 'toastSlideOut 0.3s ease-out forwards';
+            }, 3000);
+
+            setTimeout(() => toast.remove(), 3300);
+        }
+
+        // CSS for toast slide out
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes toastSlideOut {
+                from {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+                to {
+                    opacity: 0;
+                    transform: translateX(400px);
+                }
+            }
+            @keyframes spin {
+                from { transform: rotate(0deg); }
+                to { transform: rotate(360deg); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Load resources on page load
+        loadResources();
+    </script>
+
+    <script>
+        // Sticky navbar functionality
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            const topHeader = document.querySelector('.top-header-area');
+            if (!navbar || !topHeader) {
+                return;
+            }
+            const topHeaderHeight = topHeader.offsetHeight;
+
+            if (window.scrollY >= topHeaderHeight) {
+                navbar.classList.add('sticky');
+                document.body.classList.add('navbar-sticky');
+            } else {
+                navbar.classList.remove('sticky');
+                document.body.classList.remove('navbar-sticky');
+            }
+        });
+    </script>
+
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/faculty-sidebar.js?v=20260314"></script>
+    <script src="assets/js/admin-footer.js"></script>
+    <script src="assets/js/custom.js"></script>
+</body>
+</html>
+
+
+

@@ -1,0 +1,1323 @@
+﻿<!DOCTYPE html>
+<html lang="zxx">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEC Placement Cell - View Placement Drives</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/remixicon.css">
+    <link rel="stylesheet" href="assets/css/flaticon.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/admin-theme.css">
+    <link href="assets/img/crop_nec.png" type="image/x-icon" rel="icon">
+
+    <style>
+        :root {
+            --primaryColor: #001e43;
+            --secenderyColor: #0a3a75;
+            --darkColor: #00142f;
+        }
+
+        body {
+            padding-top: 0;
+            background: linear-gradient(135deg, #eef3fb 0%, #e2ebf8 100%);
+        }
+
+        .admin-page-hero {
+            background: linear-gradient(135deg, #00142f 0%, #0a3a75 100%);
+            padding: 52px 0 36px;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 30, 67, 0.2);
+        }
+
+        .admin-page-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+            animation: shimmer 4s infinite;
+        }
+
+        .admin-page-hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #0a3a75, #001e43);
+            animation: borderGlow 3s ease-in-out infinite alternate;
+        }
+
+        .admin-page-hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: left;
+        }
+
+        .admin-page-hero-title {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            color: #ffffff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            letter-spacing: -1px;
+        }
+
+        .admin-page-hero-subtitle {
+            font-size: 20px;
+            opacity: 0.95;
+            color: #ffffff;
+            font-weight: 400;
+            margin-bottom: 30px;
+        }
+
+        .admin-page-hero-visual {
+            font-size: 80px;
+            color: #ffffff;
+            animation: float 3s ease-in-out infinite;
+            position: relative;
+            z-index: 2;
+        }
+
+        .admin-wrapper { padding: 32px 0; min-height: 100vh; }
+        
+        .section-title h2 {
+            color: var(--darkColor);
+            font-weight: 800;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primaryColor), var(--secenderyColor));
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .filters-card {
+            background: #fff;
+            padding: 22px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+        }
+
+        .filters-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+
+        .filter-row {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(160px, 1fr));
+            gap: 14px;
+            align-items: end;
+        }
+
+        .filter-group-span {
+            grid-column: 1 / -1;
+        }
+
+        .filter-actions-row {
+            grid-column: 1 / -1;
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+        }
+
+        .filter-group { display: flex; flex-direction: column; }
+
+        .filter-label {
+            color: var(--darkColor);
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .filter-input, .filter-select {
+            height: 45px;
+            border: 2px solid #e8e8e8;
+            border-radius: 8px;
+            padding: 10px 15px;
+            font-size: 14px;
+            background-color: #f8f9fa;
+            transition: all 0.3s ease;
+        }
+
+        .filter-input:focus, .filter-select:focus {
+            background-color: #fff;
+            border-color: var(--primaryColor);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 30, 67, 0.12);
+        }
+
+        .branch-filter-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .branch-chip {
+            background: #f8f9fa;
+            border: 2px solid #e8e8e8;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+
+        .branch-chip:hover {
+            border-color: var(--primaryColor);
+            transform: translateY(-2px);
+        }
+
+        .branch-chip.active {
+            background: var(--primaryColor);
+            color: white;
+            border-color: var(--primaryColor);
+        }
+
+        .btn-filter {
+            background: linear-gradient(90deg, var(--primaryColor), var(--secenderyColor));
+            color: #fff;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-filter:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 30, 67, 0.3);
+        }
+
+        .btn-clear {
+            background: #1b4b85;
+            color: #fff;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-clear:hover {
+            background: #0a3a75;
+            transform: translateY(-2px);
+        }
+
+        .opportunity-card {
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            border-left: 5px solid var(--primaryColor);
+            border: 2px solid rgba(0, 30, 67, 0.1);
+            margin-bottom: 20px;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .opportunity-card::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #001e43 0%, #1b4b85 65%, #2f6fad 100%);
+            opacity: 0;
+            transition: opacity 0.25s ease;
+            z-index: 0;
+        }
+
+        .opportunity-card > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .opportunity-card:hover::before {
+            opacity: 1;
+        }
+
+        .opportunity-card:hover {
+            border-color: rgba(0, 30, 67, 0.28);
+            background: linear-gradient(135deg, #ffffff 0%, #f4f8ff 100%);
+            transform: translateY(-4px);
+            box-shadow: 0 14px 30px rgba(0, 30, 67, 0.14);
+        }
+        .header-welcome-gap {
+            height: 8px;
+            background: linear-gradient(135deg, #eef3fb 0%, #e2ebf8 100%);
+        }
+        .opportunity-card.placement-clickable {
+            cursor: pointer;
+        }
+
+        .opportunity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .opportunity-badges {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .opportunity-title-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 0;
+            flex-wrap: wrap;
+        }
+
+        .opportunity-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--darkColor);
+            margin: 0;
+            line-height: 1.2;
+        }
+
+        .opportunity-subtitle {
+            font-size: 15px;
+            color: #666;
+            margin: 0;
+            line-height: 1.2;
+        }
+
+        .opportunity-badge {
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-upcoming {
+            background: rgba(10, 58, 117, 0.12);
+            color: #0a3a75;
+            border: 1px solid rgba(10, 58, 117, 0.25);
+        }
+
+        .status-ongoing {
+            background: rgba(30, 108, 59, 0.12);
+            color: #1e6c3b;
+            border: 1px solid rgba(30, 108, 59, 0.25);
+        }
+
+        .status-completed {
+            background: rgba(108, 117, 125, 0.16);
+            color: #495057;
+            border: 1px solid rgba(108, 117, 125, 0.3);
+        }
+
+        .badge-placement {
+            background: rgba(0, 30, 67, 0.12);
+            color: var(--primaryColor);
+        }
+
+        .badge-internship {
+            background: rgba(10, 58, 117, 0.14);
+            color: #0a3a75;
+        }
+
+        .opportunity-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 16px;
+            padding: 10px 12px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin: 10px 0 0;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            white-space: nowrap;
+            line-height: 1.2;
+            padding: 4px 8px;
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid rgba(0, 30, 67, 0.08);
+            border-radius: 8px;
+        }
+
+        .meta-item i {
+            color: var(--primaryColor);
+            font-size: 15px;
+        }
+
+        .meta-label {
+            font-weight: 600;
+            color: var(--darkColor);
+            margin-right: 4px;
+        }
+
+        .btn-view {
+            background: linear-gradient(90deg, var(--primaryColor), var(--secenderyColor));
+            color: #fff;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-view:hover {
+            transform: translateY(-2px);
+            color: #fff;
+        }
+
+        .btn-delete {
+            background: #00142f;
+            color: #fff;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-delete:hover {
+            background: #001e43;
+            transform: translateY(-2px);
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #001e43, #002a5c);
+            padding: 12px 16px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 30, 67, 0.2);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.35s ease;
+            cursor: pointer;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+            animation: shimmer 4s infinite;
+        }
+
+        .stat-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, #002a5c, #003580);
+            animation: borderGlow 3s ease-in-out infinite alternate;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 60px rgba(0, 30, 67, 0.35);
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 2px;
+            line-height: 1.1;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.85);
+            font-weight: 500;
+            line-height: 1.2;
+        }
+
+        .btn-add-new {
+            background: linear-gradient(90deg, var(--primaryColor), var(--secenderyColor));
+            color: #fff;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-add-new:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 30, 67, 0.3);
+            color: #fff;
+        }
+
+        .pagination-wrap {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 18px;
+        }
+
+        .pagination-btn {
+            min-width: 40px;
+            height: 40px;
+            border: 1px solid #d8dfeb;
+            border-radius: 8px;
+            background: #fff;
+            color: var(--darkColor);
+            font-weight: 600;
+            padding: 0 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .pagination-btn:hover:not(:disabled) {
+            border-color: var(--primaryColor);
+            color: var(--primaryColor);
+            transform: translateY(-1px);
+        }
+
+        .pagination-btn.active {
+            background: var(--primaryColor);
+            border-color: var(--primaryColor);
+            color: #fff;
+        }
+
+        .pagination-btn:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 991.98px) {
+            .filter-row {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-actions-row {
+                justify-content: flex-start;
+            }
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        @keyframes borderGlow {
+            from { opacity: 0.6; }
+            to { opacity: 1; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="top-header-area style-2" style="padding: 12px 0;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-12 text-center">
+                    <h3 class="mb-0" style="color: #fff; font-weight: 700; letter-spacing: 1px; line-height: 1.4; font-size: 26px;">
+                        <span style="font-family: 'Poppins', ; font-size: 36px; font-weight: 700;"> NEC</span> – Central Placement Information and Management Center
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-welcome-gap" aria-hidden="true"></div>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light py-2">
+        <div class="container">
+            <img src="assets/img/logo_necn.png" alt="Logo" height="70" width="160">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a href="admin-dashboard.html" class="nav-link">Dashboard</a></li>
+                    <li class="nav-item"><a href="admin-students.html" class="nav-link">Students</a></li>
+                    <li class="nav-item"><a href="admin-opportunities.html" class="nav-link">Opportunities</a></li>
+                    <li class="nav-item"><a href="admin-reports.html" class="nav-link">Reports</a></li>
+                    <li class="nav-item"><a href="index.html" class="nav-link">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="admin-page-hero">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <div class="admin-page-hero-content">
+                        <h2 class="admin-page-hero-title">Placement Drives</h2>
+                        <p class="admin-page-hero-subtitle">Browse active drives, and review the latest recruitment activity.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <div class="admin-page-hero-visual">
+                        <i class="ri-calendar-event-line"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="admin-wrapper">
+        <div class="container">
+            <!-- Statistics -->
+            <div class="row mb-3 g-3">
+                <div class="col-md-4">
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalCount">0</div>
+                        <div class="stat-label">Total Opportunities</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stat-card">
+                        <div class="stat-number" id="placementCount">0</div>
+                        <div class="stat-label">Placement Drives</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stat-card">
+                        <div class="stat-number" id="internshipCount">0</div>
+                        <div class="stat-label">Internships</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="filters-card">
+                <div class="filters-header">
+                    <h5 class="mb-0" style="color: var(--darkColor); font-weight: 700;">Filters</h5>
+                    <a href="admin-opportunities.html" class="btn-add-new">
+                        <i class="ri-add-line"></i> Add New Opportunity
+                    </a>
+                </div>
+                
+                <div class="filter-row">
+                    <div class="filter-group">
+                        <label class="filter-label">Opportunity Type</label>
+                        <select class="filter-select" id="filterType">
+                            <option value="">All Types</option>
+                            <option value="placement">Placement Drive</option>
+                            <option value="internship">Internship</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label class="filter-label">Status</label>
+                        <select class="filter-select" id="filterStatus">
+                            <option value="">All Status</option>
+                            <option value="completed">Completed</option>
+                            <option value="ongoing">Ongoing</option>
+                            <option value="upcoming">Upcoming</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label class="filter-label">From Date</label>
+                        <input type="date" class="filter-input" id="filterFromDate">
+                    </div>
+
+                    <div class="filter-group">
+                        <label class="filter-label">To Date</label>
+                        <input type="date" class="filter-input" id="filterToDate">
+                    </div>
+
+                    <div class="filter-group filter-group-span">
+                        <label class="filter-label">Eligible Branches</label>
+                        <div class="branch-filter-group">
+                            <div class="branch-chip" data-branch="CSE">CSE</div>
+                            <div class="branch-chip" data-branch="ECE">ECE</div>
+                            <div class="branch-chip" data-branch="EEE">EEE</div>
+                            <div class="branch-chip" data-branch="CIVIL">CIVIL</div>
+                            <div class="branch-chip" data-branch="MECH">MECH</div>
+                        </div>
+                    </div>
+
+                    <div class="filter-actions-row">
+                        <button class="btn-filter" onclick="applyFilters()">
+                            <i class="ri-search-line"></i> Apply Filters
+                        </button>
+                        <button class="btn-clear" onclick="clearFilters()">
+                            <i class="ri-refresh-line"></i> Clear All
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results -->
+            <div id="opportunitiesGrid"></div>
+            <div id="paginationControls" class="pagination-wrap"></div>
+        </div>
+    </div>
+
+    <script>
+        let allOpportunities = [];
+        let selectedBranches = [];
+        let filteredOpportunities = [];
+        let pendingDeleteOpportunity = null;
+        let shouldReloadAfterDeleteFeedback = false;
+        let currentPage = 1;
+        const recordsPerPage = 6;
+
+        document.querySelectorAll('.branch-chip').forEach(chip => {
+            chip.addEventListener('click', function() {
+                this.classList.toggle('active');
+                const branch = this.dataset.branch;
+                if (this.classList.contains('active')) {
+                    if (!selectedBranches.includes(branch)) {
+                        selectedBranches.push(branch);
+                    }
+                } else {
+                    selectedBranches = selectedBranches.filter(b => b !== branch);
+                }
+            });
+        });
+
+        async function loadOpportunities() {
+            try {
+                const response = await fetch('/api/opportunities/all-opportunities');
+                const data = await response.json();
+                
+                if (data.success) {
+                    allOpportunities = data.opportunities || [];
+                    updateStats();
+                    // Don't display on load - show instruction message instead
+                    showInitialMessage();
+                } else {
+                    showNoData('Failed to load opportunities');
+                }
+            } catch (error) {
+                console.error('Error loading opportunities:', error);
+                showNoData('Error loading opportunities');
+            }
+        }
+
+        function showInitialMessage() {
+            const grid = document.getElementById('opportunitiesGrid');
+            const pagination = document.getElementById('paginationControls');
+            grid.innerHTML = `
+                <div class="text-center p-5" style="background: #fff; border-radius: 15px;">
+                    <i class="ri-filter-line" style="font-size: 64px; color: #ccc;"></i>
+                    <h4 class="mt-3">Select Filters and Apply</h4>
+                    <p class="text-muted">Choose your desired filters above and click "Apply Filters" to view opportunities</p>
+                </div>
+            `;
+            pagination.innerHTML = '';
+        }
+
+        function updateStats() {
+            const placements = allOpportunities.filter(o => o.type === 'placement').length;
+            const internships = allOpportunities.filter(o => o.type === 'internship').length;
+            
+            document.getElementById('totalCount').textContent = allOpportunities.length;
+            document.getElementById('placementCount').textContent = placements;
+            document.getElementById('internshipCount').textContent = internships;
+        }
+
+        function displayOpportunities(opportunities) {
+            filteredOpportunities = opportunities || [];
+            currentPage = 1;
+            renderCurrentPage();
+        }
+
+        function renderCurrentPage() {
+            const grid = document.getElementById('opportunitiesGrid');
+            const opportunities = filteredOpportunities;
+
+            if (!opportunities || opportunities.length === 0) {
+                showNoData('No opportunities found matching your filters. Try adjusting your filters.');
+                return;
+            }
+
+            const startIndex = (currentPage - 1) * recordsPerPage;
+            const endIndex = startIndex + recordsPerPage;
+            const pageItems = opportunities.slice(startIndex, endIndex);
+
+            let html = '';
+            pageItems.forEach(opp => {
+                const isPlacement = opp.type === 'placement';
+                const badgeClass = isPlacement ? 'badge-placement' : 'badge-internship';
+                const badgeText = isPlacement ? 'Placement' : 'Internship';
+                const status = getOpportunityStatus(opp);
+                const cardClass = isPlacement ? 'opportunity-card placement-clickable' : 'opportunity-card';
+                const cardOnClick = isPlacement ? `onclick="openPlacementTimeline('${opp.id}')"` : '';
+                
+                const companyName = opp.company_name || 'N/A';
+                const role = opp.job_role || opp.role || 'N/A';
+                const branches = opp.eligible_branches || 'All';
+                const eligibleYears = opp.eligible_years || 'All';
+                const deadline = new Date(opp.due_date).toLocaleDateString();
+                const minCgpa = opp.min_cgpa || 'No minimum';
+                const applyLink = opp.apply_link || '#';
+                
+                const salary = opp.salary_package || 'Not specified';
+                const stipend = opp.stipend || 'Unpaid';
+                const duration = opp.duration || 'Not specified';
+
+                html += `
+                    <div class="${cardClass}" ${cardOnClick}>
+                        <div class="opportunity-header">
+                            <div class="opportunity-title-row">
+                                <h3 class="opportunity-title">${companyName}</h3>
+                                <p class="opportunity-subtitle">- ${role}</p>
+                            </div>
+                            <div class="opportunity-badges">
+                                <span class="status-badge status-${status.toLowerCase()}">${status}</span>
+                                <span class="opportunity-badge ${badgeClass}">${badgeText}</span>
+                            </div>
+                        </div>
+
+                        <div class="opportunity-meta">
+                            ${isPlacement ? `
+                                <div class="meta-item">
+                                    <i class="ri-money-rupee-circle-line"></i>
+                                    <span><span class="meta-label">Package:</span>${salary}</span>
+                                </div>
+                            ` : `
+                                <div class="meta-item">
+                                    <i class="ri-money-rupee-circle-line"></i>
+                                    <span><span class="meta-label">Stipend:</span>${stipend}</span>
+                                </div>
+                                <div class="meta-item">
+                                    <i class="ri-time-line"></i>
+                                    <span><span class="meta-label">Duration:</span>${duration}</span>
+                                </div>
+                            `}
+                            
+                            <div class="meta-item">
+                                <i class="ri-calendar-line"></i>
+                                <span><span class="meta-label">Deadline:</span>${deadline}</span>
+                            </div>
+                            
+                            <div class="meta-item">
+                                <i class="ri-team-line"></i>
+                                <span><span class="meta-label">Branches:</span>${branches}</span>
+                            </div>
+                            
+                            <div class="meta-item">
+                                <i class="ri-graduation-cap-line"></i>
+                                <span><span class="meta-label">Years:</span>${eligibleYears}</span>
+                            </div>
+                            
+                            <div class="meta-item">
+                                <i class="ri-star-line"></i>
+                                <span><span class="meta-label">CGPA:</span>${minCgpa}</span>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-2 mt-2 pt-2" style="border-top: 1px solid #e8e8e8;">
+                            ${isPlacement ? `
+                                <button class="btn-view" onclick="generateDriveQR(event, '${opp.id}', '${companyName}')">
+                                    <i class="ri-qr-code-line"></i> QR Code
+                                </button>
+                            ` : ''}
+                            <a href="${applyLink}" target="_blank" class="btn-view" onclick="event.stopPropagation()">
+                                <i class="ri-external-link-line"></i> View Link
+                            </a>
+                            <button class="btn-delete" onclick="deleteOpportunity(event, '${opp.id}', '${opp.type}')">
+                                <i class="ri-delete-bin-line"></i> Delete
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            grid.innerHTML = html;
+            renderPagination();
+        }
+
+        function renderPagination() {
+            const pagination = document.getElementById('paginationControls');
+            const totalItems = filteredOpportunities.length;
+            const totalPages = Math.ceil(totalItems / recordsPerPage);
+
+            if (totalPages <= 1) {
+                pagination.innerHTML = '';
+                return;
+            }
+
+            let controls = `
+                <button class="pagination-btn" onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>
+                    <i class="ri-arrow-left-s-line"></i>
+                </button>
+            `;
+
+            for (let page = 1; page <= totalPages; page += 1) {
+                controls += `
+                    <button class="pagination-btn ${page === currentPage ? 'active' : ''}" onclick="goToPage(${page})">
+                        ${page}
+                    </button>
+                `;
+            }
+
+            controls += `
+                <button class="pagination-btn" onclick="goToPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>
+                    <i class="ri-arrow-right-s-line"></i>
+                </button>
+            `;
+
+            pagination.innerHTML = controls;
+        }
+
+        function goToPage(page) {
+            const totalPages = Math.ceil(filteredOpportunities.length / recordsPerPage);
+            if (page < 1 || page > totalPages) {
+                return;
+            }
+            currentPage = page;
+            renderCurrentPage();
+        }
+
+        function applyFilters() {
+            const type = document.getElementById('filterType').value;
+            const status = document.getElementById('filterStatus').value;
+            const fromDate = document.getElementById('filterFromDate').value;
+            const toDate = document.getElementById('filterToDate').value;
+
+            let filtered = [...allOpportunities];
+
+            if (type) {
+                filtered = filtered.filter(o => o.type === type);
+            }
+
+            if (status) {
+                filtered = filtered.filter(o => getOpportunityStatus(o).toLowerCase() === status.toLowerCase());
+            }
+
+            if (fromDate) {
+                filtered = filtered.filter(o => new Date(o.due_date) >= new Date(fromDate));
+            }
+            if (toDate) {
+                filtered = filtered.filter(o => new Date(o.due_date) <= new Date(toDate));
+            }
+
+            if (selectedBranches.length > 0) {
+                filtered = filtered.filter(o => {
+                    const oppBranches = o.eligible_branches || '';
+                    return selectedBranches.some(branch => 
+                        oppBranches.includes(branch) || oppBranches === 'All'
+                    );
+                });
+            }
+
+            displayOpportunities(filtered);
+
+            const recordsSection = document.getElementById('opportunitiesGrid');
+            if (recordsSection) {
+                requestAnimationFrame(() => {
+                    const targetTop = recordsSection.getBoundingClientRect().top + window.pageYOffset - 90;
+                    window.scrollTo({ top: targetTop, behavior: 'smooth' });
+                });
+            }
+        }
+
+        function clearFilters() {
+            document.getElementById('filterType').value = '';
+            document.getElementById('filterStatus').value = '';
+            document.getElementById('filterFromDate').value = '';
+            document.getElementById('filterToDate').value = '';
+            
+            document.querySelectorAll('.branch-chip').forEach(chip => {
+                chip.classList.remove('active');
+            });
+            selectedBranches = [];
+
+            displayOpportunities(allOpportunities);
+        }
+
+        function getOpportunityStatus(opp) {
+            if (opp && opp.type === 'placement' && opp.is_drive_completed) {
+                return 'Completed';
+            }
+
+            if (!opp || !opp.due_date) {
+                return 'Upcoming';
+            }
+
+            const now = new Date();
+            const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            const due = new Date(opp.due_date);
+
+            if (Number.isNaN(due.getTime())) {
+                return 'Upcoming';
+            }
+
+            const dueDay = new Date(due.getFullYear(), due.getMonth(), due.getDate());
+
+            if (dueDay < today) {
+                return 'Completed';
+            }
+            if (dueDay.getTime() === today.getTime()) {
+                return 'Ongoing';
+            }
+            return 'Upcoming';
+        }
+
+        function openPlacementTimeline(placementId) {
+            window.location.href = `admin-drive-timeline.html?placementId=${encodeURIComponent(placementId)}`;
+        }
+
+        async function deleteOpportunity(event, id, type) {
+            if (event) {
+                event.stopPropagation();
+            }
+
+            pendingDeleteOpportunity = { id, type };
+            openDeleteConfirmModal();
+        }
+
+        function openDeleteConfirmModal() {
+            const modal = document.getElementById('deleteConfirmModal');
+            if (!modal) {
+                return;
+            }
+            modal.classList.add('show');
+        }
+
+        function closeDeleteConfirmModal() {
+            const modal = document.getElementById('deleteConfirmModal');
+            if (!modal) {
+                return;
+            }
+            modal.classList.remove('show');
+        }
+
+        function openDeleteFeedbackModal(title, message) {
+            const modal = document.getElementById('deleteFeedbackModal');
+            const titleEl = document.getElementById('deleteFeedbackTitle');
+            const messageEl = document.getElementById('deleteFeedbackMessage');
+
+            if (!modal || !titleEl || !messageEl) {
+                return;
+            }
+
+            titleEl.textContent = title || 'Notification';
+            messageEl.textContent = message || 'Action completed.';
+            modal.classList.add('show');
+        }
+
+        function closeDeleteFeedbackModal() {
+            const modal = document.getElementById('deleteFeedbackModal');
+            if (!modal) {
+                return;
+            }
+
+            modal.classList.remove('show');
+
+            if (shouldReloadAfterDeleteFeedback) {
+                shouldReloadAfterDeleteFeedback = false;
+                loadOpportunities();
+            }
+        }
+
+        async function confirmDeleteOpportunity() {
+            if (!pendingDeleteOpportunity) {
+                closeDeleteConfirmModal();
+                return;
+            }
+
+            const { id, type } = pendingDeleteOpportunity;
+            pendingDeleteOpportunity = null;
+            closeDeleteConfirmModal();
+
+            try {
+                const endpoint = type === 'placement' 
+                    ? `/api/opportunities/placements/delete/${id}`
+                    : `/api/opportunities/internships/delete/${id}`;
+
+                const response = await fetch(endpoint, {
+                    method: 'DELETE'
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    shouldReloadAfterDeleteFeedback = true;
+                    openDeleteFeedbackModal('Opportunity Deleted', 'Opportunity deleted successfully.');
+                } else {
+                    shouldReloadAfterDeleteFeedback = false;
+                    openDeleteFeedbackModal('Delete Failed', result.message || 'Failed to delete opportunity.');
+                }
+            } catch (error) {
+                console.error('Error deleting opportunity:', error);
+                shouldReloadAfterDeleteFeedback = false;
+                openDeleteFeedbackModal('Delete Failed', 'An error occurred while deleting the opportunity.');
+            }
+        }
+
+        async function generateDriveQR(event, opportunityId, companyName) {
+            if (event) {
+                event.stopPropagation();
+            }
+
+            try {
+                const response = await fetch(`/api/opportunities/get-by-id/${opportunityId}`);
+                const data = await response.json();
+
+                if (data.success && data.opportunity) {
+                    const opp = data.opportunity;
+                    const qrPayload = JSON.stringify({
+                        opportunityId: parseInt(opportunityId),
+                        companyName: companyName,
+                        type: 'drive_qr',
+                        timestamp: new Date().toISOString()
+                    });
+
+                    showQRModal(opp, qrPayload);
+                } else {
+                    alert('Error: Could not fetch opportunity details');
+                }
+            } catch (error) {
+                console.error('Error generating QR:', error);
+                alert('Error generating QR code');
+            }
+        }
+
+        function showQRModal(opportunity, qrPayload) {
+            const modal = document.getElementById('qrModal');
+            const qrContainer = document.getElementById('qrContainer');
+            const opportunityInfo = document.getElementById('opportunityInfo');
+
+            // Generate QR code using a simple method
+            const encodedPayload = encodeURIComponent(qrPayload);
+            const qrImageUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodedPayload}`;
+
+            qrContainer.innerHTML = `
+                <div style="text-align: center; padding: 20px;">
+                    <img src="${qrImageUrl}" alt="QR Code" style="width: 100%; max-width: 300px; border-radius: 10px; border: 2px solid #ddd;">
+                    <p style="margin-top: 15px; color: #666; font-size: 13px;">
+                        Right-click to save or print this QR code for your students to scan during the drive.
+                    </p>
+                </div>
+            `;
+
+            opportunityInfo.innerHTML = `
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                    <div style="margin-bottom: 10px;"><strong>Company:</strong> ${opportunity.company_name}</div>
+                    <div style="margin-bottom: 10px;"><strong>Role:</strong> ${opportunity.job_role}</div>
+                    <div style="margin-bottom: 10px;"><strong>Type:</strong> ${opportunity.type === 'placement' ? 'Placement Drive' : 'Internship'}</div>
+                    <div><strong>Drive Date:</strong> ${opportunity.drive_date ? new Date(opportunity.drive_date).toLocaleString() : 'Not specified'}</div>
+                </div>
+            `;
+
+            modal.classList.add('show');
+        }
+
+        function closeQRModal() {
+            document.getElementById('qrModal').classList.remove('show');
+        }
+
+
+        function showNoData(message) {
+            const grid = document.getElementById('opportunitiesGrid');
+            const pagination = document.getElementById('paginationControls');
+            grid.innerHTML = `
+                <div class="text-center p-5" style="background: #fff; border-radius: 15px;">
+                    <i class="ri-inbox-line" style="font-size: 64px; color: #ccc;"></i>
+                    <h4 class="mt-3">No Opportunities Found</h4>
+                    <p class="text-muted">${message}</p>
+                </div>
+            `;
+            pagination.innerHTML = '';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const deleteConfirmModal = document.getElementById('deleteConfirmModal');
+            if (deleteConfirmModal) {
+                deleteConfirmModal.addEventListener('click', (event) => {
+                    if (event.target === deleteConfirmModal) {
+                        pendingDeleteOpportunity = null;
+                        closeDeleteConfirmModal();
+                    }
+                });
+            }
+
+            const deleteFeedbackModal = document.getElementById('deleteFeedbackModal');
+            if (deleteFeedbackModal) {
+                deleteFeedbackModal.addEventListener('click', (event) => {
+                    if (event.target === deleteFeedbackModal) {
+                        closeDeleteFeedbackModal();
+                    }
+                });
+            }
+
+            loadOpportunities();
+        });
+    </script>
+
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/admin-sidebar.js"></script>
+    <script src="assets/js/admin-access-control.js"></script>
+
+    <!-- QR Modal -->
+    <div id="qrModal" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px;">
+        <div style="background: white; border-radius: 16px; max-width: 500px; width: 100%; padding: 30px; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h3 style="margin: 0; color: #001e43; font-weight: 700;">Placement Drive QR Code</h3>
+                <button onclick="closeQRModal()" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #666;">&times;</button>
+            </div>
+
+            <div id="opportunityInfo"></div>
+            <div id="qrContainer"></div>
+
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button onclick="closeQRModal()" style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 8px; background: #f8f9fa; color: #333; font-weight: 600; cursor: pointer;">Close</button>
+                <button onclick="printQR()" style="flex: 1; padding: 10px; border: none; border-radius: 8px; background: linear-gradient(135deg, #001e43, #003580); color: white; font-weight: 600; cursor: pointer;"><i class="ri-printer-line"></i> Print</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirm Modal -->
+    <div id="deleteConfirmModal" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.55); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px;">
+        <div style="background: #fff; border-radius: 16px; max-width: 460px; width: 100%; padding: 28px; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
+            <h3 style="margin: 0 0 12px 0; color: #001e43; font-weight: 700;">Delete Opportunity</h3>
+            <p style="margin: 0 0 22px 0; color: #3d4960;">Are you sure you want to delete this opportunity?</p>
+            <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                <button type="button" onclick="pendingDeleteOpportunity = null; closeDeleteConfirmModal()" style="padding: 10px 16px; border: 1px solid #d2dae8; border-radius: 8px; background: #f8f9fa; color: #334155; font-weight: 600; cursor: pointer;">Cancel</button>
+                <button type="button" onclick="confirmDeleteOpportunity()" style="padding: 10px 16px; border: none; border-radius: 8px; background: linear-gradient(135deg, #001e43, #003580); color: #fff; font-weight: 600; cursor: pointer;">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Feedback Modal -->
+    <div id="deleteFeedbackModal" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.55); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px;">
+        <div style="background: #fff; border-radius: 16px; max-width: 460px; width: 100%; padding: 28px; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
+            <h3 id="deleteFeedbackTitle" style="margin: 0 0 12px 0; color: #001e43; font-weight: 700;">Notification</h3>
+            <p id="deleteFeedbackMessage" style="margin: 0 0 22px 0; color: #3d4960;">Action completed.</p>
+            <div style="display: flex; justify-content: flex-end;">
+                <button type="button" onclick="closeDeleteFeedbackModal()" style="padding: 10px 16px; border: none; border-radius: 8px; background: linear-gradient(135deg, #001e43, #003580); color: #fff; font-weight: 600; cursor: pointer;">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        #qrModal[style*="display: none"] {
+            display: none !important;
+        }
+
+        #qrModal.show {
+            display: flex !important;
+        }
+
+        #deleteConfirmModal[style*="display: none"] {
+            display: none !important;
+        }
+
+        #deleteConfirmModal.show {
+            display: flex !important;
+        }
+
+        #deleteFeedbackModal[style*="display: none"] {
+            display: none !important;
+        }
+
+        #deleteFeedbackModal.show {
+            display: flex !important;
+        }
+    </style>
+
+    <script>
+        function printQR() {
+            const qrImage = document.querySelector('#qrContainer img');
+            if (!qrImage) {
+                alert('QR code not loaded');
+                return;
+            }
+
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <html>
+                <head>
+                    <title>Print QR Code</title>
+                    <style>
+                        body {
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            height: 100vh;
+                            margin: 0;
+                            background: white;
+                        }
+                        img {
+                            max-width: 400px;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <img src="${qrImage.src}" />
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+            setTimeout(() => {
+                printWindow.print();
+            }, 250);
+        }
+    </script>
+    <script src="assets/js/admin-footer.js"></script>
+</body>
+</html>
+

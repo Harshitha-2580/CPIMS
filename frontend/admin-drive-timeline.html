@@ -1,0 +1,698 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rounds Timeline - Admin</title>
+
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/remixicon.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/admin-theme.css">
+  <link href="assets/img/crop_nec.png" type="image/x-icon" rel="icon">
+
+  <style>
+    :root {
+      --primaryColor: #001e43;
+      --secondaryColor: #002a5c;
+      --accentColor: #003580;
+      --darkColor: rgb(0, 30, 67);
+      --mutedText: #5f6b7a;
+      --gradientPrimary: linear-gradient(135deg, #001e43, #002a5c);
+      --gradientSecondary: linear-gradient(135deg, #002a5c, #003580);
+    }
+
+    body {
+      padding-top: 0;
+      overflow-x: hidden;
+      background: linear-gradient(135deg, #f8f9fa 0%, #f0f2f5 100%);
+    }
+
+    .timeline-page {
+      position: relative;
+      z-index: 1;
+      padding: 34px 0;
+      min-height: 100vh;
+    }
+
+    .admin-page-hero {
+      background: var(--gradientPrimary);
+      padding: 52px 0 36px;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0, 30, 67, 0.1);
+    }
+
+    .admin-page-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+      animation: shimmer 4s infinite;
+    }
+
+    .admin-page-hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: var(--gradientSecondary);
+      animation: borderGlow 3s ease-in-out infinite alternate;
+    }
+
+    .admin-page-hero-title {
+      font-size: 48px;
+      font-weight: 800;
+      margin-bottom: 15px;
+      color: #fff;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      letter-spacing: -1px;
+    }
+
+    .admin-page-hero-subtitle {
+      font-size: 20px;
+      opacity: 0.95;
+      color: #fff;
+      font-weight: 400;
+      margin-bottom: 0;
+    }
+
+    .admin-page-hero-visual {
+      font-size: 80px;
+      color: #fff;
+      position: relative;
+      z-index: 2;
+    }
+
+    .panel {
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid rgba(0, 30, 67, 0.1);
+      border-radius: 24px;
+      box-shadow: 0 20px 60px rgba(0, 30, 67, 0.08);
+      padding: 26px;
+      margin-bottom: 22px;
+      backdrop-filter: blur(20px);
+    }
+
+    .drive-title {
+      font-size: 30px;
+      font-weight: 800;
+      color: var(--darkColor);
+      margin-bottom: 10px;
+    }
+
+    .meta-row {
+      color: var(--mutedText);
+      font-weight: 600;
+      margin-bottom: 0;
+    }
+
+    .timeline-track {
+      position: relative;
+      padding-left: 26px;
+      margin-top: 8px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .timeline-track::before {
+      content: '';
+      position: absolute;
+      left: 8px;
+      top: 6px;
+      bottom: 6px;
+      width: 4px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, rgba(0, 30, 67, 0.35), rgba(10, 58, 117, 0.12));
+    }
+
+    .timeline-node {
+      position: relative;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: -1px;
+      top: 17px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #fff;
+      border: 4px solid #001e43;
+      box-shadow: 0 0 0 3px rgba(0, 30, 67, 0.1);
+      z-index: 2;
+    }
+
+    .timeline-dot.completed {
+      border-color: #16a34a;
+      box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.12);
+    }
+
+    .timeline-dot.current {
+      border-color: #0a3a75;
+    }
+
+    .round-card {
+      margin-left: 22px;
+      border: 2px solid #e8edf4;
+      border-radius: 14px;
+      padding: 16px 18px;
+      background: #fff;
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .round-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(0, 30, 67, 0.05), transparent);
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .round-card:hover::before {
+      opacity: 1;
+    }
+
+    .round-card.current {
+      border-color: #93b6e5;
+      background: #f4f8ff;
+    }
+
+    .round-card.completed {
+      border-color: #bbf7d0;
+      background: #f5fff8;
+    }
+
+    .round-title {
+      font-weight: 700;
+      color: var(--darkColor);
+      margin-bottom: 4px;
+    }
+
+    .round-sub {
+      color: var(--mutedText);
+      font-size: 14px;
+      margin-bottom: 0;
+    }
+
+    .round-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .round-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      background: #eef2ff;
+      color: #1e40af;
+      white-space: nowrap;
+    }
+
+    .round-chip.completed {
+      background: #ecfdf3;
+      color: #166534;
+    }
+
+    .round-chip.current {
+      background: #ebf4ff;
+      color: #0a3a75;
+    }
+
+    .blink-dot {
+      animation: blinkPulse 1.1s ease-in-out infinite;
+      box-shadow: 0 0 0 0 rgba(250, 57, 74, 0.4);
+    }
+
+    @keyframes blinkPulse {
+      0% {
+        border-left-color: var(--primaryColor);
+        box-shadow: 0 0 0 0 rgba(0, 30, 67, 0.45);
+      }
+      50% {
+        border-left-color: #3b6ba4;
+        box-shadow: 0 0 0 10px rgba(0, 30, 67, 0.06);
+      }
+      100% {
+        border-left-color: var(--primaryColor);
+        box-shadow: 0 0 0 0 rgba(0, 30, 67, 0.45);
+      }
+    }
+
+    .upload-box {
+      border: 2px dashed rgba(0, 30, 67, 0.18);
+      border-radius: 16px;
+      padding: 18px;
+      background: linear-gradient(135deg, rgba(0, 30, 67, 0.03) 0%, rgba(0, 42, 92, 0.05) 100%);
+    }
+
+    .default-btn {
+      background: var(--gradientPrimary) !important;
+      color: #fff !important;
+      border: none !important;
+      padding: 10px 20px !important;
+      border-radius: 10px !important;
+      font-weight: 600 !important;
+      text-decoration: none !important;
+      display: inline-block !important;
+      box-shadow: 0 12px 30px rgba(0, 30, 67, 0.2);
+    }
+
+    .default-btn:hover,
+    .default-btn:focus {
+      color: #fff !important;
+      text-decoration: none !important;
+    }
+
+    .btn-secondary-lite {
+      background: rgba(0, 30, 67, 0.08);
+      color: #0a3a75;
+      border: 1px solid rgba(0, 30, 67, 0.14);
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-weight: 600;
+    }
+
+    .status-chip {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      background: #ebf3ff;
+      color: #0a3a75;
+      border: 1px solid rgba(10, 58, 117, 0.22);
+    }
+
+    .status-chip.completed {
+      background: #ecfdf3;
+      color: #166534;
+      border-color: rgba(22, 101, 52, 0.28);
+    }
+
+    .status-chip.ongoing {
+      background: #ebf3ff;
+      color: #0a3a75;
+      border-color: rgba(10, 58, 117, 0.22);
+    }
+
+    .section-heading {
+      font-weight: 800;
+      color: var(--darkColor);
+      margin-bottom: 14px;
+      font-size: 22px;
+    }
+
+    .section-sub {
+      font-size: 13px;
+      color: var(--mutedText);
+      margin-bottom: 0;
+    }
+
+    .header-welcome-gap {
+      height: 8px;
+      background: linear-gradient(135deg, #f8f9fa 0%, #f0f2f5 100%);
+    }
+
+    .form-control,
+    .form-select {
+      border: 1px solid rgba(0, 30, 67, 0.12);
+      border-radius: 12px;
+      height: 46px;
+      box-shadow: none;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+      border-color: #001e43;
+      box-shadow: 0 0 0 4px rgba(0, 30, 67, 0.08);
+    }
+
+    .timeline-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      padding: 16px;
+    }
+
+    .timeline-modal-overlay.active {
+      display: flex;
+    }
+
+    .timeline-modal-card {
+      width: 100%;
+      max-width: 520px;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 24px 50px rgba(0, 0, 0, 0.22);
+      overflow: hidden;
+    }
+
+    .timeline-modal-header {
+      padding: 14px 18px;
+      background: var(--gradientPrimary);
+      color: #fff;
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    .timeline-modal-body {
+      padding: 18px;
+      color: #1f2a37;
+      line-height: 1.5;
+      font-size: 16px;
+      white-space: pre-line;
+    }
+
+    .timeline-modal-footer {
+      padding: 14px 18px;
+      display: flex;
+      justify-content: flex-end;
+      background: #f8fafc;
+    }
+
+    .timeline-modal-btn {
+      border: 0;
+      border-radius: 10px;
+      background: var(--gradientPrimary);
+      color: #fff;
+      font-weight: 700;
+      padding: 9px 22px;
+    }
+  </style>
+</head>
+<body>
+  <div class="top-header-area style-2" style="padding: 12px 0;">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-12 text-center">
+          <h3 class="mb-0" style="color: #fff; font-weight: 700; letter-spacing: 1px; line-height: 1.4; font-size: 26px;">
+            <span style="font-family: 'Poppins', ; font-size: 36px; font-weight: 700;"> NEC</span> – Central Placement Information and Management Center
+          </h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="header-welcome-gap" aria-hidden="true"></div>
+
+  <div class="admin-page-hero">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-8">
+          <div class="admin-page-hero-content">
+            <h2 class="admin-page-hero-title">Rounds Timeline</h2>
+            <p class="admin-page-hero-subtitle">Track each recruitment round, review progress, and keep every stage of the drive visible.</p>
+          </div>
+        </div>
+        <div class="col-lg-4 text-center">
+          <div class="admin-page-hero-visual">
+            <i class="ri-timeline-view"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="timeline-page">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <a href="admin-placement-drives.html" class="btn-secondary-lite"><i class="ri-arrow-left-line"></i> Back to Drives</a>
+        <span id="driveTodayChip" class="status-chip" style="display:none;">On-going Today</span>
+      </div>
+
+      <div class="panel">
+        <h1 id="driveTitle" class="drive-title">Loading drive...</h1>
+        <div id="driveMeta" class="meta-row"></div>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-lg-8">
+          <div class="panel">
+            <h4 class="section-heading">Rounds Timeline</h4>
+            <p class="section-sub">Track progress for each round. The currently active round blinks on drive day.</p>
+            <div id="roundTimeline" class="timeline-track">
+              <p class="text-muted">Loading rounds...</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="panel">
+            <h4 class="section-heading" style="font-size:20px; margin-bottom: 10px;">Upload Round Results (CSV)</h4>
+            <div class="upload-box">
+              <div class="mb-3">
+                <label for="roundSelect" class="form-label">Select Round</label>
+                <select id="roundSelect" class="form-select"></select>
+              </div>
+              <div class="mb-3">
+                <label for="resultsFile" class="form-label">CSV File</label>
+                <input id="resultsFile" type="file" class="form-control" accept=".csv">
+                <small class="text-muted">Use student_id or roll_number. If status/result/shortlisted is not provided, all listed students are treated as shortlisted.</small>
+              </div>
+              <button id="uploadBtn" class="default-btn" type="button" onclick="uploadRoundResults()">Upload Results</button>
+              <p id="uploadLockMessage" class="section-sub mt-2" style="display:none;">This drive is completed. Upload is locked.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="timelineAlertModal" class="timeline-modal-overlay" aria-hidden="true">
+    <div class="timeline-modal-card" role="dialog" aria-modal="true" aria-labelledby="timelineModalTitle">
+      <div id="timelineModalTitle" class="timeline-modal-header">Message</div>
+      <div id="timelineModalMessage" class="timeline-modal-body"></div>
+      <div class="timeline-modal-footer">
+        <button id="timelineModalOkBtn" type="button" class="timeline-modal-btn">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const placementId = params.get('placementId');
+    let timelineData = null;
+
+    function showTimelineModal(message, title = 'Message') {
+      const modal = document.getElementById('timelineAlertModal');
+      const titleEl = document.getElementById('timelineModalTitle');
+      const msgEl = document.getElementById('timelineModalMessage');
+      const okBtn = document.getElementById('timelineModalOkBtn');
+
+      if (!modal || !titleEl || !msgEl || !okBtn) return;
+
+      titleEl.textContent = title;
+      msgEl.textContent = String(message || '');
+      modal.classList.add('active');
+      modal.setAttribute('aria-hidden', 'false');
+      okBtn.focus();
+    }
+
+    function hideTimelineModal() {
+      const modal = document.getElementById('timelineAlertModal');
+      if (!modal) return;
+      modal.classList.remove('active');
+      modal.setAttribute('aria-hidden', 'true');
+    }
+
+    async function loadTimeline() {
+      if (!placementId) {
+        showTimelineModal('Placement ID is missing', 'Warning');
+        window.location.href = 'admin-placement-drives.html';
+        return;
+      }
+
+      try {
+        const response = await fetch(`/api/opportunities/placements/${placementId}/timeline`);
+        const data = await response.json();
+
+        if (!data.success) {
+          throw new Error(data.message || 'Failed to load timeline');
+        }
+
+        timelineData = data;
+        renderTimeline(data);
+      } catch (err) {
+        console.error(err);
+        document.getElementById('roundTimeline').innerHTML = `<p class="text-danger">${err.message}</p>`;
+      }
+    }
+
+    function renderTimeline(data) {
+      const placement = data.placement;
+      const rounds = placement.rounds || [];
+      const roundDetails = placement.round_details || [];
+      const summaries = data.round_summaries || {};
+      const isDriveCompleted = !!data.is_drive_completed;
+
+      document.getElementById('driveTitle').textContent = `${placement.company_name} - ${placement.job_role}`;
+      const eventDate = placement.event_date ? new Date(placement.event_date).toLocaleString() : 'Not set';
+      document.getElementById('driveMeta').textContent = `Drive Date: ${eventDate} | Location: ${placement.location || 'TBA'}`;
+
+      const driveChip = document.getElementById('driveTodayChip');
+      if (isDriveCompleted) {
+        driveChip.style.display = 'inline-block';
+        driveChip.className = 'status-chip completed';
+        driveChip.textContent = 'Completed';
+      } else if (data.is_drive_today) {
+        driveChip.style.display = 'inline-block';
+        driveChip.className = 'status-chip ongoing';
+        driveChip.textContent = 'On-going Today';
+      } else {
+        driveChip.style.display = 'none';
+      }
+
+      const select = document.getElementById('roundSelect');
+      const fileInput = document.getElementById('resultsFile');
+      const uploadBtn = document.getElementById('uploadBtn');
+      const uploadLockMessage = document.getElementById('uploadLockMessage');
+
+      select.innerHTML = rounds.length
+        ? rounds.map((round, idx) => `<option value="${idx + 1}">Round ${idx + 1}: ${round}</option>`).join('')
+        : '<option value="1">Round 1</option>';
+
+      if (uploadBtn && fileInput && select && uploadLockMessage) {
+        uploadBtn.disabled = isDriveCompleted;
+        fileInput.disabled = isDriveCompleted;
+        select.disabled = isDriveCompleted;
+        uploadBtn.textContent = isDriveCompleted ? 'Drive Completed' : 'Upload Results';
+        uploadLockMessage.style.display = isDriveCompleted ? 'block' : 'none';
+      }
+
+      const html = rounds.length
+        ? rounds.map((round, idx) => {
+            const roundNo = idx + 1;
+            const detail = roundDetails[idx] || {};
+            const summary = summaries[String(roundNo)] || summaries[roundNo] || {};
+            const total = Number(summary.total_results || 0);
+            const shortlisted = Number(summary.shortlisted_count || 0);
+            const completed = total > 0;
+            const isCurrent = data.is_drive_today && !isDriveCompleted && roundNo === data.current_round_index && !completed;
+            const roundDateText = detail.scheduled_datetime
+              ? new Date(detail.scheduled_datetime).toLocaleString()
+              : 'Date not set';
+
+            return `
+              <div class="timeline-node">
+                <span class="timeline-dot ${completed ? 'completed' : ''} ${isCurrent ? 'current blink-dot' : ''}"></span>
+                <div class="round-card ${completed ? 'completed' : ''} ${isCurrent ? 'current' : ''}">
+                  <div class="round-header-row">
+                    <div class="round-title">Round ${roundNo}: ${round}</div>
+                    <span class="round-chip ${isCurrent ? 'current' : completed ? 'completed' : ''}">${isCurrent ? 'On-going' : completed ? 'Completed' : 'Pending'}</span>
+                  </div>
+                  <p class="round-sub">${roundDateText}</p>
+                  <p class="round-sub">Uploaded Results: ${total} | Shortlisted: ${shortlisted}</p>
+                </div>
+              </div>
+            `;
+          }).join('')
+        : '<p class="text-muted">No rounds configured for this drive.</p>';
+
+      document.getElementById('roundTimeline').innerHTML = html;
+    }
+
+    async function uploadRoundResults() {
+      if (!placementId) return;
+
+      if (timelineData && timelineData.is_drive_completed) {
+        showTimelineModal('This drive is already completed. Upload is not allowed.', 'Upload Locked');
+        return;
+      }
+
+      const fileInput = document.getElementById('resultsFile');
+      const roundSelect = document.getElementById('roundSelect');
+      const uploadBtn = document.getElementById('uploadBtn');
+
+      if (!fileInput.files || !fileInput.files[0]) {
+        showTimelineModal('Please choose a CSV file.', 'Validation');
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('round_number', roundSelect.value);
+      formData.append('results_file', fileInput.files[0]);
+
+      uploadBtn.disabled = true;
+      uploadBtn.textContent = 'Uploading...';
+
+      try {
+        const response = await fetch(`/api/opportunities/placements/${placementId}/round-results/upload`, {
+          method: 'POST',
+          body: formData
+        });
+
+        const data = await response.json();
+        if (!data.success) {
+          throw new Error(data.message || 'Upload failed');
+        }
+
+        const finalRoundMsg = data.is_final_round
+          ? `, Placed: ${data.placed_count || 0}`
+          : '';
+        showTimelineModal(`Upload complete. Processed: ${data.processed_count}, Shortlisted: ${data.shortlisted_count}${finalRoundMsg}, Notifications: ${data.notifications_sent}`, 'Upload Status');
+        fileInput.value = '';
+        await loadTimeline();
+      } catch (err) {
+        console.error(err);
+        showTimelineModal(err.message || 'Failed to upload results', 'Upload Error');
+      } finally {
+        uploadBtn.disabled = false;
+        uploadBtn.textContent = 'Upload Results';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const modal = document.getElementById('timelineAlertModal');
+      const okBtn = document.getElementById('timelineModalOkBtn');
+
+      if (okBtn) {
+        okBtn.addEventListener('click', hideTimelineModal);
+      }
+
+      if (modal) {
+        modal.addEventListener('click', (event) => {
+          if (event.target === modal) {
+            hideTimelineModal();
+          }
+        });
+      }
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+          hideTimelineModal();
+        }
+      });
+
+      loadTimeline();
+    });
+  </script>
+    <script src="assets/js/admin-sidebar.js"></script>
+    <script src="assets/js/admin-footer.js"></script>
+</body>
+</html>
+
+

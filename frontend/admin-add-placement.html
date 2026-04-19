@@ -1,0 +1,252 @@
+﻿<!DOCTYPE html>
+<html lang="zxx">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NEC Placement Cell - Add Placement Drive</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/remixicon.css">
+    <link rel="stylesheet" href="assets/css/flaticon.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/admin-theme.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+
+    <style>
+        .admin-wrapper {
+            padding: 60px 0;
+            background-color: #f5f8fa;
+            min-height: 100vh;
+        }
+
+        .form-card {
+            background: #fff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0px 10px 30px rgba(13, 71, 161, 0.08);
+            border-top: 5px solid #0d47a1;
+        }
+
+        .form-label {
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .form-control, .form-select {
+            border-radius: 8px;
+            padding: 12px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .form-control:focus {
+            box-shadow: 0 0 0 3px rgba(13, 71, 161, 0.1);
+            border-color: #0d47a1;
+        }
+
+        .header-welcome-gap {
+            height: 8px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #f0f2f5 100%);
+        }
+
+        .section-heading-admin {
+            font-weight: 800;
+            color: #0d47a1;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="top-header-area style-2" style="padding: 12px 0;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-12 text-center">
+                    <h3 class="mb-0" style="color: #fff; font-weight: 700; letter-spacing: 1px; line-height: 1.4; font-size: 26px;">
+                                            <span style="font-family: 'Poppins', ; font-size: 36px; font-weight: 700;"> NEC</span> – Central Placement Information and Management Center
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-welcome-gap" aria-hidden="true"></div>
+
+    <div class="admin-page-hero">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <div class="admin-page-hero-content">
+                        <h2 class="admin-page-hero-title">Add Placement Drive</h2>
+                        <p class="admin-page-hero-subtitle">Create and publish new recruitment opportunities with the key drive details students need.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <div class="admin-page-hero-visual">
+                        <i class="ri-briefcase-4-line"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="admin-wrapper">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="form-card">
+                        <h2 class="section-heading-admin">Post Placement Drive</h2>
+                        
+                        <form id="placementForm">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Drive Title</label>
+                                    <input type="text" class="form-control" name="title" placeholder="e.g. Software Engineer Trainee" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Company Name</label>
+                                    <input type="text" class="form-control" name="company_name" placeholder="e.g. Google / TCS" required>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Description</label>
+                                <textarea class="form-control" name="description" rows="3" placeholder="Brief about the job role..."></textarea>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Opportunity Type</label>
+                                    <select class="form-select" name="type">
+                                        <option value="placement">Full-time Placement</option>
+                                        <option value="internship">Internship</option>
+                                        <option value="hackathon">Hackathon</option>
+                                        <option value="competition">Competition</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Salary Package (LPA)</label>
+                                    <input type="number" class="form-control" step="0.1" name="salary_package" placeholder="e.g. 6.5">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Drive Date &amp; Time</label>
+                                    <input type="datetime-local" class="form-control" name="event_date">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Drive Location</label>
+                                    <input type="text" class="form-control" name="location" placeholder="e.g. Main Campus / Online">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Placement Type</label>
+                                    <select class="form-select" name="placement_type">
+                                        <option value="oncampus">On Campus</option>
+                                        <option value="offcampus">Off Campus</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Deadline / Due Date</label>
+                                    <input type="date" class="form-control" name="due_date">
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Eligibility Criteria</label>
+                                <input type="text" class="form-control" name="eligibility" placeholder="e.g. B.Tech (CSE/ECE) - 60% Throughout">
+                            </div>
+
+                            <div class="mb-3 text-primary bg-light p-3 rounded border">
+                                <label class="form-label text-primary"><i class="ri-link"></i> External Application Link</label>
+                                <input type="url" class="form-control" name="apply_link" placeholder="https://careers.company.com/job-id">
+                                <small class="text-muted">Direct link for students to apply on the company portal.</small>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Process Details</label>
+                                <textarea class="form-control" name="process_details" rows="2" placeholder="e.g. 1. Aptitude Test, 2. TR, 3. HR"></textarea>
+                            </div>
+
+                            <button type="submit" class="default-btn border-0 w-100" style="background:#0d47a1; color:white; padding: 15px;">
+                                Publish Placement Drive <i class="ri-send-plane-fill"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('placementForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const form = e.target;
+
+            const payload = {
+                company_name: form.company_name.value,
+                job_role: form.title.value,
+                salary_package: form.salary_package.value || null,
+                location: form.location ? form.location.value : null,
+                placement_type: form.placement_type ? form.placement_type.value : 'full-time',
+                event_date: form.event_date.value || null,
+                due_date: form.due_date.value || null,
+                description: form.description.value || null,
+                apply_link: form.apply_link.value || null,
+                eligible_branches: 'All',
+                eligible_years: 'All'
+            };
+
+            if (!payload.company_name || !payload.job_role) {
+                alert('Company Name and Job Role are required');
+                return;
+            }
+
+            try {
+                const res = await fetch('/api/opportunities/placements/create', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+                if (data.success) {
+                    alert('Opportunity added successfully!');
+                    window.location.href = 'admin-opportunities.html';
+                } else {
+                    alert(data.message || 'Failed to add opportunity');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Network error while connecting to server');
+            }
+        });
+    </script>
+    <script src="assets/js/admin-session-manager.js"></script>
+    <script src="assets/js/admin-sidebar.js"></script>
+    <script src="assets/js/admin-access-control.js"></script>
+    <script src="assets/js/admin-footer.js"></script>
+    <script>
+        // Hide main content while checking privileges
+        const mainContent = document.querySelector('main') || 
+                           document.querySelector('.admin-wrapper') || 
+                           document.querySelector('.container-fluid');
+        if (mainContent) mainContent.style.display = 'none';
+
+        // Guard access - require can_post_opportunities privilege
+        document.addEventListener('DOMContentLoaded', async () => {
+            const hasAccess = await adminAccessControl.guardPage('can_post_opportunities', 'Post Opportunities/Placements');
+            // Show main content only if access granted
+            if (hasAccess && mainContent) mainContent.style.display = '';
+        });
+    </script>
+</body>
+</html>
+

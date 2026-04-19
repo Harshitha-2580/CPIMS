@@ -1,0 +1,983 @@
+﻿<!DOCTYPE html>
+<html lang="zxx">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEC - Assigned Drives</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="assets/css/scrollCue.css">
+    <link rel="stylesheet" href="assets/css/remixicon.css">
+    <link rel="stylesheet" href="assets/css/flaticon.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link href="assets/img/crop_nec.png" type="image/x-icon" rel="icon">
+
+    <style>
+        :root {
+            --primaryColor: #001e43;
+            --secenderyColor: #0b4b98;
+            --darkColor: rgb(0, 30, 67);
+        }
+
+        body {
+            padding-top: 0;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #f8f9fa 0%, #f0f2f5 100%);
+        }
+
+        #navbar {
+            transition: all 0.3s ease;
+        }
+
+        #navbar.sticky {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1030;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        body.navbar-sticky {
+            padding-top: 90px;
+        }
+
+        .header-welcome-gap {
+            height: 8px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #f0f2f5 100%);
+        }
+
+        body .faculty-page-overview-wrap {
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+            margin-top: 0 !important;
+        }
+
+        body .faculty-page-overview-box {
+            padding: 52px 0 36px !important;
+            margin-bottom: 24px;
+        }
+
+        .assigned-area {
+            padding: 8px 0 24px;
+        }
+
+        .top-actions {
+            display: flex;
+            justify-content: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .btn-back-page {
+            border: 1px solid #001e43;
+            border-radius: 10px;
+            background: #fff;
+            color: #001e43;
+            font-weight: 700;
+            padding: 9px 14px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-back-page:hover {
+            background: #001e43;
+            color: #fff;
+        }
+
+        .filters-card {
+            background: #fff;
+            border: 1px solid #dbe5f1;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 30, 67, 0.08);
+            padding: 18px;
+            margin-bottom: 16px;
+        }
+
+        .filter-actions {
+            display: flex;
+            gap: 10px;
+            align-items: end;
+            height: 100%;
+        }
+
+        .btn-filter {
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            padding: 10px 16px;
+            min-width: 100px;
+        }
+
+        .btn-filter.apply {
+            background: linear-gradient(90deg, var(--primaryColor), var(--secenderyColor));
+            color: #fff;
+        }
+
+        .btn-filter.reset {
+            background: #eef2f7;
+            color: var(--darkColor);
+        }
+
+        .drives-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 6px 2px 12px;
+            color: #4e6481;
+            font-weight: 600;
+            font-size: 13px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .drive-card {
+            background: #fff;
+            border: 1px solid #dbe5f1;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 30, 67, 0.08);
+            padding: 16px;
+            height: 100%;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .drive-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(0, 30, 67, 0.16);
+            border-color: rgba(0, 30, 67, 0.2);
+        }
+
+        .drive-title {
+            color: var(--darkColor);
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 4px;
+            line-height: 1.2;
+        }
+
+        .drive-role {
+            color: #53657c;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .drive-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 6px 14px;
+        }
+
+        .drive-row {
+            margin: 0;
+            color: #2f4460;
+            font-size: 13px;
+        }
+
+        .drive-row span {
+            color: #53657c;
+            font-weight: 700;
+            margin-right: 6px;
+        }
+
+        .registrations-pill {
+            margin-top: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border-radius: 22px;
+            padding: 6px 12px;
+            background: #e9f2ff;
+            color: #0b4b98;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .pager {
+            margin-top: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .pager-info {
+            color: #4e6481;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .pager .btn {
+            min-width: 92px;
+            border-radius: 8px;
+            font-weight: 700;
+        }
+
+        .empty-box {
+            background: #fff;
+            border: 1px solid #dbe5f1;
+            border-radius: 12px;
+            padding: 40px 20px;
+            text-align: center;
+            color: #6a7d95;
+            font-weight: 600;
+        }
+
+        .details-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.45);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2200;
+            padding: 14px;
+        }
+
+        .details-overlay.show {
+            display: flex;
+        }
+
+        .details-modal {
+            width: min(1100px, 100%);
+            max-height: 92vh;
+            overflow: auto;
+            background: #fff;
+            border-radius: 14px;
+            border: 1px solid #dbe5f1;
+            box-shadow: 0 22px 52px rgba(0, 30, 67, 0.24);
+        }
+
+        .details-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid #e4ebf5;
+            padding: 14px 16px;
+            position: sticky;
+            top: 0;
+            background: #fff;
+            z-index: 1;
+        }
+
+        .details-title {
+            margin: 0;
+            color: var(--darkColor);
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .details-close {
+            border: none;
+            background: #001e43;
+            color: #fff;
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            font-size: 20px;
+            line-height: 1;
+        }
+
+        .details-body {
+            padding: 16px;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        .summary-tile {
+            background: #f8fbff;
+            border: 1px solid #d8e2ef;
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .summary-tile h6 {
+            margin: 0 0 6px;
+            color: #2f4460;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .summary-tile p {
+            margin: 0;
+            color: #001e43;
+            font-size: 22px;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .details-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 10px;
+        }
+
+        .timeline-block {
+            border: 1px solid #dbe5f1;
+            border-radius: 10px;
+            background: #f8fbff;
+            padding: 12px;
+            margin-bottom: 12px;
+        }
+
+        .timeline-title {
+            margin: 0 0 10px;
+            color: #1f3754;
+            font-size: 16px;
+            font-weight: 800;
+        }
+
+        .round-list {
+            display: grid;
+            gap: 8px;
+        }
+
+        .round-item {
+            background: #fff;
+            border: 1px solid #d8e2ef;
+            border-radius: 8px;
+            padding: 10px 12px;
+            color: #2f4460;
+        }
+
+        .round-head {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: baseline;
+            margin-bottom: 6px;
+        }
+
+        .round-item .round-no {
+            color: #001e43;
+            font-weight: 800;
+            font-size: 13px;
+        }
+
+        .round-name {
+            color: #203955;
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .round-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            color: #526b86;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .round-meta-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 8px;
+            border: 1px solid #d7e3f2;
+            border-radius: 999px;
+            background: #f5f9ff;
+        }
+
+        .csv-note {
+            border: 1px dashed #bdd0e8;
+            border-radius: 10px;
+            background: #f8fbff;
+            color: #415a77;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 10px 12px;
+            margin-bottom: 10px;
+        }
+
+        .btn-export {
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #001e43, #0b4b98);
+            color: #fff;
+            font-weight: 700;
+            padding: 10px 14px;
+        }
+
+        .btn-export:disabled {
+            background: #c7d1df;
+            color: #7f8fa4;
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 992px) {
+            .drive-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+            /* Footer Area Style */
+.footer-area{
+  background-color:#071b3a;
+  color:#ffffff;
+  margin-top:100px;
+  padding:40px 20px;
+  width:100%;
+}
+.footer-area p:last-child {
+  margin-bottom: 0;
+}
+/* Inner content width (like container but no outer margins) */
+.footer-inner {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* Headings */
+.footer-area h3 {
+  font-size: 26px;
+  margin-bottom: 16px;
+  color: #ffffff;
+}
+
+.footer-area h6 {
+  font-size: 16px;
+  margin-top: 16px;
+  margin-bottom: 8px;
+  color: #ffffff;
+}
+
+/* Text */
+.footer-area p {
+  font-size: 14px;
+  color: #ffffff;
+  margin-bottom: 8px;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+/* List reset */
+.footer-area ul {
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
+
+/* Social icons spacing */
+.footer-area .social-link li {
+  margin-right: 8px;
+}
+
+/* Links: white by default */
+.footer-area a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+/* Hover / focus */
+.footer-area a:hover,
+.footer-area a:focus {
+  color: var(--primaryColor);
+  text-decoration: none;
+}
+
+/* Active click */
+.footer-area a:active {
+  color: #ffc333;
+}
+
+/* Bottom bar */
+.footer-bottom {
+  font-size: 13px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding-top: 12px;
+  margin-top: 16px;
+}
+
+/* Bottom text and links */
+.footer-bottom span {
+  color: #ffffff;
+}
+
+.footer-bottom a {
+  color: #ffffff;
+}
+
+.footer-bottom a:hover,
+.footer-bottom a:focus {
+  color: var(--primaryColor);
+}
+    </style>
+</head>
+<body>
+
+    <div class="top-header-area style-2" style="padding: 12px 0;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-12 text-center">
+                    <h3 class="mb-0" style="color: #fff; font-weight: 700; letter-spacing: 1px; line-height: 1.4; font-size: 26px;">
+                        <span style="font-family: 'Poppins', ; font-size: 36px; font-weight: 700;"> NEC </span>
+                        - Central Placement and Information Center
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-welcome-gap" aria-hidden="true"></div>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light py-2" id="navbar">
+        <div class="container">
+            <img src="assets/img/logo_necn.png" alt="Logo" height="70" width="160">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a href="faculty-dashboard.html" class="nav-link">Dashboard</a></li>
+                    <li class="nav-item"><a href="faculty-events.html" class="nav-link">Add Events</a></li>
+                    <li class="nav-item"><a href="faculty-applications.html" class="nav-link">Internships</a></li>
+                    <li class="nav-item"><a href="faculty-materials.html" class="nav-link">Materials</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">My Account</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="faculty-profile.html">My Profile</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="index.html">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="faculty-page-overview-wrap">
+        <div class="faculty-page-overview-box">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-8">
+                        <div class="faculty-page-overview-content">
+                            <h2 class="faculty-page-overview-title">Assigned Drives</h2>
+                            <p class="faculty-page-overview-subtitle">View drives assigned to you by admin and track registrations.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 text-center">
+                        <i class="ri-briefcase-4-line faculty-page-overview-icon" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="assigned-area faculty-main-content">
+        <div class="container">
+            <div class="top-actions">
+                <a href="faculty-dashboard.html" class="btn-back-page"><i class="ri-arrow-left-line"></i> Back</a>
+            </div>
+
+            <div class="filters-card">
+                <div class="row g-3">
+                    <div class="col-lg-5">
+                        <label class="form-label mb-1">Company Name</label>
+                        <input type="text" id="companyFilter" class="form-control" placeholder="Search by company name">
+                    </div>
+                    <div class="col-lg-2">
+                        <label class="form-label mb-1">From Date</label>
+                        <input type="date" id="fromDateFilter" class="form-control">
+                    </div>
+                    <div class="col-lg-2">
+                        <label class="form-label mb-1">To Date</label>
+                        <input type="date" id="toDateFilter" class="form-control">
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="filter-actions">
+                            <button id="applyFilterBtn" class="btn-filter apply" type="button">Apply</button>
+                            <button id="resetFilterBtn" class="btn-filter reset" type="button">Reset</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="drives-meta">
+                <div>Total assigned drives: <span id="totalDrivesCount">0</span></div>
+                <div id="pageMetaText">Page 1</div>
+            </div>
+
+            <div class="row g-3" id="assignedDrivesList"></div>
+
+            <div id="emptyDrives" class="empty-box" style="display:none;">No assigned drives found for the selected filters.</div>
+
+            <div class="pager" id="pagerRow">
+                <div class="pager-info" id="pagerInfo">Page 1 of 1</div>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-outline-secondary" id="prevPageBtn" type="button">Previous</button>
+                    <button class="btn btn-outline-primary" id="nextPageBtn" type="button">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="details-overlay" id="driveDetailsOverlay" onclick="closeDriveDetails(event)">
+        <div class="details-modal" onclick="event.stopPropagation()">
+            <div class="details-head">
+                <h4 class="details-title" id="detailsDriveTitle">Drive Details</h4>
+                <button class="details-close" type="button" onclick="closeDriveDetails()">&times;</button>
+            </div>
+            <div class="details-body">
+                <div id="detailsDriveMeta" class="mb-3"></div>
+                <div class="timeline-block">
+                    <h5 class="timeline-title">Rounds Timeline</h5>
+                    <div id="roundsTimeline" class="round-list"></div>
+                </div>
+                <div class="summary-grid">
+                    <div class="summary-tile"><h6>Registrations Count</h6><p id="sumRegistrations">0</p></div>
+                </div>
+
+                <div class="details-actions">
+                    <button class="btn-export" id="exportCsvBtn" type="button"><i class="ri-download-2-line"></i> Export CSV</button>
+                </div>
+                <div class="csv-note">Registration details table is hidden on screen. Use Export CSV to download the full student registration data.</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="admin-footer-placeholder"></div>
+
+    <script src="assets/js/auth-session-manager.js"></script>
+    <script src="assets/js/faculty-session-bootstrap.js"></script>
+    <script>
+        const facultyId = (sessionStorage.getItem('faculty_id') || localStorage.getItem('faculty_id'));
+        const facultyCampusType = (sessionStorage.getItem('faculty_campus_type') || localStorage.getItem('faculty_campus_type')) || 'NECN';
+
+        const state = {
+            page: 1,
+            limit: 6,
+            totalPages: 1,
+            total: 0,
+            drives: [],
+            detailsRegistrations: [],
+            selectedDrive: null
+        };
+
+        function formatDate(value) {
+            if (!value) return '-';
+            const d = new Date(value);
+            if (Number.isNaN(d.getTime())) return '-';
+            return d.toLocaleDateString();
+        }
+
+        function formatDateTime(value) {
+            if (!value) return '';
+            const d = new Date(value);
+            if (Number.isNaN(d.getTime())) return String(value);
+            return d.toLocaleString();
+        }
+
+        function escapeHtml(value) {
+            return String(value ?? '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function parseRounds(rawRounds) {
+            if (!rawRounds) {
+                return [];
+            }
+
+            try {
+                const parsed = JSON.parse(rawRounds);
+                if (Array.isArray(parsed)) {
+                    return parsed
+                        .map((round, idx) => {
+                            if (typeof round === 'string') {
+                                const title = round.trim();
+                                return title ? { title } : null;
+                            }
+                            if (round && typeof round === 'object') {
+                                const title = String(round.round_type || round.round_name || round.name || `Round ${idx + 1}`).trim();
+                                if (!title) return null;
+
+                                return {
+                                    title,
+                                    mode: String(round.mode || round.round_mode || '').trim(),
+                                    schedule: String(round.scheduled_at || round.scheduled_on || round.date || round.datetime || round.time || '').trim(),
+                                    venue: String(round.location || round.venue || '').trim()
+                                };
+                            }
+                            return null;
+                        })
+                        .filter(Boolean);
+                }
+            } catch (e) {
+                // Fallback to comma-separated values.
+            }
+
+            return String(rawRounds)
+                .split(',')
+                .map(s => s.trim())
+                .filter(Boolean)
+                .map(title => ({ title }));
+        }
+
+        function getFilters() {
+            return {
+                company: document.getElementById('companyFilter').value.trim(),
+                fromDate: document.getElementById('fromDateFilter').value,
+                toDate: document.getElementById('toDateFilter').value
+            };
+        }
+
+        async function fetchAssignedDrives() {
+            if (!facultyId) {
+                window.location.href = 'login-faculty.html';
+                return;
+            }
+
+            const filters = getFilters();
+            const query = new URLSearchParams({
+                campus: facultyCampusType,
+                page: String(state.page),
+                limit: String(state.limit)
+            });
+
+            if (filters.company) query.set('company', filters.company);
+            if (filters.fromDate) query.set('fromDate', filters.fromDate);
+            if (filters.toDate) query.set('toDate', filters.toDate);
+
+            const response = await fetch(`/api/faculty/assigned-drives/${encodeURIComponent(facultyId)}?${query.toString()}`);
+            const data = await response.json();
+
+            if (!response.ok || !data.success) {
+                const msg = data.message || 'Unable to fetch assigned drives.';
+                alert(msg);
+                if (response.status === 403) {
+                    window.location.href = 'faculty-dashboard.html';
+                }
+                return;
+            }
+
+            state.drives = data.drives || [];
+            state.total = Number(data.pagination?.total || 0);
+            state.totalPages = Number(data.pagination?.totalPages || 1);
+
+            renderAssignedDrives();
+        }
+
+        function renderAssignedDrives() {
+            const list = document.getElementById('assignedDrivesList');
+            const empty = document.getElementById('emptyDrives');
+            const pagerRow = document.getElementById('pagerRow');
+
+            document.getElementById('totalDrivesCount').textContent = String(state.total);
+            document.getElementById('pageMetaText').textContent = `Page ${state.page}`;
+            document.getElementById('pagerInfo').textContent = `Page ${state.page} of ${state.totalPages}`;
+
+            document.getElementById('prevPageBtn').disabled = state.page <= 1;
+            document.getElementById('nextPageBtn').disabled = state.page >= state.totalPages;
+
+            if (!state.drives.length) {
+                list.innerHTML = '';
+                empty.style.display = 'block';
+                pagerRow.style.display = 'none';
+                return;
+            }
+
+            empty.style.display = 'none';
+            pagerRow.style.display = 'flex';
+
+            list.innerHTML = state.drives.map(drive => {
+                const driveDate = formatDate(drive.event_date || drive.due_date || drive.created_at);
+                const dueDate = formatDate(drive.due_date);
+                return `
+                    <div class="col-lg-6">
+                        <div class="drive-card" onclick="openDriveDetails(${drive.id})">
+                            <h4 class="drive-title">${drive.company_name || '-'}</h4>
+                            <p class="drive-role">${drive.job_role || '-'}</p>
+                            <div class="drive-grid">
+                                <p class="drive-row"><span>Drive Date:</span>${driveDate}</p>
+                                <p class="drive-row"><span>Due Date:</span>${dueDate}</p>
+                                <p class="drive-row"><span>Location:</span>${drive.location || '-'}</p>
+                                <p class="drive-row"><span>Assigned:</span>${formatDate(drive.assigned_at)}</p>
+                            </div>
+                            <div class="registrations-pill"><i class="ri-team-line"></i> Registrations: ${Number(drive.registrations_count || 0)}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        async function openDriveDetails(placementId) {
+            const response = await fetch(`/api/faculty/assigned-drives/${encodeURIComponent(facultyId)}/${placementId}/registrations?campus=${encodeURIComponent(facultyCampusType)}`);
+            const data = await response.json();
+
+            if (!response.ok || !data.success) {
+                alert(data.message || 'Unable to load drive details.');
+                return;
+            }
+
+            state.selectedDrive = data.drive;
+            state.detailsRegistrations = data.registrations || [];
+
+            const driveDescription = (data.drive.description || '').trim() || 'No description available';
+            const rounds = parseRounds(data.drive.interview_rounds);
+
+            document.getElementById('detailsDriveTitle').textContent = `${data.drive.company_name || '-'} - ${data.drive.job_role || '-'}`;
+            document.getElementById('detailsDriveMeta').innerHTML = `
+                <div><strong>Drive Date:</strong> ${formatDate(data.drive.event_date || data.drive.due_date || data.drive.created_at)}</div>
+                <div><strong>Due Date:</strong> ${formatDate(data.drive.due_date)}</div>
+                <div><strong>Location:</strong> ${data.drive.location || '-'}</div>
+                <div><strong>Salary Package:</strong> ${data.drive.salary_package || '-'}</div>
+                <div><strong>Description:</strong> ${driveDescription}</div>
+            `;
+
+            const roundsTimeline = document.getElementById('roundsTimeline');
+            if (!rounds.length) {
+                roundsTimeline.innerHTML = '<div class="round-item"><span class="round-no">-</span>No rounds timeline available</div>';
+            } else {
+                roundsTimeline.innerHTML = rounds.map((round, idx) => {
+                    const meta = [];
+                    if (round.schedule) {
+                        meta.push(`<span class="round-meta-item"><i class="ri-calendar-line"></i>${escapeHtml(formatDateTime(round.schedule))}</span>`);
+                    }
+                    if (round.mode) {
+                        meta.push(`<span class="round-meta-item"><i class="ri-broadcast-line"></i>${escapeHtml(round.mode)}</span>`);
+                    }
+                    if (round.venue) {
+                        meta.push(`<span class="round-meta-item"><i class="ri-map-pin-line"></i>${escapeHtml(round.venue)}</span>`);
+                    }
+
+                    return `
+                        <div class="round-item">
+                            <div class="round-head">
+                                <span class="round-no">Round ${idx + 1}</span>
+                                <span class="round-name">${escapeHtml(round.title || '-')}</span>
+                            </div>
+                            ${meta.length ? `<div class="round-meta">${meta.join('')}</div>` : ''}
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            document.getElementById('sumRegistrations').textContent = String(data.summary?.totalRegistered || 0);
+
+            const totalRegistered = Number(data.summary?.totalRegistered || 0);
+            document.getElementById('exportCsvBtn').disabled = totalRegistered === 0;
+
+            document.getElementById('driveDetailsOverlay').classList.add('show');
+        }
+
+        function closeDriveDetails(event) {
+            if (!event || event.target.id === 'driveDetailsOverlay') {
+                document.getElementById('driveDetailsOverlay').classList.remove('show');
+            }
+        }
+
+        function toCsvValue(value) {
+            const text = String(value ?? '');
+            if (text.includes(',') || text.includes('"') || text.includes('\n')) {
+                return '"' + text.replace(/"/g, '""') + '"';
+            }
+            return text;
+        }
+
+        function exportRegistrationsCsv() {
+            if (!state.detailsRegistrations.length) {
+                alert('No registration data to export.');
+                return;
+            }
+
+            const headers = ['student_id', 'student_name', 'student_email', 'branch', 'year', 'cgpa', 'status', 'registered_on'];
+            const rows = state.detailsRegistrations.map(r => [
+                r.student_id,
+                r.student_name,
+                r.student_email,
+                r.branch,
+                r.year,
+                r.cgpa,
+                r.status,
+                r.registered_on
+            ]);
+
+            const csv = [headers.join(','), ...rows.map(row => row.map(toCsvValue).join(','))].join('\n');
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            const safeCompany = (state.selectedDrive?.company_name || 'drive').replace(/[^a-z0-9]+/gi, '-').toLowerCase();
+            const driveId = state.selectedDrive?.id || 'unknown';
+            const now = new Date();
+            const dateStamp = now.toISOString().slice(0, 10);
+            const timeStamp = now.toISOString().slice(11, 19).replace(/:/g, '-');
+            link.href = url;
+            link.download = `Drive_Registrations_${safeCompany}_ID${driveId}_${dateStamp}_${timeStamp}.csv`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+
+        function applyFilters() {
+            state.page = 1;
+            fetchAssignedDrives();
+        }
+
+        function resetFilters() {
+            document.getElementById('companyFilter').value = '';
+            document.getElementById('fromDateFilter').value = '';
+            document.getElementById('toDateFilter').value = '';
+            state.page = 1;
+            fetchAssignedDrives();
+        }
+
+        document.getElementById('applyFilterBtn').addEventListener('click', applyFilters);
+        document.getElementById('resetFilterBtn').addEventListener('click', resetFilters);
+        document.getElementById('prevPageBtn').addEventListener('click', function () {
+            if (state.page > 1) {
+                state.page -= 1;
+                fetchAssignedDrives();
+            }
+        });
+        document.getElementById('nextPageBtn').addEventListener('click', function () {
+            if (state.page < state.totalPages) {
+                state.page += 1;
+                fetchAssignedDrives();
+            }
+        });
+        document.getElementById('exportCsvBtn').addEventListener('click', exportRegistrationsCsv);
+
+        document.addEventListener('DOMContentLoaded', fetchAssignedDrives);
+
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            const topHeader = document.querySelector('.top-header-area');
+            if (!navbar || !topHeader) return;
+
+            const topHeaderHeight = topHeader.offsetHeight;
+            if (window.scrollY >= topHeaderHeight) {
+                navbar.classList.add('sticky');
+                document.body.classList.add('navbar-sticky');
+            } else {
+                navbar.classList.remove('sticky');
+                document.body.classList.remove('navbar-sticky');
+            }
+        });
+    </script>
+
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/faculty-sidebar.js?v=20260314"></script>
+    <script src="assets/js/admin-footer.js"></script>
+    <script src="assets/js/custom.js"></script>
+</body>
+</html>
+
+

@@ -1,0 +1,359 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NEC Placement Cell - Admin Attendance Scanner</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="assets/css/scrollCue.css" />
+    <link rel="stylesheet" href="assets/css/remixicon.css" />
+    <link rel="stylesheet" href="assets/css/flaticon.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/admin-theme.css" />
+    <link rel="stylesheet" href="assets/css/responsive.css" />
+    <link href="assets/img/crop_nec.png" type="image/x-icon" rel="icon" />
+    <style>
+        :root {
+            --primaryColor: #001e43;
+            --secondaryColor: #002a5c;
+            --accentColor: #003580;
+            --darkColor: rgb(0, 30, 67);
+            --lightGray: #f8f9fa;
+            --cardBg: #ffffff;
+            --textColor: #333;
+            --textLight: #666;
+            --borderColor: #e9ecef;
+            --shadowColor: rgba(0, 30, 67, 0.1);
+            --gradientPrimary: linear-gradient(135deg, #001e43, #002a5c);
+            --gradientSecondary: linear-gradient(135deg, #002a5c, #003580);
+        }
+        body {
+            padding-top: 0;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #f8f9fa 0%, #f0f2f5 100%);
+        }
+        .header-welcome-gap {
+            height: 8px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #f0f2f5 100%);
+            margin-left: 240px;
+        }
+        .main-content-wrapper {
+            margin-left: 240px;
+            transition: margin-left 0.3s cubic-bezier(0.4,0,0.2,1);
+            min-height: 100vh;
+        }
+        .admin-sidebar.collapsed ~ .main-content-wrapper {
+            margin-left: 68px;
+        }
+        .admin-welcome-banner {
+            background: var(--gradientPrimary);
+            padding: 52px 0 36px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 40px var(--shadowColor);
+            margin-left: 240px;
+            transition: margin-left 0.3s ease;
+        }
+        .admin-welcome-content {
+            position: relative;
+            z-index: 2;
+            text-align: left;
+        }
+        .admin-welcome-title {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            color: #ffffff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            letter-spacing: -1px;
+        }
+        .admin-welcome-subtitle {
+            font-size: 20px;
+            opacity: 0.95;
+            color: #ffffff;
+            font-weight: 400;
+            margin-bottom: 30px;
+        }
+        .scanner-card {
+            border-radius: 14px;
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.1);
+            background: #ffffff;
+            padding: 18px;
+            border: 1px solid #e9ecef;
+        }
+        .scanner-card h2 {
+            font-size: 1.7rem;
+            margin-bottom: 12px;
+            color: #001e43;
+        }
+        .scanner-box {
+            border: 2px dashed #0054a6;
+            border-radius: 12px;
+            padding: 12px;
+            background: #f8faff;
+            min-height: 410px;
+        }
+        .scanner-controls .btn {
+            min-width: 145px;
+        }
+        .status-chip {
+            display: inline-block;
+            margin-top: 10px;
+            font-weight: 600;
+            padding: 10px 12px;
+            border-radius: 10px;
+            border: 1px solid #cfd8e7;
+            background: #ffffff;
+        }
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 18px;
+        }
+        @media (max-width: 992px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            .header-welcome-gap,
+            .admin-welcome-banner,
+            .main-content-wrapper {
+                margin-left: 68px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header-welcome-gap"></div>
+    <div class="main-content-wrapper">
+        <section class="admin-welcome-banner">
+            <div class="admin-welcome-content container-fluid">
+                <h1 class="admin-welcome-title">Attendance Scanner</h1>
+                <p class="admin-welcome-subtitle">Use this panel to scan student QR codes and mark drive attendance</p>
+            </div>
+        </section>
+        <section class="admin-dashboard-body">
+            <div class="container-fluid">
+                <div class="dashboard-grid">
+                    <div class="scanner-card">
+                        <h2>QR Scanner</h2>
+                        <p>Select a drive, start camera, and scan student QR codes.</p>
+                        <div class="mb-3">
+                            <label for="drive-selector" class="form-label">Placement Drive</label>
+                            <select id="drive-selector" class="form-select" aria-label="Select drive"></select>
+                        </div>
+                        <div class="scanner-box" id="qr-reader"></div>
+                        <div class="d-flex flex-wrap gap-2 scanner-controls mt-3">
+                            <button id="start-scan" class="btn btn-primary"><i class="fas fa-video me-2"></i>Start Scan</button>
+                            <button id="stop-scan" class="btn btn-outline-danger" style="display:none"><i class="fas fa-stop me-2"></i>Stop Scan</button>
+                        </div>
+                        <div id="scan-result" class="status-chip">Waiting to start scanner</div>
+                        <div id="qr-result" class="alert alert-info mt-2" style="display:none;"></div>
+                    </div>
+                    <div class="scanner-card">
+                        <h2>Attendance Feed</h2>
+                        <p>Recent attendance entries for selected drive.</p>
+                        <div id="attendance-history" class="mt-2"><p class="text-muted">No records yet</p></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/custom.js"></script>
+    <script src="assets/js/admin-sidebar.js"></script>
+    <script src="https://unpkg.com/html5-qrcode@2.3.3/umd/html5-qrcode.min.js"></script>
+    <script>
+        let html5QrCode = null;
+        let lastScanTime = 0;
+        const SCAN_DEBOUNCE_MS = 1500;
+        const SCAN_TIMEOUT_MS = 120000;
+
+        document.getElementById('drive-selector').addEventListener('change', function () {
+            stopScan();
+            loadAttendanceHistory();
+        });
+
+        document.getElementById('start-scan').addEventListener('click', startScan);
+        document.getElementById('stop-scan').addEventListener('click', stopScan);
+
+        async function loadPlacementDrives() {
+            const selector = document.getElementById('drive-selector');
+            selector.innerHTML = '<option value="">Loading drives...</option>';
+
+            try {
+                const response = await fetch('/api/opportunities/placements/admin/ongoing');
+                if (!response.ok) {
+                    throw new Error('HTTP ' + response.status + ' while loading drives');
+                }
+                const data = await response.json();
+
+                if (!data.drives || !Array.isArray(data.drives)) {
+                    selector.innerHTML = '<option value="">No drives available</option>';
+                    return;
+                }
+
+                selector.innerHTML = '<option value="">Select placement drive</option>';
+                data.drives.forEach((drive) => {
+                    const opt = document.createElement('option');
+                    opt.value = drive.id;
+                    opt.textContent = `${drive.company_name} / ${drive.job_role} (${drive.event_date ? new Date(drive.event_date).toLocaleDateString() : 'TBA'})`;
+                    selector.appendChild(opt);
+                });
+
+                if (!selector.value && data.drives.length > 0) {
+                    selector.value = data.drives[0].id;
+                }
+
+                loadAttendanceHistory();
+            } catch (err) {
+                console.error('Error loading placement drives:', err);
+                selector.innerHTML = '<option value="">Failed to load drives</option>';
+                updateScanResult('❌ ' + err.message, 'danger');
+            }
+        }
+
+        function updateScanResult(message, type = 'info') {
+            const scanResult = document.getElementById('scan-result');
+            const allowed = {
+                info: 'bg-white border border-info text-info',
+                success: 'bg-white border border-success text-success',
+                warning: 'bg-white border border-warning text-warning',
+                danger: 'bg-white border border-danger text-danger'
+            };
+            scanResult.className = 'status-chip ' + (allowed[type] || allowed.info);
+            scanResult.textContent = message;
+        }
+
+        async function startScan() {
+            const driveId = document.getElementById('drive-selector').value;
+            if (!driveId) {
+                return alert('Select a drive before scanning');
+            }
+
+            updateScanResult('📷 Initializing camera...', 'info');
+
+            if (!html5QrCode) {
+                html5QrCode = new Html5Qrcode('qr-reader');
+            }
+
+            const config = {
+                fps: 12,
+                qrbox: { width: 280, height: 280 },
+                aspectRatio: 1.0,
+                rememberLastUsedCamera: true,
+                showTorchButtonIfSupported: true,
+                experimentalFeatures: { useBarCodeDetectorIfSupported: true }
+            };
+
+            html5QrCode.start(
+                { facingMode: { ideal: 'environment' } },
+                config,
+                (decodedText) => {
+                    const now = Date.now();
+                    if (now - lastScanTime > SCAN_DEBOUNCE_MS) {
+                        lastScanTime = now;
+                        updateScanResult('✅ Detected; sending to server...', 'success');
+                        processAttendance(decodedText);
+                    }
+                },
+                (errorMessage) => {
+                    console.debug('scan error:', errorMessage);
+                }
+            ).then(() => {
+                updateScanResult('📱 Camera started. Position QR code inside box.', 'info');
+                document.getElementById('start-scan').style.display = 'none';
+                document.getElementById('stop-scan').style.display = 'inline-block';
+
+                setTimeout(() => {
+                    if (html5QrCode && html5QrCode.isScanning) {
+                        updateScanResult('⏱️ Timeout reached. If no QR detected, move closer or adjust light.', 'warning');
+                        stopScan();
+                    }
+                }, SCAN_TIMEOUT_MS);
+            }).catch((err) => {
+                let errorText = err.message || 'Failed to start camera';
+                if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
+                    errorText = 'Camera permission denied; allow camera access and retry.';
+                } else if (err.name === 'NotFoundError') {
+                    errorText = 'No camera device found.';
+                } else if (err.name === 'NotReadableError') {
+                    errorText = 'Camera in use by another app.';
+                }
+                updateScanResult('❌ ' + errorText, 'danger');
+                document.getElementById('start-scan').style.display = 'inline-block';
+                document.getElementById('stop-scan').style.display = 'none';
+            });
+        }
+
+        function stopScan() {
+            if (html5QrCode && html5QrCode.isScanning) {
+                html5QrCode.stop().then(() => {
+                    updateScanResult('⏹️ Scanner stopped.', 'info');
+                    document.getElementById('start-scan').style.display = 'inline-block';
+                    document.getElementById('stop-scan').style.display = 'none';
+                }).catch(err => console.error('stop error', err));
+            }
+        }
+
+        async function processAttendance(qrData) {
+            try {
+                const driveId = document.getElementById('drive-selector').value;
+                const response = await fetch('/api/attendance/scan', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ qrData, opportunityId: driveId })
+                });
+
+                const result = await response.json();
+                const resultArea = document.getElementById('qr-result');
+                if (response.ok) {
+                    resultArea.className = 'alert alert-success';
+                    resultArea.textContent = `✅ ${result.message || 'Attendance successfully recorded.'}`;
+                } else {
+                    resultArea.className = 'alert alert-warning';
+                    resultArea.textContent = `⚠️ ${result.message || result.error || 'Unable to record attendance.'}`;
+                }
+                resultArea.style.display = 'block';
+                setTimeout(() => { resultArea.style.display = 'none'; }, 4500);
+                loadAttendanceHistory();
+            } catch (err) {
+                console.error('processAttendance error', err);
+                const resultArea = document.getElementById('qr-result');
+                resultArea.className = 'alert alert-danger';
+                resultArea.textContent = '❌ Error sending data: ' + err.message;
+                resultArea.style.display = 'block';
+            }
+        }
+
+        async function loadAttendanceHistory() {
+            const driveId = document.getElementById('drive-selector').value;
+            if (!driveId) {
+                document.getElementById('attendance-history').innerHTML = '<p class="text-muted">Select a drive to load attendance.</p>';
+                return;
+            }
+            try {
+                const response = await fetch(`/api/attendance/opportunity/${driveId}`);
+                if (!response.ok) throw new Error('HTTP ' + response.status);
+                const data = await response.json();
+
+                if (!data.attendance || data.attendance.length === 0) {
+                    document.getElementById('attendance-history').innerHTML = '<p class="text-muted">No attendance records for this drive yet.</p>';
+                    return;
+                }
+                const items = data.attendance.slice(0, 20).map(r => `<tr><td>${r.student_name}</td><td>${r.roll_no || '-'}</td><td>${r.branch || '-'}</td><td>${new Date(r.scanned_at).toLocaleTimeString()}</td></tr>`).join('');
+                document.getElementById('attendance-history').innerHTML = `<div class="table-responsive"><table class="table table-sm table-hover"><thead><tr><th>Student</th><th>Roll No</th><th>Branch</th><th>Time</th></tr></thead><tbody>${items}</tbody></table></div>`;
+            } catch (err) {
+                console.error('loadAttendanceHistory error', err);
+                document.getElementById('attendance-history').innerHTML = '<p class="text-danger">Failed to load history.</p>';
+            }
+        }
+
+        loadPlacementDrives();
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEC Placement Cell - Admin Student Management</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="assets/css/scrollCue.css">
+    <link rel="stylesheet" href="assets/css/remixicon.css">
+    <link rel="stylesheet" href="assets/css/flaticon.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/admin-theme.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link href="assets/img/crop_nec.png" type="image/x-icon" rel="icon">
+
+    <style>
+        /* Consistency fixes for Admin Pages */
+        :root {
+            --primaryColor: #001e43;
+            --secondaryColor: #002a5c;
+            --accentColor: #003580;
+            --darkColor: rgb(0, 30, 67);
+            --lightGray: #f8f9fa;
+            --cardBg: #ffffff;
+            --textColor: #333;
+            --textLight: #666;
+            --borderColor: #dbe5f1;
+            --shadowColor: rgba(0, 30, 67, 0.1);
+            --gradientPrimary: linear-gradient(135deg, #001e43, #002a5c);
+            --gradientSecondary: linear-gradient(135deg, #002a5c, #003580);
+        }
+
+        .admin-page-hero {
+            background: linear-gradient(135deg, #00142f 0%, #0a3a75 100%);
+            padding: 52px 0 36px;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 30, 67, 0.2);
+            margin-left: 240px;
+            transition: margin-left 0.3s ease;
+        }
+
+        body.admin-sidebar-collapsed .admin-page-hero,
+        body.admin-sidebar-collapsed .header-welcome-gap {
+            margin-left: 68px !important;
+        }
+
+        @media (max-width: 900px) {
+            .admin-page-hero,
+            .header-welcome-gap {
+                margin-left: 68px;
+            }
+        }
+
+        .admin-page-hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+            animation: shimmer 4s infinite;
+        }
+
+        .admin-page-hero::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #0a3a75, #001e43);
+            animation: borderGlow 3s ease-in-out infinite alternate;
+        }
+
+        .admin-page-hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .admin-page-hero-title {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            color: #ffffff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            letter-spacing: -1px;
+        }
+
+        .admin-page-hero-subtitle {
+            font-size: 20px;
+            opacity: 0.95;
+            color: #ffffff;
+            font-weight: 400;
+            margin-bottom: 30px;
+        }
+
+        .admin-page-hero-visual {
+            font-size: 80px;
+            color: #ffffff;
+            animation: float 3s ease-in-out infinite;
+            position: relative;
+            z-index: 2;
+        }
+
+        .admin-stats-wrapper {
+            padding: 32px 0;
+            background: linear-gradient(135deg, #f8fbff 0%, #eef3f9 100%);
+        }
+
+        .stats-card-item {
+            background: linear-gradient(135deg, #001e43, #002a5c);
+            padding: 35px 25px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 30, 67, 0.2);
+            text-align: center;
+            border: none;
+            transition: all 0.35s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            color: #ffffff;
+        }
+
+        .stats-card-item::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+            animation: shimmer 4s infinite;
+        }
+
+        .stats-card-item::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, #002a5c, #003580);
+            animation: borderGlow 3s ease-in-out infinite alternate;
+        }
+
+        .stats-card-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(0, 30, 67, 0.35);
+        }
+
+        .stats-card-item h3 {
+            font-size: 44px;
+            font-weight: 900;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+            color: #ffffff;
+        }
+
+        .stats-card-item p {
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 0;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+        }
+
+        .filter-box {
+            background: rgba(255, 255, 255, 0.97);
+            padding: 24px;
+            border-radius: 18px;
+            box-shadow: 0 14px 35px rgba(0, 30, 67, 0.08);
+            border: 1px solid rgba(0, 42, 92, 0.08);
+            margin-bottom: 24px;
+        }
+
+        .filter-grid {
+            align-items: end;
+        }
+
+        .filter-field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            height: 100%;
+        }
+
+        .filter-label {
+            margin: 0;
+            color: var(--darkColor);
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+        }
+
+        .filter-box .form-control,
+        .filter-box .form-select {
+            min-height: 48px;
+            border: 1px solid var(--borderColor);
+            background: #f7faff;
+            color: var(--darkColor);
+            border-radius: 12px;
+            box-shadow: none;
+            padding: 12px 16px;
+        }
+
+        .filter-box .form-control:focus,
+        .filter-box .form-select:focus {
+            border-color: rgba(0, 53, 128, 0.35);
+            box-shadow: 0 0 0 4px rgba(0, 53, 128, 0.12);
+            background: #fff;
+        }
+
+        .filter-hint {
+            color: #6c7b90;
+            font-size: 12px;
+            display: block;
+            line-height: 1.5;
+        }
+
+        .filter-field--compact {
+            justify-content: flex-end;
+        }
+
+        .filter-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 24px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        #filterBtn {
+            background: var(--gradientPrimary) !important;
+            border: none !important;
+            border-radius: 12px !important;
+            min-height: 48px;
+            box-shadow: 0 12px 24px rgba(0, 30, 67, 0.16);
+            color: #fff !important;
+            font-weight: 700;
+            padding: 0 22px;
+        }
+
+        #filterBtn:hover,
+        #filterBtn:focus,
+        #filterBtn:active {
+            transform: translateY(-2px);
+            box-shadow: 0 18px 34px rgba(0, 30, 67, 0.22);
+            color: #fff !important;
+        }
+
+        #exportCsvBtn {
+            background: linear-gradient(135deg, #f2f7fd, #e6effa);
+            color: var(--primaryColor);
+            border: 1px solid rgba(0, 42, 92, 0.14);
+            border-radius: 12px;
+            min-height: 48px;
+            font-weight: 700;
+            padding: 0 18px;
+        }
+
+        #exportCsvBtn:hover {
+            background: var(--gradientPrimary);
+            color: #fff;
+            box-shadow: 0 18px 34px rgba(0, 30, 67, 0.18);
+        }
+
+        .buzz-card-custom {
+            background: #fff;
+            border-left: 4px solid var(--accentColor);
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0px 2px 10px rgba(0,0,0,0.03);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .buzz-card-custom i {
+            font-size: 24px;
+            color: var(--accentColor);
+            margin-right: 15px;
+        }
+
+        .section-heading-admin {
+            font-weight: 700;
+            color: var(--darkColor);
+            margin-bottom: 25px;
+            position: relative;
+            padding-left: 15px;
+        }
+
+        .section-heading-admin::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 5px;
+            height: 25px;
+            width: 4px;
+            background: var(--gradientPrimary);
+            border-radius: 999px;
+        }
+
+        .header-welcome-gap {
+            height: 8px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #f0f2f5 100%);
+        }
+
+        .table-responsive {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 18px;
+            box-shadow: 0 14px 35px rgba(0, 30, 67, 0.08);
+            border: 1px solid rgba(0, 42, 92, 0.08);
+            overflow: hidden;
+        }
+
+        .table {
+            margin-bottom: 0;
+        }
+
+        .table thead {
+            background: linear-gradient(135deg, #edf3fb 0%, #e4edf8 100%);
+        }
+
+        .table thead th {
+            padding: 16px 15px !important;
+            color: var(--darkColor) !important;
+            font-weight: 700 !important;
+            border-bottom: 1px solid rgba(0, 42, 92, 0.12) !important;
+        }
+
+        .table tbody tr {
+            border-bottom: 1px solid #edf2f7;
+            transition: background-color 0.25s ease;
+        }
+
+        .table tbody tr:hover {
+            background: #f7fbff;
+        }
+
+        .table tbody td {
+            padding: 14px 15px !important;
+            vertical-align: middle;
+        }
+
+        .company-badge-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .company-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 10px;
+            border-radius: 999px;
+            background: #eef4fb;
+            color: var(--secondaryColor);
+            font-size: 12px;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        #paginationControls .btn {
+            border-color: rgba(0, 42, 92, 0.24);
+            color: var(--primaryColor);
+            border-radius: 10px;
+            min-width: 96px;
+        }
+
+        #paginationControls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .pagination-page-btn {
+            min-width: 40px !important;
+            padding: 6px 10px;
+        }
+
+        .pagination-page-btn:hover,
+        .pagination-page-btn:focus,
+        .pagination-page-btn:active {
+            color: #fff !important;
+        }
+
+        .pagination-page-btn.active {
+            background: var(--gradientPrimary);
+            color: #fff !important;
+            border-color: transparent !important;
+            box-shadow: 0 10px 22px rgba(0, 30, 67, 0.18);
+        }
+
+        .pagination-page-btn.active:hover,
+        .pagination-page-btn.active:focus,
+        .pagination-page-btn.active:active {
+            color: #fff !important;
+            border-color: transparent !important;
+        }
+
+        #paginationControls .btn:hover {
+            background: var(--gradientPrimary);
+            border-color: transparent;
+            color: #fff !important;
+        }
+
+        #paginationControls span {
+            color: var(--darkColor);
+            font-weight: 600;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        @keyframes borderGlow {
+            from { opacity: 0.6; }
+            to { opacity: 1; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @media (max-width: 991.98px) {
+            .filter-actions {
+                justify-content: stretch;
+            }
+
+            .filter-actions .btn {
+                flex: 1 1 220px;
+            }
+        }
+
+        /* Campus Toggle Styling */
+          .campus-toggle-group {
+              display: flex;
+              justify-content: center;
+              gap: 15px;
+              margin-bottom: 40px;
+              flex-wrap: wrap;
+          }
+  
+          .campus-btn {
+              padding: 12px 30px;
+              border: 2px solid var(--primaryColor);
+              border-radius: 8px;
+              background: transparent;
+              color: var(--primaryColor);
+              font-weight: 600;
+              cursor: pointer;
+              transition: all 0.3s ease;
+              font-size: 16px;
+          }
+  
+          .campus-btn.active {
+              background: var(--primaryColor);
+              color: white;
+          }
+
+          .campus-btn:hover {
+              transform: translateY(-2px);
+              box-shadow: 0 5px 15px rgba(0,30,67,0.15);
+          }
+
+          .campus-btn:hover {
+              transform: translateY(-2px);
+              box-shadow: 0 5px 15px rgba(0,30,67,0.15);
+          }
+    </style>
+</head>
+
+<body>
+
+    <div class="top-header-area style-2" style="padding: 12px 0;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-12 text-center">
+                    <h3 class="mb-0" style="color: #fff; font-weight: 700; letter-spacing: 1px; line-height: 1.4; font-size: 26px;">
+                        <span style="font-family: 'Poppins', ; font-size: 36px; font-weight: 700;"> NEC</span> � Central Placement Information and Management Center
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-welcome-gap" aria-hidden="true"></div>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light py-2" id="navbar">
+        <div class="container">
+            <img src="assets/img/logo_necn.png" alt="Logo" height="70" width="160">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a href="admin-dashboard.html" class="nav-link">Dashboard</a></li>
+                    <li class="nav-item"><a href="admin-students.html" class="nav-link active" style="color: red; font-weight: bold;">Students</a></li>
+                    <li class="nav-item"><a href="admin-opportunities.html" class="nav-link">Opportunities</a></li>
+                    <li class="nav-item"><a href="admin-reports.html" class="nav-link">Reports</a></li>
+                    <li class="nav-item"><a href="index.html" class="nav-link" style="color: #666;">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="admin-page-hero">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <div class="admin-page-hero-content">
+                        <h2 class="admin-page-hero-title">Student Management</h2>
+                        <p class="admin-page-hero-subtitle">Manage student placement records, and review recruitment outcomes.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <div class="admin-page-hero-visual">
+                        <i class="ri-graduation-cap-line"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="admin-stats-wrapper">
+        <div class="container">
+            <!-- Campus Selector -->
+            <div class="campus-toggle-group">
+                <button class="campus-btn active" id="campus-btn-necn" onclick="setCampus('NECN')">NECN Campus</button>
+                <button class="campus-btn" id="campus-btn-necg" onclick="setCampus('NECG')">NECG Campus</button>
+            </div>
+
+            <!-- Statistics Cards -->
+            <div class="row g-3 mb-4">
+                <div class="col-lg-3 col-md-6">
+                    <div class="stats-card-item">
+                        <h3 id="total-students">0</h3>
+                        <p>Total Students</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="stats-card-item">
+                        <h3 id="placed-students">0</h3>
+                        <p>Placed Students</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="stats-card-item">
+                        <h3 id="applied-students">0</h3>
+                        <p>Applied for Drives</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="stats-card-item">
+                        <h3 id="branches-count">0</h3>
+                        <p>Total Branches</p>
+                    </div>
+                </div>
+            </div>
+
+            <h4 class="section-heading-admin">Student Database Filters</h4>
+            <div class="filter-box">
+                <div class="row g-3 filter-grid">
+                    <div class="col-lg-3">
+                        <div class="filter-field">
+                            <label class="filter-label" for="searchInput">Search Student</label>
+                            <input type="text" class="form-control" id="searchInput" placeholder="Search name or email...">
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="filter-field">
+                            <label class="filter-label" for="branchFilter">Branch</label>
+                            <select class="form-select" id="branchFilter">
+                                <option value="">Select Branch</option>
+                                <option value="CSE">CSE</option>
+                                <option value="ECE">ECE</option>
+                                <option value="EEE">EEE</option>
+                                <option value="MECH">MECH</option>
+                                <option value="CIVIL">CIVIL</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="filter-field">
+                            <label class="filter-label" for="yearFilter">Academic Year</label>
+                            <select class="form-select" id="yearFilter">
+                                <option value="">Select Year</option>
+                                <option value="1">1st Year</option>
+                                <option value="2">2nd Year</option>
+                                <option value="3">3rd Year</option>
+                                <option value="4">4th Year</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="filter-field">
+                            <label class="filter-label" for="statusFilter">Placement Status</label>
+                            <select class="form-select" id="statusFilter">
+                                <option value="">All Status</option>
+                                <option value="placed">Placed</option>
+                                <option value="unplaced">Unplaced</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="filter-field filter-field--compact">
+                            <label class="filter-label" for="companyFilter">Company Filter</label>
+                            <input type="text" class="form-control" id="companyFilter" list="companySuggestions" placeholder="Company or companies">
+                        </div>
+                    </div>
+                </div>
+                <datalist id="companySuggestions"></datalist>
+                <div class="filter-actions">
+                    <button class="btn btn-primary default-btn" style="border:none;" id="filterBtn">Filter Results</button>
+                    <button class="btn" id="exportCsvBtn" type="button">Export Data as CSV</button>
+                </div>
+            </div>
+
+
+            <!-- Students Table -->
+            <div class="table-responsive" id="studentRecordsSection" style="margin-bottom: 24px;">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Companies</th>
+                            <th>Branch</th>
+                            <th>Year</th>
+                            <th>CGPA</th>
+                            <th>Applications</th>
+                            <th>Placements</th>
+                        </tr>
+                    </thead>
+                    <tbody id="studentsList">
+                        <tr>
+                            <td colspan="8" style="text-align: center; padding: 20px; color: #999;">Loading students...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- pagination controls -->
+            <div id="paginationControls" class="text-center mb-3"></div>
+
+        </div>
+    </div>
+
+    <div class="footer-area pt-100 pb-75">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-sm-6">
+                    <div class="single-footer-widget about">
+                        <h3>About NEC Placement Cell</h3>
+                        <p>NEC Placement Cell is the Placement & Career Cell of Narayana Engineering College. We provide centralized placement information, career guidance, skill development programs, and workshops to prepare students for top recruiters and industry opportunities.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <div class="single-footer-widget quick">
+                        <h3>Admin Quick Links</h3>
+                        <ul class="list-unstyled ps-0 mb-0">
+                            <li><a href="admin-dashboard.html">Admin Dashboard</a></li>
+                            <li><a href="admin-reports.html">Placement Reports</a></li>
+                            <li><a href="index.html">Main Website</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <div class="single-footer-widget contact">
+                        <h3>Support Contact</h3>
+                        <ul class="list-unstyled ps-0 mb-0">
+                            <li><a href="mailto:narayanacollege@necn.ac.in">narayanacollege@necn.ac.in <i class="ri-message-line"></i></a></li>
+                            <li><i class="ri-phone-line"></i> +91 99999 99999</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="copyright-area">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <p class="mb-0">� <strong>NEC</strong> Placement & Career Cell. All Rights Reserved.</p>
+                </div>
+                <div class="col-lg-6 text-end">
+                    <img src="assets/img/necn_logo.jpeg" alt="logo" width="40">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/custom.js"></script>
+    
+    <script>
+        const API_BASE_URL = 'http://localhost:3000';
+        let allStudents = [];
+        let hasAppliedFilters = false;
+        let currentPage = 1;
+        const pageSize = 10;
+        let totalStudentsCount = 0;
+        let activeCampus = 'NECN';
+        let currentFilters = {
+            search: '',
+            branch: '',
+            year: '',
+            status: '',
+            company: '',
+            campusType: 'NECN',
+            page: 1,
+            limit: pageSize
+        };
+
+        function escapeHtml(value) {
+            return String(value ?? '').replace(/[&<>"']/g, function(match) {
+                const map = {
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    '"': '&quot;',
+                    "'": '&#39;'
+                };
+                return map[match] || match;
+            });
+        }
+
+        function buildStudentQueryParams(filters) {
+            const params = new URLSearchParams();
+
+            if (filters.search) params.append('search', filters.search);
+            if (filters.branch) params.append('branch', filters.branch);
+            if (filters.year) params.append('year', filters.year);
+            if (filters.status) params.append('status', filters.status);
+            if (filters.company) params.append('company', filters.company);
+            if (filters.campusType) params.append('campusType', filters.campusType);
+            if (filters.page) params.append('page', filters.page);
+            if (filters.limit) params.append('limit', filters.limit);
+
+            return params;
+        }
+
+        function collectFilters(overrides = {}) {
+            return {
+                search: document.getElementById('searchInput').value.trim(),
+                branch: document.getElementById('branchFilter').value,
+                year: document.getElementById('yearFilter').value,
+                status: document.getElementById('statusFilter').value,
+                company: document.getElementById('companyFilter').value.trim(),
+                campusType: activeCampus,
+                page: overrides.page || currentPage,
+                limit: overrides.limit || pageSize
+            };
+        }
+
+        async function fetchStudents(filters) {
+            let url = `${API_BASE_URL}/api/admin/all-students`;
+            const params = buildStudentQueryParams(filters);
+
+            if (params.toString()) {
+                url += `?${params.toString()}`;
+            }
+
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            return response.json();
+        }
+
+        // Fetch all students on page load
+        async function loadStudents(filters = {}, options = {}) {
+            try {
+                currentFilters = {
+                    ...currentFilters,
+                    ...filters
+                };
+
+                if (!hasAppliedFilters && !options.force) {
+                    showInitialMessage();
+                    renderPagination(0, 1, pageSize);
+                    return;
+                }
+                const data = await fetchStudents(currentFilters);
+                
+                if (data.success) {
+                    allStudents = data.students;
+                    totalStudentsCount = data.total || 0;
+                    displayStudents(data.students);
+                    renderPagination(data.total || 0, data.page || 1, data.limit || pageSize);
+                    if (options.scrollToResults) {
+                        scrollToStudentRecords();
+                    }
+                } else {
+                    console.error('Error fetching students:', data.message);
+                    document.getElementById('studentsList').innerHTML = `
+                        <tr>
+                            <td colspan="8" style="text-align: center; padding: 20px; color: #d32f2f;">
+                                Error: ${data.message}
+                            </td>
+                        </tr>
+                    `;
+                    document.getElementById('paginationControls').innerHTML = '';
+                    if (options.scrollToResults) {
+                        scrollToStudentRecords();
+                    }
+                }
+            } catch (err) {
+                console.error('Error:', err);
+                document.getElementById('studentsList').innerHTML = `
+                    <tr>
+                        <td colspan="8" style="text-align: center; padding: 20px; color: #d32f2f;">
+                            Failed to load students: ${err.message}
+                        </td>
+                    </tr>
+                `;
+                document.getElementById('paginationControls').innerHTML = '';
+                if (options.scrollToResults) {
+                    scrollToStudentRecords();
+                }
+            }
+        }
+
+        function scrollToStudentRecords() {
+            const recordsSection = document.getElementById('studentRecordsSection');
+            if (!recordsSection) {
+                return;
+            }
+
+            recordsSection.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+
+        // Campus Toggle Function
+        function setCampus(campus) {
+            activeCampus = campus;
+            document.getElementById('campus-btn-necn').classList.toggle('active', campus === 'NECN');
+            document.getElementById('campus-btn-necg').classList.toggle('active', campus === 'NECG');
+            
+            // Reset filters and reload stats
+            currentPage = 1;
+            currentFilters.campusType = campus;
+            currentFilters.page = 1;
+            hasAppliedFilters = false;
+            showInitialMessage();
+            renderPagination(0, 1, pageSize);
+            loadStats();
+        }
+
+        // Load only statistics on page load (always show)
+        async function loadStats() {
+            try {
+                const url = `${API_BASE_URL}/api/admin/all-students?campusType=${activeCampus}`;
+                const response = await fetch(url);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    updateStats(data.stats);
+                }
+            } catch (err) {
+                console.error('Error loading stats:', err);
+            }
+        }
+
+        function showInitialMessage() {
+            const tbody = document.getElementById('studentsList');
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="8" style="text-align: center; padding: 20px; color: #777;">
+                        Select filters and click <strong>Filter Results</strong> to view students.
+                    </td>
+                </tr>
+            `;
+        }
+
+        // Display students in table
+        function displayStudents(students) {
+            const tbody = document.getElementById('studentsList');
+            
+            if (!students || students.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="8" style="text-align: center; padding: 20px; color: #999;">
+                            No students found
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            tbody.innerHTML = students.map(student => `
+                <tr>
+                    <td style="color: #24364d; font-weight: 600;">${escapeHtml(student.name || 'N/A')}</td>
+                    <td style="color: #58667a;">${escapeHtml(student.email || 'N/A')}</td>
+                    <td>
+                        ${renderCompanies(student.company_names)}
+                    </td>
+                    <td style="color: #58667a;">
+                        <span style="background: #eaf1fb; color: #001e43; padding: 5px 12px; border-radius: 999px; font-size: 13px; font-weight: 600;">
+                            ${escapeHtml(student.branch || 'N/A')}
+                        </span>
+                    </td>
+                    <td style="color: #58667a;">${escapeHtml(student.year || 'N/A')}</td>
+                    <td style="color: #58667a;">${escapeHtml(student.cgpa || 'N/A')}</td>
+                    <td style="text-align: center;">
+                        <span style="background: #dce9f9; color: #002a5c; padding: 5px 10px; border-radius: 8px; font-weight: 700; min-width: 36px; display: inline-block;">
+                            ${student.applications_count || 0}
+                        </span>
+                    </td>
+                    <td style="text-align: center;">
+                        <span style="background: #001e43; color: #ffffff; padding: 5px 10px; border-radius: 8px; font-weight: 700; min-width: 36px; display: inline-block;">
+                            ${student.placements_count || 0}
+                        </span>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function renderCompanies(companyNames) {
+            const companies = (companyNames || '')
+                .split(',')
+                .map(item => item.trim())
+                .filter(Boolean);
+
+            if (companies.length === 0) {
+                return '<span style="color: #8a97ab;">N/A</span>';
+            }
+
+            return `<div class="company-badge-list">${companies.map(company => `<span class="company-badge">${escapeHtml(company)}</span>`).join('')}</div>`;
+        }
+
+        // Update statistics
+        function updateStats(stats) {
+            document.getElementById('total-students').textContent = stats.total_students || 0;
+            document.getElementById('placed-students').textContent = stats.placed_students || 0;
+            document.getElementById('applied-students').textContent = stats.applied_students || 0;
+            document.getElementById('branches-count').textContent = stats.total_branches || 0;
+        }
+
+        // Event listeners
+        document.getElementById('filterBtn').addEventListener('click', () => {
+            currentPage = 1;
+            const filters = collectFilters({ page: currentPage, limit: pageSize });
+            hasAppliedFilters = true;
+            loadStudents(filters, { force: true, scrollToResults: true });
+        });
+
+        document.getElementById('exportCsvBtn').addEventListener('click', exportStudentsCsv);
+
+        // Allow filtering with Enter key
+        document.getElementById('searchInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                document.getElementById('filterBtn').click();
+            }
+        });
+
+        document.getElementById('companyFilter').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                document.getElementById('filterBtn').click();
+            }
+        });
+
+        // Load students on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            loadStats();
+            loadCompanySuggestions();
+            showInitialMessage();
+        });
+
+        function renderPagination(total, page, limit) {
+            const container = document.getElementById('paginationControls');
+            const totalPages = Math.ceil(total / limit);
+            if (totalPages <= 1) {
+                container.innerHTML = total > 0 ? `<span>Page 1 of 1</span>` : '';
+                return;
+            }
+
+            const maxVisiblePages = 5;
+            const startPage = Math.max(1, page - Math.floor(maxVisiblePages / 2));
+            const endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+
+            let html = `<span>Page ${page} of ${totalPages}</span>`;
+            if (page > 1) {
+                html += `<button class="btn btn-sm btn-outline-primary me-2" onclick="goPage(${page-1})">Previous</button>`;
+            }
+
+            for (let pageNumber = startPage; pageNumber <= endPage; pageNumber += 1) {
+                const activeClass = pageNumber === page ? ' active' : '';
+                html += `<button class="btn btn-sm btn-outline-primary pagination-page-btn${activeClass}" onclick="goPage(${pageNumber})">${pageNumber}</button>`;
+            }
+
+            if (page < totalPages) {
+                html += `<button class="btn btn-sm btn-outline-primary ms-2" onclick="goPage(${page+1})">Next</button>`;
+            }
+            container.innerHTML = html;
+        }
+
+        function goPage(page) {
+            currentPage = page;
+            const filters = collectFilters({ page: currentPage, limit: pageSize });
+            loadStudents(filters, { force: true, scrollToResults: true });
+        }
+
+        async function loadCompanySuggestions() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/admin/student-companies`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                if (!data.success) {
+                    return;
+                }
+
+                const datalist = document.getElementById('companySuggestions');
+                datalist.innerHTML = data.companies
+                    .map(company => `<option value="${escapeHtml(company)}"></option>`)
+                    .join('');
+            } catch (err) {
+                console.error('Error loading company suggestions:', err);
+            }
+        }
+
+        async function exportStudentsCsv() {
+            const exportButton = document.getElementById('exportCsvBtn');
+            const exportFilters = collectFilters({ page: 1, limit: totalStudentsCount || 5000 });
+
+            exportButton.disabled = true;
+            exportButton.textContent = 'Exporting...';
+
+            try {
+                const data = await fetchStudents(exportFilters);
+                if (!data.success || !data.students || data.students.length === 0) {
+                    window.alert('No student data available to export.');
+                    return;
+                }
+
+                const headers = ['Name', 'Email', 'Companies', 'Branch', 'Year', 'CGPA', 'Applications', 'Placements'];
+                const rows = data.students.map(student => ([
+                    student.name || '',
+                    student.email || '',
+                    student.company_names || '',
+                    student.branch || '',
+                    student.year || '',
+                    student.cgpa || '',
+                    student.applications_count || 0,
+                    student.placements_count || 0
+                ]));
+
+                const csvContent = [headers, ...rows]
+                    .map(row => row.map(value => `"${String(value).replace(/"/g, '""')}"`).join(','))
+                    .join('\n');
+
+                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement('a');
+                const objectUrl = URL.createObjectURL(blob);
+                const now = new Date();
+                const dateStamp = now.toISOString().slice(0, 10);
+                const timeStamp = now.toISOString().slice(11, 19).replace(/:/g, '-');
+                const campusLabel = activeCampus || 'NECN';
+
+                link.href = objectUrl;
+                link.download = `Student_Data_${campusLabel}_${dateStamp}_${timeStamp}.csv`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(objectUrl);
+            } catch (err) {
+                console.error('Error exporting student data:', err);
+                window.alert(`Failed to export CSV: ${err.message}`);
+            } finally {
+                exportButton.disabled = false;
+                exportButton.textContent = 'Export Data as CSV';
+            }
+        }
+
+    </script>
+    <script src="assets/js/admin-sidebar.js"></script>
+    <script src="assets/js/admin-footer.js"></script>
+</body>
+</html>
+
+
+

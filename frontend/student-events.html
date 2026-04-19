@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEC Placement Cell - Events</title>
+
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+  <link rel="stylesheet" href="assets/css/scrollCue.css">
+  <link rel="stylesheet" href="assets/css/remixicon.css">
+  <link rel="stylesheet" href="assets/css/flaticon.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+  <link href="assets/img/crop_nec.png" type="image/x-icon" rel="icon">
+
+  <style>
+    /* Event listing styling matches existing event cards */
+    .event-filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 30px;
+      justify-content: center;
+    }
+
+    .event-filter-btn {
+      padding: 10px 18px;
+      border-radius: 25px;
+      border: 2px solid rgba(0, 30, 67, 0.15);
+      background: #fff;
+      color: #001e43;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .event-filter-btn:hover,
+    .event-filter-btn.active {
+      background: #001e43;
+      border-color: #001e43;
+      color: #fff;
+    }
+
+    .event-listing {
+      border: 1px solid #e0e0e0;
+      padding: 25px;
+      margin-bottom: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      background-color: #fff;
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+      opacity: 0;
+      animation: eventSlideIn 0.5s ease forwards;
+    }
+
+    .event-listing:hover {
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+      transform: translateY(-5px);
+    }
+
+    @keyframes eventSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .event-type-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 16px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .event-type-badge.seminar { background: rgba(26, 115, 232, 0.15); color: #1a73e8; }
+    .event-type-badge.workshop { background: rgba(0, 150, 136, 0.15); color: #00796b; }
+    .event-type-badge.hackathon { background: rgba(233, 30, 99, 0.15); color: #c2185b; }
+    .event-type-badge.career { background: rgba(255, 152, 0, 0.15); color: #ef6c00; }
+
+    .student-events-page .student-page-hero {
+      margin-top: 10px;
+    }
+    .student-events-page .header-welcome-gap {
+      height: 10px !important;
+    }
+
+    /* Reduce gap between hero banner and event cards */
+    .student-events-page .register-area {
+      padding-top: 40px;
+    }
+    /* Footer Area Style */
+.footer-area{
+  background-color:#071b3a;
+  color:#ffffff;
+  margin-top:100px;
+  padding:40px 20px;
+  width:100%;
+}
+.footer-area p:last-child {
+  margin-bottom: 0;
+}
+/* Inner content width (like container but no outer margins) */
+.footer-inner {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* Headings */
+.footer-area h3 {
+  font-size: 26px;
+  margin-bottom: 16px;
+  color: #ffffff;
+}
+
+.footer-area h6 {
+  font-size: 16px;
+  margin-top: 16px;
+  margin-bottom: 8px;
+  color: #ffffff;
+}
+
+/* Text */
+.footer-area p {
+  font-size: 14px;
+  color: #ffffff;
+  margin-bottom: 8px;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+/* List reset */
+.footer-area ul {
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
+
+/* Social icons spacing */
+.footer-area .social-link li {
+  margin-right: 8px;
+}
+
+/* Links: white by default */
+.footer-area a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+/* Hover / focus */
+.footer-area a:hover,
+.footer-area a:focus {
+  color: var(--primaryColor);
+  text-decoration: none;
+}
+
+/* Active click */
+.footer-area a:active {
+  color: #ffc333;
+}
+
+/* Bottom bar */
+.footer-bottom {
+  font-size: 13px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding-top: 12px;
+  margin-top: 16px;
+}
+
+/* Bottom text and links */
+.footer-bottom span {
+  color: #ffffff;
+}
+
+.footer-bottom a {
+  color: #ffffff;
+}
+
+.footer-bottom a:hover,
+.footer-bottom a:focus {
+  color: var(--primaryColor);
+}
+
+  </style>
+</head>
+<body class="student-events-page">
+
+  <!-- Header -->
+  <div class="top-header-area style-2" style="padding: 12px 0;">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-12 text-center">
+          <h3 class="mb-0" style="color: #fff; font-weight: 700; letter-spacing: 1px; line-height: 1.4; font-size: 26px;">
+            <span style="font-family: 'Poppins', ; font-size: 36px; font-weight: 700;"> NEC</span>
+            - Central Placement and Information Center
+          </h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light py-2" id="navbar">
+    <div class="container">
+      <img src="assets/img/logo_necn.png" alt="Logo" height="70" width="160">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a href="student-dashboard.html" class="nav-link">Dashboard</a></li>
+          <li class="nav-item"><a href="student-announcements.html" class="nav-link">Announcements</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle active" href="student-events.html" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Events
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="student-events.html?type=seminar">Seminars</a></li>
+              <li><a class="dropdown-item" href="student-events.html?type=workshop">Workshops</a></li>
+              <li><a class="dropdown-item" href="student-events.html?type=hackathon">Hackathons</a></li>
+              <li><a class="dropdown-item" href="student-events.html?type=career">Career Guidance</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a href="student-resources.html" class="nav-link">Resources</a></li>
+          <li class="nav-item"><a href="student-internships.html" class="nav-link">Internships</a></li>
+          <li class="nav-item"><a href="student-jobs.html" class="nav-link">Job Opportunities</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">My Account</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="student-profile.html">Profile</a></li>
+              <li><a class="dropdown-item" href="student-my-applications.html">My Applications</a></li>
+              <li><a class="dropdown-item" href="index.html">Logout</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <div class="student-page-hero">
+    <div class="container">
+      <div class="student-page-hero-content">
+        <h1 class="student-page-hero-title">Events</h1>
+        <p class="student-page-hero-subtitle">Browse all upcoming seminars, workshops, hackathons, and career sessions</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="register-area ptb-100">
+    <div class="container">
+      <div class="event-filter-bar" id="eventFilterBar"></div>
+      <div class="row" id="eventsContainer">
+        <div class="col-lg-12 text-center">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <p class="mt-3">Loading events...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function getQueryParam(key) {
+      const params = new URLSearchParams(window.location.search);
+      return params.get(key);
+    }
+
+    function formatDate(dateStr) {
+      const d = new Date(dateStr);
+      return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    }
+
+    function slugifyType(type) {
+      return type.toLowerCase().replace(/\s+/g, '-');
+    }
+
+    function nicestType(type) {
+      const normalized = type.toLowerCase();
+      if (normalized.includes('seminar')) return 'Seminar';
+      if (normalized.includes('workshop')) return 'Workshop';
+      if (normalized.includes('hackathon')) return 'Hackathon';
+      if (normalized.includes('career')) return 'Career Guidance';
+      return type;
+    }
+
+    async function loadEvents() {
+      const studentId = (sessionStorage.getItem('student_id') || localStorage.getItem('student_id'));
+      const container = document.getElementById('eventsContainer');
+
+      if (!studentId) {
+        container.innerHTML = '<div class="col-lg-12"><div class="alert alert-warning">Please log in to view events.</div></div>';
+        return;
+      }
+
+      try {
+        const response = await fetch(`http://localhost:3000/api/student/${studentId}/events`);
+        const data = await response.json();
+        if (!data.success || !Array.isArray(data.events)) {
+          container.innerHTML = '<div class="col-lg-12"><div class="alert alert-info">No events available yet.</div></div>';
+          return;
+        }
+
+        const registrationsResponse = await fetch(`http://localhost:3000/api/student/${studentId}/registrations`);
+        const registrationsData = await registrationsResponse.json();
+        const registeredEventIds = new Set(registrationsData.registrations?.map(r => r.event_id) || []);
+
+        const events = data.events;
+        const types = ['All', 'Seminar', 'Workshop', 'Hackathon', 'Career Guidance'];
+        const forceType = getQueryParam('type');
+
+        const availableSlugs = types.map(t => t.toLowerCase().replace(/\s+/g, '-'));
+        const selectedType = (forceType && availableSlugs.includes(forceType.toLowerCase()))
+          ? forceType.toLowerCase()
+          : 'all';
+
+        renderFilterBar(types, selectedType);
+        renderEvents(events, selectedType, registeredEventIds);
+      } catch (err) {
+        console.error('Error loading events:', err);
+        container.innerHTML = '<div class="col-lg-12"><div class="alert alert-warning">Unable to load events. Please try again later.</div></div>';
+      }
+    }
+
+    function renderFilterBar(types, selected) {
+      const bar = document.getElementById('eventFilterBar');
+      bar.innerHTML = '';
+      types.forEach(type => {
+        const slug = type.toLowerCase().replace(/\s+/g, '-');
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'event-filter-btn' + (slug === selected ? ' active' : '');
+        button.textContent = type;
+        button.addEventListener('click', () => {
+          const url = new URL(window.location);
+          if (slug === 'all') {
+            url.searchParams.delete('type');
+          } else {
+            url.searchParams.set('type', slug);
+          }
+          window.location.href = url.toString();
+        });
+        bar.appendChild(button);
+      });
+    }
+
+    function renderEvents(events, filter, registeredEventIds = new Set()) {
+      const container = document.getElementById('eventsContainer');
+      const filterKey = (filter || 'all').toLowerCase();
+      const filtered = events.filter(e => {
+        if (filterKey === 'all') return true;
+        return e.event_type && e.event_type.toLowerCase().includes(filterKey.replace('-', ' '));
+      });
+
+      if (filtered.length === 0) {
+        const emptyMessages = {
+          all: 'No events available yet.',
+          seminar: 'No upcoming seminars to display.',
+          workshop: 'No upcoming workshops to display.',
+          hackathon: 'No upcoming hackathons to display.',
+          'career-guidance': 'No upcoming career guidance sessions to display.',
+        };
+        const message = emptyMessages[filterKey] || 'No events match the selected filter.';
+        container.innerHTML = `<div class="col-lg-12"><div class="alert alert-info">${message}</div></div>`;
+        return;
+      }
+
+      container.innerHTML = filtered.map((event, index) => {
+        const eventDate = formatDate(event.event_date);
+        const typeLabel = nicestType(event.event_type || 'Event');
+        const badgeClass = slugifyType(typeLabel);
+
+        const isRegistered = registeredEventIds.has(event.id);
+        const buttonClass = isRegistered ? 'btn btn-success btn-sm' : 'default-btn border-0 btn-sm';
+        const buttonText = isRegistered ? '<i class="ri-check-line"></i> Registered' : 'Register Now <i class="flaticon-right-arrow"></i>';
+        const buttonDisabled = isRegistered ? 'disabled' : '';
+
+        return `
+          <div class="col-lg-12" style="animation-delay: ${index * 0.1}s">
+            <div class="event-listing">
+              <div class="d-flex justify-content-between align-items-start">
+                <div>
+                  <h4>${event.event_name}</h4>
+                  <div class="event-meta">
+                    <span><i class="ri-calendar-event-line"></i> ${eventDate}</span>
+                    <span><i class="ri-map-pin-line"></i> ${event.location || 'TBA'}</span>
+                  </div>
+                  <p class="mb-0">${event.description || 'Event details coming soon...'}</p>
+                </div>
+                <span class="event-type-badge ${badgeClass}">${typeLabel}</span>
+              </div>
+              <div class="mt-3 text-end">
+                <button class="${buttonClass}" onclick="${!isRegistered ? 'registerEvent(' + event.id + ')' : ''}" ${buttonDisabled}>
+                  ${buttonText}
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    document.addEventListener('DOMContentLoaded', loadEvents);
+
+    async function registerEvent(eventId) {
+      const studentId = (sessionStorage.getItem('student_id') || localStorage.getItem('student_id'));
+
+      if (!studentId) {
+        alert('Please log in to register for events.');
+        return;
+      }
+
+      try {
+        const response = await fetch(`http://localhost:3000/api/student/${studentId}/register-event`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ event_id: eventId })
+        });
+
+        const data = await response.json();
+        if (!data.success) {
+          alert(data.message || 'Could not register for this event.');
+          return;
+        }
+
+        alert('Successfully registered for the event.');
+        await loadEvents();
+      } catch (error) {
+        console.error('Registration error:', error);
+        alert('Error registering for event. Please try again.');
+      }
+    }
+  </script>
+
+  <!-- Footer injected via admin-footer.js -->
+<div id="adminFooterPlaceholder"></div>
+  <script src="assets/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/swiper-bundle.min.js"></script>
+  <script src="assets/js/scrollCue.min.js"></script>
+  <script src="assets/js/auth-session-manager.js"></script>
+<script src="assets/js/student-session-bootstrap.js"></script>
+<script src="assets/js/custom.js"></script>
+  <script src="assets/js/student-sidebar.js?v=20260315"></script>
+</body>
+</html>
+
+
+
+
+
+
+

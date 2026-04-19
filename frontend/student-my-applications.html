@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEC Placement Cell - My Applications</title>
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/remixicon.css">
+    <link rel="stylesheet" href="assets/css/flaticon.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    <link href="assets/img/crop_nec.png" type="image/x-icon" rel="icon">
+
+    <style>
+        .navbar .dropdown-menu .dropdown-item:hover { color: red !important; }
+        body, html { overflow-x: hidden; }
+
+        /* -- Page Hero -- */
+                /* Reuse dashboard hero + card styling for consistency */
+        .dashboard-cards-container {
+            padding: 34px 0;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+            margin-bottom: 120px;
+        }
+
+        .student-my-applications .dashboard-card {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid rgba(255,255,255,0.25);
+            position: relative;
+            overflow: hidden;
+            animation: cardFadeInUp 0.6s ease-out backwards;
+        }
+
+        .dashboard-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #001e43, #002a5c);
+            transition: left 0.4s ease;
+        }
+
+        .dashboard-card:hover::before {
+            left: 0;
+        }
+
+        @keyframes cardFadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dashboard-card h3 {
+            color: #001e43;
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+
+        .dashboard-card .card-body {
+            margin-bottom: 18px;
+        }
+
+        .dashboard-card .card-footer {
+            text-align: right;
+        }
+
+        /* -- Table Container -- */
+        .applications-section {
+            padding: 50px 0 80px;
+        }
+        .table-card {
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 4px 24px rgba(0,30,67,0.09);
+            overflow: hidden;
+        }
+        .table-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 22px 28px 18px;
+            border-bottom: 1px solid #f0f2f5;
+        }
+        .table-card-header h3 {
+            color: #001e43;
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin: 0;
+        }
+        .table-card-header .total-badge {
+            background: linear-gradient(135deg, #001e43, #002a5c);
+            color: #fff;
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        /* -- Applications Table -- */
+        .apps-table { width: 100%; border-collapse: collapse; }
+        .apps-table thead tr { background: #f7f9fc; }
+        .apps-table th {
+            color: #6b7a99;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            padding: 14px 20px;
+            border-bottom: 2px solid #eef0f4;
+            white-space: nowrap;
+        }
+        .apps-table tbody tr {
+            border-bottom: 1px solid #f0f2f5;
+            transition: background 0.18s;
+        }
+        .apps-table tbody tr:hover { background: #f7f9fc; }
+        .apps-table td {
+            padding: 16px 20px;
+            vertical-align: middle;
+            color: #2d3748;
+            font-size: 14px;
+        }
+        .apps-table td:last-child { white-space: nowrap; }
+
+        /* Company cell */
+        .company-cell { display: flex; align-items: center; gap: 11px; }
+        .company-icon {
+            width: 40px; height: 40px;
+            background: linear-gradient(135deg, #001e43, #002a5c);
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            color: #fff; font-size: 16px; flex-shrink: 0;
+        }
+        .company-name-text { font-weight: 600; color: #001e43; font-size: 14px; }
+        .drive-type-tag {
+            display: inline-block;
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-weight: 600;
+            margin-top: 3px;
+        }
+        .drive-type-tag.placement { background: #e8f0fe; color: #1a56db; }
+        .drive-type-tag.internship { background: #fef3c7; color: #92400e; }
+
+        /* Profile cell */
+        .profile-cell { display: flex; align-items: center; gap: 8px; }
+        .profile-cell a {
+            color: #1a56db;
+            text-decoration: none;
+            display: inline-flex; align-items: center; gap: 4px;
+            font-size: 13px;
+        }
+        .profile-cell a:hover { text-decoration: underline; }
+
+        /* Status badges */
+        .status-badge {
+            display: inline-flex; align-items: center; gap: 5px;
+            padding: 5px 13px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .status-applied    { background: #e1f5fe; color: #0277bd; }
+        .status-shortlisted{ background: #e8f5e9; color: #2e7d32; }
+        .status-selected   { background: #e8f5e9; color: #1b5e20; font-weight: 700; }
+        .status-rejected   { background: #fce4ec; color: #880e4f; }
+
+        /* Applicant count pill */
+        .count-pill {
+            background: #f0f4ff;
+            color: #3b5bdb;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        /* -- Pagination -- */
+        .pagination-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 28px;
+            background: #f7f9fc;
+            border-top: 1px solid #eef0f4;
+        }
+
+        /* Ensure spacing between header and hero on this page */
+        .student-my-applications .student-page-hero {
+            margin-top: 10px;
+        }
+        .student-my-applications .header-welcome-gap {
+            height: 10px !important;
+        }
+        .pagination-info { color: #6b7a99; font-size: 13px; }
+        .pagination-btns { display: flex; gap: 6px; }
+        .page-btn {
+            width: 36px; height: 36px;
+            border: 1px solid #dde3f0;
+            background: #fff;
+            border-radius: 8px;
+            font-size: 13px;
+            color: #2d3748;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.18s;
+            font-weight: 600;
+        }
+        .page-btn:hover { border-color: #001e43; color: #001e43; }
+        .page-btn.active {
+            background: linear-gradient(135deg, #001e43, #002a5c);
+            color: #fff;
+            border-color: #001e43;
+        }
+        .page-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+        /* -- Empty / Loading states -- */
+        .state-box {
+            text-align: center;
+            padding: 60px 20px 120px 20px;
+            color: #9aa5b4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 40vh;
+        }
+        .state-box i { font-size: 70px; display: block; margin-bottom: 18px; }
+        .state-box h4 { color: #64748b; font-weight: 600; margin-bottom: 8px; }
+        .state-box p { font-size: 14px; }
+
+        @media (max-width: 768px) {
+            .apps-table th, .apps-table td { padding: 12px 12px; font-size: 13px; }
+            .table-card-header { flex-direction: column; gap: 10px; align-items: flex-start; }
+            .apps-table thead th:nth-child(4) { display: none; }
+            .apps-table tbody td:nth-child(4) { display: none; }
+            .pagination-wrap { flex-direction: column; gap: 12px; }
+        }
+           /* Footer Area Style */
+.footer-area{
+  background-color:#071b3a;
+  color:#ffffff;
+  margin-top:100px;
+  padding:40px 20px;
+  width:100%;
+}
+.footer-area p:last-child {
+  margin-bottom: 0;
+}
+/* Inner content width (like container but no outer margins) */
+.footer-inner {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* Headings */
+.footer-area h3 {
+  font-size: 26px;
+  margin-bottom: 16px;
+  color: #ffffff;
+}
+
+.footer-area h6 {
+  font-size: 16px;
+  margin-top: 16px;
+  margin-bottom: 8px;
+  color: #ffffff;
+}
+
+/* Text */
+.footer-area p {
+  font-size: 14px;
+  color: #ffffff;
+  margin-bottom: 8px;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+/* List reset */
+.footer-area ul {
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
+
+/* Social icons spacing */
+.footer-area .social-link li {
+  margin-right: 8px;
+}
+
+/* Links: white by default */
+.footer-area a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+/* Hover / focus */
+.footer-area a:hover,
+.footer-area a:focus {
+  color: var(--primaryColor);
+  text-decoration: none;
+}
+
+/* Active click */
+.footer-area a:active {
+  color: #ffc333;
+}
+
+/* Bottom bar */
+.footer-bottom {
+  font-size: 13px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding-top: 12px;
+  margin-top: 16px;
+}
+
+/* Bottom text and links */
+.footer-bottom span {
+  color: #ffffff;
+}
+
+.footer-bottom a {
+  color: #ffffff;
+}
+
+.footer-bottom a:hover,
+.footer-bottom a:focus {
+  color: var(--primaryColor);
+}
+    </style>
+</head>
+<body class="student-my-applications">
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light py-2" id="navbar">
+    <div class="container">
+        <img src="assets/img/logo_necn.png" alt="Logo" height="70" width="160">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a href="student-dashboard.html" class="nav-link">Dashboard</a></li>
+                <li class="nav-item"><a href="student-announcements.html" class="nav-link">Announcements</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="student-events.html" data-bs-toggle="dropdown">Events</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="student-events.html?type=seminar">Seminars</a></li>
+                        <li><a class="dropdown-item" href="student-events.html?type=workshop">Workshops</a></li>
+                        <li><a class="dropdown-item" href="student-events.html?type=hackathon">Hackathons</a></li>
+                        <li><a class="dropdown-item" href="student-events.html?type=career">Career Guidance</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item"><a href="student-resources.html" class="nav-link">Resources</a></li>
+                <li class="nav-item"><a href="student-internships.html" class="nav-link">Internships</a></li>
+                <li class="nav-item"><a href="student-jobs.html" class="nav-link">Job Opportunities</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">My Account</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="student-profile.html">Profile</a></li>
+                        <li><a class="dropdown-item active" href="student-my-applications.html">My Applications</a></li>
+                        <li><a class="dropdown-item" href="index.html">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Page Hero -->
+<div class="student-page-hero">
+    <div class="container">
+        <div class="student-page-hero-content">
+            <h1 class="student-page-hero-title">My Applications</h1>
+            <p class="student-page-hero-subtitle">Review and manage your application status across placements and internships</p>
+        </div>
+    </div>
+</div>
+
+<!-- Applications Section -->
+<div class="dashboard-cards-container">
+    <div class="container">
+        <div class="dashboard-card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                        <h3>My Applications</h3>
+                        <p class="text-muted mb-0">Track your applications and check statuses in one place.</p>
+                    </div>
+                    <span class="count-pill" id="totalBadge">0 Applications</span>
+                </div>
+                <!-- Table -->
+                <div id="tableWrap" style="overflow-x:auto; display:none;">
+                    <table class="apps-table">
+                        <thead>
+                            <tr>
+                                <th>Company</th>
+                                <th>Profile</th>
+                                <th>Applied On</th>
+                                <th>No. of Applicants</th>
+                                <th>Application Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="appsTableBody"></tbody>
+                    </table>
+                </div>
+                <!-- State Boxes are handled below -->
+            </div>
+            <div class="card-footer">
+                <div class="pagination-wrap" id="paginationWrap" style="display:none;">
+                    <span class="pagination-info" id="paginationInfo"></span>
+                    <div class="pagination-btns" id="paginationBtns"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+            <!-- Pagination -->
+            <div class="pagination-wrap" id="paginationWrap" style="display:none;">
+                <span class="pagination-info" id="paginationInfo"></span>
+                <div class="pagination-btns" id="paginationBtns"></div>
+            </div>
+
+            <!-- Loading state -->
+            <div class="state-box" id="loadingState">
+                <i class="ri-loader-4-line" style="animation:spin 1s linear infinite;"></i>
+                <h4>Loading your applications...</h4>
+            </div>
+
+            <!-- Empty state -->
+            <div class="state-box" id="emptyState" style="display:none;">
+                <i class="ri-inbox-2-line" style="color:#d1d5db;"></i>
+                <h4>No Applications Yet</h4>
+                <p>You haven't registered for any drives yet.<br>
+                   Browse <a href="student-jobs.html">Placement Drives</a> or <a href="student-internships.html">Internships</a> and click <strong>Register</strong> to apply.</p>
+            </div>
+
+            <!-- Error state -->
+            <div class="state-box" id="errorState" style="display:none;">
+                <i class="ri-error-warning-line" style="color:#ef4444;"></i>
+                <h4>Failed to Load Applications</h4>
+                <p>Please try refreshing the page or check your connection.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+ <!-- Unified Footer -->
+   <div class="footer-area admin-unified-footer">
+	<div class="footer-container">
+		<div class="row g-3">
+
+    <!-- About -->
+    <div class="col-lg-4 col-md-12">
+        <div class="single-footer-widget about">
+            <h3>About NEC Placement Cell</h3>
+
+            <p style="text-align:justify;">
+                The NEC Placement Cell is the Training, Placement, and Career Development center of Narayana Engineering College. The cell plays a crucial role in guiding students towards successful careers by connecting them with leading companies and industry opportunities. It acts as a bridge between students and recruiters by organizing campus recruitment drives, career counseling sessions, and industry interaction programs.
+            </p>
+        </div>
+        <h6 class="mt-3">Follow NEC:</h6>
+
+					<ul class="list-unstyled ps-0 mb-0 social-link">
+						<li class="d-inline-block">
+							<a href="https://www.facebook.com/" target="_blank">
+								<i class="flaticon-facebook-app-symbol"></i>
+							</a>
+						</li>
+
+						<li class="d-inline-block">
+							<a href="https://www.pinterest.com/" target="_blank">
+								<i class="flaticon-pinterest"></i>
+							</a>
+						</li>
+
+						<li class="d-inline-block">
+							<a href="https://www.instagram.com/" target="_blank">
+								<i class="flaticon-instagram"></i>
+							</a>
+						</li>
+
+						<li class="d-inline-block">
+							<a href="https://twitter.com/" target="_blank">
+								<i class="flaticon-twitter"></i>
+							</a>
+						</li>
+					</ul>
+    </div>
+
+    <!-- Nellore Campus -->
+    <div class="col-lg-3 offset-lg-1 col-md-6">
+        <div class="single-footer-widget contact">
+            <h3>Nellore Campus</h3>
+
+            <p>
+                <i class="flaticon-placeholder"></i><br>
+                Narayana Engineering College<br>
+                NH-16, Muthukur Road,<br>
+                Nellore, Andhra Pradesh – 524003
+            </p>
+
+            <p>
+                <i class="ri-phone-line"></i> +91 99999 99999
+            </p>
+
+            <p>
+                <i class="ri-message-line"></i> narayanacollege@necn.ac.in
+            </p>
+        </div>
+    </div>
+
+    <!-- Gudur Campus -->
+    <div class="col-lg-4 col-md-6">
+        <div class="single-footer-widget contact">
+            <h3>Gudur Campus</h3>
+
+            <p>
+                <i class="flaticon-placeholder"></i><br>
+                Narayana Engineering College<br>
+                Gudur, Tirupati District,<br>
+                Andhra Pradesh
+            </p>
+            <p>
+                <i class="ri-phone-line"></i> +91 99999 99999
+            </p>
+
+            <p>
+                <i class="ri-message-line"></i> narayanacollege@necg.ac.in
+            </p>
+        </div>
+    </div>
+
+</div>
+
+		</div>
+
+		<!-- Bottom -->
+		<div class="footer-bottom d-flex flex-column flex-md-row align-items-center justify-content-between pt-2 mt-3 border-top border-light">
+
+			<div class="d-flex align-items-center">
+				<img src="assets/img/crop_nec.png" alt="NEC Placement Cell" width="56" height="40">
+
+				<span class="ms-2">
+					&copy; <span id="footerYear"></span> NEC Training & Placement Cell,
+					Narayana Engineering College. All Rights Reserved.
+				</span>
+                
+
+			</div>
+            
+
+		</div>
+
+	</div>
+</div>
+
+<button type="button" id="back-to-top"><i class="ri-arrow-up-double-fill"></i></button>
+
+<script src="assets/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/scrollCue.min.js"></script>
+<script src="assets/js/auth-session-manager.js"></script>
+<script src="assets/js/student-session-bootstrap.js"></script>
+<script src="assets/js/custom.js"></script>
+
+<style>
+@keyframes spin { 0%{transform:rotate(0deg);} 100%{transform:rotate(360deg);} }
+</style>
+
+<script>
+    const ITEMS_PER_PAGE = 10;
+    let currentPage = 1;
+    let totalPages  = 1;
+    let totalItems  = 0;
+
+    function formatDate(dateStr) {
+        if (!dateStr) return '-';
+        return new Date(dateStr).toLocaleDateString('en-IN', {
+            day: '2-digit', month: 'short', year: 'numeric'
+        });
+    }
+
+    function statusBadge(status) {
+        const map = {
+            applied:     ['status-applied',     '<i class="ri-send-plane-line"></i>', 'Applied'],
+            shortlisted: ['status-shortlisted',  '<i class="ri-star-line"></i>',      'Shortlisted'],
+            selected:    ['status-selected',     '<i class="ri-checkbox-circle-line"></i>', 'Selected'],
+            rejected:    ['status-rejected',     '<i class="ri-close-circle-line"></i>', 'Not Selected'],
+        };
+        const [cls, icon, label] = map[status] || ['status-applied', '<i class="ri-send-plane-line"></i>', status];
+        return `<span class="status-badge ${cls}">${icon} ${label}</span>`;
+    }
+
+    function renderRows(rows) {
+        const tbody = document.getElementById('appsTableBody');
+        if (!rows.length) {
+            tbody.innerHTML = '';
+            return;
+        }
+        tbody.innerHTML = rows.map(app => {
+            const companyIcon = app.drive_type === 'internship'
+                ? '<i class="ri-briefcase-line"></i>'
+                : '<i class="ri-building-2-line"></i>';
+            const typeLabel = app.drive_type === 'internship' ? 'Internship' : 'Placement';
+            const profileLink = app.apply_link
+                ? `<a href="${app.apply_link}" target="_blank" rel="noopener noreferrer">${app.job_role || '-'} <i class="ri-external-link-line" style="font-size:12px;"></i></a>`
+                : `<span>${app.job_role || '-'}</span>`;
+
+            return `
+                <tr>
+                    <td>
+                        <div class="company-cell">
+                            <div class="company-icon">${companyIcon}</div>
+                            <div>
+                                <div class="company-name-text">${app.company_name || '-'}</div>
+                                <span class="drive-type-tag ${app.drive_type}">${typeLabel}</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td><div class="profile-cell">${profileLink}</div></td>
+                    <td>${formatDate(app.registered_on)}</td>
+                    <td><span class="count-pill"><i class="ri-group-line me-1"></i>${app.applicant_count || 0}</span></td>
+                    <td>${statusBadge(app.status)}</td>
+                </tr>
+            `;
+        }).join('');
+    }
+
+    function renderPagination(page, pages, total, count) {
+        const info = document.getElementById('paginationInfo');
+        const btns = document.getElementById('paginationBtns');
+        const start = (page - 1) * ITEMS_PER_PAGE + 1;
+        const end   = Math.min(page * ITEMS_PER_PAGE, total);
+        info.textContent = `Showing ${start}-${end} of ${total} application${total !== 1 ? 's' : ''}`;
+
+        let html = `
+            <button class="page-btn" onclick="goToPage(${page - 1})" ${page <= 1 ? 'disabled' : ''}>
+                <i class="ri-arrow-left-s-line"></i>
+            </button>
+        `;
+
+        // Show up to 5 page buttons around current
+        let startPage = Math.max(1, page - 2);
+        let endPage   = Math.min(pages, page + 2);
+        if (startPage > 1)  html += `<button class="page-btn" onclick="goToPage(1)">1</button>${startPage > 2 ? '<span style="padding:0 4px;color:#9aa5b4;">...</span>' : ''}`;
+        for (let p = startPage; p <= endPage; p++) {
+            html += `<button class="page-btn ${p === page ? 'active' : ''}" onclick="goToPage(${p})">${p}</button>`;
+        }
+        if (endPage < pages) html += `${endPage < pages - 1 ? '<span style="padding:0 4px;color:#9aa5b4;">...</span>' : ''}<button class="page-btn" onclick="goToPage(${pages})">${pages}</button>`;
+
+        html += `
+            <button class="page-btn" onclick="goToPage(${page + 1})" ${page >= pages ? 'disabled' : ''}>
+                <i class="ri-arrow-right-s-line"></i>
+            </button>
+        `;
+        btns.innerHTML = html;
+    }
+
+    async function loadApplications(page) {
+        const studentId = (sessionStorage.getItem('student_id') || localStorage.getItem('student_id'));
+        if (!studentId) {
+            window.location.href = 'login-student.html';
+            return;
+        }
+
+        document.getElementById('loadingState').style.display = '';
+        document.getElementById('emptyState').style.display   = 'none';
+        document.getElementById('errorState').style.display   = 'none';
+        document.getElementById('tableWrap').style.display    = 'none';
+        document.getElementById('paginationWrap').style.display = 'none';
+
+        try {
+            const resp = await fetch(`/api/student/${studentId}/my-applications?page=${page}`);
+            const data = await resp.json();
+
+            document.getElementById('loadingState').style.display = 'none';
+
+            if (!data.success) throw new Error(data.message || 'Request failed');
+
+            totalItems = data.total || 0;
+            totalPages = data.totalPages || 1;
+            currentPage = data.page || 1;
+
+            document.getElementById('totalBadge').textContent =
+                `${totalItems} Application${totalItems !== 1 ? 's' : ''}`;
+
+            if (!data.applications || data.applications.length === 0) {
+                document.getElementById('emptyState').style.display = '';
+                return;
+            }
+
+            renderRows(data.applications);
+            document.getElementById('tableWrap').style.display = '';
+            if (totalPages > 1) {
+                renderPagination(currentPage, totalPages, totalItems, data.applications.length);
+                document.getElementById('paginationWrap').style.display = '';
+            }
+
+        } catch (err) {
+            console.error('Error loading applications:', err);
+            document.getElementById('loadingState').style.display = 'none';
+            document.getElementById('errorState').style.display = '';
+        }
+    }
+
+    function goToPage(page) {
+        if (page < 1 || page > totalPages) return;
+        loadApplications(page);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => loadApplications(1));
+</script>
+    <script src="assets/js/student-sidebar.js?v=20260315"></script>
+    <script src="assets/js/admin-footer.js"></script>
+</body>
+</html>
+
+
+
+

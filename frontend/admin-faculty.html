@@ -1,0 +1,1022 @@
+﻿<!DOCTYPE html>
+<html lang="zxx">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEC - Admin Faculty Management</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="assets/css/scrollCue.css">
+    <link rel="stylesheet" href="assets/css/remixicon.css">
+    <link rel="stylesheet" href="assets/css/flaticon.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/admin-theme.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link href="assets/img/crop_nec.png" type="image/x-icon" rel="icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <style>
+        /* Shared Style with Dashboard/Students */
+        :root {
+            --navy-900: #00142f;
+            --navy-800: #001e43;
+            --navy-700: #0a3a75;
+            --navy-100: #e8f0fb;
+            --navy-050: #f4f8ff;
+        }
+
+        .admin-wrapper {
+            padding: 50px 0;
+            background-color: var(--navy-050);
+        }
+
+        .admin-page-hero {
+            background: linear-gradient(135deg, #00142f 0%, #0a3a75 100%);
+            padding: 52px 0 36px;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 30, 67, 0.2);
+        }
+
+        .admin-page-hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+            animation: shimmer 4s infinite;
+        }
+
+        .admin-page-hero::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #0a3a75, #001e43);
+            animation: borderGlow 3s ease-in-out infinite alternate;
+        }
+
+        .admin-page-hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .admin-page-hero-title {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            color: #ffffff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            letter-spacing: -1px;
+        }
+
+        .admin-page-hero-subtitle {
+            font-size: 20px;
+            opacity: 0.95;
+            color: #ffffff;
+            font-weight: 400;
+            margin-bottom: 30px;
+        }
+
+        .admin-page-hero-visual {
+            font-size: 80px;
+            color: #ffffff;
+            animation: float 3s ease-in-out infinite;
+            position: relative;
+            z-index: 2;
+        }
+
+        .stats-card-item {
+            background: linear-gradient(135deg, #001e43, #002a5c);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 30, 67, 0.2);
+            text-align: center;
+            border: none;
+            transition: all 0.35s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            color: #ffffff;
+        }
+
+        .stats-card-item::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+            animation: shimmer 4s infinite;
+        }
+
+        .stats-card-item::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, #002a5c, #003580);
+            animation: borderGlow 3s ease-in-out infinite alternate;
+        }
+
+        .stats-card-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(0, 30, 67, 0.35);
+        }
+
+        .stats-card-item h3 {
+            color: #ffffff;
+        }
+
+        .stats-card-item p {
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .faculty-list-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0px 4px 20px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+            transition: 0.3s;
+            border: 1px solid #f1f1f1;
+        }
+
+        .faculty-list-card:hover {
+            box-shadow: 0px 8px 25px rgba(0,0,0,0.1);
+            border-color: var(--navy-700);
+        }
+
+        .faculty-action-group {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .faculty-action-group .btn {
+            min-height: 34px;
+        }
+
+        .faculty-action-group .btn-admin-view {
+            padding-left: 12px;
+            padding-right: 12px;
+        }
+
+        .badge-activeness {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .badge-high { background-color: #dbe8fb; color: #001e43; }
+        .badge-medium { background-color: #e8f0fb; color: #0a3a75; }
+        .badge-low { background-color: #f1f6ff; color: #1b4b85; }
+
+        .filter-section-admin {
+            background: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+
+        .filter-section-admin .form-control,
+        .filter-section-admin .form-select,
+        .filter-section-admin .default-btn {
+            min-height: 46px;
+            border-radius: 10px;
+        }
+
+        .btn-add-faculty {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            white-space: nowrap;
+            font-weight: 600;
+        }
+
+        .btn-add-faculty,
+        .btn-add-faculty:hover,
+        .btn-add-faculty:focus,
+        .btn-add-faculty:active {
+            color: #ffffff !important;
+        }
+
+        .btn-add-faculty i {
+            color: #ffffff;
+        }
+
+        .section-heading-admin {
+            font-weight: 700;
+            color: var(--navy-900);
+            margin-bottom: 25px;
+            position: relative;
+            padding-left: 15px;
+        }
+
+        .section-heading-admin::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 5px;
+            height: 25px;
+            width: 4px;
+            background: var(--navy-800);
+        }
+
+        .campus-toggle-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .campus-toggle-wrapper {
+            text-align: center;
+            margin-bottom: 0;
+        }
+
+        .campus-btn {
+            min-width: 230px;
+            padding: 12px 30px;
+            border: 2px solid var(--navy-800);
+            border-radius: 8px;
+            background: transparent;
+            color: var(--navy-800);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+
+        .campus-btn.active {
+            background: var(--navy-800);
+            color: #fff;
+        }
+
+        .campus-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 30, 67, 0.15);
+        }
+
+        .header-welcome-gap {
+            height: 8px;
+            background: linear-gradient(135deg, #eef3fb 0%, #e2ebf8 100%);
+        }
+
+        .btn-admin-edit {
+            color: var(--navy-700);
+            border-color: var(--navy-700);
+        }
+
+        .btn-admin-edit:hover {
+            color: #fff;
+            background: var(--navy-700);
+            border-color: var(--navy-700);
+        }
+
+        .btn-admin-remove {
+            color: var(--navy-800);
+            border-color: var(--navy-800);
+        }
+
+        .btn-admin-remove:hover {
+            color: #fff;
+            background: var(--navy-800);
+            border-color: var(--navy-800);
+        }
+
+        .btn-admin-view {
+            color: #fff;
+            background: var(--navy-800);
+            border-color: var(--navy-800);
+        }
+
+        .btn-admin-view:hover {
+            color: #fff;
+            background: var(--navy-700);
+            border-color: var(--navy-700);
+        }
+
+        .dept-badge {
+            background: var(--navy-100) !important;
+            color: var(--navy-800) !important;
+        }
+
+        .campus-badge {
+            background: #001e43;
+            color: #fff;
+            font-size: 11px;
+        }
+
+        .privilege-checklist {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .privilege-item {
+            background: #f4f8ff;
+            border: 1px solid #d7e3f7;
+            border-radius: 10px;
+            padding: 10px 12px;
+            display: flex;
+            align-items: center;
+            min-height: 44px;
+        }
+
+        .faculty-modal .modal-content {
+            border-radius: 14px;
+            border: none;
+            box-shadow: 0 24px 60px rgba(0, 30, 67, 0.18);
+        }
+
+        .modal-action-btn {
+            margin-top: 20px;
+            min-height: 46px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .modal-action-btn,
+        .modal-action-btn:hover,
+        .modal-action-btn:focus,
+        .modal-action-btn:active {
+            color: #ffffff !important;
+        }
+
+        .modal-action-btn i {
+            color: #ffffff;
+        }
+
+        #confirmDeleteFacultyBtn,
+        #confirmDeleteFacultyBtn:hover,
+        #confirmDeleteFacultyBtn:focus,
+        #confirmDeleteFacultyBtn:active {
+            color: #ffffff !important;
+        }
+
+        .privilege-pill {
+            display: inline-flex;
+            align-items: center;
+            background: #e8f0fb;
+            color: #001e43;
+            border-radius: 999px;
+            padding: 4px 10px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-right: 6px;
+            margin-top: 6px;
+        }
+
+        @media (max-width: 767px) {
+            .privilege-checklist {
+                grid-template-columns: 1fr;
+            }
+
+            .faculty-list-card {
+                padding: 18px;
+            }
+
+            .faculty-action-group {
+                justify-content: flex-start;
+                margin-top: 14px;
+            }
+
+            .btn-add-faculty {
+                width: 100%;
+            }
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        @keyframes borderGlow {
+            from { opacity: 0.6; }
+            to { opacity: 1; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="top-header-area style-2" style="padding: 12px 0;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-12 text-center">
+                    <h3 class="mb-0" style="color: #fff; font-weight: 700; letter-spacing: 1px; line-height: 1.4; font-size: 26px;">
+                        <span style="font-family: 'Poppins', ; font-size: 36px; font-weight: 700;"> NEC</span> – Central Placement Information and Management Center
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-welcome-gap" aria-hidden="true"></div>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light py-2" id="navbar">
+        <div class="container">
+            <img src="assets/img/logo_necn.png" alt="Logo" height="70" width="160">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a href="admin-dashboard.html" class="nav-link">Dashboard</a></li>
+                    <li class="nav-item"><a href="admin-students.html" class="nav-link">Students</a></li>
+                    <li class="nav-item"><a href="admin-faculty.html" class="nav-link active" style="color: #001e43; font-weight: bold;">Faculty</a></li>
+                    <li class="nav-item"><a href="admin-opportunities.html" class="nav-link">Opportunities</a></li>
+                    <li class="nav-item"><a href="admin-reports.html" class="nav-link">Reports</a></li>
+                    <li class="nav-item"><a href="index.html" class="nav-link" style="color: #001e43;">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="admin-page-hero">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <div class="admin-page-hero-content">
+                        <h2 class="admin-page-hero-title">Faculty Management</h2>
+                        <p class="admin-page-hero-subtitle">Manage faculty participation, and involvement across placement workflows.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <div class="admin-page-hero-visual">
+                        <i class="ri-team-line"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="admin-wrapper">
+        <div class="container">
+            <div class="campus-toggle-wrapper">
+                <div class="campus-toggle-group">
+                    <button class="campus-btn active" id="campus-btn-necn" onclick="setCampus('NECN')">NECN Campus</button>
+                    <button class="campus-btn" id="campus-btn-necg" onclick="setCampus('NECG')">NECG Campus</button>
+                </div>
+            </div>
+            
+            <div class="row g-4 mb-5 justify-content-center">
+                <div class="col-lg-3 col-md-6">
+                    <div class="stats-card-item">
+                        <h3 id="totalFaculty">0</h3>
+                        <p>Total Faculty</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="stats-card-item">
+                        <h3 id="facultyInDrives">0</h3>
+                        <p>In Drives</p>
+                    </div>
+                </div>
+            </div>
+
+            <h4 class="section-heading-admin">Manage Faculty Team</h4>
+            <div class="filter-section-admin">
+                <div class="row g-3">
+                    <div class="col-lg-5">
+                        <input type="text" id="filterName" class="form-control" placeholder="Filter by name...">
+                    </div>
+                    <div class="col-lg-5">
+                        <input type="text" id="filterDepartment" class="form-control" placeholder="Filter by department...">
+                    </div>
+                    <div class="col-lg-2 d-flex">
+                        <button class="default-btn border-0 w-100 btn-add-faculty" data-bs-toggle="modal" data-bs-target="#addFacultyModal" style="background:#001e43; color:white;">
+                            <i class="ri-user-add-line"></i> Add New
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="facultyList"></div>
+
+        </div>
+    </div>
+
+    <div class="modal fade faculty-modal" id="addFacultyModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content p-4">
+                <h4 class="mb-3">Register New Faculty</h4>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <select id="newFacultyCampusType" class="form-select">
+                            <option value="NECN">NECN</option>
+                            <option value="NECG">NECG</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6"><input type="text" id="newFacultyName" class="form-control" placeholder="Full Name"></div>
+                    <div class="col-md-6"><input type="email" id="newFacultyEmail" class="form-control" placeholder="Email Address"></div>
+                    <div class="col-md-6"><input type="text" id="newFacultyPhone" class="form-control" placeholder="Phone Number"></div>
+                    <div class="col-md-6">
+                        <select id="newFacultyDept" class="form-select">
+                            <option value="">Select Department</option>
+                            <option value="CSE">CSE</option>
+                            <option value="ECE">ECE</option>
+                            <option value="EE">EE</option>
+                            <option value="Civil">Civil</option>
+                            <option value="Mech">Mech</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6"><input type="text" id="newFacultyDesignation" class="form-control" placeholder="Designation"></div>
+                    <div class="col-12">
+                        <label class="form-label fw-bold mb-2">Assign Privileges</label>
+                        <div class="privilege-checklist">
+                            <label class="privilege-item"><input type="checkbox" class="form-check-input me-2 new-faculty-privilege" value="postEvents"> Post events</label>
+                            <label class="privilege-item"><input type="checkbox" class="form-check-input me-2 new-faculty-privilege" value="uploadResources"> Upload resources</label>
+                            <label class="privilege-item"><input type="checkbox" class="form-check-input me-2 new-faculty-privilege" value="postInternships"> Post internships</label>
+                            <label class="privilege-item"><input type="checkbox" class="form-check-input me-2 new-faculty-privilege" value="monitorAssignedDrives"> Monitor assigned drives</label>
+                        </div>
+                    </div>
+                </div>
+                <button class="default-btn border-0 w-100 modal-action-btn" onclick="addFaculty()" style="background:#001e43; color:white;">Save Faculty Member</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade faculty-modal" id="editFacultyModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content p-4">
+                <h4 class="mb-3">Update Faculty Info</h4>
+                <input type="hidden" id="editFacultyCampusType">
+                <div class="row g-3">
+                    <div class="col-md-6"><input type="text" id="editFacultyName" class="form-control" placeholder="Name"></div>
+                    <div class="col-md-6"><input type="email" id="editFacultyEmail" class="form-control" disabled></div>
+                    <div class="col-md-6"><input type="text" id="editFacultyPhone" class="form-control" placeholder="Phone Number"></div>
+                    <div class="col-md-6">
+                        <select id="editFacultyDept" class="form-select">
+                            <option value="">Select Department</option>
+                            <option value="CSE">CSE</option>
+                            <option value="ECE">ECE</option>
+                            <option value="EE">EE</option>
+                            <option value="Civil">Civil</option>
+                            <option value="Mech">Mech</option>
+                        </select>
+                    </div>
+                    <div class="col-12"><input type="text" id="editFacultyDesignation" class="form-control" placeholder="Designation"></div>
+                    <div class="col-12">
+                        <label class="form-label fw-bold mb-2">Assign Privileges</label>
+                        <div class="privilege-checklist">
+                            <label class="privilege-item"><input type="checkbox" class="form-check-input me-2 edit-faculty-privilege" value="postEvents"> Post events</label>
+                            <label class="privilege-item"><input type="checkbox" class="form-check-input me-2 edit-faculty-privilege" value="uploadResources"> Upload resources</label>
+                            <label class="privilege-item"><input type="checkbox" class="form-check-input me-2 edit-faculty-privilege" value="postInternships"> Post internships</label>
+                            <label class="privilege-item"><input type="checkbox" class="form-check-input me-2 edit-faculty-privilege" value="monitorAssignedDrives"> Monitor assigned drives</label>
+                        </div>
+                    </div>
+                </div>
+                <button class="default-btn border-0 w-100 modal-action-btn" onclick="updateFaculty()" style="background:#0a3a75; color:white;">Update Records</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade faculty-modal" id="confirmDeleteFacultyModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content p-4">
+                <h4 class="mb-2">Confirm Removal</h4>
+                <p class="text-muted mb-4">Remove this faculty member?</p>
+                <div class="d-flex gap-2 justify-content-end">
+                    <button type="button" class="btn btn-outline-secondary" id="cancelDeleteFacultyBtn" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="default-btn border-0" id="confirmDeleteFacultyBtn" style="background:#001e43; color:white;">Remove</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= FOOTER ================= -->
+<div class="footer-area pt-100 pb-75">
+    <div class="container">
+        <div class="row align-items-start">
+
+            <!-- About NEC -->
+            <div class="col-lg-4 col-sm-6">
+                <div class="single-footer-widget about">
+                    <h3>About NEC Placement Cell</h3>
+                    <p>NEC Placement Cell is the Placement & Career Cell of Narayana Engineering College. We provide centralized placement information, career guidance, skill development programs, and workshops to prepare students for top recruiters and industry opportunities.</p>
+                    <h6>Follow NEC Placement Cell:</h6>
+                    <ul class="list-unstyled ps-0 mb-0 social-link">
+                        <li class="d-inline-block">
+                            <a class="text-decoration-none" href="https://www.facebook.com/" target="_blank">
+                                <i class="flaticon-facebook-app-symbol"></i>
+                            </a>
+                        </li>
+                        <li class="d-inline-block">
+                            <a class="text-decoration-none" href="https://www.pinterest.com/" target="_blank">
+                                <i class="flaticon-pinterest"></i>
+                            </a>
+                        </li>
+                        <li class="d-inline-block">
+                            <a class="text-decoration-none" href="https://www.instagram.com/" target="_blank">
+                                <i class="flaticon-instagram"></i>
+                            </a>
+                        </li>
+                        <li class="d-inline-block">
+                            <a class="text-decoration-none" href="https://twitter.com/" target="_blank">
+                                <i class="flaticon-twitter"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="col-lg-4 col-sm-6">
+                <div class="single-footer-widget quick">
+                    <h3>Quick Links</h3>
+                    <ul class="list-unstyled ps-0 mb-0">
+                        <li><a class="text-decoration-none" href="placement-overview.html">Placement Info</a></li>
+                        <li><a class="text-decoration-none" href="career-guidance.html">Career Guidance</a></li>
+                        <li><a class="text-decoration-none" href="events.html">Workshops & Events</a></li>
+                        <li><a class="text-decoration-none" href="contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Contact Placement Cell -->
+            <div class="col-lg-4 col-sm-6">
+                <div class="single-footer-widget contact">
+                    <h3>Contact Placement Cell</h3>
+                    <ul class="list-unstyled ps-0 mb-0">
+                        <li>
+                            <a class="text-decoration-none" href="tel:+919999999999">
+                                +91 99999 99999
+                                <i class="ri-phone-line"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="text-decoration-none" href="mailto:narayanacollege@necn.ac.in">
+                                narayanacollege@necn.ac.in
+                                <i class="ri-message-line"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <i class="flaticon-placeholder"></i>
+                            <p>Narayana Engineering College, Nellore<br>NH-16, Muthukur Road, Nellore, Andhra Pradesh 524003</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="copyright-area">
+    <div class="container">
+        <div class="row align-items-center">
+            
+            <!-- College Logo -->
+            <div class="col-lg-2 col-sm-12 d-flex align-items-center">
+                <div class="copyright-logo">
+                    <img src="assets/img/necn_logo.jpeg" alt="nec-placement-cell-logo" width="70" height="50">
+                    <p class="mb-0">NEC Placement Cell</p>
+                </div>
+            </div>
+
+            <!-- Copyright Text -->
+            <div class="col-lg-5 col-sm-6">
+                <div class="copyright-title text-lg-end text-sm-start">
+                    <p class="mb-0">© <strong>NEC Placement Cell</strong> Placement & Career Cell. All Rights Reserved.</p>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="col-lg-5 col-sm-6">
+                <div class="copyright-list text-lg-end text-sm-start">
+                    <ul class="list-unstyled ps-0 mb-0">
+                        <li class="d-inline-block me-3">
+                            <a class="text-decoration-none" href="faculty.html">P&T Team</a>
+                        </li>
+                        <li class="d-inline-block me-3">
+                            <a class="text-decoration-none" href="placement-overview.html">Placements Info</a>
+                        </li>
+                        <li class="d-inline-block">
+                            <a class="text-decoration-none" href="career-guidance.html">About NEC Placement Cell</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script>
+    let facultyData = [];
+    let activeCampus = 'NECN';
+    let editModalInstance = null;
+    let addModalInstance = null;
+    let confirmDeleteModalInstance = null;
+
+    const privilegeLabels = {
+        postEvents: 'Post Events',
+        uploadResources: 'Upload Resources',
+        postInternships: 'Post Internships',
+        monitorAssignedDrives: 'Monitor Drives'
+    };
+
+    function getSelectedPrivileges(selector) {
+        return Array.from(document.querySelectorAll(selector + ':checked')).map(input => input.value);
+    }
+
+    function setPrivilegeCheckboxes(selector, privileges = {}) {
+        document.querySelectorAll(selector).forEach(input => {
+            input.checked = Boolean(privileges[input.value]);
+        });
+    }
+
+    function getPrivilegeMarkup(privileges = {}) {
+        const enabledPrivileges = Object.keys(privileges).filter(key => privileges[key]);
+        if (!enabledPrivileges.length) {
+            return '<span class="text-muted">No privileges assigned</span>';
+        }
+
+        return enabledPrivileges.map(key => `<span class="privilege-pill">${privilegeLabels[key] || key}</span>`).join('');
+    }
+
+    // Helper for Badge
+    function getActivenessBadge(score) {
+        let cls = score >= 75 ? 'badge-high' : (score >= 50 ? 'badge-medium' : 'badge-low');
+        return `<span class="badge-activeness ${cls}">${score}% Active</span>`;
+    }
+
+    function normalizeCampus(value) {
+        return String(value || '').trim().toUpperCase();
+    }
+
+    function isInDriveValue(value) {
+        const normalized = String(value || '').trim().toLowerCase();
+        return value === true || value === 1 || normalized === '1' || normalized === 'true' || normalized === 'yes';
+    }
+
+    // Standard Render Logic
+    function renderFaculty(data) {
+        const list = document.getElementById('facultyList');
+        if(!data.length) {
+            list.innerHTML = `<div class="text-center py-5">No faculty found.</div>`;
+            document.getElementById('totalFaculty').innerText = '0';
+            document.getElementById('facultyInDrives').innerText = '0';
+            return;
+        }
+
+        list.innerHTML = data.map(f => `
+            <div class="faculty-list-card">
+                <div class="row align-items-center">
+                    <div class="col-lg-8">
+                        <h5 class="mb-1">${f.name} <span class="badge dept-badge ms-2" style="font-size:11px;">${f.department}</span> <span class="badge campus-badge ms-2">${f.campusType}</span></h5>
+                        <p class="mb-1 text-muted" style="font-size:13px;">${f.email}</p>
+                        <p class="mb-2 text-muted" style="font-size:13px;">${f.phone || 'No phone'} | ${f.designation || 'No designation'}</p>
+                        <div class="mt-2">${getPrivilegeMarkup(f.privileges)}</div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="faculty-action-group">
+                            <button class="btn btn-sm btn-admin-edit" onclick="editFaculty('${f.email}')"><i class="bi bi-pencil"></i></button>
+                            <button class="btn btn-sm btn-admin-remove" onclick="removeFaculty('${f.email}', '${f.campusType}')"><i class="bi bi-trash"></i></button>
+                            <button class="btn btn-sm btn-admin-view" onclick="viewFaculty('${f.email}', '${f.campusType}')">View Details <i class="ri-arrow-right-s-line"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+
+        // Update Summary Stats
+        document.getElementById('totalFaculty').innerText = data.length;
+        document.getElementById('facultyInDrives').innerText = data.filter(f => isInDriveValue(f.inDrive)).length;
+    }
+
+    // Filter Logic
+    function applyFilters() {
+        const nameFilter = document.getElementById('filterName').value.toLowerCase();
+        const departmentFilter = document.getElementById('filterDepartment').value.toLowerCase();
+
+        let filtered = facultyData.filter(f => {
+            const matchesName = (f.name || '').toLowerCase().includes(nameFilter);
+            const matchesDepartment = (f.department || '').toLowerCase().includes(departmentFilter);
+            const facultyCampus = normalizeCampus(f.campusType || f.campus || f.college);
+            const matchesCampus = facultyCampus === activeCampus;
+            return matchesName && matchesDepartment && matchesCampus;
+        });
+
+        renderFaculty(filtered);
+    }
+
+    function setCampus(campus) {
+        activeCampus = campus;
+        document.getElementById('campus-btn-necn').classList.toggle('active', campus === 'NECN');
+        document.getElementById('campus-btn-necg').classList.toggle('active', campus === 'NECG');
+        applyFilters();
+    }
+
+    document.getElementById('filterName').addEventListener('input', applyFilters);
+    document.getElementById('filterDepartment').addEventListener('input', applyFilters);
+
+    async function loadFaculty() {
+        try {
+            const response = await fetch('/api/admin/faculty');
+            const data = await response.json();
+            facultyData = data.success ? (data.faculty || []) : [];
+            applyFilters();
+        } catch (error) {
+            console.error('Failed to load faculty:', error);
+            facultyData = [];
+            applyFilters();
+        }
+    }
+
+    async function addFaculty() {
+        const payload = {
+            campusType: document.getElementById('newFacultyCampusType').value,
+            name: document.getElementById('newFacultyName').value.trim(),
+            email: document.getElementById('newFacultyEmail').value.trim(),
+            phone: document.getElementById('newFacultyPhone').value.trim(),
+            department: document.getElementById('newFacultyDept').value.trim(),
+            designation: document.getElementById('newFacultyDesignation').value.trim(),
+            privileges: getSelectedPrivileges('.new-faculty-privilege')
+        };
+
+        const response = await fetch('/api/admin/add-faculty', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+
+        const result = await response.json();
+        if (!result.success) {
+            alert(result.message || 'Failed to add faculty');
+            return;
+        }
+
+        document.getElementById('newFacultyCampusType').value = 'NECN';
+        document.getElementById('newFacultyName').value = '';
+        document.getElementById('newFacultyEmail').value = '';
+        document.getElementById('newFacultyPhone').value = '';
+        document.getElementById('newFacultyDept').value = '';
+        document.getElementById('newFacultyDesignation').value = '';
+        document.querySelectorAll('.new-faculty-privilege').forEach(input => input.checked = false);
+
+        if (!addModalInstance) {
+            addModalInstance = bootstrap.Modal.getOrCreateInstance(document.getElementById('addFacultyModal'));
+        }
+        addModalInstance.hide();
+        await loadFaculty();
+    }
+
+    function editFaculty(email) {
+        const faculty = facultyData.find(item => item.email === email);
+        if (!faculty) return;
+
+        document.getElementById('editFacultyCampusType').value = faculty.campusType;
+        document.getElementById('editFacultyName').value = faculty.name || '';
+        document.getElementById('editFacultyEmail').value = faculty.email || '';
+        document.getElementById('editFacultyPhone').value = faculty.phone || '';
+        document.getElementById('editFacultyDept').value = faculty.department || '';
+        document.getElementById('editFacultyDesignation').value = faculty.designation || '';
+        setPrivilegeCheckboxes('.edit-faculty-privilege', faculty.privileges || {});
+
+        if (!editModalInstance) {
+            editModalInstance = bootstrap.Modal.getOrCreateInstance(document.getElementById('editFacultyModal'));
+        }
+        editModalInstance.show();
+    }
+
+    async function updateFaculty() {
+        const payload = {
+            campusType: document.getElementById('editFacultyCampusType').value,
+            email: document.getElementById('editFacultyEmail').value,
+            name: document.getElementById('editFacultyName').value.trim(),
+            phone: document.getElementById('editFacultyPhone').value.trim(),
+            department: document.getElementById('editFacultyDept').value.trim(),
+            designation: document.getElementById('editFacultyDesignation').value.trim(),
+            privileges: getSelectedPrivileges('.edit-faculty-privilege')
+        };
+
+        const response = await fetch('/api/admin/update-faculty', {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+
+        const result = await response.json();
+        if (!result.success) {
+            alert(result.message || 'Failed to update faculty');
+            return;
+        }
+
+        if (!editModalInstance) {
+            editModalInstance = bootstrap.Modal.getOrCreateInstance(document.getElementById('editFacultyModal'));
+        }
+        editModalInstance.hide();
+        await loadFaculty();
+    }
+
+    async function removeFaculty(email, campusType) {
+        const confirmed = await showDeleteFacultyConfirm();
+        if (!confirmed) {
+            return;
+        }
+
+        const response = await fetch(`/api/admin/remove-faculty/${encodeURIComponent(email)}?campus=${campusType}`, {
+            method: 'DELETE'
+        });
+        const result = await response.json();
+
+        if (!result.success) {
+            alert(result.message || 'Failed to remove faculty');
+            return;
+        }
+
+        await loadFaculty();
+    }
+
+    function showDeleteFacultyConfirm() {
+        return new Promise(resolve => {
+            const modalEl = document.getElementById('confirmDeleteFacultyModal');
+            const confirmBtn = document.getElementById('confirmDeleteFacultyBtn');
+            const cancelBtn = document.getElementById('cancelDeleteFacultyBtn');
+
+            if (!confirmDeleteModalInstance) {
+                confirmDeleteModalInstance = bootstrap.Modal.getOrCreateInstance(modalEl);
+            }
+
+            const cleanupAndResolve = (value) => {
+                modalEl.removeEventListener('hidden.bs.modal', onHidden);
+                confirmBtn.removeEventListener('click', onConfirm);
+                cancelBtn.removeEventListener('click', onCancel);
+                resolve(value);
+            };
+
+            const onConfirm = () => {
+                confirmDeleteModalInstance.hide();
+                cleanupAndResolve(true);
+            };
+
+            const onCancel = () => {
+                cleanupAndResolve(false);
+            };
+
+            const onHidden = () => {
+                cleanupAndResolve(false);
+            };
+
+            confirmBtn.addEventListener('click', onConfirm, { once: true });
+            cancelBtn.addEventListener('click', onCancel, { once: true });
+            modalEl.addEventListener('hidden.bs.modal', onHidden, { once: true });
+
+            confirmDeleteModalInstance.show();
+        });
+    }
+
+    function viewFaculty(email, campusType) {
+        window.location.href = `admin-faculty-detail.html?email=${encodeURIComponent(email)}&campus=${encodeURIComponent(campusType)}`;
+    }
+
+    loadFaculty();
+    </script>
+    <script src="assets/js/admin-session-manager.js"></script>
+    <script src="assets/js/admin-access-control.js"></script>
+    <script>
+        // Hide main content while checking privileges
+        const mainContent = document.querySelector('main') || 
+                           document.querySelector('.admin-wrapper') || 
+                           document.querySelector('.container-fluid');
+        if (mainContent) mainContent.style.display = 'none';
+
+        // Guard this page - check if admin has permission to add faculty
+        document.addEventListener('DOMContentLoaded', async function() {
+            const hasAccess = await adminAccessControl.guardPage('can_add_faculty', 'Faculty Management');
+            if (hasAccess && mainContent) mainContent.style.display = '';
+        });
+    </script>
+    <script src="assets/js/admin-sidebar.js"></script>
+    <script src="assets/js/admin-footer.js"></script>
+</body>
+</html>
+

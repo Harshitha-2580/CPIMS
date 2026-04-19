@@ -1,0 +1,1321 @@
+﻿<!DOCTYPE html>
+<html lang="zxx">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEC Placement Cell - Admin Reports</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="assets/css/scrollCue.css">
+    <link rel="stylesheet" href="assets/css/remixicon.css">
+    <link rel="stylesheet" href="assets/css/flaticon.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/admin-theme.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link href="assets/img/crop_nec.png" type="image/x-icon" rel="icon">
+
+    <style>
+        :root {
+            --primaryColor: #001e43;
+            --secenderyColor: #0a3a75;
+            --darkColor: #00142f;
+            --lightGray: #f8f9fa;
+        }
+
+        body {
+            padding-top: 0;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #eef3fb 0%, #e2ebf8 100%);
+        }
+
+        .admin-page-hero {
+            background: linear-gradient(135deg, #00142f 0%, #0a3a75 100%);
+            padding: 52px 0 36px;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 30, 67, 0.2);
+        }
+
+        .admin-page-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+            animation: shimmer 4s infinite;
+        }
+
+        .admin-page-hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #0a3a75, #001e43);
+            animation: borderGlow 3s ease-in-out infinite alternate;
+        }
+
+        .admin-page-hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .admin-page-hero-title {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            color: #ffffff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            letter-spacing: -1px;
+        }
+
+        .admin-page-hero-subtitle {
+            font-size: 20px;
+            opacity: 0.95;
+            color: #ffffff;
+            font-weight: 400;
+            margin-bottom: 30px;
+        }
+
+        .admin-page-hero-visual {
+            font-size: 80px;
+            color: #ffffff;
+            animation: float 3s ease-in-out infinite;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Welcome Banner */
+        .reports-welcome-banner {
+            background: linear-gradient(135deg, var(--darkColor) 0%, #0a3a75 100%);
+            padding: 60px 0;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            animation: bannerSlideIn 0.8s ease-out;
+        }
+
+        .reports-welcome-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        .reports-welcome-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .reports-welcome-title {
+            font-size: 42px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            color: #ffffff;
+            animation: titleFadeIn 0.8s ease-out 0.2s backwards;
+        }
+
+        .reports-welcome-subtitle {
+            font-size: 18px;
+            opacity: 0.9;
+            color: #ffffff;
+            animation: subtitleFadeIn 0.8s ease-out 0.4s backwards;
+        }
+
+        @keyframes bannerSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes titleFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes subtitleFadeIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        @keyframes borderGlow {
+            from { opacity: 0.6; }
+            to { opacity: 1; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Reports Container */
+        .reports-section {
+            padding: 60px 0;
+        }
+
+        .section-title-reports {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .section-title-reports h2 {
+            color: var(--darkColor);
+            font-weight: 800;
+            font-size: 38px;
+            position: relative;
+            padding-bottom: 20px;
+            margin-bottom: 15px;
+        }
+
+        .section-title-reports h2::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primaryColor), var(--secenderyColor));
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .section-title-reports p {
+            color: #666;
+            font-size: 16px;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Stats Cards */
+        .report-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .report-stat-card {
+            background: linear-gradient(135deg, #001e43, #002a5c);
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 30, 67, 0.2);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            animation: cardFadeInUp 0.6s ease-out backwards;
+            color: #ffffff;
+        }
+
+        .report-stat-card:nth-child(1) { animation-delay: 0.1s; }
+        .report-stat-card:nth-child(2) { animation-delay: 0.2s; }
+        .report-stat-card:nth-child(3) { animation-delay: 0.3s; }
+        .report-stat-card:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes cardFadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .header-welcome-gap {
+            height: 8px;
+            background: linear-gradient(135deg, #eef3fb 0%, #e2ebf8 100%);
+        }
+        .report-stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+            animation: shimmer 4s infinite;
+        }
+
+        .report-stat-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, #002a5c, #003580);
+            animation: borderGlow 3s ease-in-out infinite alternate;
+        }
+
+        .report-stat-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(0, 30, 67, 0.35);
+        }
+
+        .stat-icon-reports {
+            width: 70px;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 36px;
+            color: #ffffff;
+            transition: all 0.3s ease;
+        }
+
+        .report-stat-card:hover .stat-icon-reports {
+            background: rgba(255, 255, 255, 0.25);
+            transform: scale(1.1);
+        }
+
+        .stat-number-reports {
+            font-size: 32px;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+
+        .stat-label-reports {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* Report Types Grid */
+        .report-types-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .report-type-card {
+            background: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            animation: slideInCard 0.6s ease-out backwards;
+        }
+
+        .report-type-card:nth-child(1) { animation-delay: 0.1s; }
+        .report-type-card:nth-child(2) { animation-delay: 0.2s; }
+        .report-type-card:nth-child(3) { animation-delay: 0.3s; }
+
+        @keyframes slideInCard {
+            from {
+                opacity: 0;
+                transform: translateX(-40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .report-type-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 30, 67, 0.18);
+        }
+
+        .report-type-header {
+            background: linear-gradient(135deg, var(--primaryColor) 0%, var(--secenderyColor) 100%);
+            padding: 30px;
+            color: white;
+            text-align: center;
+        }
+
+        .report-type-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        .report-type-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .report-type-subtitle {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+
+        .report-type-content {
+            padding: 25px;
+        }
+
+        .report-type-content p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .report-type-btn {
+            display: inline-block;
+            background: linear-gradient(90deg, var(--primaryColor), var(--secenderyColor));
+            color: white;
+            padding: 10px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .report-type-btn:hover {
+            transform: translateX(5px);
+            box-shadow: 0 8px 20px rgba(0, 30, 67, 0.3);
+            color: white;
+        }
+
+        /* Table Section */
+        .reports-table-section {
+            background: #fff;
+            border-radius: 15px;
+            padding: 35px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            animation: tableSlideIn 0.8s ease-out 0.3s backwards;
+        }
+
+        @keyframes tableSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .table-header-reports {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .table-header-reports h3 {
+            color: var(--darkColor);
+            font-weight: 700;
+            font-size: 22px;
+            margin: 0;
+        }
+
+        .table-filters {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .filter-select {
+            padding: 10px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: #fff;
+            color: #333;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-select:hover {
+            border-color: var(--primaryColor);
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--primaryColor);
+            box-shadow: 0 0 0 3px rgba(0, 30, 67, 0.12);
+        }
+
+        .reports-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .reports-table thead {
+            background-color: #f8f9fa;
+        }
+
+        .reports-table th {
+            padding: 15px;
+            text-align: left;
+            color: var(--darkColor);
+            font-weight: 700;
+            border-bottom: 2px solid #e0e0e0;
+            font-size: 14px;
+        }
+
+        .reports-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #f0f0f0;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .reports-table tbody tr {
+            transition: all 0.3s ease;
+        }
+
+        .reports-table tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-success {
+            background: #e6eef9;
+            color: #0a2f63;
+        }
+
+        .status-pending {
+            background: #dce9fb;
+            color: #0c3f80;
+        }
+
+        .status-warning {
+            background: #d2e3fa;
+            color: #001e43;
+        }
+
+        /* Download Button */
+        .download-btn {
+            display: inline-block;
+            background: linear-gradient(90deg, var(--primaryColor), var(--secenderyColor));
+            color: white;
+            padding: 12px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 30, 67, 0.3);
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .reports-welcome-title {
+                font-size: 28px;
+            }
+
+            .section-title-reports h2 {
+                font-size: 28px;
+            }
+
+            .report-stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .report-types-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .table-filters {
+                flex-direction: column;
+            }
+
+            .filter-select {
+                width: 100%;
+            }
+        }
+
+        /* Campus Selector Button Styles */
+        .campus-selector-btn {
+            transition: all 0.3s ease;
+        }
+
+        .campus-selector-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 30, 67, 0.2);
+        }
+
+        .campus-selector-btn.campus-active {
+            background: var(--primaryColor) !important;
+            color: white !important;
+            box-shadow: 0 4px 16px rgba(0, 30, 67, 0.3);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Top Header -->
+    <div class="top-header-area style-2" style="padding: 12px 0;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-12 text-center">
+                    <h3 class="mb-0" style="color: #fff; font-weight: 700; letter-spacing: 1px; line-height: 1.4; font-size: 26px;">
+                        <span style="font-family: 'Poppins', ; font-size: 36px; font-weight: 700;"> NEC</span> – Central Placement Information and Management Center
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-welcome-gap" aria-hidden="true"></div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light py-2" id="navbar">
+        <div class="container">
+            <img src="assets/img/logo_necn.png" alt="Logo" height="70" width="160">
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a href="admin-dashboard.html" class="nav-link">Dashboard</a></li>
+                    <li class="nav-item"><a href="admin-students.html" class="nav-link">Students</a></li>
+                    <li class="nav-item"><a href="admin-opportunities.html" class="nav-link">Opportunities</a></li>
+                    <li class="nav-item"><a href="admin-reports.html" class="nav-link active-admin" style="color: #001e43; font-weight: bold;">Reports</a></li>
+                    <li class="nav-item"><a href="index.html" class="nav-link" style="color: #001e43;">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Welcome Banner -->
+    <div class="admin-page-hero">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <div class="admin-page-hero-content">
+                        <h2 class="admin-page-hero-title">Reports &amp; Analytics</h2>
+                        <p class="admin-page-hero-subtitle">Comprehensive placement and student data analysis dashboard.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <div class="admin-page-hero-visual">
+                        <i class="ri-file-chart-line"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reports Section -->
+    <div class="reports-section">
+        <div class="container">
+            <!-- Campus Selector -->
+            <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 40px; flex-wrap: wrap;">
+                <button class="campus-selector-btn campus-active" data-campus="NECN" style="padding: 12px 30px; border: 2px solid var(--primaryColor); border-radius: 8px; background: var(--primaryColor); color: white; font-weight: 600; cursor: pointer; transition: all 0.3s ease; font-size: 16px;">
+                    NECN Campus
+                </button>
+                <button class="campus-selector-btn" data-campus="NECG" style="padding: 12px 30px; border: 2px solid var(--primaryColor); border-radius: 8px; background: transparent; color: var(--primaryColor); font-weight: 600; cursor: pointer; transition: all 0.3s ease; font-size: 16px;">
+                    NECG Campus
+                </button>
+            </div>
+
+            <!-- Campus Indicator -->
+            <div style="text-align: center; margin-bottom: 30px;">
+                <h3 id="campus-indicator" style="color: var(--darkColor); font-size: 20px; font-weight: 600;">NECN Campus Reports</h3>
+            </div>
+
+            <!-- Statistics Cards -->
+            <div class="report-stats-grid">
+                <div class="report-stat-card">
+                    <div class="stat-icon-reports"><i class="flaticon-writing"></i></div>
+                    <div class="stat-number-reports" id="stat-drives">--</div>
+                    <div class="stat-label-reports">Placement Drives Conducted</div>
+                </div>
+
+                <div class="report-stat-card">
+                    <div class="stat-icon-reports"><i class="flaticon-graduation-cap"></i></div>
+                    <div class="stat-number-reports" id="stat-placed">--</div>
+                    <div class="stat-label-reports">Students Successfully Placed</div>
+                </div>
+
+                <div class="report-stat-card">
+                    <div class="stat-icon-reports"><i class="flaticon-loan"></i></div>
+                    <div class="stat-number-reports" id="stat-package">--</div>
+                    <div class="stat-label-reports">Average Package Offered</div>
+                </div>
+
+                <div class="report-stat-card">
+                    <div class="stat-icon-reports"><i class="flaticon-speech"></i></div>
+                    <div class="stat-number-reports" id="stat-rate">--</div>
+                    <div class="stat-label-reports">Placement Success Rate</div>
+                </div>
+            </div>
+
+            <!-- Report Types -->
+            <h3 style="color: var(--darkColor); font-weight: 700; margin-bottom: 30px; margin-top: 50px;">Available Reports</h3>
+            <div class="report-types-grid">
+                <div class="report-type-card" data-report-type="placement">
+                    <div class="report-type-header">
+                        <div class="report-type-icon"><i class="flaticon-writing"></i></div>
+                        <div class="report-type-title">Placement Reports</div>
+                        <div class="report-type-subtitle">Drive-wise analysis</div>
+                    </div>
+                    <div class="report-type-content">
+                        <p>View comprehensive placement statistics including company-wise placements, student participation, and placement success metrics.</p>
+                        <button class="report-type-btn">Generate Report</button>
+                    </div>
+                </div>
+
+                <div class="report-type-card" data-report-type="student">
+                    <div class="report-type-header">
+                        <div class="report-type-icon"><i class="flaticon-graduation-cap"></i></div>
+                        <div class="report-type-title">Student Reports</div>
+                        <div class="report-type-subtitle">Performance analytics</div>
+                    </div>
+                    <div class="report-type-content">
+                        <p>Analyze student placement statistics, branch-wise performance, CGPA distribution, and individual student placement details.</p>
+                        <button class="report-type-btn">Generate Report</button>
+                    </div>
+                </div>
+
+                <div class="report-type-card" data-report-type="company">
+                    <div class="report-type-header">
+                        <div class="report-type-icon"><i class="flaticon-loan"></i></div>
+                        <div class="report-type-title">Company Reports</div>
+                        <div class="report-type-subtitle">Recruitment insights</div>
+                    </div>
+                    <div class="report-type-content">
+                        <p>Track company recruiting patterns, salary packages, job roles offered, and company-specific placement data across drives.</p>
+                        <button class="report-type-btn">Generate Report</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table Section -->
+            <div class="reports-table-section">
+                <div class="table-header-reports">
+                    <h3>Recent Placement Statistics</h3>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <button class="download-btn" id="download-csv-btn"><i class="ri-file-list-3-line"></i> Export CSV</button>
+                        <button class="download-btn" id="download-pdf-btn"><i class="ri-download-cloud-line"></i> Export PDF</button>
+                    </div>
+                </div>
+
+                <div class="table-filters" style="margin-bottom: 20px;">
+                    <select class="filter-select" id="filter-status">
+                        <option value="">All Status</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Upcoming">Upcoming</option>
+                    </select>
+                </div>
+
+                <div id="report-detail-section" style="margin-bottom:20px; display:none;">
+                    <h4 id="report-detail-title" style="margin-bottom: 12px; font-size: 1.3rem; color: #001e43;"></h4>
+                    <div id="report-detail-body"></div>
+                    <div id="chart-container" style="margin-top: 20px; display: none; max-width: 100%;">
+                        <canvas id="report-chart" style="width: 100%; max-height: 420px;"></canvas>
+                    </div>
+                </div>
+
+                <div id="placements-table-container" style="overflow-x: auto;">
+                    <table class="reports-table">
+                        <thead>
+                            <tr>
+                                <th>Drive Name</th>
+                                <th>Company</th>
+                                <th>Package</th>
+                                <th>Participants</th>
+                                <th>Selected</th>
+                                <th>Success Rate</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reports-table-body">
+                            <tr>
+                                <td colspan="7" style="text-align: center; padding: 30px;">Loading data...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer-area pt-100 pb-75">
+        <div class="container">
+            <div class="row align-items-start">
+                <div class="col-lg-4 col-sm-6">
+                    <div class="single-footer-widget about">
+                        <h3>About NEC Placement Cell</h3>
+                        <p>NEC Placement Cell is the Placement & Career Cell of Narayana Engineering College, Nellore. We provide centralized placement information, career guidance, skill development programs, and workshops to prepare students for top recruiters and industry opportunities.</p>
+                        <h6>Follow NEC Placement Cell:</h6>
+                        <ul class="list-unstyled ps-0 mb-0 social-link">
+                            <li class="d-inline-block">
+                                <a class="text-decoration-none" href="https://www.facebook.com/" target="_blank">
+                                    <i class="flaticon-facebook-app-symbol"></i>
+                                </a>
+                            </li>
+                            <li class="d-inline-block">
+                                <a class="text-decoration-none" href="https://www.pinterest.com/" target="_blank">
+                                    <i class="flaticon-pinterest"></i>
+                                </a>
+                            </li>
+                            <li class="d-inline-block">
+                                <a class="text-decoration-none" href="https://www.instagram.com/" target="_blank">
+                                    <i class="flaticon-instagram"></i>
+                                </a>
+                            </li>
+                            <li class="d-inline-block">
+                                <a class="text-decoration-none" href="https://twitter.com/" target="_blank">
+                                    <i class="flaticon-twitter"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-sm-6">
+                    <div class="single-footer-widget quick">
+                        <h3>Quick Links</h3>
+                        <ul class="list-unstyled ps-0 mb-0">
+                            <li><a class="text-decoration-none" href="admin-dashboard.html">Admin Dashboard</a></li>
+                            <li><a class="text-decoration-none" href="admin-students.html">Manage Students</a></li>
+                            <li><a class="text-decoration-none" href="admin-opportunities.html">Manage Opportunities</a></li>
+                            <li><a class="text-decoration-none" href="contact.html">Contact Support</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-sm-6">
+                    <div class="single-footer-widget contact">
+                        <h3>Contact Placement Cell</h3>
+                        <ul class="list-unstyled ps-0 mb-0">
+                            <li>
+                                <a class="text-decoration-none" href="tel:+919999999999">
+                                    +91 99999 99999
+                                    <i class="ri-phone-line"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="text-decoration-none" href="mailto:narayanacollege@necn.ac.in">
+                                    narayanacollege@necn.ac.in
+                                    <i class="ri-message-line"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <i class="flaticon-placeholder"></i>
+                                <p>Narayana Engineering College, Nellore<br>NH-16, Muthukur Road, Nellore, Andhra Pradesh 524003</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="copyright-area">
+        <div class="container">
+            <div class="row align-items-center">
+                
+                <div class="col-lg-2 col-sm-12 d-flex align-items-center">
+                    <div class="copyright-logo">
+                        <img src="assets/img/necn_logo.jpeg" alt="nec-placement-cell-logo" width="70" height="50">
+                        <p class="mb-0">NEC Placement Cell</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-5 col-sm-6">
+                    <div class="copyright-title text-lg-end text-sm-start">
+                        <p class="mb-0">© <strong>NEC Placement Cell</strong> Placement & Career Cell. All Rights Reserved.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-5 col-sm-6">
+                    <div class="copyright-list text-lg-end text-sm-start">
+                        <ul class="list-unstyled ps-0 mb-0">
+                            <li class="d-inline-block me-3">
+                                <a class="text-decoration-none" href="admin-dashboard.html">Management</a>
+                            </li>
+                            <li class="d-inline-block me-3">
+                                <a class="text-decoration-none" href="admin-reports.html">Reports</a>
+                            </li>
+                            <li class="d-inline-block">
+                                <a class="text-decoration-none" href="admin-dashboard.html">About NEC Placement Cell</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/custom.js"></script>
+    
+    <script>
+        // State management
+        let currentCampus = 'NECN';
+        let reportsData = null;
+
+        // Campus selector functionality
+        document.querySelectorAll('.campus-selector-btn').forEach(btn => {
+            btn.addEventListener('click', async function() {
+                currentCampus = this.dataset.campus;
+                
+                // Update button states
+                document.querySelectorAll('.campus-selector-btn').forEach(b => {
+                    b.classList.remove('campus-active');
+                    b.style.background = 'transparent';
+                    b.style.color = 'var(--primaryColor)';
+                });
+                this.classList.add('campus-active');
+                this.style.background = 'var(--primaryColor)';
+                this.style.color = 'white';
+                
+                // Update campus indicator
+                document.getElementById('campus-indicator').textContent = 
+                    currentCampus === 'NECN' ? 'NECN Campus Reports' : 'NECG Campus Reports';
+                
+                // Fetch and display data
+                await fetchReportsData();
+            });
+        });
+
+        // Fetch reports data from API
+        async function fetchReportsData() {
+            try {
+                const response = await fetch(`/api/admin/reports?campus=${currentCampus}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    reportsData = data;
+                    updateStatistics(data.statistics);
+                    updateTable(data.placements);
+                } else {
+                    console.error('Error fetching reports:', data.message);
+                    showError('Failed to load reports data');
+                }
+            } catch (err) {
+                console.error('Error fetching reports:', err);
+                showError('Error connecting to server');
+            }
+        }
+
+        // Update statistics cards
+        function updateStatistics(stats) {
+            document.getElementById('stat-drives').textContent = stats.total_drives || 0;
+            document.getElementById('stat-placed').textContent = stats.placed_students || 0;
+            document.getElementById('stat-package').textContent = stats.avg_package ? `$${stats.avg_package}L` : '$0';
+            document.getElementById('stat-rate').textContent = (stats.placement_rate || 0) + '%';
+        }
+
+        // Update table with placement data
+        function updateTable(placements) {
+            const tbody = document.getElementById('reports-table-body');
+            
+            if (!placements || placements.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 30px;">No placement data available</td></tr>';
+                return;
+            }
+            
+            const rows = placements.map(p => {
+                const status = p.status || 'Scheduled';
+                const statusClass = status === 'Completed' ? 'status-success' : 
+                                   status === 'Upcoming' ? 'status-pending' : 'status-warning';
+                
+                return `
+                    <tr>
+                        <td>${p.company_name || '-'}</td>
+                        <td>${p.company_name || '-'}</td>
+                        <td>${p.salary_package || '-'}</td>
+                        <td>${p.participants || 0}</td>
+                        <td>${p.selected || 0}</td>
+                        <td>${p.success_rate || 0}%</td>
+                        <td><span class="status-badge ${statusClass}">${status}</span></td>
+                    </tr>
+                `;
+            });
+            
+            tbody.innerHTML = rows.join('');
+        }
+
+        // Report chart instance (destroy before rerender)
+        let reportChart = null;
+
+        // Report type buttons
+        document.querySelectorAll('.report-type-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const card = this.closest('.report-type-card');
+                const type = card?.dataset?.reportType || 'placement';
+                renderReportDetail(type);
+
+                // auto-scroll to the report details section
+                const target = document.getElementById('report-detail-section');
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        function renderReportDetail(type) {
+            const detailSection = document.getElementById('report-detail-section');
+            const tableContainer = document.getElementById('placements-table-container');
+            const title = document.getElementById('report-detail-title');
+            const body = document.getElementById('report-detail-body');
+            const chartContainer = document.getElementById('chart-container');
+
+            if (!reportsData) {
+                showError('No data available to render report');
+                return;
+            }
+
+            detailSection.style.display = 'block';
+            chartContainer.style.display = 'block';
+            body.innerHTML = '';
+
+            if (reportChart) {
+                reportChart.destroy();
+                reportChart = null;
+            }
+
+            if (type === 'placement') {
+                title.textContent = 'Placement Report: Drive-wise Results';
+                body.innerHTML = `<p style="margin-bottom: 10px; color: #444;">Showing placement drive summary with counts and success relationships.</p>`;
+                tableContainer.style.display = 'block';
+                updateTable(reportsData.placements);
+
+                const labels = (reportsData.placements || []).map(p => p.company_name || `Drive ${p.id}`);
+                const dataPoints = (reportsData.placements || []).map(p => p.selected || 0);
+                const otherPoints = (reportsData.placements || []).map(p => p.participants || 0);
+
+                renderChart('bar', {
+                    labels,
+                    datasets: [
+                        { label: 'Selected', data: dataPoints, backgroundColor: 'rgba(26,188,156,0.8)' },
+                        { label: 'Participants', data: otherPoints, backgroundColor: 'rgba(52,152,219,0.7)' }
+                    ]
+                }, 'Drive vs Selected / Participants');
+            } else if (type === 'student') {
+                title.textContent = 'Student Report: Branch-wise Performance';
+                tableContainer.style.display = 'none';
+
+                const branches = reportsData.branch_stats || [];
+                const rows = branches.map(b => `<tr>
+                    <td>${b.branch || 'Unknown'}</td>
+                    <td>${b.total_students || 0}</td>
+                    <td>${b.placed_count || 0}</td>
+                    <td>${b.placement_rate || 0}%</td>
+                </tr>`).join('') || `<tr><td colspan="4" style="text-align: center">No data</td></tr>`;
+
+                body.innerHTML = `<div style="overflow-x:auto;"><table class="reports-table" style="margin-top:10px;"><thead><tr><th>Branch</th><th>Total Students</th><th>Placed</th><th>Placement Rate</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+
+                const labels = branches.map(b => b.branch || 'Unknown');
+                const dataPoints = branches.map(b => parseFloat(b.placement_rate) || 0);
+
+                renderChart('doughnut', {
+                    labels,
+                    datasets: [{ label: 'Placement Rate %', data: dataPoints, backgroundColor: ['rgba(46,204,113,0.7)', 'rgba(52,152,219,0.7)', 'rgba(241,196,15,0.7)', 'rgba(231,76,60,0.7)', 'rgba(155,89,182,0.7)'] }]
+                }, 'Branch-wise Placement Rate');
+            } else if (type === 'company') {
+                title.textContent = 'Company Report: Company Performance';
+                tableContainer.style.display = 'none';
+
+                const companies = reportsData.company_stats || [];
+                const rows = companies.map(c => `<tr>
+                    <td>${c.company_name || 'Unknown'}</td>
+                    <td>${c.total_drives || 0}</td>
+                    <td>${c.total_participants || 0}</td>
+                    <td>${c.total_selected || 0}</td>
+                    <td>${c.salary_package || '-'}</td>
+                </tr>`).join('') || `<tr><td colspan="5" style="text-align: center">No data</td></tr>`;
+
+                body.innerHTML = `<div style="overflow-x:auto;"><table class="reports-table" style="margin-top:10px;"><thead><tr><th>Company</th><th>Total Drives</th><th>Participants</th><th>Selected</th><th>Avg Package</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+
+                const labels = companies.map(c => c.company_name || 'Unknown');
+                const dataPoints = companies.map(c => c.total_selected || 0);
+
+                renderChart('horizontalBar', {
+                    labels,
+                    datasets: [{ label: 'Selected Count', data: dataPoints, backgroundColor: 'rgba(241,196,15,0.7)' }]
+                }, 'Company Selected Count');
+            }
+        }
+
+        function renderChart(type, chartData, chartLabel) {
+            const chartContainer = document.getElementById('chart-container');
+            const ctx = document.getElementById('report-chart').getContext('2d');
+            chartContainer.style.display = 'block';
+
+            if (reportChart) {
+                reportChart.destroy();
+            }
+
+            const config = {
+                type: type === 'horizontalBar' ? 'bar' : type,
+                data: chartData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom' },
+                        title: { display: true, text: chartLabel }
+                    },
+                    scales: {
+                        x: { beginAtZero: true },
+                        y: { beginAtZero: true }
+                    }
+                }
+            };
+
+            if (type === 'horizontalBar') {
+                config.options.indexAxis = 'y';
+            }
+
+            reportChart = new Chart(ctx, config);
+        }
+
+        // Filter functionality
+        document.getElementById('filter-status').addEventListener('change', function() {
+            const filterValue = this.value;
+            if (!reportsData) return;
+            
+            let filtered = reportsData.placements;
+            if (filterValue) {
+                filtered = reportsData.placements.filter(p => p.status === filterValue);
+            }
+            updateTable(filtered);
+        });
+
+        // Download CSV functionality
+        document.getElementById('download-csv-btn').addEventListener('click', function() {
+            if (!reportsData) {
+                alert('No data available to download');
+                return;
+            }
+
+            const csvContent = generateCSVContent(reportsData.placements);
+            const now = new Date();
+            const dateStamp = now.toISOString().slice(0, 10);
+            const timeStamp = now.toISOString().slice(11, 19).replace(/:/g, '-');
+            downloadCSV(csvContent, `Placement_Report_${currentCampus}_${dateStamp}_${timeStamp}.csv`);
+        });
+
+        // Download PDF functionality (with charts + visual section)
+        document.getElementById('download-pdf-btn').addEventListener('click', async function() {
+            if (!reportsData) {
+                alert('No data available to download');
+                return;
+            }
+
+            const reportArea = document.getElementById('report-detail-section');
+            const tableArea = document.getElementById('placements-table-container');
+            const chartArea = document.getElementById('chart-container');
+
+            if (!reportArea || !tableArea) {
+                alert('Report area is not available. Please generate a report first.');
+                return;
+            }
+            if (!chartArea) {
+                alert('Chart area is not available. Please generate a report first.');
+                return;
+            }
+
+            if (typeof html2canvas === 'undefined') {
+                alert('html2canvas library not loaded. Please include it.');
+                return;
+            }
+            if (typeof window.jspdf === 'undefined' && typeof window.jsPDF === 'undefined') {
+                alert('jsPDF library not loaded. Please include it.');
+                return;
+            }
+
+            const section = document.createElement('div');
+            section.style.width = '1200px';
+            section.style.padding = '16px';
+            section.style.background = '#ffffff';
+            section.appendChild(reportArea.cloneNode(true));
+
+            // Use the chart image from chart.js canvas to ensure rendered chart is captured
+            const reportChartCanvas = document.querySelector('#chart-container canvas#report-chart');
+            if (reportChartCanvas instanceof HTMLCanvasElement) {
+                const chartImg = document.createElement('img');
+                chartImg.src = reportChartCanvas.toDataURL('image/png');
+                chartImg.style.width = '100%';
+                chartImg.style.height = 'auto';
+                chartImg.style.display = 'block';
+                section.appendChild(chartImg);
+            } else {
+                section.appendChild(chartArea.cloneNode(true));
+            }
+
+            section.appendChild(tableArea.cloneNode(true));
+
+            // Attach clone to DOM so html2canvas can resolve computed styles and node references safely
+            section.style.position = 'fixed';
+            section.style.left = '-9999px';
+            section.style.top = '-9999px';
+            section.style.width = '1200px';
+            section.style.zIndex = '-9999';
+            document.body.appendChild(section);
+
+            let canvas;
+            try {
+                canvas = await html2canvas(section, {
+                    scale: 2,
+                    useCORS: true,
+                    backgroundColor: '#ffffff',
+                    allowTaint: true
+                });
+            } catch (error) {
+                console.error('PDF capture failed:', error);
+                alert('Unable to generate PDF from report content. Please try again or contact support.');
+                document.body.removeChild(section);
+                return;
+            }
+
+            document.body.removeChild(section);
+
+            const imgData = canvas.toDataURL('image/png');
+            const { jsPDF } = window.jspdf || window;
+            const doc = new jsPDF('p', 'mm', 'a4');
+            const pdfWidth = doc.internal.pageSize.getWidth();
+            const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+            const pageHeight = doc.internal.pageSize.getHeight();
+            let position = 0;
+            doc.addImage(imgData, 'PNG', 0, position, pdfWidth, pdfHeight);
+
+            // If content is bigger than one page, add extra pages
+            let remainingHeight = pdfHeight - pageHeight;
+            while (remainingHeight > 0) {
+                position -= pageHeight;
+                doc.addPage();
+                doc.addImage(imgData, 'PNG', 0, position, pdfWidth, pdfHeight);
+                remainingHeight -= pageHeight;
+            }
+
+            const now = new Date();
+            const dateStamp = now.toISOString().slice(0, 10);
+            const timeStamp = now.toISOString().slice(11, 19).replace(/:/g, '-');
+            doc.save(`Placement_Report_${currentCampus}_${dateStamp}_${timeStamp}.pdf`);
+        });
+
+        // Generate CSV content
+        function generateCSVContent(placements) {
+            let csv = 'Drive Name,Company,Package,Participants,Selected,Success Rate,Status\n';
+            placements.forEach(p => {
+                csv += `"${p.company_name || '-'}","${p.company_name || '-'}","${p.salary_package || '-'}",${p.participants || 0},${p.selected || 0},${p.success_rate || 0}%,"${p.status || 'Scheduled'}"\n`;
+            });
+            return csv;
+        }
+
+        // Download CSV file
+        function downloadCSV(content, filename) {
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(content));
+            element.setAttribute('download', filename);
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        // Show error message
+        function showError(message) {
+            const tbody = document.getElementById('reports-table-body');
+            tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 30px; color: red;">${message}</td></tr>`;
+            document.getElementById('stat-drives').textContent = '--';
+            document.getElementById('stat-placed').textContent = '--';
+            document.getElementById('stat-package').textContent = '--';
+            document.getElementById('stat-rate').textContent = '--';
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', async function() {
+            await fetchReportsData();
+        });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="assets/js/admin-session-manager.js"></script>
+    <script src="assets/js/admin-sidebar.js"></script>
+    <script src="assets/js/admin-access-control.js"></script>
+    <script>
+        // Hide main content while checking privileges
+        const mainContent = document.querySelector('main') || 
+                           document.querySelector('.admin-wrapper') || 
+                           document.querySelector('.container-fluid');
+        if (mainContent) mainContent.style.display = 'none';
+
+        // Guard this page - check if admin has permission to generate reports
+        document.addEventListener('DOMContentLoaded', async function() {
+            const hasAccess = await adminAccessControl.guardPage('can_generate_reports', 'Generate Reports');
+            if (hasAccess && mainContent) mainContent.style.display = '';
+        });
+    </script>
+    <script src="assets/js/admin-footer.js"></script>
+</body>
+</html>
+
+

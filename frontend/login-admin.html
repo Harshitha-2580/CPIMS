@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEC – Admin Login</title>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="assets/css/scrollCue.css">
+    <link rel="stylesheet" href="assets/css/remixicon.css">
+    <link rel="stylesheet" href="assets/css/flaticon.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="assets/css/index-inline.css">
+
+    <!-- Custom Styles -->
+    <style>
+        /* Prevent horizontal overflow */
+        body, html {
+            overflow-x: hidden;
+        }
+        #navbar img {
+            max-width: 100%;
+            height: auto;
+        }
+        .top-header-area h3 {
+            word-wrap: break-word;
+        }
+
+        /* 🎨 Login Form Animations & Transitions */
+        .register-area {
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .single-register-info {
+            background: #ffffff;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            padding: 0;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden;
+        }
+
+        .single-register-info::before {
+            content: '';
+            display: block;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, #090252 0%, #18b0de 100%);
+            transform: scaleX(0);
+            transform-origin: left center;
+            will-change: transform;
+            animation: slideInWidth 0.8s ease-out 0.2s forwards;
+        }
+
+        .single-register-info:hover {
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            transform: translateY(-5px);
+            border-color: #0c054c;
+        }
+
+        .single-register-info > div {
+            padding: 50px 40px;
+        }
+
+        .single-register-info h3 {
+            animation: fadeInDown 0.8s ease-out 0.2s backwards;
+            font-weight: 700;
+            color: #001e43;
+            margin-bottom: 10px;
+            margin-top: 0;
+            position: relative;
+            padding-bottom: 0;
+            font-size: 28px;
+        }
+
+        .login-subtitle {
+            animation: fadeInDown 0.8s ease-out 0.3s backwards;
+            color: #0c054c;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 30px;
+            display: block;
+        }
+
+        .single-register-info h3::after {
+            display: none;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInWidth {
+            from {
+                transform: scaleX(0);
+            }
+            to {
+                transform: scaleX(1);
+            }
+        }
+
+        .form-group {
+            animation: fadeInUp 0.8s ease-out backwards;
+            margin-bottom: 20px;
+        }
+
+        .form-group:nth-child(1) { animation-delay: 0.3s; }
+        .form-group:nth-child(2) { animation-delay: 0.4s; }
+        .form-group:nth-child(3) { animation-delay: 0.5s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-control {
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 12px 16px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            background-color: #f5f5f5;
+        }
+
+        .form-control:focus {
+            background-color: #fff;
+            border-color: #0c054c;
+            box-shadow: 0 0 0 0.2rem rgba(12, 5, 76, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .form-control::placeholder {
+            color: #999;
+            transition: color 0.3s ease;
+        }
+
+        .form-control:focus::placeholder {
+            color: #0c054c;
+        }
+
+        .form-check {
+            animation: fadeInUp 0.8s ease-out 0.6s backwards;
+            margin-bottom: 25px;
+        }
+
+        .form-check-input {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+        }
+
+        .form-check-input:checked {
+            background-color: #0c054c;
+            border-color: #0c054c;
+            box-shadow: 0 0 0 0.25rem rgba(12, 5, 76, 0.25);
+        }
+
+        .form-check-label {
+            cursor: pointer;
+            transition: color 0.3s ease;
+            margin-left: 8px;
+        }
+
+        .form-check-input:checked ~ .form-check-label {
+            color: #0c054c;
+            font-weight: 500;
+        }
+
+        .default-btn {
+            animation: fadeInUp 0.8s ease-out 0.7s backwards;
+            background: linear-gradient(135deg, #0c054c 0%, #090252 100%);
+            border: none;
+            border-radius: 10px;
+            padding: 12px 30px;
+            font-weight: 600;
+            font-size: 16px;
+            color: white;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .default-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .default-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .default-btn:hover {
+            box-shadow: 0 12px 30px rgba(12, 5, 76, 0.4);
+            transform: translateY(-3px);
+        }
+
+        .default-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .login-popup-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7); /* dark background without blur */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+}
+
+.login-popup-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+        .login-popup-content {
+            background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+            padding: 40px 50px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 30, 67, 0.3);
+            border-left: 5px solid #060667;
+            max-width: 450px;
+            width: 90%;
+            animation: popupSlideIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform-origin: center;
+        }
+
+        @keyframes popupSlideIn {
+            from {
+                transform: scale(0.7) translateY(-30px);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1) translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .login-popup-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #050454 0%, #050757 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: white;
+            animation: popupIconScale 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s backwards;
+        }
+
+        @keyframes popupIconScale {
+            from {
+                transform: scale(0);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+
+        .login-popup-title {
+            font-family: "Roboto Slab", serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: #001e43;
+            margin-bottom: 12px;
+            animation: fadeInDown 0.6s ease-out 0.2s backwards;
+        }
+
+        .login-popup-message {
+            font-family: "Poppins", sans-serif;
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 25px;
+            line-height: 1.6;
+            animation: fadeInUp 0.6s ease-out 0.3s backwards;
+        }
+
+        .login-popup-name {
+            color: #0c054c;
+            font-weight: 600;
+        }
+
+        .login-popup-btn {
+            background: linear-gradient(135deg, #060456 0%, #0a034a 100%);
+            color: white;
+            border: none;
+            padding: 12px 35px;
+            border-radius: 8px;
+            font-family: "Poppins", sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: fadeInUp 0.6s ease-out 0.4s backwards;
+        }
+
+        .login-popup-btn:hover {
+            box-shadow: 0 8px 20px rgba(18, 3, 90, 0.4);
+            transform: translateY(-3px);
+        }
+
+   .login-popup-content {
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+
+        /* Keep stable border rendering during focus/hover */
+        .form-control {
+            border-image: none;
+        }
+    </style>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
+    <link href="assets/img/crop_nec.png" type="image/x-icon" rel="icon">
+</head>
+<body>
+
+    <!-- Top Header Area -->
+    <div class="top-header-area style-2" style="padding: 12px 0;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-12 text-center">
+                    <h3 class="mb-0" style="color: #fff; font-weight: 700; letter-spacing: 1px; line-height: 1.4; font-size: 26px;">
+                        <span style=" font-size: 36px; font-weight: 600; margin-right: 6px;">
+                            NEC
+                        </span>
+                        – Central Placement and Information Center
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Top Header Area -->
+
+    <!-- Start Navbar Area -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light py-2" id="navbar">
+        <div class="container-nav"><!-- Changed from container-fluid to container -->
+            <!-- Logo -->
+            <img src="assets/img/logo_necn.png" alt="Logo" height="100" width="200">
+
+            <!-- Toggler for mobile -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navbar Items -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <!-- Home -->
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">Home</a>
+                    </li>
+
+                    <!-- Placements -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="companies.html">
+                            Companies
+                        </a>
+                        
+                    </li>
+
+                    <!-- Events -->
+                    <li class="nav-item">
+                        <a href="events.html" class="nav-link">Events</a>
+                    </li>
+
+                    <!-- Contact -->
+                    <li class="nav-item">
+                        <a href="contact.html" class="nav-link">Contact Us</a>
+                    </li>
+
+                    <!-- Login -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Login
+                        </a>
+                        <ul class="dropdown-menu">
+    <li>
+        <a class="dropdown-item" href="login-student.html">🎓&nbsp;&nbsp;Student Login</a>
+    </li>
+    <li>
+        <a class="dropdown-item" href="login-faculty.html">👨‍🏫&nbsp;&nbsp;Faculty Login</a>
+    </li>
+    <li>
+        <a class="dropdown-item active" href="login-admin.html">👨‍💼&nbsp;&nbsp;Admin Login</a>
+    </li>
+</ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- End Navbar Area -->
+
+    <!-- Pages Banner Area -->
+    <div class="pages-banner-area">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="pages-title">
+                        <h2>Admin Login</h2>
+                        <ul class="list-unstyled ps-0 mb-0">
+                            <li class="d-inline-block">
+                                <a class="text-decoration-none" href="index.html">Home</a>
+                            </li>
+                            <!-- ✅ Fixed breadcrumb -->
+                            <li class="d-inline-block">Admin Login</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="pages-image">
+                        <img src="assets/img/pages/necn.png" alt="pages-image">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="shape-7">
+            <img src="assets/img/shape/shape-7.png" alt="shape">
+        </div>
+    </div>
+    <!-- End Pages Banner Area -->
+    
+    <!-- Faculty Login Form -->
+    <div id="loginBox" class="register-area ptb-100">
+        <div class="container">
+            <div class="single-register-info">
+                <div>
+                    <h3 class="mb-2" style="text-align: center; color: #333;">Admin Login</h3>
+                    <span class="login-subtitle" style="text-align: center;">Sign in to your admin account</span>
+                            
+                    <form id="adminLoginForm">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="email" placeholder="Username">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" id="password" placeholder="Your password">
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="rememberMe">
+                            <label class="form-check-label" for="rememberMe">Remember me</label>
+                        </div>
+                        <button type="submit" class="default-btn border-0">
+                            Log In
+                            <i class="flaticon-right-arrow"></i>
+                        </button>
+                    </form>
+
+                    <div class="text-center mt-3">
+                        <a href="#" id="forgotPasswordLink" class="text-decoration-none" style="color: #E63946; font-size: 14px;">Forgot Password?</a>
+                    </div>
+
+                    <!-- Message area -->
+                    <p id="loginMessage" style="text-align:center; color:red; margin-top:10px;"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div class="modal fade" id="forgotPasswordModal" tabindex="-1" aria-labelledby="forgotPasswordModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="forgotPasswordModalLabel">Reset Password</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Enter your email address and we'll send you a link to reset your password.</p>
+                    <form id="forgotPasswordForm">
+                        <div class="mb-3">
+                            <label for="resetEmail" class="form-label">Email Address</label>
+                            <input type="email" class="form-control" id="resetEmail" placeholder="Enter your email" required>
+                        </div>
+                        <div id="resetMessage" class="mt-3" style="display: none;"></div>
+                        <div class="d-flex justify-content-end gap-2">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn" style="background-color: #E63946; color: white; border: none;">Send Reset Link</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Faculty Login Form -->
+
+    <div class="footer-area admin-unified-footer">
+	<div class="footer-container">
+		<div class="row g-3">
+
+    <!-- About -->
+    <div class="col-lg-4 col-md-12">
+        <div class="single-footer-widget about">
+            <h3>About NEC Placement Cell</h3>
+
+            <p style="text-align:justify;">
+                The NEC Placement Cell is the Training, Placement, and Career Development center of Narayana Engineering College. The cell plays a crucial role in guiding students towards successful careers by connecting them with leading companies and industry opportunities. It acts as a bridge between students and recruiters by organizing campus recruitment drives, career counseling sessions, and industry interaction programs.
+            </p>
+        </div>
+        <h6 class="mt-3">Follow NEC:</h6>
+
+			<ul class="list-unstyled ps-0 mb-0 social-link">
+				<li class="d-inline-block">
+					<a href="https://www.facebook.com/" target="_blank">
+						<i class="flaticon-facebook-app-symbol"></i>
+					</a>
+				</li>
+
+				<li class="d-inline-block">
+					<a href="https://www.pinterest.com/" target="_blank">
+						<i class="flaticon-pinterest"></i>
+					</a>
+				</li>
+
+				<li class="d-inline-block">
+					<a href="https://www.instagram.com/" target="_blank">
+						<i class="flaticon-instagram"></i>
+					</a>
+				</li>
+
+				<li class="d-inline-block">
+					<a href="https://twitter.com/" target="_blank">
+						<i class="flaticon-twitter"></i>
+					</a>
+				</li>
+			</ul>
+    </div>
+
+    <!-- Nellore Campus -->
+    <div class="col-lg-3 offset-lg-1 col-md-6">
+        <div class="single-footer-widget contact">
+            <h3>Nellore Campus</h3>
+
+            <p>
+                <i class="flaticon-placeholder"></i><br>
+                Narayana Engineering College<br>
+                NH-16, Muthukur Road,<br>
+                Nellore, Andhra Pradesh – 524003
+            </p>
+
+            <p>
+                <i class="ri-phone-line"></i> +91 99999 99999
+            </p>
+
+            <p>
+                <i class="ri-message-line"></i> narayanacollege@necn.ac.in
+            </p>
+        </div>
+    </div>
+
+    <!-- Gudur Campus -->
+    <div class="col-lg-4 col-md-6">
+        <div class="single-footer-widget contact">
+            <h3>Gudur Campus</h3>
+
+            <p>
+                <i class="flaticon-placeholder"></i><br>
+                Narayana Engineering College<br>
+                Gudur, Tirupati District,<br>
+                Andhra Pradesh
+            </p>
+            <p>
+                <i class="ri-phone-line"></i> +91 99999 99999
+            </p>
+
+            <p>
+                <i class="ri-message-line"></i> narayanacollege@necg.ac.in
+            </p>
+        </div>
+    </div>
+
+
+<script>
+  document.getElementById('footerYear').textContent = new Date().getFullYear();
+</script>
+
+<!-- End Footer Area -->
+    <!-- Back to Top -->
+    <button type="button" id="back-to-top"><i class="ri-arrow-up-double-fill"></i></button>
+
+    <!-- Highlight Active Menu Script -->
+    
+      
+
+    <!-- Back to Top -->
+    <button type="button" id="back-to-top">
+        <i class="ri-arrow-up-double-fill"></i>
+    </button>
+
+    <!-- Highlight Active Menu Script -->
+    <script>
+    // Auto-scroll to login form on page load
+    window.addEventListener("load", function() {
+        const loginBox = document.getElementById("loginBox");
+        if (loginBox) {
+            loginBox.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+    });
+
+    document.addEventListener("DOMContentLoaded", function() {
+        let currentPage = window.location.pathname.split("/").pop() || "index.html";
+
+        document.querySelectorAll(".navbar-nav .nav-link").forEach(link => {
+            if (link.getAttribute("href") === currentPage) {
+                link.classList.add("active");
+            }
+        });
+
+        document.querySelectorAll(".responsive-menu a").forEach(link => {
+            if (link.getAttribute("href") === currentPage) {
+                link.classList.add("active");
+                let parent = link.closest(".responsive-menu-list");
+                if (parent) parent.classList.add("active");
+            }
+        });
+    });
+    </script>
+
+    <!-- Js Files -->
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/swiper-bundle.min.js"></script>
+    <script src="assets/js/fslightbox.js"></script>
+    <script src="assets/js/scrollCue.min.js"></script>
+    <script src="assets/js/custom.js"></script>
+    <script src="assets/js/auth-session-manager.js"></script>
+
+    <script>
+document.getElementById("adminLoginForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+    const messageEl = document.getElementById("loginMessage");
+
+    if (!email || !password) {
+        messageEl.textContent = "Please enter both email and password.";
+        return;
+    }
+
+    try {
+        const response = await fetch("http://localhost:3000/api/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password, role: "admin" })
+        });
+
+        const data = await response.json();
+        if (data.success) {
+            messageEl.style.color = "green";
+            messageEl.textContent = "Login successful! Redirecting...";
+            
+            // Store admin data as a per-tab session and avoid shared global auth state.
+            if (data.user && data.token) {
+                const privileges = {
+                    can_add_faculty: data.user.can_add_faculty || 0,
+                    can_generate_reports: data.user.can_generate_reports || 0,
+                    can_post_opportunities: data.user.can_post_opportunities || 0,
+                    can_assign_students_opportunities: data.user.can_assign_students_opportunities || 0,
+                    can_manage_admins: data.user.can_manage_admins || 0
+                };
+
+                AuthSessionManager.createSession({
+                    user: data.user,
+                    token: data.token,
+                    privileges,
+                    meta: { role: data.user.role }
+                });
+
+                sessionStorage.setItem('admin_data', JSON.stringify(data.user));
+                sessionStorage.setItem('admin_role', data.user.role);
+                sessionStorage.setItem('admin_privileges', JSON.stringify(privileges));
+                sessionStorage.setItem('authToken', data.token);
+
+                console.log('Admin session initialized for current tab:', AuthSessionManager.getCurrentSessionId());
+            }
+            setTimeout(() => {
+                sessionStorage.removeItem('logout_back_guard_prompt_seen_page');
+                sessionStorage.setItem('logout_back_guard_entry', 'admin-dashboard.html');
+                window.location.href = "admin-dashboard.html";
+            }, 1000);
+        } else {
+            messageEl.style.color = "red";
+            messageEl.textContent = data.message || "Invalid login details.";
+        }
+    } catch (error) {
+        messageEl.style.color = "red";
+        messageEl.textContent = "Server not reachable. Please try again.";
+    }
+});
+
+// Forgot Password functionality
+document.getElementById("forgotPasswordLink").addEventListener("click", (e) => {
+    e.preventDefault();
+    const modal = new bootstrap.Modal(document.getElementById('forgotPasswordModal'));
+    modal.show();
+});
+
+document.getElementById("forgotPasswordForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    
+    const email = document.getElementById("resetEmail").value.trim();
+    const messageEl = document.getElementById("resetMessage");
+    
+    if (!email) {
+        messageEl.style.display = "block";
+        messageEl.className = "alert alert-danger";
+        messageEl.textContent = "Please enter your email address.";
+        return;
+    }
+    
+    try {
+        const response = await fetch("http://localhost:3000/api/forgot-password", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, role: "admin" })
+        });
+        
+        const data = await response.json();
+        messageEl.style.display = "block";
+        
+        if (data.success) {
+            messageEl.className = "alert alert-success";
+            messageEl.textContent = "Password reset link sent to your email!";
+            setTimeout(() => {
+                const modal = bootstrap.Modal.getInstance(document.getElementById('forgotPasswordModal'));
+                modal.hide();
+                document.getElementById("forgotPasswordForm").reset();
+                messageEl.style.display = "none";
+            }, 2000);
+        } else {
+            messageEl.className = "alert alert-danger";
+            messageEl.textContent = data.message || "Failed to send reset link.";
+        }
+    } catch (error) {
+        messageEl.style.display = "block";
+        messageEl.className = "alert alert-danger";
+        messageEl.textContent = "Server not reachable. Please try again.";
+    }
+});
+</script>
+
+</body>
+</html>

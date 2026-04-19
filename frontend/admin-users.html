@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEC Placement Cell - Manage Users</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="assets/css/scrollCue.css">
+    <link rel="stylesheet" href="assets/css/remixicon.css">
+    <link rel="stylesheet" href="assets/css/flaticon.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/admin-theme.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link href="assets/img/crop_nec.png" type="image/x-icon" rel="icon">
+
+    <style>
+        :root {
+            --primaryColor: #001e43;
+            --secondaryColor: #002a5c;
+            --accentColor: #003580;
+            --darkColor: rgb(0, 30, 67);
+            --lightGray: #f8f9fa;
+            --cardBg: #ffffff;
+            --textColor: #333;
+            --textLight: #666;
+            --borderColor: #e9ecef;
+            --shadowColor: rgba(0, 30, 67, 0.1);
+            --gradientPrimary: linear-gradient(135deg, #001e43, #002a5c);
+            --gradientSecondary: linear-gradient(135deg, #002a5c, #003580);
+        }
+
+        body {
+            padding-top: 0;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #f8f9fa 0%, #f0f2f5 100%);
+        }
+
+        .header-welcome-gap {
+            height: 8px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #f0f2f5 100%);
+            margin-left: 240px;
+        }
+
+        /* Welcome Banner Section */
+        .admin-welcome-banner {
+            background: var(--gradientPrimary);
+            padding: 52px 0 36px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            /* match dashboard welcome banner style */
+            border-radius: 12px;
+            box-shadow: 0 10px 40px var(--shadowColor);
+            margin-left: 240px;
+            transition: margin-left 0.3s ease;
+        }
+
+        .admin-welcome-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+            animation: shimmer 4s infinite;
+        }
+
+        body.admin-sidebar-collapsed .top-header-area,
+        body.admin-sidebar-collapsed .header-welcome-gap,
+        body.admin-sidebar-collapsed .admin-welcome-banner,
+        body.admin-sidebar-collapsed .admin-wrapper {
+            margin-left: 68px !important;
+        }
+
+        @media (max-width: 900px) {
+            .admin-welcome-banner {
+                margin-left: 68px;
+            }
+        }
+
+        .admin-welcome-banner::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: var(--gradientSecondary);
+            animation: borderGlow 3s ease-in-out infinite alternate;
+        }
+
+        .admin-welcome-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .admin-welcome-title {
+            font-size: 44px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            animation: titleFadeIn 1s ease-out;
+            color: #ffffff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            letter-spacing: -1px;
+        }
+
+        .admin-welcome-subtitle {
+            font-size: 19px;
+            opacity: 0.95;
+            animation: subtitleFadeIn 1s ease-out 0.3s backwards;
+            color: #ffffff;
+            font-weight: 400;
+            margin-bottom: 0;
+        }
+
+        .banner-icon-wrapper {
+            min-width: 120px;
+            min-height: 120px;
+            font-size: 82px;
+            animation: adminPageHeroFloat 3s ease-in-out infinite;
+            color: #ffffff;
+            position: relative;
+            z-index: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .admin-wrapper {
+            padding: 40px 0;
+        }
+
+        .users-container {
+            background: var(--cardBg);
+            border-radius: 12px;
+            box-shadow: 0 4px 24px var(--shadowColor);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--borderColor);
+        }
+
+        .table-header h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primaryColor);
+            margin: 0;
+        }
+
+        .users-table {
+            width: 100%;
+            border-collapse: collapse;
+            overflow: hidden;
+        }
+
+        .users-table thead tr {
+            background: linear-gradient(135deg, #f8f9fa 0%, #f0f2f5 100%);
+            border-bottom: 2px solid var(--borderColor);
+        }
+
+        .users-table thead th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--primaryColor);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .users-table tbody tr {
+            border-bottom: 1px solid var(--borderColor);
+            transition: background 0.2s ease;
+        }
+
+        .users-table tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        .users-table tbody td {
+            padding: 15px;
+            font-size: 14px;
+            color: var(--textColor);
+        }
+
+        .admin-name {
+            font-weight: 600;
+            color: var(--primaryColor);
+        }
+
+        .admin-email {
+            color: var(--textLight);
+            font-size: 13px;
+        }
+
+        .privilege-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-right: 5px;
+            margin-bottom: 3px;
+        }
+
+        .privilege-granted {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .privilege-denied {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-edit, .btn-delete {
+            min-width: 100px;
+            padding: 8px 14px;
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-edit {
+            background: linear-gradient(135deg, #003580, #001e43);
+            color: white;
+        }
+
+        .btn-edit:hover {
+            background: linear-gradient(135deg, #002a5c, #001e43);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 53, 128, 0.3);
+            color: white !important;
+        }
+
+        .btn-delete {
+            background: linear-gradient(135deg, #dc3545, #b02a37);
+            color: white;
+        }
+
+        .btn-delete:hover {
+            background: linear-gradient(135deg, #c82333, #9a212c);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .empty-state i {
+            font-size: 64px;
+            color: var(--borderColor);
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .empty-state p {
+            color: var(--textLight);
+            font-size: 16px;
+        }
+
+        /* Modal Styles */
+        .modal-wrapper {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-wrapper.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--cardBg);
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            animation: slideUp 0.3s ease;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--borderColor);
+        }
+
+        .modal-header h3 {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--primaryColor);
+            margin: 0;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--textLight);
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--primaryColor);
+        }
+
+        .form-section {
+            margin-bottom: 25px;
+        }
+
+        .form-section h4 {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--primaryColor);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--borderColor);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primaryColor);
+            font-size: 14px;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="tel"] {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid var(--borderColor);
+            border-radius: 6px;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--accentColor);
+            box-shadow: 0 0 0 3px rgba(0, 53, 128, 0.1);
+        }
+
+        .privilege-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .privilege-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .privilege-item input[type="checkbox"] {
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+            accent-color: var(--accentColor);
+        }
+
+        .privilege-item label {
+            cursor: pointer;
+            margin: 0;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--textColor);
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+            justify-content: flex-end;
+        }
+
+        .btn-modal-cancel, .btn-modal-save {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-modal-cancel {
+            background: var(--borderColor);
+            color: var(--textColor);
+        }
+
+        .btn-modal-cancel:hover {
+            background: var(--lightGray);
+        }
+
+        .btn-modal-save {
+            background: linear-gradient(135deg, #003580, #001e43);
+            color: white;
+        }
+
+        .btn-modal-save:hover {
+            background: linear-gradient(135deg, #002a5c, #001e43);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 53, 128, 0.3);
+        }
+
+        .btn-modal-delete {
+            background: linear-gradient(135deg, #dc3545, #b02a37);
+            color: white;
+        }
+
+        .btn-modal-delete:hover {
+            background: linear-gradient(135deg, #c82333, #9a212c);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+        }
+
+        #deleteConfirmMessage {
+            color: var(--textColor);
+            font-size: 15px;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .message-box {
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .message-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+
+        .message-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(0,0,0,0.1);
+            border-top-color: var(--accentColor);
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes titleFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes subtitleFadeIn {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes borderGlow {
+            from { opacity: 0.6; }
+            to { opacity: 1; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes adminPageHeroFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @media (max-width: 768px) {
+            .users-container {
+                padding: 20px;
+            }
+
+            .users-table {
+                font-size: 12px;
+            }
+
+            .users-table thead th,
+            .users-table tbody td {
+                padding: 10px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .modal-content {
+                max-width: 90%;
+                padding: 20px;
+            }
+
+            .privilege-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-header-area style-2">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-12 text-center">
+                    <h3 class="mb-0" style="color: #fff; font-weight: 700; letter-spacing: 1px; line-height: 1.4; font-size: 26px;">
+                        <span style="font-family: 'Poppins'; font-size: 36px; font-weight: 700;">NEC</span> – Central Placement Information and Management Center
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header-welcome-gap"></div>
+
+    <!-- Welcome Banner -->
+    <div class="admin-welcome-banner">
+        <div class="container-xl">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <div class="admin-welcome-content">
+                        <h2 class="admin-welcome-title">Manage Admin Users</h2>
+                        <p class="admin-welcome-subtitle">View, edit, and manage all admin users and their privileges</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <div class="banner-icon-wrapper">
+                        <i class="ri-team-line"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="admin-wrapper">
+        <div class="container-xl">
+            <div class="users-container">
+                <div class="table-header">
+                    <h2>Admin Users</h2>
+                    <a href="admin-add-admin.html" class="btn-edit">
+                        <i class="ri-add-line"></i>
+                        Add New Admin
+                    </a>
+                </div>
+
+                <div id="messageBox" class="message-box"></div>
+
+                <div id="usersTableContainer">
+                    <table class="users-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Role</th>
+                                <th>Privileges</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            <tr>
+                                <td colspan="6" style="text-align: center; padding: 40px;">
+                                    <i class="ri-loader-4-line" style="font-size: 24px; animation: spin 0.6s linear infinite;"></i>
+                                    <p style="margin-top: 10px;">Loading users...</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div id="editModal" class="modal-wrapper">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Edit Admin User</h3>
+                <button class="modal-close" id="closeModal">&times;</button>
+            </div>
+
+            <div id="modalMessageBox" class="message-box"></div>
+
+            <form id="editAdminForm">
+                <div class="form-section">
+                    <h4>Basic Information</h4>
+                    
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" id="editName" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="editEmail" disabled style="opacity: 0.6; cursor: not-allowed;">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input type="tel" id="editPhone">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Designation</label>
+                        <input type="text" id="editDesignation">
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h4>Privileges</h4>
+                    <div class="privilege-list">
+                        <div class="privilege-item">
+                            <input type="checkbox" id="priv_faculty" value="can_add_faculty">
+                            <label for="priv_faculty">Add Faculty</label>
+                        </div>
+                        <div class="privilege-item">
+                            <input type="checkbox" id="priv_reports" value="can_generate_reports">
+                            <label for="priv_reports">Generate Reports</label>
+                        </div>
+                        <div class="privilege-item">
+                            <input type="checkbox" id="priv_opportunities" value="can_post_opportunities">
+                            <label for="priv_opportunities">Post Opportunities</label>
+                        </div>
+                        <div class="privilege-item">
+                            <input type="checkbox" id="priv_assign" value="can_assign_students_opportunities">
+                            <label for="priv_assign">Assign Students</label>
+                        </div>
+                        <div class="privilege-item">
+                            <input type="checkbox" id="priv_approve" value="can_approve_students">
+                            <label for="priv_approve">Approve Students</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-modal-cancel" id="cancelBtn">Cancel</button>
+                    <button type="submit" class="btn-modal-save">
+                        <span id="saveButtonText">Save Changes</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete Confirm Modal -->
+    <div id="deleteConfirmModal" class="modal-wrapper">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Confirm Delete</h3>
+                <button class="modal-close" id="deleteConfirmClose">&times;</button>
+            </div>
+
+            <p id="deleteConfirmMessage"></p>
+
+            <div class="modal-actions">
+                <button type="button" class="btn-modal-cancel" id="deleteConfirmCancel">Cancel</button>
+                <button type="button" class="btn-modal-save btn-modal-delete" id="deleteConfirmOk">Delete Admin</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/admin-session-manager.js"></script>
+    <script src="assets/js/admin-sidebar.js"></script>
+    <script src="assets/js/admin-access-control.js"></script>
+    <script>
+        // Hide main content while checking privileges
+        const mainContent = document.querySelector('main') || 
+                           document.querySelector('.admin-wrapper') || 
+                           document.querySelector('.container-fluid');
+        if (mainContent) mainContent.style.display = 'none';
+
+        // Guard this page - check if admin has permission to manage admins
+        document.addEventListener('DOMContentLoaded', async function() {
+            const hasAccess = await adminAccessControl.guardPage('can_manage_admins', 'Manage Admin Users');
+            if (hasAccess && mainContent) mainContent.style.display = '';
+        });
+    </script>
+    <script src="assets/js/admin-users.js"></script>
+</body>
+</html>

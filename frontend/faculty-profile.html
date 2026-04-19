@@ -1,0 +1,524 @@
+﻿<!DOCTYPE html>
+<html lang="zxx">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEC - Faculty Profile</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="assets/css/scrollCue.css">
+    <link rel="stylesheet" href="assets/css/remixicon.css">
+    <link rel="stylesheet" href="assets/css/flaticon.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link href="assets/img/crop_nec.png" type="image/x-icon" rel="icon">
+
+    <style>
+        body {
+            padding-top: 0;
+            overflow-x: hidden;
+        }
+
+        #navbar {
+            transition: all 0.3s ease;
+        }
+
+        #navbar.sticky {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1030;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        body.navbar-sticky {
+            padding-top: 90px;
+        }
+
+        .header-welcome-gap {
+            height: 8px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #f0f2f5 100%);
+        }
+
+        body .faculty-page-overview-wrap {
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+            margin-top: 0 !important;
+        }
+
+        body .faculty-page-overview-box {
+            padding: 52px 0 36px !important;
+            margin-bottom: 24px;
+        }
+
+        .profile-wrapper {
+            padding: 16px 0 20px;
+            background-color: #f5f8fa;
+        }
+
+        .profile-card {
+            background: white;
+            border: 1px solid #dbe5f1;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 30, 67, 0.08);
+            margin-bottom: 0;
+        }
+
+        .profile-avatar {
+            width: 88px;
+            height: 88px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #001e43, #0b4b98);
+            color: #fff;
+            font-size: 34px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .profile-name {
+            font-size: 28px;
+            font-weight: 700;
+            color: #001e43;
+            line-height: 1.2;
+            margin-bottom: 4px;
+        }
+
+        .profile-subtitle {
+            color: #5f6f84;
+            font-weight: 500;
+            font-size: 15px;
+            margin-bottom: 0;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 4px 14px;
+            font-size: 14px;
+        }
+
+        .info-grid p {
+            margin: 0;
+            padding: 6px 0;
+            border-bottom: 1px solid #f0f4f9;
+        }
+
+        .info-row-label {
+            color: #53657c;
+            font-weight: 600;
+            margin-right: 6px;
+        }
+
+
+        .priv-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 12px;
+            border: 1px solid #e3ebf5;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            background: #f8fbff;
+        }
+
+        .priv-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .priv-row-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #1f3754;
+        }
+
+        .priv-badge-granted {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 20px;
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .priv-badge-denied {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 20px;
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .profile-section-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #001e43;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #001e43;
+        }
+
+        .form-control, .form-select {
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 10px 15px;
+            font-size: 14px;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: #001e43;
+            box-shadow: 0 0 0 3px rgba(0, 30, 67, 0.1);
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #001e43;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        @media (max-width: 767.98px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+            /* Footer Area Style */
+.footer-area{
+  background-color:#071b3a;
+  color:#ffffff;
+  margin-top:100px;
+  padding:40px 20px;
+  width:100%;
+}
+.footer-area p:last-child {
+  margin-bottom: 0;
+}
+/* Inner content width (like container but no outer margins) */
+.footer-inner {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* Headings */
+.footer-area h3 {
+  font-size: 26px;
+  margin-bottom: 16px;
+  color: #ffffff;
+}
+
+.footer-area h6 {
+  font-size: 16px;
+  margin-top: 16px;
+  margin-bottom: 8px;
+  color: #ffffff;
+}
+
+/* Text */
+.footer-area p {
+  font-size: 14px;
+  color: #ffffff;
+  margin-bottom: 8px;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+/* List reset */
+.footer-area ul {
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
+
+/* Social icons spacing */
+.footer-area .social-link li {
+  margin-right: 8px;
+}
+
+/* Links: white by default */
+.footer-area a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+/* Hover / focus */
+.footer-area a:hover,
+.footer-area a:focus {
+  color: var(--primaryColor);
+  text-decoration: none;
+}
+
+/* Active click */
+.footer-area a:active {
+  color: #ffc333;
+}
+
+/* Bottom bar */
+.footer-bottom {
+  font-size: 13px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding-top: 12px;
+  margin-top: 16px;
+}
+
+/* Bottom text and links */
+.footer-bottom span {
+  color: #ffffff;
+}
+
+.footer-bottom a {
+  color: #ffffff;
+}
+
+.footer-bottom a:hover,
+.footer-bottom a:focus {
+  color: var(--primaryColor);
+}
+    </style>
+</head>
+
+<body>
+
+    <div class="top-header-area style-2" style="padding: 12px 0;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-12 text-center">
+                    <h3 class="mb-0" style="color: #fff; font-weight: 700; letter-spacing: 1px; line-height: 1.4; font-size: 26px;">
+                        <span style="font-family: 'Poppins', ; font-size: 36px; font-weight: 700;"> NEC
+                        </span>
+                        - Central Placement and Information Center
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-welcome-gap" aria-hidden="true"></div>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light py-2" id="navbar">
+        <div class="container">
+            <img src="assets/img/logo_necn.jpg" alt="Logo" height="70" width="160">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a href="faculty-dashboard.html" class="nav-link">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="faculty-events.html" class="nav-link">Add Events</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="faculty-applications.html" class="nav-link">Applications</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="faculty-materials.html" class="nav-link">Materials</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            My Account
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item active" href="faculty-profile.html">My Profile</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="login-faculty.html">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="faculty-page-overview-wrap">
+        <div class="faculty-page-overview-box">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-8">
+                        <div class="faculty-page-overview-content">
+                            <h2 class="faculty-page-overview-title" id="heroFacultyName">Loading...</h2>
+                            <p class="faculty-page-overview-subtitle" id="heroFacultyDesignation" style="margin-top:6px; opacity:0.9;"></p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 text-center">
+                        <i class="ri-user-settings-line faculty-page-overview-icon" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+ 
+
+    <!-- Profile Content -->
+    <div class="profile-wrapper">
+        <div class="container">
+
+            <!-- Main Info Card -->
+            <div class="card profile-card p-3 mb-3">
+                <div class="row g-4 align-items-start">
+                    <div class="col-lg-8">
+                        <div class="d-flex gap-3 align-items-start">
+                            <div class="profile-avatar" id="facultyInitials">F</div>
+                            <div>
+                                <div class="profile-name" id="displayName">Loading...</div>
+                                <div class="profile-subtitle" id="displayDesignation">Loading...</div>
+                            </div>
+                        </div>
+                        <div class="info-grid mt-3">
+                            <p><span class="info-row-label">Faculty ID:</span><span id="infoFacultyId"></span></p>
+                            <p><span class="info-row-label">Email:</span><span id="infoEmail"></span></p>
+                            <p><span class="info-row-label">Phone Number:</span><span id="infoPhone"></span></p>
+                            <p><span class="info-row-label">Campus Type:</span><span id="infoCampusType"></span></p>
+                            <p><span class="info-row-label">Department:</span><span id="infoDepartment"></span></p>
+                            <p><span class="info-row-label">Designation:</span><span id="infoDesignation"></span></p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div style="border-left: 3px solid #001e43; padding-left: 14px;">
+                            <h6 class="mb-3" style="color:#001e43; font-weight:700; font-size:15px;">Privileges</h6>
+                            <div id="privilegesList"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Copyright -->
+    <!-- Back to Top -->
+    <button type="button" id="back-to-top">
+        <i class="ri-arrow-up-double-fill"></i>
+    </button>
+
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/swiper-bundle.min.js"></script>
+    <script src="assets/js/fslightbox.js"></script>
+    <script src="assets/js/scrollCue.min.js"></script>
+    <script src="assets/js/auth-session-manager.js"></script>
+    <script src="assets/js/faculty-session-bootstrap.js"></script>
+    <script src="assets/js/faculty-sidebar.js?v=20260314"></script>
+    <script src="assets/js/admin-footer.js"></script>
+    <script src="assets/js/custom.js"></script>
+
+    <script>
+        // Load faculty profile data
+        async function loadProfileData() {
+            const facultyId = (sessionStorage.getItem('faculty_id') || localStorage.getItem('faculty_id'));
+            const facultyCampusType = (sessionStorage.getItem('faculty_campus_type') || localStorage.getItem('faculty_campus_type')) || 'NECN';
+            console.log('Faculty ID:', facultyId);
+            
+            if (!facultyId) {
+                console.warn('No faculty ID found in localStorage. Redirecting to login...');
+                window.location.href = 'login-faculty.html';
+                return;
+            }
+
+            let profileData = null;
+
+            try {
+                const profileRes = await fetch(`/api/faculty/profile/${facultyId}?campus=${facultyCampusType}`, {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                profileData = await profileRes.json();
+            } catch (err) {
+                console.error('Error fetching from API:', err);
+                profileData = null;
+            }
+
+            // Use API data if successful, otherwise fall back to localStorage
+            let faculty = null;
+
+            if (profileData && profileData.success && profileData.faculty) {
+                faculty = profileData.faculty;
+            } else {
+                // Fallback to localStorage
+                console.log('API failed, using localStorage fallback');
+                faculty = {
+                    name: (sessionStorage.getItem('faculty_name') || localStorage.getItem('faculty_name')) || 'Faculty',
+                    email: (sessionStorage.getItem('faculty_email') || localStorage.getItem('faculty_email')) || 'N/A',
+                    phone: (sessionStorage.getItem('faculty_phone') || localStorage.getItem('faculty_phone')) || 'N/A',
+                    designation: (sessionStorage.getItem('faculty_designation') || localStorage.getItem('faculty_designation')) || 'Faculty Member',
+                    department: (sessionStorage.getItem('faculty_department') || localStorage.getItem('faculty_department')) || 'N/A',
+                    qualification: (sessionStorage.getItem('faculty_qualification') || localStorage.getItem('faculty_qualification')) || 'N/A'
+                };
+                mentees = '0';
+                placedCount = '0';
+                eventsCount = '0';
+            }
+
+            // Update display
+            document.getElementById('heroFacultyName').textContent = faculty.name || 'Faculty';
+            document.getElementById('heroFacultyDesignation').textContent = faculty.designation || '';
+
+            // Avatar initials (up to 2 letters)
+            const initials = (faculty.name || 'F').trim().split(/\s+/).map(w => w[0]).slice(0, 2).join('').toUpperCase();
+            document.getElementById('facultyInitials').textContent = initials;
+
+            // Card header
+            document.getElementById('displayName').textContent = faculty.name || 'Faculty';
+            document.getElementById('displayDesignation').textContent = faculty.designation || 'Faculty Member';
+
+            // Info grid
+            document.getElementById('infoFacultyId').textContent = faculty.faculty_id || 'N/A';
+            document.getElementById('infoEmail').textContent = faculty.email || 'N/A';
+            document.getElementById('infoPhone').textContent = faculty.phone || 'N/A';
+            document.getElementById('infoCampusType').textContent = faculty.campus_type || facultyCampusType || 'N/A';
+            document.getElementById('infoDepartment').textContent = faculty.department || 'N/A';
+            document.getElementById('infoDesignation').textContent = faculty.designation || 'N/A';
+
+            // Render privilege badges from raw DB columns
+            const privLabels = {
+                can_post_events: 'Post Events',
+                can_upload_resources: 'Upload Resources',
+                can_post_internships: 'Post Internships',
+                can_monitor_assigned_drives: 'Monitor Assigned Drives'
+            };
+            const chips = Object.keys(privLabels).map(col => {
+                const granted = Boolean(faculty[col]);
+                const badgeCls = granted ? 'priv-badge-granted' : 'priv-badge-denied';
+                const badgeText = granted ? 'Granted' : 'Not Granted';
+                return `<div class="priv-row"><span class="priv-row-label">${privLabels[col]}</span><span class="${badgeCls}">${badgeText}</span></div>`;
+            }).join('');
+            document.getElementById('privilegesList').innerHTML = chips;
+
+            console.log('Profile loaded');
+        }
+
+        // Load data on page load
+        document.addEventListener('DOMContentLoaded', loadProfileData);
+
+        // Sticky navbar functionality
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            const topHeader = document.querySelector('.top-header-area');
+            if (!navbar || !topHeader) {
+                return;
+            }
+            const topHeaderHeight = topHeader.offsetHeight;
+
+            if (window.scrollY >= topHeaderHeight) {
+                navbar.classList.add('sticky');
+                document.body.classList.add('navbar-sticky');
+            } else {
+                navbar.classList.remove('sticky');
+                document.body.classList.remove('navbar-sticky');
+            }
+        });
+    </script>
+
+</body>
+</html>
+
+
+
+

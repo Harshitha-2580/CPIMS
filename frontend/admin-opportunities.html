@@ -1,0 +1,1495 @@
+﻿<!DOCTYPE html>
+<html lang="zxx">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEC - Post Opportunities</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="assets/css/scrollCue.css">
+    <link rel="stylesheet" href="assets/css/remixicon.css">
+    <link rel="stylesheet" href="assets/css/flaticon.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/admin-theme.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link href="assets/img/crop_nec.png" type="image/x-icon" rel="icon">
+
+    <style>
+        :root {
+            --primaryColor: #001e43;
+            --secenderyColor: #0a3a75;
+            --darkColor: rgb(0, 30, 67);
+            --lightGray: #f8f9fa;
+            --dashboardBlue: #001e43;
+            --dashboardBlueSecondary: #002a5c;
+            --dashboardBlueAccent: #003580;
+            --dashboardBlueSoft: #eaf1fb;
+        }
+
+        body {
+            padding-top: 0;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #f8f9fa 0%, #f0f2f5 100%);
+        }
+
+        .admin-page-hero {
+            background: linear-gradient(135deg, #00142f 0%, #0a3a75 100%);
+            padding: 52px 0 36px;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 30, 67, 0.2);
+        }
+
+        .admin-page-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+            animation: shimmer 4s infinite;
+        }
+
+        .admin-page-hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #0a3a75, #001e43);
+            animation: borderGlow 3s ease-in-out infinite alternate;
+        }
+
+        .admin-page-hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .admin-page-hero-title {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            color: #ffffff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            letter-spacing: -1px;
+        }
+
+        .admin-page-hero-subtitle {
+            font-size: 20px;
+            opacity: 0.95;
+            color: #ffffff;
+            font-weight: 400;
+            margin-bottom: 30px;
+        }
+
+        .admin-page-hero-visual {
+            font-size: 80px;
+            color: #ffffff;
+            animation: float 3s ease-in-out infinite;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Modal Overlay */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 30, 67, 0.74);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .modal-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content-wrapper {
+            background: linear-gradient(135deg, #ffffff 0%, #f3f7fc 100%);
+            padding: 60px 50px;
+            border-radius: 25px;
+            border: 1px solid rgba(0, 42, 92, 0.12);
+            box-shadow: 0 25px 80px rgba(0, 30, 67, 0.24);
+            max-width: 800px;
+            width: 90%;
+            transform: scale(0.8) translateY(-50px);
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .modal-overlay.show .modal-content-wrapper {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+
+        .modal-title {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--darkColor);
+            margin-bottom: 15px;
+            text-align: center;
+            animation: slideInDown 0.6s ease;
+        }
+
+        .modal-subtitle {
+            font-size: 16px;
+            color: #666;
+            text-align: center;
+            margin-bottom: 45px;
+            animation: fadeInUp 0.6s ease 0.2s both;
+        }
+
+        .option-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .option-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f1f6fc 100%);
+            padding: 40px 30px;
+            border-radius: 20px;
+            text-align: center;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg, var(--dashboardBlue), var(--dashboardBlueAccent));
+            border-radius: 20px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .option-card:hover::before {
+            opacity: 1;
+        }
+
+        .option-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 25px 60px rgba(0, 30, 67, 0.18);
+            border-color: transparent;
+        }
+
+        .option-icon {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, var(--dashboardBlue), var(--dashboardBlueSecondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 10px 30px rgba(0, 30, 67, 0.22);
+        }
+
+        .option-card:hover .option-icon {
+            transform: rotate(360deg) scale(1.1);
+            background: linear-gradient(135deg, var(--dashboardBlueSecondary), var(--dashboardBlueAccent));
+        }
+
+        .option-icon i {
+            font-size: 42px;
+            color: white;
+        }
+
+        .option-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--darkColor);
+            margin-bottom: 12px;
+            transition: color 0.3s ease;
+        }
+
+        .option-card:hover .option-title {
+            color: var(--dashboardBlue);
+        }
+
+        .option-desc {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .option-card:hover .option-title,
+        .option-card:hover .option-desc {
+            color: #fff;
+        }
+
+        .header-welcome-gap {
+            height: 8px;
+            background: linear-gradient(135deg, #eef3fb 0%, #e2ebf8 100%);
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 5px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .modal-close-btn:hover {
+            background: var(--dashboardBlueSoft);
+            color: var(--dashboardBlue);
+            transform: rotate(90deg);
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        @keyframes borderGlow {
+            from { opacity: 0.6; }
+            to { opacity: 1; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Form Sections */
+        .form-section {
+            display: none;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        .form-section.active {
+            display: block;
+        }
+
+        .admin-wrapper {
+            padding: 50px 0;
+            min-height: 100vh;
+        }
+
+        .section-title h2 {
+            color: var(--darkColor);
+            font-weight: 800;
+            position: relative;
+            padding-bottom: 15px;
+            animation: slideInDown 0.6s ease;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primaryColor), var(--secenderyColor));
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+            animation: expandWidth 0.8s ease 0.2s both;
+        }
+
+        .section-title p {
+            color: #666;
+            font-size: 15px;
+            animation: fadeInUp 0.6s ease 0.2s both;
+        }
+
+        .placement-card {
+            background: #fff;
+            padding: 45px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border: 2px solid transparent;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            animation: slideInUp 0.7s ease 0.3s both;
+        }
+
+        .placement-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primaryColor), var(--secenderyColor));
+            transition: left 0.5s ease;
+        }
+
+        .placement-card:hover::before {
+            left: 0;
+        }
+
+        .placement-card:hover,
+        .placement-card:focus-within {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(0, 30, 67, 0.16);
+            border-color: rgba(0, 30, 67, 0.2);
+        }
+
+        .placement-card .form-label {
+            color: var(--darkColor);
+            font-weight: 600;
+            margin-bottom: 12px;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+        }
+
+        .placement-card .form-control,
+        .placement-card .form-select {
+            height: 50px;
+            border: 2px solid #e8e8e8;
+            border-radius: 10px;
+            padding: 12px 18px;
+            font-size: 14px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background-color: #f8f9fa;
+        }
+
+        .placement-card .form-control:focus,
+        .placement-card .form-select:focus {
+            background-color: #fff;
+            border-color: var(--primaryColor);
+            box-shadow: 0 0 0 3px rgba(0, 30, 67, 0.12);
+            transform: translateY(-2px);
+            outline: none;
+        }
+
+        .placement-card .form-control:hover,
+        .placement-card .form-select:hover {
+            border-color: var(--primaryColor);
+        }
+
+        .placement-card textarea.form-control {
+            height: auto;
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Branch Checkbox Styling */
+        .branch-checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 12px;
+        }
+
+        .branch-checkbox-group .form-check {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0;
+        }
+
+        .branch-checkbox-group .form-check-input {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #e8e8e8;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            appearance: none;
+            background-color: #f8f9fa;
+            margin-right: 8px;
+            flex-shrink: 0;
+        }
+
+        .branch-checkbox-group .form-check-input:hover {
+            border-color: var(--primaryColor);
+            transform: scale(1.05);
+        }
+
+        .branch-checkbox-group .form-check-input:checked {
+            background-color: var(--primaryColor);
+            border-color: var(--primaryColor);
+            box-shadow: 0 0 0 3px rgba(0, 30, 67, 0.12);
+        }
+
+        .branch-checkbox-group .form-check-input:checked::after {
+            content: '✓';
+            color: white;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        .branch-checkbox-group .form-check-label {
+            color: var(--darkColor);
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            user-select: none;
+            margin-bottom: 0;
+            transition: color 0.3s ease;
+        }
+
+        .branch-checkbox-group .form-check-input:checked ~ .form-check-label {
+            color: var(--primaryColor);
+        }
+
+        /* Radio Button Styling */
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            margin-top: 12px;
+        }
+
+        .radio-group .form-check {
+            display: flex;
+            align-items: center;
+        }
+
+        .radio-group .form-check-input {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #e8e8e8;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            appearance: none;
+            background-color: #f8f9fa;
+            margin-right: 8px;
+            position: relative;
+        }
+
+        .radio-group .form-check-input:hover {
+            border-color: var(--primaryColor);
+            transform: scale(1.05);
+        }
+
+        .radio-group .form-check-input:checked {
+            background-color: var(--primaryColor);
+            border-color: var(--primaryColor);
+            box-shadow: 0 0 0 3px rgba(0, 30, 67, 0.12);
+        }
+
+        .radio-group .form-check-input:checked::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .radio-group .form-check-label {
+            color: var(--darkColor);
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            user-select: none;
+            margin-bottom: 0;
+            transition: color 0.3s ease;
+        }
+
+        .radio-group .form-check-input:checked ~ .form-check-label {
+            color: var(--primaryColor);
+        }
+
+        .default-btn {
+            background: linear-gradient(90deg, var(--primaryColor), var(--secenderyColor)) !important;
+            color: #fff !important;
+            border: none !important;
+            padding: 14px 40px !important;
+            border-radius: 10px !important;
+            font-weight: 700 !important;
+            font-size: 15px !important;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            display: inline-block !important;
+            text-decoration: none !important;
+            letter-spacing: 0.5px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .default-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 30, 67, 0.3);
+            letter-spacing: 1px;
+            color: #fff !important;
+        }
+
+        .default-btn:focus,
+        .default-btn:active {
+            color: #fff !important;
+        }
+
+        .default-btn i {
+            margin-left: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .default-btn:hover i {
+            transform: translateX(5px);
+        }
+
+        .btn-back-choice {
+            background: linear-gradient(90deg, #334155, #1f2937);
+            color: #fff;
+            border: none;
+            padding: 14px 40px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 15px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-block;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            margin-right: 15px;
+        }
+
+        .btn-back-choice:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(31, 41, 55, 0.3);
+            color: #fff;
+        }
+
+        .rounds-container {
+            display: grid;
+            gap: 14px;
+        }
+
+        .rounds-container .round-card {
+            border: 2px solid rgba(0, 30, 67, 0.12);
+            border-radius: 14px;
+            background: linear-gradient(135deg, #ffffff, #f5f9ff);
+            padding: 16px;
+            box-shadow: 0 8px 24px rgba(0, 30, 67, 0.08);
+        }
+
+        .rounds-container .round-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .rounds-container .round-title {
+            margin: 0;
+            color: var(--darkColor);
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .rounds-container .remove-round {
+            width: 30px;
+            height: 30px;
+            border: none;
+            border-radius: 999px;
+            background: #e2e8f0;
+            color: #334155;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .rounds-container .remove-round:hover {
+            background: #001e43;
+            color: #fff;
+        }
+
+        .btn.btn-outline-primary {
+            border-color: rgba(0, 30, 67, 0.24);
+            color: #001e43;
+            font-weight: 600;
+        }
+
+        .btn.btn-outline-primary:hover {
+            background: #001e43;
+            border-color: #001e43;
+            color: #fff;
+        }
+
+        /* Success Popup */
+        .success-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .success-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .success-popup {
+            background: linear-gradient(135deg, #ffffff 0%, #f3f7fc 100%);
+            padding: 50px 60px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 30, 67, 0.3);
+            border-left: 6px solid var(--dashboardBlue);
+            max-width: 500px;
+            width: 90%;
+            animation: successSlideIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes successSlideIn {
+            from { opacity: 0; transform: scale(0.8) translateY(-30px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--dashboardBlue), var(--dashboardBlueSecondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            box-shadow: 0 10px 30px rgba(0, 30, 67, 0.22);
+            animation: successBounce 0.6s ease-out;
+        }
+
+        @keyframes successBounce {
+            0% { transform: scale(0) rotate(-45deg); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+
+        .success-icon::before {
+            content: '✓';
+            color: white;
+            font-size: 48px;
+            font-weight: bold;
+            line-height: 1;
+        }
+
+        .success-title {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--darkColor);
+            margin-bottom: 15px;
+        }
+
+        .success-message {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .btn-back {
+            background: linear-gradient(90deg, var(--dashboardBlue), var(--dashboardBlueSecondary));
+            color: #fff;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-back:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 30, 67, 0.24);
+            color: #fff;
+        }
+
+        /* Animations */
+        @keyframes slideInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes expandWidth {
+            from { width: 0; }
+            to { width: 80px; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="top-header-area style-2" style="padding: 12px 0;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-12 text-center">
+                    <h3 class="mb-0" style="color: #fff; font-weight: 700; letter-spacing: 1px; line-height: 1.4; font-size: 26px;">
+                            <span style="font-family: 'Poppins', ; font-size: 36px; font-weight: 700;"> NEC</span> – Central Placement Information and Management Center
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-welcome-gap" aria-hidden="true"></div>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light py-2" id="navbar">
+        <div class="container">
+            <img src="assets/img/logo_necn.jpg" alt="Logo" height="70" width="160">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a href="admin-dashboard.html" class="nav-link">Dashboard</a></li>
+                    <li class="nav-item"><a href="admin-students.html" class="nav-link">Students</a></li>
+                    <li class="nav-item"><a href="admin-opportunities.html" class="nav-link active" style="color: red; font-weight: bold;">Opportunities</a></li>
+                    <li class="nav-item"><a href="admin-reports.html" class="nav-link">Reports</a></li>
+                    <li class="nav-item"><a href="index.html" class="nav-link" style="color: #666;">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="admin-page-hero">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <div class="admin-page-hero-content">
+                        <h2 class="admin-page-hero-title">Opportunities Hub</h2>
+                        <p class="admin-page-hero-subtitle">Create, organize, and publish placements or internships.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <div class="admin-page-hero-visual">
+                        <i class="ri-checkbox-circle-line"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Opportunity Type Selection -->
+    <div class="modal-overlay show" id="modalOverlay">
+        <div class="modal-content-wrapper">
+            <button class="modal-close-btn" onclick="closeModal()" title="Close">
+                <i class="ri-close-line"></i>
+            </button>
+            <h2 class="modal-title">What would you like to post?</h2>
+            <p class="modal-subtitle">Choose the type of opportunity you want to create for students</p>
+            
+            <div class="option-cards">
+                <div class="option-card" onclick="selectOpportunityType('placement')">
+                    <div class="option-icon">
+                        <i class="ri-briefcase-line"></i>
+                    </div>
+                    <h3 class="option-title">Placement Drive</h3>
+                    <p class="option-desc">Post job opportunities for final year students with salary packages and company details</p>
+                </div>
+                
+                <div class="option-card" onclick="selectOpportunityType('internship')">
+                    <div class="option-icon">
+                        <i class="ri-user-star-line"></i>
+                    </div>
+                    <h3 class="option-title">Internship</h3>
+                    <p class="option-desc">Offer internship positions with stipend details and duration information</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="admin-wrapper">
+        <div class="container">
+            <!-- Placement Drive Form -->
+            <div id="placementSection" class="form-section">
+                
+
+                <div class="row justify-content-center">
+                    <div class="col-lg-10">
+                        <div class="placement-card">
+                            <form id="placementForm">
+                                <div class="row g-4">
+                                    <!-- Campus Type -->
+                                    <div class="col-12">
+                                        <label class="form-label">Campus Type <span style="color: var(--primaryColor);">*</span></label>
+                                        <div class="branch-checkbox-group">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="NECN" id="placementCampusNECN" name="target_campus">
+                                                <label class="form-check-label" for="placementCampusNECN">NECN</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="NECG" id="placementCampusNECG" name="target_campus">
+                                                <label class="form-check-label" for="placementCampusNECG">NECG</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label class="form-label">Company Name <span style="color: var(--primaryColor);">*</span></label>
+                                        <input type="text" class="form-control" name="company_name" placeholder="e.g., Google, TCS, Infosys" required>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label class="form-label">Job Role/Position <span style="color: var(--primaryColor);">*</span></label>
+                                        <input type="text" class="form-control" name="job_role" placeholder="e.g., Software Engineer, Data Analyst" required>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label class="form-label">Salary Package (LPA) <span style="color: var(--primaryColor);">*</span></label>
+                                        <input type="text" class="form-control" name="salary_package" placeholder="e.g., 6.5 LPA" required>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label class="form-label">Drive Type <span style="color: var(--primaryColor);">*</span></label>
+                                        <select class="form-control" name="campus_type" required>
+                                            <option value="">Select Drive Type</option>
+                                            <option value="on-campus">On Campus</option>
+                                            <option value="off-campus">Off Campus</option>
+                                            <option value="pool-campus">Pool Campus</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label class="form-label">Application Deadline <span style="color: var(--primaryColor);">*</span></label>
+                                        <input type="date" class="form-control" name="due_date" required>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label class="form-label">Drive/Event Date</label>
+                                        <input type="date" class="form-control" name="drive_date">
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label class="form-label">Location</label>
+                                        <input type="text" class="form-control" name="location" placeholder="e.g., Main Campus, Building A, Room 101">
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label class="form-label">Eligible Branches <span style="color: var(--primaryColor);">*</span></label>
+                                        <div class="branch-checkbox-group">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="CSE" id="placementBranchCSE" name="branches">
+                                                <label class="form-check-label" for="placementBranchCSE">CSE</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="ECE" id="placementBranchECE" name="branches">
+                                                <label class="form-check-label" for="placementBranchECE">ECE</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="EEE" id="placementBranchEEE" name="branches">
+                                                <label class="form-check-label" for="placementBranchEEE">EEE</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="CIVIL" id="placementBranchCIVIL" name="branches">
+                                                <label class="form-check-label" for="placementBranchCIVIL">CIVIL</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="MECH" id="placementBranchMECH" name="branches">
+                                                <label class="form-check-label" for="placementBranchMECH">MECH</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label class="form-label">Eligible Years <span style="color: var(--primaryColor);">*</span></label>
+                                        <div class="branch-checkbox-group">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="3" id="placementYear3" name="years">
+                                                <label class="form-check-label" for="placementYear3">3rd Year</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="4" id="placementYear4" name="years">
+                                                <label class="form-check-label" for="placementYear4">4th Year</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label class="form-label">Minimum CGPA</label>
+                                        <input type="number" step="0.1" class="form-control" name="min_cgpa" placeholder="e.g., 7.0">
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label class="form-label">Apply Link (URL) <span style="color: var(--primaryColor);">*</span></label>
+                                        <input type="url" class="form-control" name="apply_link" placeholder="e.g., https://company.com/careers/apply" required>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label class="form-label">Job Description</label>
+                                        <textarea class="form-control" name="description" rows="4" placeholder="Enter detailed job description, responsibilities, and requirements..."></textarea>
+                                    </div>
+
+                                    <!-- Rounds Section -->
+                                    <div class="col-12">
+                                        <label class="form-label">Rounds (Optional)</label>
+                                        <div class="rounds-container" id="roundsContainer">
+                                            <!-- Rounds will be added here dynamically -->
+                                        </div>
+                                        <button type="button" class="btn btn-outline-primary btn-sm mt-2" onclick="addInterviewRound()">
+                                            <i class="ri-add-line"></i> Add Round
+                                        </button>
+                                    </div>
+
+                                    <div class="col-12 text-center mt-4">
+                                        <button type="button" class="btn-back-choice" onclick="backToChoice()">
+                                            <i class="ri-arrow-left-line"></i> Back
+                                        </button>
+                                        <button type="submit" class="default-btn">
+                                            <i class="ri-add-circle-line"></i> Post Placement Drive
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Internship Form -->
+            <div id="internshipSection" class="form-section">
+               
+
+                <div class="row justify-content-center">
+                    <div class="col-lg-10">
+                        <div class="placement-card">
+                            <form id="internshipForm">
+                                <div class="row g-4">
+                                    <!-- Campus Type -->
+                                    <div class="col-12">
+                                        <label class="form-label">Campus Type <span style="color: var(--primaryColor);">*</span></label>
+                                        <div class="branch-checkbox-group">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="NECN" id="internshipCampusNECN" name="target_campus">
+                                                <label class="form-check-label" for="internshipCampusNECN">NECN</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="NECG" id="internshipCampusNECG" name="target_campus">
+                                                <label class="form-check-label" for="internshipCampusNECG">NECG</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label class="form-label">Company Name <span style="color: var(--primaryColor);">*</span></label>
+                                        <input type="text" class="form-control" name="company_name" placeholder="e.g., Google, TCS, Infosys" required>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label class="form-label">Internship Role <span style="color: var(--primaryColor);">*</span></label>
+                                        <input type="text" class="form-control" name="role" placeholder="e.g., Software Intern, Data Science Intern" required>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label class="form-label">Internship Type <span style="color: var(--primaryColor);">*</span></label>
+                                        <div class="radio-group">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" value="paid" id="internshipPaid" name="internship_type" onchange="toggleStipendField()" required>
+                                                <label class="form-check-label" for="internshipPaid">Paid</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" value="unpaid" id="internshipUnpaid" name="internship_type" onchange="toggleStipendField()" required>
+                                                <label class="form-check-label" for="internshipUnpaid">Unpaid</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6" id="stipendField" style="display: none;">
+                                        <label class="form-label">Stipend Amount <span style="color: var(--primaryColor);">*</span></label>
+                                        <input type="text" class="form-control" name="stipend" placeholder="e.g., ₹10,000 per month">
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label class="form-label">Duration <span style="color: var(--primaryColor);">*</span></label>
+                                        <input type="text" class="form-control" name="duration" placeholder="e.g., 3 months, 6 weeks" required>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label class="form-label">Application Deadline <span style="color: var(--primaryColor);">*</span></label>
+                                        <input type="date" class="form-control" name="due_date" required>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label class="form-label">Eligible Branches <span style="color: var(--primaryColor);">*</span></label>
+                                        <div class="branch-checkbox-group">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="CSE" id="internshipBranchCSE" name="branches">
+                                                <label class="form-check-label" for="internshipBranchCSE">CSE</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="ECE" id="internshipBranchECE" name="branches">
+                                                <label class="form-check-label" for="internshipBranchECE">ECE</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="EEE" id="internshipBranchEEE" name="branches">
+                                                <label class="form-check-label" for="internshipBranchEEE">EEE</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="CIVIL" id="internshipBranchCIVIL" name="branches">
+                                                <label class="form-check-label" for="internshipBranchCIVIL">CIVIL</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="MECH" id="internshipBranchMECH" name="branches">
+                                                <label class="form-check-label" for="internshipBranchMECH">MECH</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label class="form-label">Eligible Years <span style="color: var(--primaryColor);">*</span></label>
+                                        <div class="branch-checkbox-group">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="1" id="internshipYear1" name="years">
+                                                <label class="form-check-label" for="internshipYear1">1st Year</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="2" id="internshipYear2" name="years">
+                                                <label class="form-check-label" for="internshipYear2">2nd Year</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="3" id="internshipYear3" name="years">
+                                                <label class="form-check-label" for="internshipYear3">3rd Year</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="4" id="internshipYear4" name="years">
+                                                <label class="form-check-label" for="internshipYear4">4th Year</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label class="form-label">Minimum CGPA</label>
+                                        <input type="number" step="0.1" class="form-control" name="min_cgpa" placeholder="e.g., 7.0">
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label class="form-label">Apply Link (URL) <span style="color: var(--primaryColor);">*</span></label>
+                                        <input type="url" class="form-control" name="apply_link" placeholder="e.g., https://company.com/internship/apply" required>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label class="form-label">Internship Description</label>
+                                        <textarea class="form-control" name="description" rows="4" placeholder="Enter internship description, responsibilities, and requirements..."></textarea>
+                                    </div>
+
+                                    <div class="col-12 text-center mt-4">
+                                        <button type="button" class="btn-back-choice" onclick="backToChoice()">
+                                            <i class="ri-arrow-left-line"></i> Back
+                                        </button>
+                                        <button type="submit" class="default-btn">
+                                            <i class="ri-add-circle-line"></i> Post Internship
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Popup -->
+    <div class="success-overlay" id="successOverlay">
+        <div class="success-popup">
+            <div class="success-icon"></div>
+            <h3 class="success-title">Success!</h3>
+            <p class="success-message" id="successMessage">Opportunity has been posted successfully. Students can now apply!</p>
+            <a href="admin-dashboard.html" class="btn-back">
+                <i class="ri-arrow-left-line"></i> Back to Dashboard
+            </a>
+        </div>
+    </div>
+
+    <div class="footer-area pt-100 pb-75">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="single-footer-widget about">
+                        <h3>About NEC Placement Cell</h3>
+                        <p>Narayana Engineering College Placement Cell. Managing career paths and industry connections for students.</p>
+                    </div>
+                </div>
+                <div class="col-lg-6 text-end">
+                    <img src="assets/img/crop_nec.png" alt="logo" width="60">
+                    <p class="mt-2 text-muted">© 2026 NEC Placement Cell</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Close modal function - navigate back to previous page
+        function closeModal() {
+            window.history.back();
+        }
+
+        // Select opportunity type from modal
+        function selectOpportunityType(type) {
+            document.getElementById('modalOverlay').classList.remove('show');
+            
+            if(type === 'placement') {
+                document.getElementById('placementSection').classList.add('active');
+                document.getElementById('internshipSection').classList.remove('active');
+            } else if(type === 'internship') {
+                document.getElementById('internshipSection').classList.add('active');
+                document.getElementById('placementSection').classList.remove('active');
+            }
+        }
+
+        // Go back to choice modal
+        function backToChoice() {
+            document.getElementById('placementSection').classList.remove('active');
+            document.getElementById('internshipSection').classList.remove('active');
+            document.getElementById('modalOverlay').classList.add('show');
+        }
+
+        // Toggle stipend field based on internship type
+        function toggleStipendField() {
+            const paidRadio = document.getElementById('internshipPaid');
+            const stipendField = document.getElementById('stipendField');
+            const stipendInput = stipendField.querySelector('input[name="stipend"]');
+            
+            if(paidRadio.checked) {
+                stipendField.style.display = 'block';
+                stipendInput.setAttribute('required', 'required');
+            } else {
+                stipendField.style.display = 'none';
+                stipendInput.removeAttribute('required');
+                stipendInput.value = '';
+            }
+        }
+
+        // Rounds management
+        let roundCounter = 0;
+
+        function addInterviewRound() {
+            roundCounter++;
+            const roundsContainer = document.getElementById('roundsContainer');
+            
+            const roundCard = document.createElement('div');
+            roundCard.className = 'round-card';
+            roundCard.id = `round-${roundCounter}`;
+            
+            roundCard.innerHTML = `
+                <div class="round-header">
+                    <h5 class="round-title">Round ${roundCounter}</h5>
+                    <button type="button" class="remove-round" onclick="removeInterviewRound(${roundCounter})">
+                        <i class="ri-close-line"></i>
+                    </button>
+                </div>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Round Name <span style="color: var(--primaryColor);">*</span></label>
+                        <input type="text" class="form-control" name="round_name_${roundCounter}" placeholder="e.g., Written Test, Technical Interview" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Location</label>
+                        <input type="text" class="form-control" name="round_location_${roundCounter}" placeholder="e.g., Main Campus, Room 101">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Date & Time <span style="color: var(--primaryColor);">*</span></label>
+                        <input type="datetime-local" class="form-control" name="round_datetime_${roundCounter}" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Duration (minutes)</label>
+                        <input type="number" class="form-control" name="round_duration_${roundCounter}" placeholder="e.g., 60" min="15" max="480">
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-control" name="round_description_${roundCounter}" rows="2" placeholder="Enter round details, requirements, or instructions..."></textarea>
+                    </div>
+                </div>
+            `;
+            
+            roundsContainer.appendChild(roundCard);
+            
+            // Set minimum datetime to now
+            const now = new Date();
+            now.setMinutes(now.getMinutes() + 1); // Add 1 minute buffer
+            const minDatetime = now.toISOString().slice(0, 16);
+            roundCard.querySelector(`input[name="round_datetime_${roundCounter}"]`).setAttribute('min', minDatetime);
+        }
+
+        function removeInterviewRound(roundId) {
+            const roundCard = document.getElementById(`round-${roundId}`);
+            if (roundCard) {
+                roundCard.remove();
+            }
+        }
+
+        function collectInterviewRounds() {
+            const rounds = [];
+            const roundCards = document.querySelectorAll('.round-card');
+            
+            roundCards.forEach((card, index) => {
+                const roundId = card.id.split('-')[1];
+                const roundName = card.querySelector(`input[name="round_name_${roundId}"]`).value;
+                const location = card.querySelector(`input[name="round_location_${roundId}"]`).value;
+                const datetime = card.querySelector(`input[name="round_datetime_${roundId}"]`).value;
+                const duration = card.querySelector(`input[name="round_duration_${roundId}"]`).value;
+                const description = card.querySelector(`textarea[name="round_description_${roundId}"]`).value;
+                
+                if (roundName && datetime) {
+                    rounds.push({
+                        round_type: roundName,
+                        scheduled_datetime: datetime,
+                        duration_minutes: duration ? parseInt(duration) : 60,
+                        location: location || null,
+                        description: description || null
+                    });
+                }
+            });
+            
+            return rounds;
+        }
+
+        // Placement Form Submission
+        document.getElementById('placementForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Validate that at least one branch is selected
+            const selectedBranches = Array.from(document.querySelectorAll('#placementSection input[name="branches"]:checked'));
+            if(selectedBranches.length === 0) {
+                alert('Please select at least one eligible branch');
+                return;
+            }
+            
+            // Validate that at least one year is selected
+            const selectedYears = Array.from(document.querySelectorAll('#placementSection input[name="years"]:checked'));
+            if(selectedYears.length === 0) {
+                alert('Please select at least one eligible year');
+                return;
+            }
+
+            // Validate that at least one campus is selected
+            const selectedCampuses = Array.from(document.querySelectorAll('#placementSection input[name="target_campus"]:checked'));
+            if(selectedCampuses.length === 0) {
+                alert('Please select at least one campus type (NECN or NECG)');
+                return;
+            }
+            
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+
+            // Handle checkboxes for branches
+            const branchValues = selectedBranches.map(cb => cb.value);
+            data.eligible_branches = branchValues.join(',');
+            
+            // Handle checkboxes for years
+            const yearValues = selectedYears.map(cb => cb.value);
+            data.eligible_years = yearValues.join(',');
+
+            // Handle checkboxes for campus type
+            data.target_campus = selectedCampuses.map(cb => cb.value);
+            
+            // Remove the individual branch and year entries
+            delete data.branches;
+            delete data.years;
+
+            // Attach rounds as JSON array for backend persistence
+            data.interview_rounds = collectInterviewRounds();
+
+            console.log('Placing placement data:', data);
+
+            try {
+                const response = await fetch('/api/opportunities/placements/create', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if(result.success) {
+                    // Show success popup
+                    document.getElementById('successMessage').textContent = 'Placement drive has been posted successfully. Students can now apply for this opportunity.';
+                    document.getElementById('successOverlay').classList.add('show');
+                    
+                    // Reset form
+                    this.reset();
+                    
+                    // Auto redirect after 3 seconds
+                    setTimeout(() => {
+                        window.location.href = 'admin-dashboard.html';
+                    }, 3000);
+                } else {
+                    alert('Error: ' + (result.message || 'Failed to post placement drive'));
+                }
+            } catch(err) {
+                console.error('Error:', err);
+                alert('An error occurred while posting the placement drive');
+            }
+        });
+
+        // Internship Form Submission
+        document.getElementById('internshipForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Validate that at least one branch is selected
+            const selectedBranches = Array.from(document.querySelectorAll('#internshipSection input[name="branches"]:checked'));
+            if(selectedBranches.length === 0) {
+                alert('Please select at least one eligible branch');
+                return;
+            }
+            
+            // Validate that at least one year is selected
+            const selectedYears = Array.from(document.querySelectorAll('#internshipSection input[name="years"]:checked'));
+            if(selectedYears.length === 0) {
+                alert('Please select at least one eligible year');
+                return;
+            }
+
+            // Validate that at least one campus is selected
+            const selectedCampuses = Array.from(document.querySelectorAll('#internshipSection input[name="target_campus"]:checked'));
+            if(selectedCampuses.length === 0) {
+                alert('Please select at least one campus type (NECN or NECG)');
+                return;
+            }
+            
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+
+            // Handle checkboxes for branches
+            const branchValues = selectedBranches.map(cb => cb.value);
+            data.eligible_branches = branchValues.join(',');
+            
+            // Handle checkboxes for years
+            const yearValues = selectedYears.map(cb => cb.value);
+            data.eligible_years = yearValues.join(',');
+
+            // Handle checkboxes for campus type
+            data.target_campus = selectedCampuses.map(cb => cb.value);
+            
+            // Remove the individual branch and year entries
+            delete data.branches;
+            delete data.years;
+
+            // If unpaid, set stipend to null
+            if(data.internship_type === 'unpaid') {
+                data.stipend = null;
+            }
+
+            try {
+                const response = await fetch('/api/opportunities/internships/create', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if(result.success) {
+                    // Show success popup
+                    document.getElementById('successMessage').textContent = 'Internship has been posted successfully. Students can now apply for this opportunity.';
+                    document.getElementById('successOverlay').classList.add('show');
+                    
+                    // Reset form
+                    this.reset();
+                    toggleStipendField(); // Reset stipend field visibility
+                    
+                    // Auto redirect after 3 seconds
+                    setTimeout(() => {
+                        window.location.href = 'admin-dashboard.html';
+                    }, 3000);
+                } else {
+                    alert('Error: ' + (result.message || 'Failed to post internship'));
+                }
+            } catch(err) {
+                console.error('Error:', err);
+                alert('An error occurred while posting the internship');
+            }
+        });
+
+        // Set minimum date to today for both forms
+        const today = new Date().toISOString().split('T')[0];
+        document.querySelectorAll('input[name="due_date"]').forEach(input => {
+            input.setAttribute('min', today);
+        });
+    </script>
+
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/admin-session-manager.js"></script>
+    <script src="assets/js/admin-sidebar.js"></script>
+    <script src="assets/js/admin-access-control.js"></script>
+    <script>
+        // Hide main content while checking privileges
+        const mainContent = document.querySelector('main') || 
+                           document.querySelector('.admin-wrapper') || 
+                           document.querySelector('.container-fluid');
+        if (mainContent) mainContent.style.display = 'none';
+
+        // Hide the opportunity selection modal until access is confirmed
+        const pageModal = document.getElementById('modalOverlay');
+        if (pageModal) {
+            pageModal.classList.remove('show');
+            pageModal.style.display = 'none';
+        }
+
+        // Guard this page - check if admin has permission to post opportunities
+        document.addEventListener('DOMContentLoaded', async function() {
+            const hasAccess = await adminAccessControl.guardPage('can_post_opportunities', 'Manage Opportunities');
+            if (hasAccess) {
+                if (mainContent) mainContent.style.display = '';
+                if (pageModal) {
+                    pageModal.classList.add('show');
+                    pageModal.style.display = 'flex';
+                }
+            }
+        });
+    </script>
+    <script src="assets/js/admin-footer.js"></script>
+</body>
+</html>
+
+
