@@ -80,6 +80,7 @@ router.post('/login', async (req, res) => {
         userData.can_generate_reports = user.can_generate_reports || 0;
         userData.can_post_opportunities = user.can_post_opportunities || 0;
         userData.can_assign_students_opportunities = user.can_assign_students_opportunities || 0;
+        userData.can_edit_public_pages = user.can_edit_public_pages || 0;
         userData.can_manage_admins = user.can_manage_admins || 0;
 
         const token = createToken({
