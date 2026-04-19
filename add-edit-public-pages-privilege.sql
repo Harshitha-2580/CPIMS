@@ -1,5 +1,5 @@
--- Add can_edit_public_pages privilege column to admins table
-ALTER TABLE admins ADD COLUMN can_edit_public_pages TINYINT DEFAULT 0 AFTER can_manage_admins;
+-- Migration: Add can_edit_public_pages privilege to admins table
+ALTER TABLE admins ADD COLUMN IF NOT EXISTS can_edit_public_pages TINYINT(1) DEFAULT 0;
 
--- For backward compatibility, grant this privilege to existing superadmins
-UPDATE admins SET can_edit_public_pages = 1 WHERE role IN ('superadmin', 'super');
+-- Grant public page editing rights to all existing superadmins and supers
+UPDATE admins SET can_edit_public_pages = 1 WHERE role IN ('super', 'superadmin');

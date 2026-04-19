@@ -9,6 +9,7 @@ const PUBLIC_ROUTES = [
   { method: 'POST', path: '/resend-otp' },
   { method: 'POST', path: '/forgot-password' },
   { method: 'POST', path: '/reset-password' },
+  { method: 'POST', path: '/admin/reset-password' },
   { method: 'POST', path: '/student/signup' },
   { method: 'POST', path: '/faculty/login-email' },
   { method: 'POST', path: '/faculty/verify-otp' }
