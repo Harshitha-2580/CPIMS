@@ -394,6 +394,14 @@ function buildAndInsertSidebar(adminData, adminPrivileges) {
             activeOn: ['admin-reports.html'],
             requiredPrivilege: 'can_generate_reports',
             pageTitle: 'Generate Reports'
+        },
+        {
+            href: 'admin-public-pages.html',
+            icon: 'ri-pages-line',
+            label: 'Public Pages',
+            activeOn: ['admin-public-pages.html'],
+            requiredPrivilege: 'can_edit_public_pages',
+            pageTitle: 'Public Pages'
         }
     ];
 
