@@ -295,7 +295,8 @@ document.addEventListener('DOMContentLoaded', function() {
             can_generate_reports: document.getElementById('priv_reports').checked ? 1 : 0,
             can_post_opportunities: document.getElementById('priv_opportunities').checked ? 1 : 0,
             can_assign_students_opportunities: document.getElementById('priv_assign').checked ? 1 : 0,
-            can_approve_students: document.getElementById('priv_approve').checked ? 1 : 0
+            can_approve_students: document.getElementById('priv_approve').checked ? 1 : 0,
+            can_edit_public_pages: document.getElementById('priv_public_pages').checked ? 1 : 0
         };
 
         console.log('[SaveAdmin] Privileges:', privileges);

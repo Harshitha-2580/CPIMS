@@ -69,7 +69,8 @@ function disableUnavailablePrivileges(adminPrivileges) {
         'privGenerateReports': 'can_generate_reports',
         'privPostOpportunities': 'can_post_opportunities',
         'privAssignStudentsOpportunities': 'can_assign_students_opportunities',
-        'privApproveStudents': 'can_approve_students'
+        'privApproveStudents': 'can_approve_students',
+        'privEditPublicPages': 'can_edit_public_pages'
     };
     
     Object.entries(privilegeMap).forEach(([elementId, privilegeKey]) => {
@@ -120,7 +121,7 @@ document.getElementById('addAdminForm').addEventListener('submit', async functio
     
     // If superadmin is checked, set all privileges
     if (document.getElementById('privSuperadmin').checked) {
-        privileges = ['can_add_faculty', 'can_generate_reports', 'can_post_opportunities', 'can_assign_students_opportunities', 'can_approve_students'];
+        privileges = ['can_add_faculty', 'can_generate_reports', 'can_post_opportunities', 'can_assign_students_opportunities', 'can_approve_students', 'can_edit_public_pages'];
     }
     
     // Get current active admin info using session manager or storage
