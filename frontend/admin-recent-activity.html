@@ -500,20 +500,20 @@
     <script>
         async function loadRecentActivity() {
             try {
-                // Fetch all data
-                const placementsRes = await fetch('/api/opportunities/placements');
-                const internshipsRes = await fetch('/api/opportunities/internships');
+                // Fetch all data from unfiltered endpoint
                 const allOpportunitiesRes = await fetch('/api/opportunities/all-opportunities');
-
-                const placements = await placementsRes.json();
-                const internships = await internshipsRes.json();
                 const allOpportunities = await allOpportunitiesRes.json();
+
+                // Separate placements and internships for stats/timeline
+                const opportunities = allOpportunities.opportunities || [];
+                const placements = { opportunities: opportunities.filter(o => o.type === 'placement') };
+                const internships = { opportunities: opportunities.filter(o => o.type === 'internship') };
 
                 // Update statistics
                 updateStats(placements, internships);
 
                 // Display recent opportunities
-                displayRecentOpportunities(allOpportunities.opportunities || []);
+                displayRecentOpportunities(opportunities);
 
                 // Display timeline
                 displayTimeline(placements, internships);
@@ -650,7 +650,7 @@
             }
 
             let html = '';
-            events.slice(0, 15).forEach(event => {
+            events.slice(0, 10).forEach(event => {
                 const dateStr = event.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
                 const timeStr = event.date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
 
